@@ -1,8 +1,8 @@
 === Feed Them Gallery ===
 Contributors: slickremix
-Tags:   gallery, woocommerce gallery, sell photos, responsive images
+Tags:   gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
-Tested up to: 4.9.1
+Tested up to: 4.9.5
 Stable tag: 1.0.1
 License: GPLv2 or later
 

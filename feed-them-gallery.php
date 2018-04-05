@@ -13,14 +13,14 @@
  * Text Domain: feed-them-gallery
  * Domain Path: /languages
  * Requires at least: Wordpress 4.7.0
- * Tested up to: WordPress 4.9.1
+ * Tested up to: WordPress 4.9.5
  * Stable tag: 1.0.1
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  *
  * @version  1.0.1
  * @package  FeedThemSocial/Core
- * @copyright  	Copyright (c) 2012-2017 SlickRemix
+ * @copyright  	Copyright (c) 2012-2018 SlickRemix
  *
  * Need Support? http://www.slickremix.com/my-account
 */
