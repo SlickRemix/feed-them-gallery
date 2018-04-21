@@ -10,12 +10,12 @@ Create customizable Image Galleries and sell your images using woocommerce.
 
 == Description ==
 
-[View Demo](http://feedthemgallery.com/gallery-demo-one/) and adjust columns, spacing, size & look of the image gallery!
+[View Demo](http://feedthemgallery.com/gallery-demo-one/) and adjust columns, spacing, size & look of the image gallery.
 
-Here's a look at how fast you can setup a gallery!
+See how fast you can setup a gallery.
 [youtube https://www.youtube.com/watch?v=Fa2mjmFAGZQ&rel=0]
 
-ALL SlickRemix plugins come with Amazing Support! If you need help or have questions we're here to help, just create a ticket on our [website](https://www.slickremix.com/support/) and we’ll get to you as quickly as we can! (usually within 24hrs)
+ALL SlickRemix plugins come with Amazing Support. If you need help or have questions we're here to help, just create a ticket on our [website](https://www.slickremix.com/support/) and we’ll get to you as quickly as we can! (usually within 24hrs)
 
 = Who is this plugin for? =
 If you are a Photographer, Developer, Artist, Someone looking to help others sell their photos, or just looking to create awesome, easy-to-use Galleries this plugin is for you! We made the process of setting up Galleries super simple. We included TONS of options to change the style and layout keeping focus on organization and simplicity. We want to make it so anyone can create a Gallery and sell photos with ease giving your customers/clients a hassle free experience when looking at or buying your images or art!
@@ -123,7 +123,7 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
-= Version 1.0.3 Friday, April 20th, 2018 =
+= Version 1.0.3 Monday, April 23rd, 2018 =
   * FIXED: Adding existing images in your Media Library before our plugin was active now works.
   * FIXED CSS: Select Images and Media Library button not aligned next to each other on the edit gallery page.
   * FIXED PREMIUM: Add to cart permalink not working correctly in some cases for the direct add to cart option.
