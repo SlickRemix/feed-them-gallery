@@ -36,10 +36,10 @@ FREE PLUGIN OPTIONS
  * Choose images already uploaded and add to your gallery
 
 = Layout Options =
- * Image Post Gallery that looks similar to a blog post. Example
- * Image Post in Grid Gallery. Example
- * Image Gallery Squared, similar to Instagram. Example
- * Image Gallery Collage, were different heights and width images will stack. Example
+ * Image Gallery Squared, similar to Instagram. [Demos](http://feedthemgallery.com/gallery-demo-one/)
+ * Image Post Gallery that looks similar to a blog post.
+ * Image Post in Grid Gallery.
+ * Image Gallery Collage, were different heights and width images will stack.
  * Adjust the number of photos that show per gallery, for instance if you are showing a teaser
  * Choose the image size on the page
  * Add a User Name who took the photo and link it to an about page or social media account
@@ -48,9 +48,9 @@ FREE PLUGIN OPTIONS
 
 = Popup Options =
  * 3 different popup options
- * Name, title, description etc on the right side of photo. Example
- * Name, title, description etc on the bottom of photo. Example
- * Photo only Example
+ * Name, title, description etc on the right side of photo.
+ * Name, title, description etc on the bottom of photo.
+ * Photo only
  * Choose the image size in the popup
 
 = Duplicate Galleries =
@@ -126,7 +126,7 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
 = Version 1.0.3 Friday, April 20th, 2018 =
   * FIXED: Adding existing images in your Media Library before our plugin was active now works.
   * FIXED CSS: Select Images and Media Library button not aligned next to each other on the edit gallery page.
-  * FIXED PREMIUM: Add to cart permalink not working correctly.
+  * FIXED PREMIUM: Add to cart permalink not working correctly in some cases for the direct add to cart option.
 
 = Version 1.0.2 Tuesday, March 13th, 2018 =
   * FIXED: Skipping Image if Feed Them Social Premium plugin was active.
