@@ -1008,9 +1008,9 @@ class Gallery {
                                     $times = $image->post_date;
                                     $image = wp_prepare_attachment_for_js($image->ID);
 
-                                    // echo '<pre>';
-                                    //   print_r($image);
-                                    // echo '</pre>';
+                                   //  echo '<pre>';
+                                   //    print_r($image['sizes']);
+                                   //  echo '</pre>';
                                     $fts_final_date = $display_gallery->ft_gallery_custom_date($times, 'wp_gallery');
                                     $instagram_date = $fts_final_date;
 
@@ -1075,7 +1075,20 @@ class Gallery {
                                              echo '<div class="ft-gallery-file-delete ft-gallery-file-zip-to-woo"><a class="ft_gallery_create_woo_prod_button" onclick="ft_gallery_image_to_woo(\'zip\',\'' . $zip_name . '\',\'' . $abs_file_url . '\')">Create product</a></div>';
                                          }*/
                                     }
-                                    $image_url = wp_get_attachment_image_src($attachment_id = $image['id'], 'ft_gallery_thumb', false);
+
+                                      //  echo '<pre>';
+                                      //  print_r($image['sizes']['ft_gallery_thumb']);
+                                      //  echo '</pre>';
+
+                                    if($image['sizes']['ft_gallery_thumb']){
+                                        $image_url = wp_get_attachment_image_src($attachment_id = $image['id'], 'ft_gallery_thumb', false);
+                                        // print_r('proper size<br/>');
+                                    }
+                                    else {
+                                         $image_url = wp_get_attachment_image_src($attachment_id = $image['id'], 'thumbnail', false);
+                                        // print_r(' not set<br/>');
+                                    }
+
                                     $ft_custom_thumb = $image_url[0];
                                     //  $meta_box .= '<a href="' . $image['media_details']['sizes']['full']['source_url'] . '" rel="gallery-' . $image['id'] . '" class="ft-gallery-edit-img-popup">';
                                     $meta_box .= '<img src="' . $ft_custom_thumb . '"/>';
