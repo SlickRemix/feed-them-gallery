@@ -1,9 +1,9 @@
 === Feed Them Gallery ===
 Contributors: slickremix
-Tags:   gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
+Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
 Tested up to: 4.9.5
-Stable tag: 1.0.1
+Stable tag: 1.0.3
 License: GPLv2 or later
 
 Create customizable Image Galleries and sell your images using woocommerce.
@@ -123,6 +123,14 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.0.3 Friday, April 20th, 2018 =
+  * FIXED: Adding existing images in your Media Library before our plugin was active now works.
+  * FIXED CSS: Select Images and Media Library button not aligned next to each other on the edit gallery page.
+  * FIXED PREMIUM: Add to cart permalink not working correctly.
+
+= Version 1.0.2 Tuesday, March 13th, 2018 =
+  * FIXED: Skipping Image if Feed Them Social Premium plugin was active.
+  * FIXED: Misc CSS Tweaks for missing X button on popup because some theme overrides and CSS tweak for share button spacing.
 
 = Version 1.0.1 Saturday, December 2nd, 2017 =
   * FIXED: Display Gallery Class to have Woocommerce Purchase buttons show properly.
