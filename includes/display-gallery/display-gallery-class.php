@@ -1234,8 +1234,6 @@ class Display_Gallery extends Gallery {
                                                 }, 500);
                                                 <?php } ?>
                                                 if (ft_gallery_posts<?php echo $_REQUEST['ft_gallery_dynamic_name']; ?> >=  <?php echo $this->ft_gallery_count_post_images($ftg['id']); ?>) {
-
-
                                                     jQuery('#loadMore_<?php echo $ft_gallery_dynamic_name ?>').replaceWith('<?php
                                                         print'<div style="';
                                                         if (isset($loadmore_btn_maxwidth) && $loadmore_btn_maxwidth !== '') {
@@ -1249,7 +1247,6 @@ class Display_Gallery extends Gallery {
                                                         }
                                                         print'margin:' . $loadmore_btn_margin . ' auto ' . $loadmore_btn_margin . '" class="fts-fb-load-more">' . __('No More Photos', 'feed-them-gallery') . '</div>';
                                                         ?>'
-
                                                     );
                                                     //  jQuery('.ft-wp-gallery-scrollable').removeAttr('class');
                                                     jQuery('.<?php echo $feed_name_rand_string ?>-scrollable').unbind('scroll');
