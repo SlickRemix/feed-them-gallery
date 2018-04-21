@@ -1260,8 +1260,7 @@ class Display_Gallery extends Gallery {
                                                 jQuery.fn.ftsShare();
                                                 // Reload this function again otherwise the popup won't work correctly for the newly loaded items
                                                 jQuery.fn.slickWordpressPopUpFunction();
-                                                <?php if ($format_type == 'gallery') { ?>
-                                                if(typeof outputSRmargin === "function"){outputSRmargin(document.querySelector('#margin').value)} // Reload our margin for the demo
+                                                <?php if ($format_type == 'gallery') { ?>if(jQuery( "#ftg-gallery-demo" ).hasClass( "ftg-demo-1" )){outputSRmargin(document.querySelector('#margin').value)} // Reload our margin for the demo
                                                 // Reload our imagesizing function so the images show up proper
                                                 slickremixFTGalleryImageResizing();
                                                 <?php } ?>
