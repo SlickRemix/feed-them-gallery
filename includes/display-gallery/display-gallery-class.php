@@ -144,7 +144,6 @@ class Display_Gallery extends Gallery {
         $fts_language_ago = get_option('ft_gallery_language_ago');
         if (empty($fts_language_ago)) $fts_language_ago = 'ago';
 
-        $difference = time() - $timestamp;
         //	$periods = array( "sec", "min", "hour", "day", "week", "month", "years", "decade" );
         $periods = array($fts_language_second, $fts_language_minute, $fts_language_hour, $fts_language_day, $fts_language_week, $fts_language_month, $fts_language_year, "decade");
         $periods_plural = array($fts_language_seconds, $fts_language_minutes, $fts_language_hours, $fts_language_days, $fts_language_weeks, $fts_language_months, $fts_language_years, "decades");
@@ -1042,12 +1041,12 @@ class Display_Gallery extends Gallery {
                                 <?php } ?>
 
                                 <div class="ft-gallery-cta-button-wrap">
-                                    <?php if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php') && isset($productID) && $show_purchase_link == 'yes') {
+                                    <?php  if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php') && isset($productID) && $show_purchase_link == 'yes') {
 
                                         if ($purchase_link_option == 'prod_page') {
                                             $purchase_link = '' . $siteurl . '/product/?p=' . $productID . '';
                                         } elseif ($purchase_link_option == 'add_cart') {
-                                            $purchase_link = '' . get_the_permalink() . '/?add-to-cart=' . $productID . '';
+                                            $purchase_link = '' . $siteurl . '/?add-to-cart=' . $productID . '';
                                         } elseif ($purchase_link_option == 'add_cart_checkout') {
                                             $purchase_link = '' . $siteurl . '/cart/?add-to-cart=' . $productID . '';
                                         } else {

@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) exit;
  * Class Gallery_Options
  */
 class Gallery_Options {
-    public $all_options = '';
+    public $all_options = array();
 
     public function __construct() {
         $this->layout_options();
@@ -60,7 +60,7 @@ class Gallery_Options {
         $this->all_options['layout'] = array(
             'section_attr_key' => 'facebook_',
             'section_title' => __('Layout Options', 'feed-them-gallery'),
-            'section_wrap_class' => 'fts-facebook_page-shortcode-form',
+            'section_wrap_class' => 'ftg-section-options',
             //Form Info
             'form_wrap_classes' => 'fb-page-shortcode-form',
             'form_wrap_id' => 'fts-fb-page-form',
@@ -623,7 +623,7 @@ class Gallery_Options {
         $this->all_options['colors'] = array(
             'section_attr_key' => 'facebook_',
             'section_title' => __('Feed Color Options', 'feed-them-gallery'),
-            'section_wrap_class' => 'fts-facebook_page-shortcode-form',
+            'section_wrap_class' => 'ftg-section-options',
             //Form Info
             'form_wrap_classes' => 'fb-page-shortcode-form',
             'form_wrap_id' => 'fts-fb-page-form',
@@ -725,7 +725,7 @@ class Gallery_Options {
             'input_wrap_class' => 'ft-woocommerce-styles',
             'section_attr_key' => 'woocommerce_',
             'section_title' => __('Woocommerce Options', 'feed-them-gallery'),
-            'section_wrap_class' => 'fts-facebook_page-shortcode-form',
+            'section_wrap_class' => 'ftg-section-options',
             //Form Info
             'form_wrap_classes' => 'fb-page-shortcode-form',
             'form_wrap_id' => 'fts-fb-page-form',
@@ -832,7 +832,7 @@ class Gallery_Options {
             'required_prem_plugin' => 'feed_them_gallery_premium',
             'section_attr_key' => 'facebook_',
             'section_title' => __('Watermark Options', 'feed-them-gallery'),
-            'section_wrap_class' => 'fts-facebook_page-shortcode-form',
+            'section_wrap_class' => 'ftg-section-options',
             //Form Info
             'form_wrap_classes' => 'fb-page-shortcode-form',
             'form_wrap_id' => 'fts-fb-page-form',
