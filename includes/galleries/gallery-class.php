@@ -760,10 +760,10 @@ class Gallery {
                     </label>
                 </div>
 
-                <div id="tab-content1" class="tab-content fts-hide-me <?php if (isset($_GET['tab']) && $_GET['tab'] == 'ft_images' || !isset($_GET['tab'])) {
+                <div id="ftg-tab-content1" class="tab-content fts-hide-me <?php if (isset($_GET['tab']) && $_GET['tab'] == 'ft_images' || !isset($_GET['tab'])) {
                     echo ' pane-active';
                 } ?>">
-                    <section>
+                    <div class="ftg-section">
 
                         <div id="uploadContainer" style="margin-top: 10px;">
 
@@ -1008,9 +1008,9 @@ class Gallery {
                                     $times = $image->post_date;
                                     $image = wp_prepare_attachment_for_js($image->ID);
 
-                                    // echo '<pre>';
-                                    //   print_r($image);
-                                    // echo '</pre>';
+                                   //  echo '<pre>';
+                                   //    print_r($image['sizes']);
+                                   //  echo '</pre>';
                                     $fts_final_date = $display_gallery->ft_gallery_custom_date($times, 'wp_gallery');
                                     $instagram_date = $fts_final_date;
 
@@ -1075,7 +1075,20 @@ class Gallery {
                                              echo '<div class="ft-gallery-file-delete ft-gallery-file-zip-to-woo"><a class="ft_gallery_create_woo_prod_button" onclick="ft_gallery_image_to_woo(\'zip\',\'' . $zip_name . '\',\'' . $abs_file_url . '\')">Create product</a></div>';
                                          }*/
                                     }
-                                    $image_url = wp_get_attachment_image_src($attachment_id = $image['id'], 'ft_gallery_thumb', false);
+
+                                      //  echo '<pre>';
+                                      //  print_r($image['sizes']['ft_gallery_thumb']);
+                                      //  echo '</pre>';
+
+                                    if(isset($image['sizes']['ft_gallery_thumb'])){
+                                        $image_url = wp_get_attachment_image_src($attachment_id = $image['id'], 'ft_gallery_thumb', false);
+                                        // print_r('proper size<br/>');
+                                    }
+                                    else {
+                                         $image_url = wp_get_attachment_image_src($attachment_id = $image['id'], 'thumbnail', false);
+                                        // print_r(' not set<br/>');
+                                    }
+
                                     $ft_custom_thumb = $image_url[0];
                                     //  $meta_box .= '<a href="' . $image['media_details']['sizes']['full']['source_url'] . '" rel="gallery-' . $image['id'] . '" class="ft-gallery-edit-img-popup">';
                                     $meta_box .= '<img src="' . $ft_custom_thumb . '"/>';
@@ -1188,11 +1201,11 @@ class Gallery {
                         ?>
 
                         <div class="clear"></div>
-                    </section>
+                    </div>
 
                 </div> <!-- #tab-content1 -->
 
-                <div id="tab-content2" class="tab-content fts-hide-me <?php if (isset($_GET['tab']) && $_GET['tab'] == 'ft_layout') {
+                <div id="ftg-tab-content2" class="tab-content fts-hide-me <?php if (isset($_GET['tab']) && $_GET['tab'] == 'ft_layout') {
                     echo ' pane-active';
                 } ?>">
 
@@ -1202,7 +1215,7 @@ class Gallery {
 
                 </div>
 
-                <div id="tab-content3" class="tab-content fts-hide-me <?php if (isset($_GET['tab']) && $_GET['tab'] == 'ft_colors') {
+                <div id="ftg-tab-content3" class="tab-content fts-hide-me <?php if (isset($_GET['tab']) && $_GET['tab'] == 'ft_colors') {
                     echo ' pane-active';
                 } ?>">
                     <?php
@@ -1213,17 +1226,17 @@ class Gallery {
 
                 </div>
 
-                <div id="tab-content6" class="tab-content fts-hide-me <?php if (isset($_GET['tab']) && $_GET['tab'] == 'ft_zip_gallery') {
+                <div id="ftg-tab-content6" class="tab-content fts-hide-me <?php if (isset($_GET['tab']) && $_GET['tab'] == 'ft_zip_gallery') {
                     echo ' pane-active';
                 } ?>">
                     <?php
 
                     //If Premium add Functionality
                     if (!is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
-                        echo '<section>' . $this->ft_gallery_tab_premium_msg() . '</section>';
+                        echo '<div class="ftg-section">' . $this->ft_gallery_tab_premium_msg() . '</div>';
                     }
                     ?>
-                    <section>
+                    <div class="ftg-section">
 
                         <div class="fts-title-description-settings-page">
                             <h3><?php _e('Gallery Digital Zip History List', 'feed-them-gallery'); ?></h3>
@@ -1261,20 +1274,20 @@ class Gallery {
                         }
                         ?>
 
-                    </section>
+                    </div>
                     <div class="clear"></div>
                 </div>
 
-                <div id="tab-content5" class="tab-content fts-hide-me <?php if (isset($_GET['tab']) && $_GET['tab'] == 'ft_woo_commerce') {
+                <div id="ftg-tab-content5" class="tab-content fts-hide-me <?php if (isset($_GET['tab']) && $_GET['tab'] == 'ft_woo_commerce') {
                     echo ' pane-active';
                 } ?>">
 
                     <?php
 
                     if (!is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) { ?>
-                        <section>
+                        <div class="ftg-section">
                             <?php $this->ft_gallery_tab_premium_msg(); ?>
-                        </section>
+                        </div>
                     <?php } ?>
 
                     <?php
@@ -1320,14 +1333,14 @@ class Gallery {
 
                 </div>
 
-                <div id="tab-content7" class="tab-content fts-hide-me <?php if (isset($_GET['tab']) && $_GET['tab'] == 'ft_watermark') {
+                <div id="ftg-tab-content7" class="tab-content fts-hide-me <?php if (isset($_GET['tab']) && $_GET['tab'] == 'ft_watermark') {
                     echo ' pane-active';
                 } ?>">
 
                     <?php if (!is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) { ?>
-                        <section>
+                        <div class="ftg-section">
                             <?php $this->ft_gallery_tab_premium_msg(); ?>
-                        </section>
+                        </div>
                     <?php }
 
                     echo $this->ft_gallery_settings_html_form($this->parent_post_id, $this->saved_settings_array['watermark'], null); ?>
@@ -1742,7 +1755,7 @@ class Gallery {
         $section_required_prem_plugin = !isset($section_info['required_prem_plugin']) || isset($section_info['required_prem_plugin']) && is_plugin_active($prem_required_plugins[ $section_info['required_prem_plugin'] ]['plugin_url']) ? 'active' : '';
 
         //Start creation of fields for each Feed
-        $output .= '<section class="' . $section_info['section_wrap_class'] . '">';
+        $output .= '<div class="ftg-section" class="' . $section_info['section_wrap_class'] . '">';
 
         //Section Title
         $output .= isset($section_info['section_title']) ? '<h3>' . $section_info['section_title'] . '</h3>' : '';
@@ -2009,7 +2022,7 @@ class Gallery {
             }
         }
 
-        $output .= '</section> <!--/Section Wrap Class END -->';
+        $output .= '</div> <!--/Section Wrap Class END -->';
 
         return $output;
     }
