@@ -97,6 +97,8 @@ FREE PLUGIN OPTIONS
  * Create a product that contains all the images in your gallery
  * Create a product for each individual image in the gallery
  * Choose to auto create a product for each image uploaded, saving you tons of time!
+ * Options for orientation model products.
+ * Our plugin will auto detect your image orientation and apply it to the model product of your choice that you will create as a product in WooCommerce. Once this is setup it will literally take you minutes if not seconds to upload a batch of photos and have them converted into products for you. No more hand creating a prodcut for each image.
  * Attach Product to a Category named after the Gallery
  * Options for the Add to Cart Button Functionality
  * Show or hide the Purchase button on any gallery
@@ -104,6 +106,9 @@ FREE PLUGIN OPTIONS
  * Easy Edit Product buttons for each image in the admin of our galleries
  * Create a custom product to be used in association with your single image products or full gallery products.
  * Purchase button can appear on the page under the photo and in the popup
+ * Variable Options displayed. [Demos](http://feedthemgallery.com/gallery-demo-one/)
+ * Add to Cart using Ajax. Makes it easy to scroll or click through photos in popup and quickly add photos to your cart.
+ * Variable Options displayed. [Demos](http://feedthemgallery.com/gallery-demo-one/)
 
 = Zip Options =
  * Zip any gallery to create backups
@@ -123,10 +128,12 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
-= Version 1.0.3 Monday, April 23rd, 2018 =
-  * FIXED: Adding existing images in your Media Library before our plugin was active now works.
+= Version 1.0.3 Friday, May 11th, 2018 =
+  * NEW: Made garbage icon red in color and when clicked it reveals an alert with an ok/cancel confirming you want to delete the image from your website.
+  * FIXED: Add existing images in your Media Library to a gallery.
   * FIXED CSS: Select Images and Media Library button not aligned next to each other on the edit gallery page.
   * FIXED PREMIUM: Add to cart permalink not working correctly in some cases for the direct add to cart option.
+  * NEW PREMIUM: WooCommerce Variables and Ajax Add to Cart button added along with Image orientation detection for model products.
 
 = Version 1.0.2 Tuesday, March 13th, 2018 =
   * FIXED: Skipping Image if Feed Them Social Premium plugin was active.

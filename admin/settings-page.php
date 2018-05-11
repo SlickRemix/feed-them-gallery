@@ -664,7 +664,6 @@ class Settings_Page {
                                 }
                                 ?>
                             </p>
-
                         </div>
 
                             <div class="ft-gallery-woo-settings-options-wrap">
