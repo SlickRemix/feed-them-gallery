@@ -58,10 +58,13 @@ class Settings_Page {
         ?>
         <div class="ft-gallery-main-template-wrapper-all">
 
-
             <div class="ft-gallery-settings-admin-wrap" id="theme-settings-wrap">
-                <h2><img src="<?php echo plugins_url('css/ft-gallery-logo.png', __FILE__) ?>" /></h2>
-                <a class="buy-extensions-btn" href="http://www.slickremix.com/ft-gallery-documentation/" target="_blank"><?php _e('Setup Documentation', 'ft-gallery'); ?></a>
+                <h2><img src="<?php echo plugins_url('css/ft-gallery-logo.png', __FILE__) ?>"/></h2>
+
+               <?php echo sprintf(__('%1$sSetup Documentation%2$s', 'feed-them-gallery'),
+                        ' <a class="buy-extensions-btn" href="'.esc_url('http://www.slickremix.com/ft-gallery-documentation/').'" target="_blank">',
+                        '</a>'
+                    ); ?>
 
                 <div class="ft-gallery-settings-admin-input-wrap company-info-style ft-gallery-cache-wrap" style="padding-bottom: 0px;">
                     <?php
@@ -78,69 +81,81 @@ class Settings_Page {
                     <div class="ft-rename-options-wrap">
                         <h4 style="margin-top: 10px;  border:none;padding: 0 0 20px 0;"><?php _e('Attachment File & Title Renaming [on upload]', 'feed-them-gallery'); ?></h4>
 
-
-                        <?php _e('Use attachment renaming when importing/uploading attachments. This will overwrite original Filename.', 'ft-gallery'); ?>
-                        <br />
-                        <strong><?php _e('Below are examples of what the attachment filenames and Titles will look like after uploading:', 'ft-gallery'); ?></strong> <?php _e('(Click "Save All Changes" to view Examples)', 'ft-gallery'); ?>
-                        <br />
+                        <?php _e('Use attachment renaming when importing/uploading attachments. This will overwrite original Filename.', 'feed-them-gallery'); ?>
+                        <br/>
+                        <strong><?php _e('Below are examples of what the attachment filenames and Titles will look like after uploading:', 'feed-them-gallery'); ?></strong> <?php _e('(Click "Save All Changes" to view Examples)', 'feed-them-gallery'); ?>
+                        <br/>
                         <em>
-                            <small><?php _e('**NOTE** Filename renaming your Gallery\'s attachments will always include the ID and change the Titles of each attachment.', 'ft-gallery'); ?></small>
-                        </em><br /><br />
+                            <small><?php _e('**NOTE** Filename renaming your Gallery\'s attachments will always include the ID and change the Titles of each attachment.', 'feed-them-gallery'); ?></small>
+                        </em><br/><br/>
                         <input name="ft-gallery-use-attachment-naming" type="checkbox" id="ft-gallery-attachment-naming" value="1" <?php echo checked('1', get_option('ft-gallery-use-attachment-naming')); ?>/>
                         <?php
                         if (get_option('ft-gallery-use-attachment-naming') == '1') {
-                            _e('<strong>Checked:</strong> You are using Attachment File and Title Renaming when uploading each image.', 'ft-gallery');
+                            echo sprintf(__('%1$sChecked:%2$s You are using Attachment File and Title Renaming when uploading each image.', 'feed-them-gallery'),
+                                '<strong>',
+                                '</strong>'
+                            );
 
                         } else {
-                            _e('<strong>Not Checked:</strong> You are using the Original filename for Attachment names and Titles that is uploaded with each file.', 'ft-gallery');
+                            echo sprintf(__('%1$sNot Checked:%2$s You are using the Original filename for Attachment names and Titles that is uploaded with each file.', 'feed-them-gallery'),
+                                '<strong>',
+                                '</strong>'
+                            );
                         }
-                        ?><br /><br />
+                        ?><br/><br/>
                         <div class="clear"></div>
 
                         <div class="settings-sub-wrap">
-                            <h5><?php _e('Filename', 'ft-gallery'); ?></h5>
+                            <h5><?php _e('Filename', 'feed-them-gallery'); ?></h5>
 
-                            <label><input name="ft_gallery_attch_name_gallery_name" type="checkbox" value="1" <?php echo checked('1', get_option('ft_gallery_attch_name_gallery_name')); ?>/> <?php _e('Include Gallery Name', 'ft-gallery'); ?>
-                                (Example: this-gallery-name-)</label>
+                            <label><input name="ft_gallery_attch_name_gallery_name" type="checkbox" value="1" <?php echo checked('1', get_option('ft_gallery_attch_name_gallery_name')); ?>/> <?php _e('Include Gallery Name (Example: this-gallery-name-)', 'feed-them-gallery'); ?></label>
 
-                            <label><input name="ft_gallery_attch_name_post_id" type="checkbox" value="1" <?php echo checked('1', get_option('ft_gallery_attch_name_post_id')); ?>/> <?php _e('Include Gallery ID Number', 'ft-gallery'); ?>
-                                (Example: 20311-)</label>
+                            <label><input name="ft_gallery_attch_name_post_id" type="checkbox" value="1" <?php echo checked('1', get_option('ft_gallery_attch_name_post_id')); ?>/> <?php _e('Include Gallery ID Number (Example: 20311-)', 'feed-them-gallery'); ?></label>
 
-                            <label><input name="ft_gallery_attch_name_date" type="checkbox" value="1" <?php echo checked('1', get_option('ft_gallery_attch_name_date')); ?>/> <?php _e('Include Date', 'ft-gallery'); ?>
-                                (Example: 08-11-17-)</label>
+                            <label><input name="ft_gallery_attch_name_date" type="checkbox" value="1" <?php echo checked('1', get_option('ft_gallery_attch_name_date')); ?>/> <?php _e('Include Date (Example: 08-11-17-)', 'feed-them-gallery'); ?></label>
 
                             <div class="ft-gallery-attch-name-example">
                                 <?php
                                 $attch_name_output = '';
                                 //Attachment Filename Gallery Name
                                 if (get_option('ft_gallery_attch_name_gallery_name') == '1') {
-                                    $attch_name_output .= '<span class="ft_gallery_attch_name_gallery_name">this-gallery-name-</span>';
+                                    $attch_name_output .= sprintf(__('%1$sthis-gallery-name-%2$s', 'feed-them-gallery'),
+                                        '<span class="ft_gallery_attch_name_gallery_name">',
+                                        '</span>'
+                                    );
                                 }
                                 //Attachment Filename Gallery ID
                                 if (get_option('ft_gallery_attch_name_post_id') == '1') {
-                                    $attch_name_output .= '<span class="ft_gallery_attch_name_post_id">20311-</span>';
+                                    $attch_name_output .= sprintf(__('%1$s20311-%2$s', 'feed-them-gallery'),
+                                        '<span class="ft_gallery_attch_name_post_id">',
+                                        '</span>'
+                                    );
                                 }
                                 //Attachment Filename Date
                                 if (get_option('ft_gallery_attch_name_date') == '1') {
-                                    $attch_name_output .= '<span class="ft_gallery_attch_name_date">08-11-17-</span>';
+                                    $attch_name_output .= sprintf(__('%1$s08-11-17-%2$s', 'feed-them-gallery'),
+                                        '<span class="ft_gallery_attch_name_date">',
+                                        '</span>'
+                                    );
                                 }
                                 //Output Filename Example
-                                echo '<div class="clear"></div><div class="ftg-filename-renaming-example"><strong><em>Example Filename:</em></strong> ' . $attch_name_output . '1234.jpeg</div>';
+                                echo sprintf(__('%1$sExample Filename:%2$s', 'feed-them-gallery'),
+                                    '<div class="clear"></div><div class="ftg-filename-renaming-example"><strong><em>',
+                                    '</em></strong> ' . $attch_name_output . '1234.jpeg</div>'
+                                );
+
                                 ?>
                             </div>
                         </div>
 
                         <div class="settings-sub-wrap">
-                            <h5><?php _e('Title', 'ft-gallery'); ?></h5>
+                            <h5><?php _e('Title', 'feed-them-gallery'); ?></h5>
 
-                            <label><input name="ft_gallery_attch_title_gallery_name" type="checkbox" value="1" <?php echo checked('1', get_option('ft_gallery_attch_title_gallery_name')); ?>/> <?php _e('Include Gallery Name', 'ft-gallery'); ?>
-                                (Example: This Gallery Name)</label>
+                            <label><input name="ft_gallery_attch_title_gallery_name" type="checkbox" value="1" <?php echo checked('1', get_option('ft_gallery_attch_title_gallery_name')); ?>/> <?php _e('Include Gallery Name (Example: This Gallery Name)', 'feed-them-gallery'); ?></label>
 
-                            <label><input name="ft_gallery_attch_title_post_id" type="checkbox" value="1" <?php echo checked('1', get_option('ft_gallery_attch_title_post_id')); ?>/> <?php _e('Include Gallery ID Number', 'ft-gallery'); ?>
-                                (Example: 20311)</label>
+                            <label><input name="ft_gallery_attch_title_post_id" type="checkbox" value="1" <?php echo checked('1', get_option('ft_gallery_attch_title_post_id')); ?>/> <?php _e('Include Gallery ID Number (Example: 20311)', 'feed-them-gallery'); ?></label>
 
-                            <label><input name="ft_gallery_attch_title_date" type="checkbox" value="1" <?php echo checked('1', get_option('ft_gallery_attch_title_date')); ?>/> <?php _e('Include Date', 'ft-gallery'); ?>
-                                (Example: 08-11-17)</label>
+                            <label><input name="ft_gallery_attch_title_date" type="checkbox" value="1" <?php echo checked('1', get_option('ft_gallery_attch_title_date')); ?>/> <?php _e('Include Date (Example: 08-11-17)', 'feed-them-gallery'); ?></label>
 
                             <div class="clear"></div>
 
@@ -149,19 +164,30 @@ class Settings_Page {
                                 $attch_title_output = '';
                                 //Attachment Title Gallery Name
                                 if (get_option('ft_gallery_attch_title_gallery_name') == '1') {
-                                    $attch_title_output .= '<span class="ft_gallery_attch_title_gallery_name">This Gallery Name </span>';
+                                    $attch_title_output .= sprintf(__('%1$sThis Gallery Name%2$s', 'feed-them-gallery'),
+                                        '<span class="ft_gallery_attch_title_gallery_name">',
+                                        '</span>'
+                                    );
                                 }
                                 //Attachment Title Gallery ID
                                 if (get_option('ft_gallery_attch_title_post_id') == '1') {
-                                    $attch_title_output .= '<span class="ft_gallery_attch_title_post_id">20311 </span>';
+                                    $attch_title_output .= sprintf(__('%1$s20311%2$s', 'feed-them-gallery'),
+                                        '<span class="ft_gallery_attch_title_post_id">',
+                                        ' </span>'
+                                    );
                                 }
                                 //Attachment Title Date
                                 if (get_option('ft_gallery_attch_title_date') == '1') {
-                                    $attch_title_output .= '<span class="ft_gallery_attch_title_date">08-11-17 </span>';
+                                    $attch_title_output .= sprintf(__('%1$s08-11-17%2$s', 'feed-them-gallery'),
+                                        '<span class="ft_gallery_attch_title_date">',
+                                        ' </span>'
+                                    );
                                 }
-
                                 //Output Filename Example
-                                echo '<div class="clear"></div><div class="ftg-title-renaming-example"><strong><em>Example Title:</em></strong> ' . $attch_title_output . '1234</div>';
+                                echo sprintf(__('%1$sExample Title:%2$s', 'feed-them-gallery'),
+                                    '<div class="clear"></div><div class="ftg-title-renaming-example"><strong><em>',
+                                    '</em></strong> ' . $attch_title_output . '1234</div>'
+                                );
                                 ?>
                             </div>
 
@@ -173,81 +199,93 @@ class Settings_Page {
                         <?php $options = get_option('ft_gallery_format_attachment_titles_options'); ?>
 
                         <div class="settings-sub-wrap">
-                            <h5><?php _e('Remove Characters', 'ft-gallery'); ?></h5>
+                            <h5><?php _e('Remove Characters', 'feed-them-gallery'); ?></h5>
                             <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_fat_hyphen]" type="checkbox" value="1" <?php if (isset($options['ft_gallery_fat_hyphen'])) {
                                     checked('1', $options['ft_gallery_fat_hyphen']);
-                                } ?>> <?php _e('Hyphen', 'ft-gallery'); ?> (-)</label>
+                                } ?>> <?php _e('Hyphen', 'feed-them-gallery'); ?> (-)</label>
 
                             <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_fat_underscore]" type="checkbox" value="1" <?php if (isset($options['ft_gallery_fat_underscore'])) {
                                     checked('1', $options['ft_gallery_fat_underscore']);
-                                } ?>> <?php _e('Underscore', 'ft-gallery'); ?> (_)</label>
+                                } ?>> <?php _e('Underscore', 'feed-them-gallery'); ?> (_)</label>
 
                             <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_fat_period]" type="checkbox" value="1" <?php if (isset($options['ft_gallery_fat_period'])) {
                                     checked('1', $options['ft_gallery_fat_period']);
-                                } ?>> <?php _e('Period', 'ft-gallery'); ?> (.)</label>
+                                } ?>> <?php _e('Period', 'feed-them-gallery'); ?> (.)</label>
 
                             <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_fat_tilde]" type="checkbox" value="1" <?php if (isset($options['ft_gallery_fat_title'])) {
                                     checked('1', $options['ft_gallery_fat_title']);
-                                } ?>> <?php _e('Tilde', 'ft-gallery'); ?> (~)</label>
+                                } ?>> <?php _e('Tilde', 'feed-them-gallery'); ?> (~)</label>
 
                             <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_fat_plus]" type="checkbox" value="1" <?php if (isset($options['ft_gallery_fat_plus'])) {
                                     checked('1', $options['ft_gallery_fat_plus']);
-                                } ?>> <?php _e('Plus', 'ft-gallery'); ?> (+)</label>
+                                } ?>> <?php _e('Plus', 'feed-them-gallery'); ?> (+)</label>
 
                             <div class="clear"></div>
-                            <div class="description"><?php _e('This is only for the image title the image file will still contain a hyphen - in the file name.', 'ft-gallery'); ?></div>
+                            <div class="description"><?php _e('This is only for the image title the image file will still contain a hyphen - in the file name.', 'feed-them-gallery'); ?></div>
 
                         </div>
 
-
                         <div class="settings-sub-wrap">
-                            <h5><?php _e('Capitalization Method', 'ft-gallery'); ?></h5>
+                            <h5><?php _e('Capitalization Method', 'feed-them-gallery'); ?></h5>
 
-                            <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_cap_options]" type="radio" value="cap_all" <?php checked('cap_all', $options['ft_gallery_cap_options']); ?>> <?php _e('Capitalize All Words', 'ft-gallery'); ?>
+                            <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_cap_options]" type="radio" value="cap_all" <?php if (isset($options['ft_gallery_cap_options'])) {
+                                    checked('cap_all', $options['ft_gallery_cap_options']);
+                                } ?>> <?php _e('Capitalize All Words', 'feed-them-gallery'); ?>
                             </label>
 
-                            <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_cap_options]" type="radio" value="cap_first" <?php checked('cap_first', $options['ft_gallery_cap_options']); ?>> <?php _e('Capitalize First Word Only', 'ft-gallery'); ?>
+                            <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_cap_options]" type="radio" value="cap_first" <?php if (isset($options['ft_gallery_cap_options'])) {
+                                    checked('cap_first', $options['ft_gallery_cap_options']);
+                                } ?>> <?php _e('Capitalize First Word Only', 'feed-them-gallery'); ?>
                             </label>
 
-                            <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_cap_options]" type="radio" value="all_lower" <?php checked('all_lower', $options['ft_gallery_cap_options']); ?>> <?php _e('All Words Lower Case', 'ft-gallery'); ?>
+                            <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_cap_options]" type="radio" value="all_lower" <?php if (isset($options['ft_gallery_cap_options'])) {
+                                    checked('all_lower', $options['ft_gallery_cap_options']);
+                                } ?>> <?php _e('All Words Lower Case', 'feed-them-gallery'); ?>
                             </label>
 
-                            <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_cap_options]" type="radio" value="all_upper" <?php checked('all_upper', $options['ft_gallery_cap_options']); ?>> <?php _e('All Words Upper Case', 'ft-gallery'); ?>
+                            <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_cap_options]" type="radio" value="all_upper" <?php if (isset($options['ft_gallery_cap_options'])) {
+                                    checked('all_upper', $options['ft_gallery_cap_options']);
+                                } ?>> <?php _e('All Words Upper Case', 'feed-them-gallery'); ?>
                             </label>
 
-                            <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_cap_options]" type="radio" value="dont_alter" <?php checked('dont_alter', $options['ft_gallery_cap_options']); ?>> <?php _e('Don\'t Alter (title text isn\'t modified in any way)', 'ft-gallery'); ?>
+                            <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_cap_options]" type="radio" value="dont_alter" <?php if (isset($options['ft_gallery_cap_options'])) {
+                                    checked('dont_alter', $options['ft_gallery_cap_options']);
+                                } ?>> <?php _e('Don\'t Alter (title text isn\'t modified in any way)', 'feed-them-gallery'); ?>
                             </label>
                             <div class="clear"></div>
-                            <div class="description"><?php _e('Capitalization works on individual words separated by spaces. If the title contains NO spaces after formatting then only the first letter will be capitalized.', 'ft-gallery'); ?></div>
+                            <div class="description"><?php _e('Capitalization works on individual words separated by spaces. If the title contains NO spaces after formatting then only the first letter will be capitalized.', 'feed-them-gallery'); ?></div>
                         </div>
                         <div class="settings-sub-wrap">
 
                             <div class="clear"></div>
 
-                            <h5><?php _e('Misc. Options', 'ft-gallery'); ?></h5>
+                            <h5><?php _e('Misc. Options', 'feed-them-gallery'); ?></h5>
                             <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_fat_alt]" type="checkbox" value="1" <?php if (isset($options['ft_gallery_fat_alt'])) {
                                     checked('1', $options['ft_gallery_fat_alt']);
-                                } ?>> <?php _e('Add Title to \'Alternative Text\' Field?', 'ft-gallery'); ?>
+                                } ?>> <?php _e('Add Title to \'Alternative Text\' Field?', 'feed-them-gallery'); ?>
                             </label>
 
                             <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_fat_caption]" type="checkbox" value="1" <?php if (isset($options['ft_gallery_fat_caption'])) {
                                     checked('1', $options['ft_gallery_fat_caption']);
-                                } ?>> <?php _e('Add Title to \'Caption\' Field?', 'ft-gallery'); ?></label>
+                                } ?>> <?php _e('Add Title to \'Caption\' Field?', 'feed-them-gallery'); ?></label>
 
                             <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_fat_description]" type="checkbox" value="1" <?php if (isset($options['ft_gallery_fat_description'])) {
                                     checked('1', $options['ft_gallery_fat_description']);
-                                } ?>> <?php _e('Add Title to \'Description\' Field?', 'ft-gallery'); ?></label>
+                                } ?>> <?php _e('Add Title to \'Description\' Field?', 'feed-them-gallery'); ?></label>
                             <div class="clear"></div>
                         </div>
 
                         <div class="clear"></div>
                         <div class="settings-example-block" style="margin-top: 25px;">
-                            <strong>Below is an example of what the attachment Titles will look like after
-                                uploading:</strong> (Click "Save All Changes" to view Example)<br />
+                            <?php
+                            echo sprintf(__('%1$sBelow is an example of what the attachment Titles will look like after uploading:%2$s (Click "Save All Changes" to view Example)', 'feed-them-gallery'),
+                                '<strong>',
+                                '</strong>'
+                            );
+                            ?>
+                            <br/>
                             <em>
-                                <small>**NOTE** Title will come from Filename of uploaded attachment. You may still set
-                                    a custom name for each photo after uploaded.
-                                </small>
+                                <small><?php _e('**NOTE** Title will come from Filename of uploaded attachment. You may still set a custom name for each photo after uploaded.', 'feed-them-gallery'); ?></small>
                             </em>
                         </div>
 
@@ -255,8 +293,12 @@ class Settings_Page {
                             <?php
                             $gallery_class = new Gallery();
                             //Output Title Example
-                            echo '<div class="ftg-filename-renaming-example"><strong><em>Example Title:</em></strong> ' . $gallery_class->ft_gallery_format_attachment_title('Gallery Image Title 1234') . '</div>';
-                            ?>
+                            echo sprintf(__('%1$sExample Title:%2$s (Click "Save All Changes" to view Example)', 'feed-them-gallery'),
+                                '<div class="ftg-filename-renaming-example"><strong><em>',
+                                '</em></strong> ',
+                                $gallery_class->ft_gallery_format_attachment_title('Gallery Image Title 1234'),
+                                '</div>'
+                            ); ?>
                         </div>
                     </div>
                     <div class="clear"></div>
@@ -266,39 +308,42 @@ class Settings_Page {
                         <input name="ft-gallery-options-settings-custom-css-second" type="checkbox" id="ft-gallery-options-settings-custom-css-second" value="1" <?php echo checked('1', get_option('ft-gallery-options-settings-custom-css-second')); ?>/>
                         <?php
                         if (get_option('ft-gallery-options-settings-custom-css-second') == '1') {
-                            _e('<strong>Checked:</strong> Custom CSS option is being used now.', 'ft-gallery');
+                            echo sprintf(__('%1$sChecked:%2$s Custom CSS option is being used now.', 'feed-them-gallery'),
+                                '<strong>',
+                                '</strong>'
+                            );
                         } else {
-                            _e('<strong>Not Checked:</strong> You are using the default CSS.', 'ft-gallery');
+                            echo sprintf(__('%1$sNot Checked:%2$s You are using the default CSS.', 'feed-them-gallery'),
+                                '<strong>',
+                                '</strong>'
+                            );
                         }
                         ?>
                     </p>
 
-                    <label class="toggle-custom-textarea-show button"><span><?php _e('Show', 'ft-gallery'); ?></span><span class="toggle-custom-textarea-hide"><?php _e('Hide', 'ft-gallery'); ?></span> <?php _e('custom CSS', 'ft-gallery'); ?>
+                    <label class="toggle-custom-textarea-show button"><span><?php _e('Show', 'feed-them-gallery'); ?></span><span class="toggle-custom-textarea-hide"><?php _e('Hide', 'feed-them-gallery'); ?></span> <?php _e('custom CSS', 'feed-them-gallery'); ?>
                     </label>
-                    <div class="ft-gallery-custom-css-text"><?php _e('<p>Add Your Custom CSS Code below.</p>', 'ft-gallery'); ?></div>
+                    <div class="ft-gallery-custom-css-text"><p><?php _e('Add Your Custom CSS Code below.', 'feed-them-gallery'); ?></p></div>
                     <textarea name="ft-gallery-settings-admin-textarea-css" class="ft-gallery-settings-admin-textarea-css" id="ft-gallery-main-wrapper-css-input"><?php echo get_option('ft-gallery-settings-admin-textarea-css'); ?></textarea>
-
 
                     <h4><?php _e('Gallery Color Options', 'feed-them-gallery'); ?></h4>
 
                     <p><label><?php _e('Text Color', 'feed-them-gallery'); ?></label>
-                        <input type="text" name="ft_gallery_text_color" class="feed-them-social-admin-input fb-text-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:'#eee',pickerFace:3,pickerBorder:0,pickerInsetColor:'white'}" id="fb-text-color-input" placeholder="#222" value="<?php echo get_option('ft_gallery_text_color'); ?>" />
+                        <input type="text" name="ft_gallery_text_color" class="feed-them-social-admin-input fb-text-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:'#eee',pickerFace:3,pickerBorder:0,pickerInsetColor:'white'}" id="fb-text-color-input" placeholder="#222" value="<?php echo get_option('ft_gallery_text_color'); ?>"/>
                     </p>
 
                     <p><label><?php _e('Link Color', 'feed-them-gallery'); ?></label>
-                        <input type="text" name="ft_gallery_link_color" class="feed-them-social-admin-input fb-link-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:'#eee',pickerFace:3,pickerBorder:0,pickerInsetColor:'white'}" id="fb-link-color-input" placeholder="#222" value="<?php echo get_option('ft_gallery_link_color'); ?>" />
+                        <input type="text" name="ft_gallery_link_color" class="feed-them-social-admin-input fb-link-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:'#eee',pickerFace:3,pickerBorder:0,pickerInsetColor:'white'}" id="fb-link-color-input" placeholder="#222" value="<?php echo get_option('ft_gallery_link_color'); ?>"/>
                     </p>
 
                     <p>
                         <label><?php _e('Link Color Hover', 'feed-them-gallery'); ?></label>
-                        <input type="text" name="ft_gallery_link_color_hover" class="feed-them-social-admin-input fb-link-color-hover-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:'#eee',pickerFace:3,pickerBorder:0,pickerInsetColor:'white'}" id="fb-link-color-hover-input" placeholder="#ddd" value="<?php echo get_option('ft_gallery_link_color_hover'); ?>" />
+                        <input type="text" name="ft_gallery_link_color_hover" class="feed-them-social-admin-input fb-link-color-hover-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:'#eee',pickerFace:3,pickerBorder:0,pickerInsetColor:'white'}" id="fb-link-color-hover-input" placeholder="#ddd" value="<?php echo get_option('ft_gallery_link_color_hover'); ?>"/>
                     </p>
                     <p>
                         <label><?php _e('Date Color', 'feed-them-gallery'); ?></label>
-                        <input type="text" name="ft_gallery_post_time" class="feed-them-social-admin-input fb-date-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:'#eee',pickerFace:3,pickerBorder:0,pickerInsetColor:'white'}" id="ft-gallery-post-time" placeholder="#ddd" value="<?php echo get_option('ft_gallery_post_time'); ?>" />
+                        <input type="text" name="ft_gallery_post_time" class="feed-them-social-admin-input fb-date-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:'#eee',pickerFace:3,pickerBorder:0,pickerInsetColor:'white'}" id="ft-gallery-post-time" placeholder="#ddd" value="<?php echo get_option('ft_gallery_post_time'); ?>"/>
                     </p>
-
-
 
                     <div class="clear"></div>
 
@@ -362,49 +407,49 @@ class Settings_Page {
                             <div class="custom_time_ago_wrap" style="display:none;">
                                 <h5><?php _e('Translate words for 1 day ago option.', 'feed-them-gallery'); ?></h5>
                                 <label for="ft_gallery_language_second"><?php _e("second"); ?></label>
-                                <input name="ft_gallery_language_second" type="text" value="<?php echo stripslashes(esc_attr($fts_language_second)); ?>" size="25" />
-                                <br />
+                                <input name="ft_gallery_language_second" type="text" value="<?php echo stripslashes(esc_attr($fts_language_second)); ?>" size="25"/>
+                                <br/>
                                 <label for="ft_gallery_language_seconds"><?php _e("seconds"); ?></label>
-                                <input name="ft_gallery_language_seconds" type="text" value="<?php echo stripslashes(esc_attr($fts_language_seconds)); ?>" size="25" />
-                                <br />
+                                <input name="ft_gallery_language_seconds" type="text" value="<?php echo stripslashes(esc_attr($fts_language_seconds)); ?>" size="25"/>
+                                <br/>
                                 <label for="ft_gallery_language_minute"><?php _e("minute"); ?></label>
-                                <input name="ft_gallery_language_minute" type="text" value="<?php echo stripslashes(esc_attr($fts_language_minute)); ?>" size="25" />
-                                <br />
+                                <input name="ft_gallery_language_minute" type="text" value="<?php echo stripslashes(esc_attr($fts_language_minute)); ?>" size="25"/>
+                                <br/>
                                 <label for="ft_gallery_language_minutes"><?php _e("minutes"); ?></label>
-                                <input name="ft_gallery_language_minutes" type="text" value="<?php echo stripslashes(esc_attr($fts_language_minutes)); ?>" size="25" />
-                                <br />
+                                <input name="ft_gallery_language_minutes" type="text" value="<?php echo stripslashes(esc_attr($fts_language_minutes)); ?>" size="25"/>
+                                <br/>
                                 <label for="ft_gallery_language_hour"><?php _e("hour"); ?></label>
-                                <input name="ft_gallery_language_hour" type="text" value="<?php echo stripslashes(esc_attr($fts_language_hour)); ?>" size="25" />
-                                <br />
+                                <input name="ft_gallery_language_hour" type="text" value="<?php echo stripslashes(esc_attr($fts_language_hour)); ?>" size="25"/>
+                                <br/>
                                 <label for="ft_gallery_language_hours"><?php _e("hours"); ?></label>
-                                <input name="ft_gallery_language_hours" type="text" value="<?php echo stripslashes(esc_attr($fts_language_hours)); ?>" size="25" />
-                                <br />
+                                <input name="ft_gallery_language_hours" type="text" value="<?php echo stripslashes(esc_attr($fts_language_hours)); ?>" size="25"/>
+                                <br/>
                                 <label for="ft_gallery_language_day"><?php _e("day"); ?></label>
-                                <input name="ft_gallery_language_day" type="text" value="<?php echo stripslashes(esc_attr($fts_language_day)); ?>" size="25" />
-                                <br />
+                                <input name="ft_gallery_language_day" type="text" value="<?php echo stripslashes(esc_attr($fts_language_day)); ?>" size="25"/>
+                                <br/>
                                 <label for="ft_gallery_language_days"><?php _e("days"); ?></label>
-                                <input name="ft_gallery_language_days" type="text" value="<?php echo stripslashes(esc_attr($fts_language_days)); ?>" size="25" />
-                                <br />
+                                <input name="ft_gallery_language_days" type="text" value="<?php echo stripslashes(esc_attr($fts_language_days)); ?>" size="25"/>
+                                <br/>
                                 <label for="ft_gallery_language_week"><?php _e("week"); ?></label>
-                                <input name="ft_gallery_language_week" type="text" value="<?php echo stripslashes(esc_attr($fts_language_week)); ?>" size="25" />
-                                <br />
+                                <input name="ft_gallery_language_week" type="text" value="<?php echo stripslashes(esc_attr($fts_language_week)); ?>" size="25"/>
+                                <br/>
                                 <label for="ft_gallery_language_weeks"><?php _e("weeks"); ?></label>
-                                <input name="ft_gallery_language_weeks" type="text" value="<?php echo stripslashes(esc_attr($fts_language_weeks)); ?>" size="25" />
-                                <br />
+                                <input name="ft_gallery_language_weeks" type="text" value="<?php echo stripslashes(esc_attr($fts_language_weeks)); ?>" size="25"/>
+                                <br/>
                                 <label for="ft_gallery_language_month"><?php _e("month"); ?></label>
-                                <input name="ft_gallery_language_month" type="text" value="<?php echo stripslashes(esc_attr($fts_language_month)); ?>" size="25" />
-                                <br />
+                                <input name="ft_gallery_language_month" type="text" value="<?php echo stripslashes(esc_attr($fts_language_month)); ?>" size="25"/>
+                                <br/>
                                 <label for="ft_gallery_language_months"><?php _e("months"); ?></label>
-                                <input name="ft_gallery_language_months" type="text" value="<?php echo stripslashes(esc_attr($fts_language_months)); ?>" size="25" />
-                                <br />
+                                <input name="ft_gallery_language_months" type="text" value="<?php echo stripslashes(esc_attr($fts_language_months)); ?>" size="25"/>
+                                <br/>
                                 <label for="ft_gallery_language_year"><?php _e("year"); ?></label>
-                                <input name="ft_gallery_language_year" type="text" value="<?php echo stripslashes(esc_attr($fts_language_year)); ?>" size="25" />
-                                <br />
+                                <input name="ft_gallery_language_year" type="text" value="<?php echo stripslashes(esc_attr($fts_language_year)); ?>" size="25"/>
+                                <br/>
                                 <label for="ft_gallery_language_years"><?php _e("years"); ?></label>
-                                <input name="ft_gallery_language_years" type="text" value="<?php echo stripslashes(esc_attr($fts_language_years)); ?>" size="25" />
-                                <br />
+                                <input name="ft_gallery_language_years" type="text" value="<?php echo stripslashes(esc_attr($fts_language_years)); ?>" size="25"/>
+                                <br/>
                                 <label for="ft_gallery_language_ago"><?php _e("ago"); ?></label>
-                                <input name="ft_gallery_language_ago" type="text" value="<?php echo stripslashes(esc_attr($fts_language_ago)); ?>" size="25" />
+                                <input name="ft_gallery_language_ago" type="text" value="<?php echo stripslashes(esc_attr($fts_language_ago)); ?>" size="25"/>
 
                             </div>
                             <script>
@@ -431,11 +476,11 @@ class Settings_Page {
                                     echo date(get_option('ft-gallery-custom-date') . ' ' . get_option('ft-gallery-custom-time'));
                                 } ?></div>
                             <p style="margin:12px 0 !important;">
-                                <input name="ft-gallery-custom-date" style="max-width:105px;" class="fts-color-settings-admin-input" id="ft-gallery-custom-date" placeholder="<?php _e('Date', 'feed-them-gallery'); ?>" value="<?php echo get_option('ft-gallery-custom-date'); ?>" />
-                                <input name="ft-gallery-custom-time" style="max-width:75px;" class="fts-color-settings-admin-input" id="ft-gallery-custom-time" placeholder="<?php _e('Time', 'feed-them-gallery'); ?>" value="<?php echo get_option('ft-gallery-custom-time'); ?>" />
+                                <input name="ft-gallery-custom-date" style="max-width:105px;" class="fts-color-settings-admin-input" id="ft-gallery-custom-date" placeholder="<?php _e('Date', 'feed-them-gallery'); ?>" value="<?php echo get_option('ft-gallery-custom-date'); ?>"/>
+                                <input name="ft-gallery-custom-time" style="max-width:75px;" class="fts-color-settings-admin-input" id="ft-gallery-custom-time" placeholder="<?php _e('Time', 'feed-them-gallery'); ?>" value="<?php echo get_option('ft-gallery-custom-time'); ?>"/>
                             </p>
                             <div><?php _e('This will override the date and time format above.', 'feed-them-gallery'); ?>
-                                <br /><a href="https://codex.wordpress.org/Formatting_Date_and_Time" target="_blank"><?php _e('Options for custom date and time formatting.', 'feed-them-gallery'); ?></a>
+                                <br/><a href="https://codex.wordpress.org/Formatting_Date_and_Time" target="_blank"><?php _e('Options for custom date and time formatting.', 'feed-them-gallery'); ?></a>
                             </div>
                         </div>
                         <div style="float:left; max-width:330px; margin-right: 30px;">
@@ -626,7 +671,6 @@ class Settings_Page {
                         </div>
                     </div>
 
-
                     <div class="clear"></div>
                     <div class="ft-gallery-date-settings-options-wrap">
                         <h4><?php _e('Disable Magnific Popup CSS', 'feed-them-gallery'); ?></h4>
@@ -640,7 +684,6 @@ class Settings_Page {
                         <p>
                             <input name="ft_gallery_duplicate_post_show" class="fts-powered-by-settings-admin-input" type="checkbox" id="ft_gallery_duplicate_post_show" value="1" <?php echo checked('1', get_option('ft_gallery_duplicate_post_show')); ?>/> <?php _e('Check this if you already have a duplicate post plugin installed.', 'feed-them-gallery'); ?>
                         </p>
-
 
                         <div class="clear"></div>
                         <h4><?php _e('Admin Menu Bar Option', 'feed-them-gallery'); ?></h4>
@@ -657,73 +700,81 @@ class Settings_Page {
                             <p>
                                 <input name="ft-gallery-powered-text-options-settings" class="ft-powered-by-settings-admin-input" type="checkbox" id="ft-gallery-powered-text-options-settings" value="1" <?php echo checked('1', get_option('ft-gallery-powered-text-options-settings')); ?>/>
                                 <?php
-                                if (get_option('ft-gallery-powered-text-options-settings') == '1') { ?>
-                                    <strong><?php _e('Checked: ', 'feed-them-gallery'); ?></strong> <?php _e('You are not showing the Powered by Logo in the popup.', 'feed-them-gallery'); ?><?php
-                                } else { ?>
-                                    <strong><?php _e('Not Checked: ', 'feed-them-gallery'); ?></strong><?php _e('The Powered by text will appear in the popup. Awesome! Thanks so much for sharing.', 'feed-them-gallery'); ?><?php
+                                if (get_option('ft-gallery-powered-text-options-settings') == '1') {
+                                    echo sprintf(__('%1$sChecked:%2$s You are not showing the Powered by Logo in the popup.', 'feed-them-gallery'),
+                                        '<strong>',
+                                        '</strong>'
+                                    );
+                                } else {
+                                    echo sprintf(__('%1$sNot Checked:%2$s The Powered by text will appear in the popup. Awesome! Thanks so much for sharing.', 'feed-them-gallery'),
+                                        '<strong>',
+                                        '</strong>'
+                                    );
                                 }
                                 ?>
                             </p>
 
                         </div>
 
-                            <div class="ft-gallery-woo-settings-options-wrap">
+                        <div class="ft-gallery-woo-settings-options-wrap">
 
                             <h4><?php _e('Woocommerce Options', 'feed-them-gallery'); ?></h4>
 
-                            <?php if(is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php')) { ?>
-                                <div class="settings-sub-wrap">
-                                    <h5><?php _e('Product Creation', 'ft-gallery'); ?></h5>
+                            <?php if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php')) { ?>
+                            <div class="settings-sub-wrap">
+                                <h5><?php _e('Product Creation', 'feed-them-gallery'); ?></h5>
 
-                                    <label><input name="ft_gallery_attch_prod_to_gallery_cat" type="checkbox" value="1" <?php echo checked('1', get_option('ft_gallery_attch_prod_to_gallery_cat')); ?>/> <?php _e('Attach Product to a Category named after Gallery', 'ft-gallery'); ?>
-                                    </label>
+                                <label><input name="ft_gallery_attch_prod_to_gallery_cat" type="checkbox" value="true" <?php echo checked('true', get_option('ft_gallery_attch_prod_to_gallery_cat')); ?>/> <?php _e('Attach Product to a Category named after Gallery', 'feed-them-gallery'); ?>
+                                </label>
 
-                                    <div class="clear"></div>
+                                <div class="clear"></div>
 
-                                    <h5 style="margin-top: 30px;"><?php _e('Add to Cart Button Functionality', 'ft-gallery'); ?></h5>
+                                <h5 style="margin-top: 30px;"><?php _e('Add to Cart Button Functionality', 'feed-them-gallery'); ?></h5>
 
-                                    <?php $woo_options = get_option('ft_gallery_woo_add_to_cart') ? get_option('ft_gallery_woo_add_to_cart') : 0; ?>
+                                <?php $woo_options = get_option('ft_gallery_woo_add_to_cart') ? get_option('ft_gallery_woo_add_to_cart') : 0; ?>
 
-                                    <label><input name="ft_gallery_woo_add_to_cart[ft_gallery_woo_options]" type="radio" value="prod_page" <?php checked('prod_page', $woo_options['ft_gallery_woo_options']); ?>> <strong><?php _e('(Default)', 'ft-gallery'); ?></strong> <?php _e('Take Customers to product page. (Doesn\'t add product to cart)', 'ft-gallery'); ?>
-                                    </label>
+                                <label><input name="ft_gallery_woo_add_to_cart[ft_gallery_woo_options]" type="radio" value="prod_page" <?php checked('prod_page', $woo_options['ft_gallery_woo_options']); ?>>
+                                    <strong><?php _e('(Default)', 'feed-them-gallery'); ?></strong> <?php _e('Take Customers to product page. (Doesn\'t add product to cart)', 'feed-them-gallery'); ?>
+                                </label>
 
-                                    <label><input name="ft_gallery_woo_add_to_cart[ft_gallery_woo_options]" type="radio" value="add_cart" <?php checked('add_cart', $woo_options['ft_gallery_woo_options']); ?>> <?php _e('Add product to cart. (Adds product to cart but doesn\'t take them to checkout.) This will not work if your product has required variations.', 'ft-gallery'); ?>
-                                    </label>
+                                <label><input name="ft_gallery_woo_add_to_cart[ft_gallery_woo_options]" type="radio" value="add_cart" <?php checked('add_cart', $woo_options['ft_gallery_woo_options']); ?>> <?php _e('Add product to cart. (Adds product to cart but doesn\'t take them to checkout.) This will not work if your product has required variations.', 'feed-them-gallery'); ?>
+                                </label>
 
-                                    <label><input name="ft_gallery_woo_add_to_cart[ft_gallery_woo_options]" type="radio" value="add_cart_checkout" <?php checked('add_cart_checkout', $woo_options['ft_gallery_woo_options']); ?>> <?php _e('Add product to cart and take them directly to checkout. This will not work if your product has required variations.', 'ft-gallery'); ?>
-                                    </label>
+                                <label><input name="ft_gallery_woo_add_to_cart[ft_gallery_woo_options]" type="radio" value="add_cart_checkout" <?php checked('add_cart_checkout', $woo_options['ft_gallery_woo_options']); ?>> <?php _e('Add product to cart and take them directly to checkout. This will not work if your product has required variations.', 'feed-them-gallery'); ?>
+                                </label>
 
-                                    <div class="clear"></div>
-                                </div>
+                                <div class="clear"></div>
+                            </div>
 
-                                </div>
+                        </div>
 
-                            <?php }
-                            else{
-                                echo '<div class="ft-gallery-premium-mesg">Please purchase <a href="https://www.slickremix.com/downloads/feed-them-gallery/">Feed Them Gallery Premium</a> for the Awesome additional features!</div>  ';
-                            }
-                            ?>
-                            <div class="clear"></div>
+                        <?php }
+                        else {
+                            echo sprintf(__('%1$sPlease purchase %2$sFeed Them Gallery Premium%3$s for the Awesome additional features!%4$s', 'feed-them-gallery'),
+                                '<div class="ft-gallery-premium-mesg">',
+                                '<a href="'.esc_url('https://www.slickremix.com/downloads/feed-them-gallery/').'">',
+                                '</a>',
+                                '</div>'
+                            );
+                        }
+                        ?>
+                        <div class="clear"></div>
 
-                        <input type="submit" class="ft-gallery-settings-admin-submit button button-primary button-larg" value="<?php _e('Save All Changes', 'ft-gallery') ?>" />
-
+                        <input type="submit" class="ft-gallery-settings-admin-submit button button-primary button-larg" value="<?php _e('Save All Changes', 'feed-them-gallery') ?>"/>
                 </form>
             </div>
             <!--/ft-gallery-settings-admin-wrap-->
             <div class="clear"></div>
         </div><!--/ft-gallery-main-template-wrapper-all-->
 
-        <h1 class="plugin-author-note"><?php _e('Plugin Authors Note', 'ft-gallery') ?></h1>
+        <h1 class="plugin-author-note"><?php _e('Plugin Authors Note', 'feed-them-gallery') ?></h1>
         <div class="fts-plugin-reviews">
-            <div class="fts-plugin-reviews-rate">Feed Them Gallery was created by 2 Brothers, Spencer and Justin Labadie.
-                That’s it, 2 people! We spend all our time creating and supporting our plugins. Show us some love if you
-                like our plugin and leave a quick review for us, it will make our day!
-                <a href="https://www.facebook.com/pg/SlickRemix/reviews/?ref=page_internal" target="_blank">Leave us a
-                    Review ★★★★★</a>
+            <div class="fts-plugin-reviews-rate"><?php _e('Feed Them Gallery was created by 2 Brothers, Spencer and Justin Labadie. That’s it, 2 people! We spend all our time creating and supporting our plugins. Show us some love if you like our plugin and leave a quick review for us, it will make our day!', 'feed-them-gallery') ?>
+                <a href="https://www.facebook.com/pg/SlickRemix/reviews/?ref=page_internal" target="_blank"><?php _e('Leave us a Review', 'feed-them-gallery') ?> ★★★★★</a>
             </div>
-            <div class="fts-plugin-reviews-support">If you're having troubles getting setup please contact us. We will
-                respond within 24hrs, but usually within 1-6hrs.
-                <a href="https://www.slickremix.com/support/" target="_blank">Support Forum</a>
+            <div class="fts-plugin-reviews-support"><?php _e('If you\'re having troubles getting setup please contact us. We will
+                respond within 24hrs, but usually within 1-6hrs.', 'feed-them-gallery') ?>
+                <a href="https://www.slickremix.com/support/" target="_blank"><?php _e('Support Forum', 'feed-them-gallery') ?></a>
                 <div class="fts-text-align-center">
                     <a class="feed-them-gallery-admin-slick-logo" href="https://www.slickremix.com" target="_blank"></a>
                 </div>
