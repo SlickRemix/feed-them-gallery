@@ -1307,7 +1307,7 @@ class Gallery {
                                 echo $gallery_to_woo_class->ft_gallery_image_to_woo_model_prod_select($this->parent_post_id);
                             }
                             ?>
-                            </br><span class="tab-section-description"><small><?php _e('Select a Product that will be duplicated when creating a Woocommerce products for individual images. 1 image will turn 1 woo product. Saves time when creating variable product Example: Printable images that have different print sizes, material, ect...', 'feed-them-gallery'); ?></small></span>
+                            </br><span class="tab-section-description"><small><?php _e('Select a Product that will be duplicated when creating a Woocommerce products for individual images. 1 image will turn 1 woo product. Saves time when creating variable product Example: Printable images that have different print sizes, material, etc.', 'feed-them-gallery'); ?></small></span>
                             <span class="tab-section-description"><a href="https://docs.woocommerce.com/document/variable-product/" target="_blank"><small><?php _e('Learn how to create a <strong>Variable product</strong> in Woocommerce.', 'feed-them-gallery'); ?></small></a> </span>
                         </div>
                         <div class="feed-them-gallery-admin-input-wrap ">
