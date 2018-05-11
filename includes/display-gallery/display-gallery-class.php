@@ -55,7 +55,6 @@ class Display_Gallery extends Gallery {
         add_action('wp_ajax_nopriv_ft_gallery_load_more', array($this, 'ft_gallery_load_more'));
     }
 
-
     /**
      * FT Gallery Register Gallery Route (REST API)
      *
@@ -87,7 +86,6 @@ class Display_Gallery extends Gallery {
             wp_enqueue_script('ft_gallery_display_gallery_scripts');
         }
     }
-
 
     /**
      * FT Gallery Header Scripts
@@ -161,7 +159,7 @@ class Display_Gallery extends Gallery {
                 return "";
             }
         }
-        $difference = time() - $timestamp;
+        $difference = date_i18n(time()) - $timestamp;
         // Customize in your own language. Why thank-you I will.
         $lengths = array("60", "60", "24", "7", "4.35", "12", "10");
 
@@ -172,14 +170,14 @@ class Display_Gallery extends Gallery {
             //not doing dates in the future for posts
             $ending = "to go";
         }
-        for ($j = 0; $difference >= $lengths[ $j ] && $j < count($lengths) - 1; $j++) {
-            $difference /= $lengths[ $j ];
+        for ($j = 0; $difference >= $lengths[$j] && $j < count($lengths) - 1; $j++) {
+            $difference /= $lengths[$j];
         }
 
         $difference = round($difference);
 
         if ($difference != 1) {
-            $periods[ $j ] = $periods_plural[ $j ];
+            $periods[$j] = $periods_plural[$j];
         }
         $text = "$difference $periods[$j] $ending";
 
@@ -200,7 +198,7 @@ class Display_Gallery extends Gallery {
         $charactersLength = strlen($characters);
         $randomString = '';
         for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[ rand(0, $charactersLength - 1) ];
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
 
         return $randomString;
@@ -694,7 +692,7 @@ class Display_Gallery extends Gallery {
         $ft_gallery_dynamic_string = trim($this->ft_gallery_rand_string(10));
 
 
-        $post_count = get_post_meta($ftg['id'], 'ft_gallery_photo_count', true) == true ? get_post_meta($ftg['id'], 'ft_gallery_photo_count', true) : '999';
+        $post_count = get_post_meta($ftg['id'], 'ft_gallery_photo_count', true) == TRUE ? get_post_meta($ftg['id'], 'ft_gallery_photo_count', true) : '999';
 
         $scrollMore = get_post_meta($ftg['id'], 'ft_gallery_load_more_style', true);
 
@@ -796,9 +794,10 @@ class Display_Gallery extends Gallery {
         $show_share = get_post_meta($ftg['id'], 'ft_gallery_wp_share', true);
         $show_purchase_link = get_post_meta($ftg['id'], 'ft_gallery_purchase_link', true);
 
-        if (get_post_meta($ftg['id'], 'ft_gallery_purchase_word', true) == true) {
+        if(get_post_meta($ftg['id'], 'ft_gallery_purchase_word', true) == TRUE){
             $purchase_text = get_post_meta($ftg['id'], 'ft_gallery_purchase_word', true);
-        } else {
+        }
+        else {
             $purchase_text = 'Purchase';
         }
 
@@ -811,6 +810,8 @@ class Display_Gallery extends Gallery {
             ?>
             <div class="ft-gallery-main-title"><?php print $title ?></div>
         <?php }
+
+        //echo do_shortcode( '[ft-gallery-specific-cats-menu gallery_id='.$ftg['id'].' menu_title="Specific Gallery Categories"]' );
 
         $ft_gallery_loadmore_background_color = get_post_meta($ftg['id'], 'ft_gallery_loadmore_background_color', true);
         $ft_gallery_loadmore_text_color = get_post_meta($ftg['id'], 'ft_gallery_loadmore_text_color', true);
@@ -844,18 +845,18 @@ class Display_Gallery extends Gallery {
             if ($format_type == 'post-in-grid' || $format_type == 'gallery-collage') {
                 print '<div class="ft-wp-gallery ft-wp-gallery-masonry popup-gallery-fb-posts ' . $feed_name_rand_string . ' ' . $fts_dynamic_class_name . ' masonry js-masonry"';
                 if (isset($center_container) && $center_container == 'yes') {
-                    print 'data-masonry-options=\'{"itemSelector": ".ft-gallery-post-wrap", "isFitWidth": ' . ($center_container == 'no' ? 'false' : 'true') . ' ' . ($stack_animation == 'no' ? ', "transitionDuration": 0' : '') . '}\' style="margin:auto;' . $background_color . '"';
+                    print 'data-masonry-options=\'{"itemSelector": ".ft-gallery-post-wrap", "isFitWidth": ' . ($center_container == 'no' ? 'false' : 'true') . ' ' . ($stack_animation == 'no' ? ', "transitionDuration": 0' : '') . '}\' style="margin:auto;'. $background_color .'"';
                 }
                 print '>';
             } elseif ($format_type == 'gallery') {
-                $scrollable = isset($scrollMore) && $scrollMore == 'autoscroll' ? $feed_name_rand_string . '-scrollable ft-wp-gallery-scrollable' : '';
+                $scrollable = isset($scrollMore) && $scrollMore == 'autoscroll' ? $feed_name_rand_string.'-scrollable ft-wp-gallery-scrollable' : '';
 
                 $ft_gallery_columns = get_post_meta($ftg['id'], 'ft_gallery_columns', true);
                 $ft_gallery_force_columns = get_post_meta($ftg['id'], 'ft_gallery_force_columns', true);
-                $columns = isset($ft_gallery_columns) ? 'data-ftg-columns="' . $ft_gallery_columns . '" ' : '';
-                $force_columns = isset($ft_gallery_force_columns) ? 'data-ftg-force-columns="' . $ft_gallery_force_columns . '" ' : '';
+                $columns = isset($ft_gallery_columns) ? 'data-ftg-columns="'.$ft_gallery_columns.'" ' : '';
+                $force_columns = isset($ft_gallery_force_columns) ? 'data-ftg-force-columns="'.$ft_gallery_force_columns.'" ' : '';
 
-                print '<div ' . $columns . $force_columns . 'data-ftg-margin=' . $space_between_photos . ' data-ftg-width="' . $grid_width . '" class="fts-mashup ft-wp-gallery-centered ft-wp-gallery popup-gallery-fb-posts ' . $feed_name_rand_string . ' ' . $scrollable . '" ' . $style_start . $feed_width . $mashup_margin . $height . $padding . $background_color . $style_end . '>';
+                print '<div '. $columns . $force_columns .'data-ftg-margin='.$space_between_photos.' data-ftg-width="'.$grid_width.'" class="fts-mashup ft-wp-gallery-centered ft-wp-gallery popup-gallery-fb-posts ' . $feed_name_rand_string .' '.$scrollable.'" ' . $style_start . $feed_width . $mashup_margin . $height . $padding . $background_color . $style_end . '>';
                 print '<div class="' . $fts_dynamic_class_name . '">';
 
             } elseif ($format_type == 'post') {
@@ -870,10 +871,10 @@ class Display_Gallery extends Gallery {
             'post_parent' => $ftg['id'],
             'post_type' => 'attachment',
             'post_mime_type' => 'image',
-            'posts_per_page' => $post_count,
+            'posts_per_page' =>  $post_count,
             'orderby' => 'menu_order',
             'order' => 'asc',
-            'paged' => $paged
+            'paged'          => $paged
         ));
 
         // echo '<pre>';
@@ -887,7 +888,7 @@ class Display_Gallery extends Gallery {
 
             if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
                 $gallery_to_woo = new Gallery_to_Woocommerce();
-                $siteurl = get_option('siteurl');
+                $siteurl = get_option('get_bloginfo');
                 $purchase_link = get_option('ft_gallery_woo_add_to_cart');
                 $purchase_link_option = $purchase_link['ft_gallery_woo_options'];
             }
@@ -907,7 +908,7 @@ class Display_Gallery extends Gallery {
                 // found @: https://wordpress.org/ideas/topic/functions-to-get-an-attachments-caption-title-alt-description
                 $image = wp_prepare_attachment_for_js($image->ID);
 
-                $description = make_clickable($image['description']);
+                $description = make_clickable( $image['description'] );
                 $img_title = $image['title'];
 
                 // Going to remove this option for the time being, since unlike facebook we don't have another page to take them to with the rest of the description
@@ -977,10 +978,9 @@ class Display_Gallery extends Gallery {
                     }
                 }
 
-                if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
+                if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')){
                     //Check custom post meta for woo product field
                     $productID = get_post_meta($image['id'], 'ft_gallery_woo_prod', true);
-
                 }
 
                 // Regular Post Format
@@ -1007,14 +1007,11 @@ class Display_Gallery extends Gallery {
                                     <?php if ($title_description == 'title' || $title_description == 'title_description') { ?>
                                         <p><strong><?php print $img_title ?></strong>
                                         </p><?php } ?><?php if ($title_description == 'description' || $title_description == 'title_description') { ?>
-                                        <p><?php print $image_description ?></p><?php }
-                                    ?>
+                                        <p><?php print $image_description ?></p><?php } ?>
                                 </div>
 
                             </div>
                         </div>
-
-
                         <div class="fts-mashup-image-and-video-wrap" <?php if (isset($image_size)){ ?>style="max-width: <?php print $image_size; ?>"<?php } ?>>
 
                             <a href="<?php print $image_source_popup ?>" class="ft-gallery-link-popup-master ft-gallery-link-popup-click-action" style="position: relative; overflow: hidden;"><img class="fts-mashup-instagram-photo " src="<?php print $image_source_page ?>" alt="<?php print $ft_gallery_alt_text ?>"><?php
@@ -1022,13 +1019,12 @@ class Display_Gallery extends Gallery {
                                     ?>
                                     <div class="<?php if (isset($watermark_overlay_enable) && $watermark_overlay_enable == 'popup-only') { ?>ft-image-overlay fts-image-overlay-hide<?php } elseif (isset($watermark_overlay_enable) && $watermark_overlay_enable == 'page-and-popup') { ?>ft-image-overlay<?php } ?>">
                                         <div class="fts-watermark-inside fts-watermark-inside-<?php echo $watermark_image_position ?>" <?php if (isset($watermark_image_opacity) && $watermark_image_opacity == true){ ?>style="opacity:<?php echo $watermark_image_opacity ?>"<?php } ?>>
-                                            <img src="<?php print $watermark_image_url ?>" <?php if (isset($watermark_image_margin) && $watermark_image_margin == true){ ?>style="margin:<?php echo $watermark_image_margin ?>"<?php } ?> alt="<?php print $ft_gallery_alt_text ?>" />
+                                            <img src="<?php print $watermark_image_url ?>" <?php if (isset($watermark_image_margin) && $watermark_image_margin == true){ ?>style="margin:<?php echo $watermark_image_margin ?>"<?php } ?> alt="<?php print $ft_gallery_alt_text ?>"/>
                                         </div>
                                     </div>
                                 <?php } ?></a>
 
                         </div>
-
                         <?php print ' <div class="ftg-varation-for-popup">';
                         if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php') && isset($productID) && $productID !== '') {
 
@@ -1052,10 +1048,7 @@ class Display_Gallery extends Gallery {
                                             <a href='<?php print $ft_gallery_share_email ?>' target='_blank' class='ft-galleryemail-icon'><i class='fa fa-envelope'></i></a>
                                         </div>
                                     </div>
-                                <?php }
-
-
-                                ?>
+                                <?php } ?>
 
                                 <div class="ft-gallery-cta-button-wrap">
                                     <?php
@@ -1095,6 +1088,7 @@ class Display_Gallery extends Gallery {
                             </div>
                             <div class="clear"></div>
                         <?php } ?>
+
                     </div>
                 <?php } // Instagram Style Post Format "Image gallery squared"
                 elseif ($format_type == 'gallery') {
@@ -1140,13 +1134,13 @@ class Display_Gallery extends Gallery {
                             // Get $product object from product ID
                             ?>
                         </a>
-                   <?php print ' <div class="ftg-varation-for-popup" style="display: none!important;">';
+                    <?php print ' <div class="ftg-varation-for-popup" style="display: none!important;">';
                     if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php') && isset($productID) && $productID !== '') {
 
                         // Get $product object from product ID
                         $this->ftg_variable_add_to_cart($productID);
                     }
-                        print '</div>';
+                    print '</div>';
 
                     if ($show_share == 'yes' || is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php') && isset($productID) && $productID !== '' && $show_purchase_link == 'yes') { ?>
 
@@ -1219,7 +1213,7 @@ class Display_Gallery extends Gallery {
             $offset = $ftg['offset'];
 
 
-            if ($ft_gallery_load_more_option == "yes") {
+            if($ft_gallery_load_more_option == "yes"){
 
                 //******************
                 //Load More BUTTON Start
@@ -1310,13 +1304,13 @@ class Display_Gallery extends Gallery {
                                                     //  jQuery('.ft-wp-gallery-scrollable').removeAttr('class');
                                                     jQuery('.<?php echo $feed_name_rand_string ?>-scrollable').unbind('scroll');
                                                 }
-                                                jQuery('#loadMore_<?php echo $ft_gallery_dynamic_name ?>').html('<?php _e('Load More', 'feed-them-instagram') ?>');
+                                                jQuery('#loadMore_<?php echo $ft_gallery_dynamic_name ?>').html('<?php _e('Load More', 'feed-them-gallery') ?>');
                                                 jQuery("#loadMore_<?php echo $ft_gallery_dynamic_name ?>").removeClass('fts-fb-spinner');
                                                 // Reload the share each funcion otherwise you can't open share option.
                                                 jQuery.fn.ftsShare();
                                                 // Reload this function again otherwise the popup won't work correctly for the newly loaded items
                                                 jQuery.fn.slickWordpressPopUpFunction();
- <?php if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php') && isset($productID)) {?>
+                                                <?php if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php')) {?>
                                                 jQuery.fn.ftg_apply_quant_btn();
                                                 jQuery.getScript("/wp-content/plugins/woocommerce/assets/js/frontend/add-to-cart-variation.min.js");<?php } ?>
 
@@ -1341,7 +1335,7 @@ class Display_Gallery extends Gallery {
                 }//End Check
                 // main closing div not included in ajax check so we can close the wrap at all times
 
-                print '</div><!--closing main div for photos and scroll wrap-->'; // closing main div for photos and scroll wrap
+                print '</div>'; // closing main div for photos and scroll wrap
 
 
                 //Make sure it's not ajaxing
@@ -1352,10 +1346,11 @@ class Display_Gallery extends Gallery {
                     print '<div class="fts-clear"></div>';
                     print '<div id="output_' . $fts_dynamic_class_name . '"></div>';
                     if ($scrollMore == 'autoscroll') {
-                        print '<div id="loadMore_' . $ft_gallery_dynamic_name . '" class="fts-fb-load-more fts-fb-autoscroll-loader">' . __('Load More', 'feed-them-instagram') . '</div>';
+                        print '<div id="loadMore_' . $ft_gallery_dynamic_name . '" class="fts-fb-load-more fts-fb-autoscroll-loader">'.__('Load More', 'feed-them-gallery').'</div>';
                     }
                 }
-                ?><?php //only show this script if the height option is set to a number
+                ?>
+                <?php //only show this script if the height option is set to a number
                 if ($height !== '' && empty($height) == NULL) { ?>
                     <script>
                         // this makes it so the page does not scroll if you reach the end of scroll bar or go back to top
@@ -1372,10 +1367,10 @@ class Display_Gallery extends Gallery {
                         };
                         jQuery('.ft-wp-gallery-scrollable').isolatedScrollFTGallery();
                     </script>
-                <?php } //end $height !== 'auto' && empty($height) == NULL
-                ?><?php
-                if (isset($scrollMore) && $scrollMore == 'autoscroll' || $height !== '' && empty($height) == NULL) {
-                    //  print '</div><!--closing height div for scrollable feeds-->'; // closing height div for scrollable feeds
+                <?php } //end $height !== 'auto' && empty($height) == NULL ?>
+                <?php
+                if (isset($scrollMore) && $scrollMore == 'autoscroll' || isset($height) && $height !== '') {
+                    print '</div><!--closing height div for scrollable feeds-->'; // closing height div for scrollable feeds
                 }
                 //Make sure it's not ajaxing
                 if (!isset($_GET['load_more_ajaxing'])) {
@@ -1396,20 +1391,21 @@ class Display_Gallery extends Gallery {
                         print'</div>';
 
                     }
-                    if ($pagination == 'yes') {
+                    if($pagination == 'yes') {
 
                         if (isset($ft_gallery_pagination_text_color) && $ft_gallery_pagination_text_color !== '') {
                             $ft_gallery_pagination_text_color = 'style="color:' . $ft_gallery_pagination_text_color . ';"';
                         }
-                        echo '<div class="ftgallery-image-count-wrap"' . $ft_gallery_pagination_text_color . '>';
+                        echo '<div class="ftgallery-image-count-wrap"'.$ft_gallery_pagination_text_color.'>';
                         echo '<span class="ft-gallery-image-loaded-count">' . $post_count . '</span>';
-                        echo '<span class="ft-gallery-count-of">' . __("of", "feed-them-instagram") . '</span>';
+                        echo '<span class="ft-gallery-count-of">' . __('of', 'feed-them-gallery') . '</span>';
                         echo '<span class="ft-gallery-image-count-total"> ' . $this->ft_gallery_count_post_images($ftg['id']) . ' </span>';
                         echo '</div>';
                     }
                 }//End Check
                 unset($_REQUEST['ft_gallery_offset']);
-            } else {
+            }
+            else {
                 print '</div>'; // closing div for main wrap
             }
 
@@ -1505,8 +1501,8 @@ class Display_Gallery extends Gallery {
             $pointer = 0;
             for ($row = 0; $row < $row_count; $row++) {
                 for ($col = 0; $col < $col_count; ++$col) {
-                    if (isset($array[ $pointer ])) {
-                        $result[ $row ]['id'] = $array[ $pointer ];
+                    if (isset($array[$pointer])) {
+                        $result[$row]['id'] = $array[$pointer];
                         $pointer++;
                     }
                 }
@@ -1539,8 +1535,8 @@ class Display_Gallery extends Gallery {
                 $pointer = 0;
                 for ($row = 0; $row < $row_count; $row++) {
                     for ($col = 0; $col < $col_count; ++$col) {
-                        if (isset($array[ $pointer ])) {
-                            $result[ $row ]['id'] = $array[ $pointer ];
+                        if (isset($array[$pointer])) {
+                            $result[$row]['id'] = $array[$pointer];
                             $pointer++;
                         }
                     }
@@ -1558,9 +1554,9 @@ class Display_Gallery extends Gallery {
         echo '<pre>' . print_r($skeys, 1) . '</pre>';
         usort($image_list_sort,
             function ($a, $b) use ($skeys) {
-                $final = isset($skeys[ $a['id'] ]) ? $skeys[ $a['id'] ] : null;
+                $final = isset($skeys[$a['id']]) ? $skeys[$a['id']] : null;
                 $a = $final;
-                $b = $skeys[ $b['id'] ];
+                $b = $skeys[$b['id']];
                 $newlist = $a - $b;
                 echo '<pre>' . print_r($newlist, 1) . '</pre>';
 
