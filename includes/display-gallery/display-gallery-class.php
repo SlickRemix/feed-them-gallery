@@ -154,7 +154,7 @@ class Display_Gallery extends Gallery {
                 return "";
             }
         }
-        $difference = date_i18n(time()) - $timestamp;
+        $difference = time() - $timestamp;
         // Customize in your own language. Why thank-you I will.
         $lengths = array("60", "60", "24", "7", "4.35", "12", "10");
 
@@ -807,8 +807,6 @@ class Display_Gallery extends Gallery {
             <div class="ft-gallery-main-title"><?php print $title ?></div>
         <?php }
 
-        //echo do_shortcode( '[ft-gallery-specific-cats-menu gallery_id='.$ftg['id'].' menu_title="Specific Gallery Categories"]' );
-
         $ft_gallery_loadmore_background_color = get_post_meta($ftg['id'], 'ft_gallery_loadmore_background_color', true);
         $ft_gallery_loadmore_text_color = get_post_meta($ftg['id'], 'ft_gallery_loadmore_text_color', true);
         $ft_gallery_pagination_text_color = get_post_meta($ftg['id'], 'ft_gallery_pagination_text_color', true);
@@ -1252,7 +1250,7 @@ class Display_Gallery extends Gallery {
                                                     //  jQuery('.ft-wp-gallery-scrollable').removeAttr('class');
                                                     jQuery('.<?php echo $feed_name_rand_string ?>-scrollable').unbind('scroll');
                                                 }
-                                                jQuery('#loadMore_<?php echo $ft_gallery_dynamic_name ?>').html('<?php _e('Load More', 'feed-them-gallery') ?>');
+                                                jQuery('#loadMore_<?php echo $ft_gallery_dynamic_name ?>').html('<?php _e('Load More', 'feed-them-instagram') ?>');
                                                 jQuery("#loadMore_<?php echo $ft_gallery_dynamic_name ?>").removeClass('fts-fb-spinner');
                                                 // Reload the share each funcion otherwise you can't open share option.
                                                 jQuery.fn.ftsShare();
@@ -1288,7 +1286,7 @@ class Display_Gallery extends Gallery {
                     print '<div class="fts-clear"></div>';
                     print '<div id="output_' . $fts_dynamic_class_name . '"></div>';
                     if ($scrollMore == 'autoscroll') {
-                        print '<div id="loadMore_' . $ft_gallery_dynamic_name . '" class="fts-fb-load-more fts-fb-autoscroll-loader">'.__('Load More', 'feed-them-gallery').'</div>';
+                        print '<div id="loadMore_' . $ft_gallery_dynamic_name . '" class="fts-fb-load-more fts-fb-autoscroll-loader">'.__('Load More', 'feed-them-instagram').'</div>';
                     }
                 }
                 ?>
@@ -1340,7 +1338,7 @@ class Display_Gallery extends Gallery {
                         }
                         echo '<div class="ftgallery-image-count-wrap"'.$ft_gallery_pagination_text_color.'>';
                         echo '<span class="ft-gallery-image-loaded-count">' . $post_count . '</span>';
-                        echo '<span class="ft-gallery-count-of">' . __('of', 'feed-them-gallery') . '</span>';
+                        echo '<span class="ft-gallery-count-of">' . __("of", "feed-them-instagram") . '</span>';
                         echo '<span class="ft-gallery-image-count-total"> ' . $this->ft_gallery_count_post_images($ftg['id']) . ' </span>';
                         echo '</div>';
                     }
