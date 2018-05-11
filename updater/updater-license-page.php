@@ -112,7 +112,7 @@ class updater_license_page {
         $license_error = isset($settings_array[$key]['license_error']) ? $settings_array[$key]['license_error'] : '';
 
         ?>
-        <tr valign="top" class="fts-license-wrap">
+        <tr valign="top" class="ftg-license-wrap">
             <th scope="row" valign="top">
                 <?php _e($plugin_name, 'feed-them-gallery'); ?>
             </th>
@@ -159,7 +159,7 @@ class updater_license_page {
     }
 
     /**
-     * Add FREE Plugin License Page for displaying what is available to extend FTS
+     * Add FREE Plugin License Page for displaying what is available to extend ftg
      *
      * @since 1.0.2
      */
@@ -176,7 +176,7 @@ class updater_license_page {
                 ); ?>
             </div>
 
-            <div class="fts-activation-msg">
+            <div class="ftg-activation-msg">
                 <ol>
                     <li><?php
                        echo sprintf(__('Install the zip file of the plugin you should have received after purchase on the %1$splugins page%2$s and leave the free version active too.', 'feed-them-gallery'),
@@ -192,7 +192,7 @@ class updater_license_page {
                     </li>
                 </ol>
             </div>
-            <form method="post" action="options.php" class="fts-license-master-form">
+            <form method="post" action="options.php" class="ftg-license-master-form">
                 <?php settings_fields($this->license_page_slug); ?>
                 <table class="form-table">
                     <tbody>
@@ -238,7 +238,7 @@ class updater_license_page {
     }
 
     /**
-     * Display Premium Needed boxes for plugins not active/installed for FTS
+     * Display Premium Needed boxes for plugins not active/installed for ftg
      *
      * @param $args Passed by function or add_settings_field
      * @since 1.0.2
@@ -249,18 +249,18 @@ class updater_license_page {
         $this->purchase_url = $args['purchase_url'];
         ?>
 
-        <tr valign="top" class="fts-license-wrap">
+        <tr valign="top" class="ftg-license-wrap">
             <th scope="row" valign="top"><?php _e($this->plugin_title, 'feed-them-gallery'); ?></th>
             <td>
-                <div class="fts-no-license-overlay">
-                    <div class="fts-no-license-button-wrap">
+                <div class="ftg-no-license-overlay">
+                    <div class="ftg-no-license-button-wrap">
                         <?php echo sprintf(__('%1$sDemo%2$s', 'feed-them-gallery'),
-                        '<a class="fts-no-license-button-purchase-btn" href="'.esc_url($this->demo_url).'" target="_blank">',
+                        '<a class="ftg-no-license-button-purchase-btn" href="'.esc_url($this->demo_url).'" target="_blank">',
                             '</a>'
                         );  ?>
 
                         <?php echo sprintf(__('%1$sBuy Extension%2$s', 'feed-them-gallery'),
-                            '<a class="fts-no-license-button-demo-btn" href="'.esc_url($this->purchase_url).'" target="_blank">',
+                            '<a class="ftg-no-license-button-demo-btn" href="'.esc_url($this->purchase_url).'" target="_blank">',
                             '</a>'
                         );  ?>
                     </div>
