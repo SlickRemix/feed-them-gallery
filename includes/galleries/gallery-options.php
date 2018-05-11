@@ -81,7 +81,11 @@ class Gallery_Options {
                 array(
                     'input_wrap_class' => 'ft-wp-gallery-type',
                     'option_type' => 'select',
-                    'label' => __('Choose the gallery type', 'feed-them-gallery') . '<br/><small>' . __('View all Gallery <a href="http://feedthemgallery.com/gallery-demo-one/" target="_blank">Demos</a>', 'feed-them-gallery') . '</small>',
+                    'label' => trim(sprintf(__('Choose the gallery type%1$s View all Gallery %2$sDemos%3$s', 'feed-them-gallery'),
+                        '<br/><small>',
+                        '<a href="'.esc_url('http://feedthemgallery.com/gallery-demo-one/').'" target="_blank">',
+                        '</a></small>'
+                    )),
                     'type' => 'text',
                     'id' => 'ft_gallery_type',
                     'name' => 'ft_gallery_type',
@@ -166,7 +170,10 @@ class Gallery_Options {
                     'option_type' => 'select',
                     'label' => __('Number of Columns', 'feed-them-gallery'),
                     'type' => 'text',
-                    'instructional-text' => '<strong>' . __('NOTE:', 'feed-them-gallery') . '</strong> ' . __('Using the Columns option will make this gallery fully responsive and it will adapt in size to your containers width. Choose the Number of Columns and Space between each image below.', 'feed-them-gallery'),
+                    'instructional-text' => sprintf(__('%1$sNOTE:%2$s Using the Columns option will make this gallery fully responsive and it will adapt in size to your containers width. Choose the Number of Columns and Space between each image below.', 'feed-them-gallery'),
+                        '<strong>',
+                        '</strong>'
+                    ),
                     'id' => 'ft_gallery_columns',
                     'name' => 'ft_gallery_columns',
                     'default_value' => '4',
@@ -208,7 +215,11 @@ class Gallery_Options {
                 array(
                     'input_wrap_class' => 'fb-page-columns-option-hide',
                     'option_type' => 'select',
-                    'label' => __('Force Columns', 'feed-them-gallery') . '<br/><small>' . __('Yes, will force image columns. No, will allow the images to be resposive for smaller devices', 'feed-them-gallery') . '</small>',
+                    'label' =>
+                        sprintf(__('Force Columns%1$s Yes, will force image columns. No, will allow the images to be resposive for smaller devices%2$s', 'feed-them-gallery'),
+                            '<br/><small>',
+                            '</small>'
+                        ),
                     'type' => 'text',
                     'id' => 'ft_gallery_force_columns',
                     'name' => 'ft_gallery_force_columns',
@@ -233,7 +244,11 @@ class Gallery_Options {
                     'type' => 'text',
                     'id' => 'ft_gallery_grid_column_width',
                     'name' => 'ft_gallery_grid_column_width',
-                    'instructional-text' => '<strong>' . __('NOTE:', 'feed-them-gallery') . '</strong> ' . __('Define the Width of each post and the Space between each post below. You must add px after any number.', 'feed-them-gallery'),
+                    'instructional-text' =>
+                        sprintf(__('%1$sNOTE:%2$s Define the Width of each post and the Space between each post below. You must add px after any number.', 'feed-them-gallery'),
+                            '<strong>',
+                            '</strong>'
+                        ),
                     'placeholder' => '310px ' . __('for example', 'feed-them-gallery'),
                     'default_value' => '310px',
                     'value' => '',
@@ -258,7 +273,11 @@ class Gallery_Options {
                 array(
                     'input_wrap_class' => 'ft-gallery-user-name',
                     'option_type' => 'input',
-                    'label' => __('User Name', 'feed-them-gallery') . '<br/><small>' . __('Photographer, Company, etc.', 'feed-them-gallery') . '</small>',
+                    'label' =>
+                        sprintf(__('User Name%1$s Company or user who took this photo%2$s', 'feed-them-gallery'),
+                            '<br/><small>',
+                            '</small>'
+                        ),
                     'type' => 'text',
                     'id' => 'ft_gallery_username',
                     'name' => 'ft_gallery_username',
@@ -268,7 +287,11 @@ class Gallery_Options {
                 //Show Name Link
                 array(
                     'option_type' => 'input',
-                    'label' => __('User Custom Link', 'feed-them-gallery') . '<br/><small>' . __('Custom about page or social media page link', 'feed-them-gallery') . '</small>',
+                    'label' =>
+                        sprintf(__('User Custom Link%1$s Custom about page or social media page link%2$s', 'feed-them-gallery'),
+                            '<br/><small>',
+                            '</small>'
+                        ),
                     'type' => 'text',
                     'id' => 'ft_gallery_user_link',
                     'name' => 'ft_gallery_user_link',
@@ -279,7 +302,11 @@ class Gallery_Options {
                 array(
                     'input_wrap_class' => 'ft-gallery-share',
                     'option_type' => 'select',
-                    'label' => __('Show Share Options', 'feed-them-gallery') . '<br/><small>' . __('Appears in the bottom left corner and in popup', 'feed-them-gallery') . '</small>',
+                    'label' =>
+                        sprintf(__('Show Share Options%1$s Appears in the bottom left corner and in popup%2$s', 'feed-them-gallery'),
+                            '<br/><small>',
+                            '</small>'
+                        ),
                     'type' => 'text',
                     'id' => 'ft_gallery_wp_share',
                     'name' => 'ft_gallery_wp_share',
@@ -299,7 +326,11 @@ class Gallery_Options {
                 array(
                     'input_wrap_class' => 'ft-gallery-date',
                     'option_type' => 'select',
-                    'label' => __('Show Date', 'feed-them-gallery') . '<br/><small>' . __('Date image was uploaded', 'feed-them-gallery') . '</small>',
+                    'label' =>
+                        sprintf(__('Show Date%1$s Date image was uploaded%2$s', 'feed-them-gallery'),
+                            '<br/><small>',
+                            '</small>'
+                        ),
                     'type' => 'text',
                     'id' => 'ft_gallery_wp_date',
                     'name' => 'ft_gallery_wp_date',
@@ -319,7 +350,11 @@ class Gallery_Options {
                 array(
                     'input_wrap_class' => 'ft-gallery-icon',
                     'option_type' => 'select',
-                    'label' => __('Show Wordpress Icon', 'feed-them-gallery') . '<br/><small>' . __('Appears in the top left corner', 'feed-them-gallery') . '</small>',
+                    'label' =>
+                        sprintf(__('Show Wordpress Icon%1$s Appears in the top left corner%2$s', 'feed-them-gallery'),
+                            '<br/><small>',
+                            '</small>'
+                        ),
                     'type' => 'text',
                     'id' => 'ft_gallery_wp_icon',
                     'name' => 'ft_gallery_wp_icon',
@@ -351,7 +386,13 @@ class Gallery_Options {
                 array(
                     'input_wrap_class' => 'ft-images-sizes-page',
                     'option_type' => 'ft-images-sizes-page',
-                    'instructional-text' => '<strong>' . __('NOTE:', 'feed-them-gallery') . '</strong> '  . __('If for some reason the image size you choose does not appear on the front end you may need to regenerate your images. This free plugin called <a href="http://sidebar-support.com/wp-admin/plugin-install.php?s=regenerate+thumbnails&tab=search&type=term" target="_blank">Regenerate Thumbnails</a> does an amazing job of that.', 'feed-them-gallery'),
+                    'instructional-text' =>
+                        sprintf(__('%1$sNOTE:%2$s If for some reason the image size you choose does not appear on the front end you may need to regenerate your images. This free plugin called %3$sRegenerate Thumbnails%4$s does an amazing job of that.', 'feed-them-gallery'),
+                            '<strong>',
+                            '</strong>',
+                            '<a href="'.esc_url('http://sidebar-support.com/wp-admin/plugin-install.php?s=regenerate+thumbnails&tab=search&type=term').'" target="_blank">',
+                            '</a>'
+                        ),
                     'label' => __('Image Size on Page', 'feed-them-gallery'),
                     'class' => 'ft-gallery-images-sizes-page',
                     'type' => 'select',
@@ -386,7 +427,11 @@ class Gallery_Options {
                 array(
                     'input_wrap_class' => 'ft-gallery-height',
                     'option_type' => 'input',
-                    'label' => __('Gallery Height<br/><small>' . __('Set the height to have a scrolling feed.', 'feed-them-gallery') . '</small>', 'feed-them-gallery'),
+                    'label' =>
+                        sprintf(__('Gallery Height%1$s Set the height to have a scrolling feed%2$s', 'feed-them-gallery'),
+                            '<br/><small>',
+                            '</small>'
+                        ),
                     'type' => 'text',
                     'id' => 'ft_gallery_height',
                     'name' => 'ft_gallery_height',
@@ -396,7 +441,11 @@ class Gallery_Options {
                 //Gallery Margin
                 array(
                     'option_type' => 'input',
-                    'label' => __('Gallery Margin', 'feed-them-gallery') . '<br/><small>' . __('To center feed type auto', 'feed-them-gallery') . '</small>',
+                    'label' =>
+                        sprintf(__('Gallery Margin%1$s To center feed type auto%2$s', 'feed-them-gallery'),
+                            '<br/><small>',
+                            '</small>'
+                        ),
                     'type' => 'text',
                     'id' => 'ft_gallery_margin',
                     'name' => 'ft_gallery_margin',
@@ -444,7 +493,13 @@ class Gallery_Options {
                 array(
                     'input_wrap_class' => 'ft-images-sizes-popup',
                     'option_type' => 'ft-images-sizes-popup',
-                    'instructional-text' => '<strong>' . __('NOTE:', 'feed-them-gallery') . '</strong> ' . __('If for some reason the image size you choose does not appear on in your popup you may need to regenerate your images. This free plugin called <a href="http://sidebar-support.com/wp-admin/plugin-install.php?s=regenerate+thumbnails&tab=search&type=term" target="_blank">Regenerate Thumbnails</a> does an amazing job of that.', 'feed-them-gallery'),
+                    'instructional-text' =>
+                        sprintf(__('%1$sNOTE:%2$s If for some reason the image size you choose does not appear on the front end you may need to regenerate your images. This free plugin called %3$sRegenerate Thumbnails%4$s does an amazing job of that.', 'feed-them-gallery'),
+                            '<strong>',
+                            '</strong>',
+                            '<a href="'.esc_url('http://sidebar-support.com/wp-admin/plugin-install.php?s=regenerate+thumbnails&tab=search&type=term').'" target="_blank">',
+                            '</a>'
+                        ),
                     'label' => __('Image Size in Popup', 'feed-them-gallery'),
                     'class' => 'ft-gallery-images-sizes-popup',
                     'type' => 'select',
@@ -524,7 +579,11 @@ class Gallery_Options {
                     'type' => 'text',
                     'id' => 'ft_gallery_load_more_style',
                     'name' => 'ft_gallery_load_more_style',
-                    'instructional-text' => '<strong>' . __('NOTE:', 'feed-them-gallery') . '</strong> ' . __('The Button option will show a "Load More Posts" button under your feed. The AutoScroll option will load more posts when you reach the bottom of the feed. AutoScroll ONLY works if you\'ve filled in a Fixed Height for your feed.', 'feed-them-gallery'),
+                    'instructional-text' =>
+                        sprintf(__('%1$sNOTE:%2$s The Button option will show a "Load More Posts" button under your feed. The AutoScroll option will load more posts when you reach the bottom of the feed. AutoScroll ONLY works if you\'ve filled in a Fixed Height for your feed.', 'feed-them-gallery'),
+                            '<strong>',
+                            '</strong>'
+                        ),
                     'default_value' => 'button',
                     'options' => array(
                         1 => array(
@@ -546,7 +605,11 @@ class Gallery_Options {
                 //Load more Button Width
                 array(
                     'option_type' => 'input',
-                    'label' => __('Load more Button Width', 'feed-them-gallery') . '<br/><small>' . __('Leave blank for auto width', 'feed-them-gallery') . '</small>',
+                    'label' =>
+                        sprintf(__('Load more Button Width%1$s Leave blank for auto width%2$s', 'feed-them-gallery'),
+                            '<br/><small>',
+                            '</small>'
+                        ),
                     'type' => 'text',
                     'id' => 'ft_gallery_loadmore_button_width',
                     'name' => 'ft_gallery_loadmore_button_width',
@@ -573,10 +636,6 @@ class Gallery_Options {
                 //******************************************
                 // Gallery Pagination Options
                 //******************************************
-                //Pagination
-
-
-
                 //Load More Style
                 array(
                     'grouped_options_title' => __('Pagination', 'feed-them-gallery'),
@@ -585,7 +644,11 @@ class Gallery_Options {
                     'type' => 'text',
                     'id' => 'ft_gallery_show_pagination',
                     'name' => 'ft_gallery_show_pagination',
-                    'instructional-text' => '<strong>' . __('NOTE:', 'feed-them-gallery') . '</strong> ' . __('This will display the number of images you have in your gallery, and will appear centered at the bottom of your image feed. For Example: 4 of 50 (4 being the number of images you have loaded on the page already and 50 being the total number of images in the gallery.', 'feed-them-gallery'),
+                    'instructional-text' =>
+                        sprintf(__('%1$sNOTE:%2$s This will display the number of images you have in your gallery, and will appear centered at the bottom of your image feed. For Example: 4 of 50 (4 being the number of images you have loaded on the page already and 50 being the total number of images in the gallery.', 'feed-them-gallery'),
+                            '<strong>',
+                            '</strong>'
+                        ),
                     'default_value' => 'yes',
                     'options' => array(
                         1 => array(
@@ -603,8 +666,6 @@ class Gallery_Options {
                     ),
                     'sub_options_end' => true,
                 ),
-
-
             ),
         );
 
@@ -734,7 +795,11 @@ class Gallery_Options {
                 array(
                     'input_wrap_class' => 'ft-gallery-purchase-link',
                     'option_type' => 'select',
-                    'label' => __('Show Purchase Link', 'feed-them-gallery'). '<br/><small>' . __('Appears on the page and popup', 'feed-them-gallery') . '</small>',
+                    'label' =>
+                        sprintf(__('Show Purchase Link%1$s Appears on the page and popup%2$s', 'feed-them-gallery'),
+                            '<br/><small>',
+                            '</small>'
+                        ),
                     'type' => 'text',
                     'id' => 'ft_gallery_purchase_link',
                     'name' => 'ft_gallery_purchase_link',
@@ -753,7 +818,11 @@ class Gallery_Options {
                 //Purchase Button Text
                 array(
                     'option_type' => 'input',
-                    'label' => __('Change Purchase Link text', 'feed-them-gallery') . '<br/><small>' . __('The default word is Purchase', 'feed-them-gallery') . '</small>',
+                    'label' =>
+                        sprintf(__('Change Purchase Link text%1$s The default word is Purchase%2$s', 'feed-them-gallery'),
+                            '<br/><small>',
+                            '</small>'
+                        ),
                     'type' => 'text',
                     'id' => 'ft_gallery_purchase_word',
                     'name' => 'ft_gallery_purchase_word',
@@ -762,7 +831,11 @@ class Gallery_Options {
                 ),
                 array(
                     'option_type' => 'checkbox',
-                    'label' => __('Auto Create a product for each image uploaded.', 'ft-gallery') . '<br/><small>' . __('You must have a "Single Image Model Product" selected for this option to work.', 'ft-gallery') . '</small>',
+                    'label' =>
+                        sprintf(__('Auto Create a product for each image uploaded.%1$s You must have a "Global Model Product" or "Smart Image Orientation Model Products" selected for this option to work.%2$s', 'feed-them-gallery'),
+                            '<br/><small>',
+                            '</small>'
+                        ),
                     'class' => 'ft-gallery-auto-image-woo-prod',
                     'type' => 'checkbox',
                     'id' => 'ft_gallery_auto_image_woo_prod',
@@ -770,11 +843,23 @@ class Gallery_Options {
                     'default_value' => '',
 
                 ),
+                array(
+                    'option_type' => 'checkbox',
+                    'label' =>
+                        sprintf(__('Use Smart Image Orientation %1$s You must have a "Smart Image Orientation Model Products" selected below for this option to work. Checking this option will automatically determine the images orientation and match it to the appropriate Model Product (Landscape, Square or Portrait) when creating a WooCommerce product for each image. This will override using the "Global Model Product" option for this Gallery.%2$s', 'feed-them-gallery'),
+                            '<br/><small>',
+                            '</small>'
+                        ),
+                    'class' => 'ft-gallery-smart-image-orient-prod',
+                    'type' => 'checkbox',
+                    'id' => 'ft_gallery_smart_image_orient_prod',
+                    'name' => 'ft_gallery_smart_image_orient_prod',
+                    'default_value' => '',
+
+                ),
 
             ),
         );
-
-
 
         return $this->all_options['woocommerce'];
     } //END LAYOUT OPTIONS
@@ -798,6 +883,16 @@ class Gallery_Options {
                 //******************************************
                 //Automatically turn created Images to products
                 array(
+                    'option_type' => 'checkbox',
+                    'default_value' => '',
+                    'name' => 'ft_gallery_auto_image_woo_prod',
+                ),
+                array(
+                    'option_type' => 'checkbox',
+                    'default_value' => '',
+                    'name' => 'ft_gallery_smart_image_orient_prod',
+                ),
+                array(
                     'option_type' => 'select',
                     'default_value' => '',
                     'name' => 'ft_gallery_image_to_woo_model_prod',
@@ -805,12 +900,23 @@ class Gallery_Options {
                 array(
                     'option_type' => 'select',
                     'default_value' => '',
-                    'name' => 'ft_gallery_zip_to_woo_model_prod',
+                    'name' => 'ft_gallery_landscape_to_woo_model_prod',
                 ),
                 array(
-                    'option_type' => 'checkbox',
+                    'option_type' => 'select',
                     'default_value' => '',
-                    'name' => 'ft_gallery_auto_image_woo_prod',
+                    'name' => 'ft_gallery_square_to_woo_model_prod',
+                ),
+                array(
+                    'option_type' => 'select',
+                    'default_value' => '',
+                    'name' => 'ft_gallery_portrait_to_woo_model_prod',
+                ),
+
+                array(
+                    'option_type' => 'select',
+                    'default_value' => '',
+                    'name' => 'ft_gallery_zip_to_woo_model_prod',
                 ),
             )
         );
@@ -840,7 +946,11 @@ class Gallery_Options {
                 // Disable Right Click
                 array(
                     'input_wrap_class' => 'ft-watermark-disable-right-click',
-                    'instructional-text' => '<strong>' . __('NOTE:', 'feed-them-gallery') . '</strong> ' . __('This option will disable the right click option on desktop computers so people cannot look at the source code. This is not fail safe but for the vast majority this is enough to deter people from trying to find the image source.', 'feed-them-gallery'),
+                    'instructional-text' =>
+                        sprintf(__('%1$sNOTE:%2$s This option will disable the right click option on desktop computers so people cannot look at the source code. This is not fail safe but for the vast majority this is enough to deter people from trying to find the image source.', 'feed-them-gallery'),
+                            '<strong>',
+                            '</strong>'
+                        ),
                     'option_type' => 'select',
                     'label' => __('Disable Right Click', 'feed-them-gallery'),
                     'type' => 'text',
@@ -882,7 +992,11 @@ class Gallery_Options {
                 //Choose Watermark Image
                 array(
                     'option_type' => 'input',
-                    'instructional-text' => '<strong>' . __('NOTE:', 'feed-them-gallery') . '</strong> ' . __('Upload the exact image size you want to display, we will not rescale the image in anyway.', 'feed-them-gallery'),
+                    'instructional-text' =>
+                        sprintf(__('%1$sNOTE:%2$s Upload the exact image size you want to display, we will not rescale the image in anyway.', 'feed-them-gallery'),
+                            '<strong>',
+                            '</strong>'
+                        ),
                     'label' => __('Watermark Image', 'feed-them-gallery'),
                     'id' => 'ft-watermark-image',
                     'name' => 'ft-watermark-image',
@@ -979,7 +1093,13 @@ class Gallery_Options {
                 array(
                     'input_wrap_class' => 'ft-watermark-hidden-options ft-gallery-image-sizes-checkbox-wrap-label',
                     'option_type' => 'checkbox-image-sizes',
-                    'instructional-text' => '<strong>' . __('IMPORTANT:', 'feed-them-gallery') . '</strong> ' . __('This option will permanently mark your chosen image size once you click the publish button or update button. Set the opacity of your <strong>Watermark Image</strong> before you upload it above for this option. We suggest using a png for the best clarity and not a gif.', 'feed-them-gallery'),
+                    'instructional-text' =>
+                        sprintf(__('%1$sIMPORTANT:%2$s This option will permanently mark your chosen image size once you click the publish button or update button. Set the opacity of your %3$sWatermark Image%4$s before you upload it above for this option. We suggest using a png for the best clarity and not a gif.', 'feed-them-gallery'),
+                            '<strong>',
+                            '</strong>',
+                            '<strong>',
+                            '</strong>'
+                        ),
                     'label' => __('Image Sizes', 'feed-them-gallery'),
                     'class' => 'ft-watermark-opacity',
                     'type' => 'hidden',
@@ -1009,7 +1129,10 @@ class Gallery_Options {
                 array(
                     'input_wrap_class' => 'ft-watermark-duplicate-image',
                     'option_type' => 'select',
-                    'label' => __('Duplicate Full Image<br/>before watermarking', 'feed-them-gallery'),
+                    'label' =>
+                        sprintf(__('Duplicate Full Image%1$s before watermarking', 'feed-them-gallery'),
+                            '<br/>'
+                        ),
                     'type' => 'text',
                     'id' => 'ft_gallery_duplicate_image',
                     'name' => 'ft_gallery_duplicate_image',
@@ -1090,7 +1213,6 @@ class Gallery_Options {
                     'placeholder' => __('10px', 'feed-them-gallery'),
                     'autocomplete' => 'off',
                 ),
-
             )
         );
 
@@ -1102,15 +1224,10 @@ class Gallery_Options {
      *
      * Function to return all Gallery options
      *
-     * @return string
+     * @return array
      * @since 1.0.0
      */
     function all_gallery_options() {
-
-
         return $this->all_options;
-
-
     }
-
 }
