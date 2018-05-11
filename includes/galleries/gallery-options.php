@@ -60,7 +60,7 @@ class Gallery_Options {
         $this->all_options['layout'] = array(
             'section_attr_key' => 'facebook_',
             'section_title' => __('Layout Options', 'feed-them-gallery'),
-            'section_wrap_class' => 'ftg-section-options',
+            'section_wrap_class' => 'fts-facebook_page-shortcode-form',
             //Form Info
             'form_wrap_classes' => 'fb-page-shortcode-form',
             'form_wrap_id' => 'fts-fb-page-form',
@@ -666,6 +666,8 @@ class Gallery_Options {
                     ),
                     'sub_options_end' => true,
                 ),
+
+
             ),
         );
 
@@ -684,7 +686,7 @@ class Gallery_Options {
         $this->all_options['colors'] = array(
             'section_attr_key' => 'facebook_',
             'section_title' => __('Feed Color Options', 'feed-them-gallery'),
-            'section_wrap_class' => 'ftg-section-options',
+            'section_wrap_class' => 'fts-facebook_page-shortcode-form',
             //Form Info
             'form_wrap_classes' => 'fb-page-shortcode-form',
             'form_wrap_id' => 'fts-fb-page-form',
@@ -785,8 +787,8 @@ class Gallery_Options {
             'required_prem_plugin' => 'feed_them_gallery_premium',
             'input_wrap_class' => 'ft-woocommerce-styles',
             'section_attr_key' => 'woocommerce_',
-            'section_title' => __('Woocommerce Options', 'feed-them-gallery'),
-            'section_wrap_class' => 'ftg-section-options',
+            'section_title' => __('WooCommerce Options', 'feed-them-gallery'),
+            'section_wrap_class' => 'fts-facebook_page-shortcode-form',
             //Form Info
             'form_wrap_classes' => 'fb-page-shortcode-form',
             'form_wrap_id' => 'fts-fb-page-form',
@@ -846,7 +848,7 @@ class Gallery_Options {
                 array(
                     'option_type' => 'checkbox',
                     'label' =>
-                        sprintf(__('Use Smart Image Orientation %1$s You must have a "Smart Image Orientation Model Products" selected below for this option to work. Checking this option will automatically determine the images orientation and match it to the appropriate Model Product (Landscape, Square or Portrait) when creating a WooCommerce product for each image. This will override using the "Global Model Product" option for this Gallery.%2$s', 'feed-them-gallery'),
+                        sprintf(__('Use Image Smart Orientation %1$s You must have a "Smart Image Orientation Model Products" selected below for this option to work. Checking this option will automatically determine the images orientation and match it to the appropriate Model Product (Landscape, Square or Portrait) when creating a WooCommerce product for each image. This will override using the "Global Model Product" option for this Gallery.%2$s', 'feed-them-gallery'),
                             '<br/><small>',
                             '</small>'
                         ),
@@ -938,7 +940,7 @@ class Gallery_Options {
             'required_prem_plugin' => 'feed_them_gallery_premium',
             'section_attr_key' => 'facebook_',
             'section_title' => __('Watermark Options', 'feed-them-gallery'),
-            'section_wrap_class' => 'ftg-section-options',
+            'section_wrap_class' => 'fts-facebook_page-shortcode-form',
             //Form Info
             'form_wrap_classes' => 'fb-page-shortcode-form',
             'form_wrap_id' => 'fts-fb-page-form',

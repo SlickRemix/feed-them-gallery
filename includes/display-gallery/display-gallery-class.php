@@ -807,8 +807,6 @@ class Display_Gallery extends Gallery {
             <div class="ft-gallery-main-title"><?php print $title ?></div>
         <?php }
 
-        //echo do_shortcode( '[ft-gallery-specific-cats-menu gallery_id='.$ftg['id'].' menu_title="Specific Gallery Categories"]' );
-
         $ft_gallery_loadmore_background_color = get_post_meta($ftg['id'], 'ft_gallery_loadmore_background_color', true);
         $ft_gallery_loadmore_text_color = get_post_meta($ftg['id'], 'ft_gallery_loadmore_text_color', true);
         $ft_gallery_pagination_text_color = get_post_meta($ftg['id'], 'ft_gallery_pagination_text_color', true);
@@ -873,9 +871,9 @@ class Display_Gallery extends Gallery {
             'paged'          => $paged
         ));
 
-        // echo '<pre>';
-        //  print_r($image_list);
-        //  echo '</pre>';
+       // echo '<pre>';
+       //  print_r($image_list);
+       //  echo '</pre>';
 
         if (is_array($image_list) && isset($image_list[0])) {
             // echo '<pre>';
@@ -1043,7 +1041,7 @@ class Display_Gallery extends Gallery {
                                 <?php } ?>
 
                                 <div class="ft-gallery-cta-button-wrap">
-                                    <?php  if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php') && isset($productID) && $show_purchase_link == 'yes') {
+                                    <?php if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php') && isset($productID) && $show_purchase_link == 'yes') {
 
                                         if ($purchase_link_option == 'prod_page') {
                                             $purchase_link = '' . $siteurl . '/product/?p=' . $productID . '';
@@ -1076,63 +1074,63 @@ class Display_Gallery extends Gallery {
                 elseif ($format_type == 'gallery') {
                     ?>
                     <div class='fts-feed-type-wp_gallery slicker-ft-gallery-placeholder ft-gallery-wrapper ft-gallery-<?php echo $ft_gallery_dynamic_string ?>' style='background-image:url(<?php print $image_source_page ?>);width:<?php print $grid_width ?>;height:<?php print $grid_width ?>;margin:<?php print $space_between_photos ?>;'>
-                        <?php if ($popup == 'yes'){ ?>
-                        <div class='slicker-instaG-backg-link'>
-                            <div class="ft-text-for-popup">
-                                <div class="ft-text-for-popup-content">
-                                    <?php if ($hide_icon == 'yes') { ?>
-                                        <div class="ft-gallery-icon-wrap-right fts-mashup-wp_gallery-icon ft-wp-gallery-icon">
-                                            <a href="<?php print $username_link ?>" target="<?php print $link_target ?>"></a>
-                                        </div>
-                                    <?php } ?>
-
-                                    <?php if ($username !== 'none') { ?>
-                                        <span class="ft-gallery-fb-user-name"><a href="<?php print $username_link ?>" target="<?php print $link_target ?>"><?php print $username ?></a></span>
-                                    <?php } ?>
-
-                                    <?php if ($hide_date == 'yes') { ?>
-                                        <span class="ft-gallery-post-time"><?php print $instagram_date ?></span>
-                                    <?php } ?>
-                                    <div class="ft-gallery-description-wrap">
-                                        <?php if ($title_description == 'title' || $title_description == 'title_description') { ?>
-                                            <p><strong><?php print $img_title ?></strong>
-                                            </p><?php } ?><?php if ($title_description == 'description' || $title_description == 'title_description') { ?>
-                                            <p><?php print $image_description ?></p><?php } ?>
+                    <?php if ($popup == 'yes'){ ?>
+                    <div class='slicker-instaG-backg-link'>
+                        <div class="ft-text-for-popup">
+                            <div class="ft-text-for-popup-content">
+                                <?php if ($hide_icon == 'yes') { ?>
+                                    <div class="ft-gallery-icon-wrap-right fts-mashup-wp_gallery-icon ft-wp-gallery-icon">
+                                        <a href="<?php print $username_link ?>" target="<?php print $link_target ?>"></a>
                                     </div>
+                                <?php } ?>
+
+                                <?php if ($username !== 'none') { ?>
+                                    <span class="ft-gallery-fb-user-name"><a href="<?php print $username_link ?>" target="<?php print $link_target ?>"><?php print $username ?></a></span>
+                                <?php } ?>
+
+                                <?php if ($hide_date == 'yes') { ?>
+                                    <span class="ft-gallery-post-time"><?php print $instagram_date ?></span>
+                                <?php } ?>
+                                <div class="ft-gallery-description-wrap">
+                                    <?php if ($title_description == 'title' || $title_description == 'title_description') { ?>
+                                        <p><strong><?php print $img_title ?></strong>
+                                        </p><?php } ?><?php if ($title_description == 'description' || $title_description == 'title_description') { ?>
+                                        <p><?php print $image_description ?></p><?php } ?>
                                 </div>
                             </div>
                         </div>
-                        <a href="<?php print $image_source_popup; ?>" title='<?php print $ft_gallery_alt_text ?>' class="ft-gallery-link-popup-master ft-gallery-link-popup-click-action ft-view-photo">
-                            <?php } ?>
-                            <?php if (isset($ft_gallery_watermark_enable_options) && $ft_gallery_watermark_enable_options == 'yes' && isset($watermark) && $watermark == 'overlay') {
-                                ?>
-                                <div class="<?php if (isset($watermark_overlay_enable) && $watermark_overlay_enable == 'popup-only') { ?>ft-image-overlay fts-image-overlay-hide<?php } elseif (isset($watermark_overlay_enable) && $watermark_overlay_enable == 'page-and-popup') { ?>ft-image-overlay<?php } ?>">
-                                    <div class="fts-watermark-inside fts-watermark-inside-<?php echo $watermark_image_position ?>" <?php if (isset($watermark_image_opacity) && $watermark_image_opacity == true){ ?>style="opacity:<?php echo $watermark_image_opacity ?>"<?php } ?>>
-                                        <img src="<?php print $watermark_image_url ?>" <?php if (isset($watermark_image_margin) && $watermark_image_margin == true){ ?>style="margin:<?php echo $watermark_image_margin ?>"<?php } ?> alt="<?php print $ft_gallery_alt_text ?>"/>
-                                    </div>
+                    </div>
+                    <a href="<?php print $image_source_popup; ?>" title='<?php print $ft_gallery_alt_text ?>' class="ft-gallery-link-popup-master ft-gallery-link-popup-click-action ft-view-photo">
+                <?php } ?>
+                    <?php if (isset($ft_gallery_watermark_enable_options) && $ft_gallery_watermark_enable_options == 'yes' && isset($watermark) && $watermark == 'overlay') {
+                        ?>
+                        <div class="<?php if (isset($watermark_overlay_enable) && $watermark_overlay_enable == 'popup-only') { ?>ft-image-overlay fts-image-overlay-hide<?php } elseif (isset($watermark_overlay_enable) && $watermark_overlay_enable == 'page-and-popup') { ?>ft-image-overlay<?php } ?>">
+                            <div class="fts-watermark-inside fts-watermark-inside-<?php echo $watermark_image_position ?>" <?php if (isset($watermark_image_opacity) && $watermark_image_opacity == true){ ?>style="opacity:<?php echo $watermark_image_opacity ?>"<?php } ?>>
+                                <img src="<?php print $watermark_image_url ?>" <?php if (isset($watermark_image_margin) && $watermark_image_margin == true){ ?>style="margin:<?php echo $watermark_image_margin ?>"<?php } ?> alt="<?php print $ft_gallery_alt_text ?>"/>
+                            </div>
+                        </div>
+                    <?php } ?>
+                    <?php if ($popup == 'yes'){ ?>
+                    </a>
+                    <div class="fts-mashup-count-wrap" style="<?php if ($show_share == 'yes') { ?>display:none !important;<?php } ?>">
+                        <div class="fts-share-wrap">  <?php if ($show_share == 'yes') { ?>
+                                <a href="javascript:;" class="ft-gallery-link-popup"></a>
+                                <div class='ft-gallery-share-wrap'>
+                                    <a href='<?php print $ft_gallery_share_facebook ?>' target='_blank' class='ft-galleryfacebook-icon'><i class='fa fa-facebook-square'></i></a>
+                                    <a href='<?php print $ft_gallery_share_twitter ?>' target='_blank' class='ft-gallerytwitter-icon'><i class='fa fa-twitter'></i></a>
+                                    <a href='<?php print $ft_gallery_share_google ?>' target='_blank' class='ft-gallerygoogle-icon'><i class='fa fa-google-plus'></i></a>
+                                    <a href='<?php print $ft_gallery_share_linkedin ?>' target='_blank' class='ft-gallerylinkedin-icon'><i class='fa fa-linkedin'></i></a>
+                                    <a href='<?php print $ft_gallery_share_email ?>' target='_blank' class='ft-galleryemail-icon'><i class='fa fa-envelope'></i></a>
                                 </div>
                             <?php } ?>
-                            <?php if ($popup == 'yes'){ ?>
-                        </a>
-                        <div class="fts-mashup-count-wrap" style="<?php if ($show_share == 'yes') { ?>display:none !important;<?php } ?>">
-                            <div class="fts-share-wrap">  <?php if ($show_share == 'yes') { ?>
-                                    <a href="javascript:;" class="ft-gallery-link-popup"></a>
-                                    <div class='ft-gallery-share-wrap'>
-                                        <a href='<?php print $ft_gallery_share_facebook ?>' target='_blank' class='ft-galleryfacebook-icon'><i class='fa fa-facebook-square'></i></a>
-                                        <a href='<?php print $ft_gallery_share_twitter ?>' target='_blank' class='ft-gallerytwitter-icon'><i class='fa fa-twitter'></i></a>
-                                        <a href='<?php print $ft_gallery_share_google ?>' target='_blank' class='ft-gallerygoogle-icon'><i class='fa fa-google-plus'></i></a>
-                                        <a href='<?php print $ft_gallery_share_linkedin ?>' target='_blank' class='ft-gallerylinkedin-icon'><i class='fa fa-linkedin'></i></a>
-                                        <a href='<?php print $ft_gallery_share_email ?>' target='_blank' class='ft-galleryemail-icon'><i class='fa fa-envelope'></i></a>
-                                    </div>
-                                <?php } ?>
-                            </div>
-                            <div class="ft-gallery-cta-button-wrap">
-                                <?php if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php') && isset($productID) && $show_purchase_link == 'yes') {
+                        </div>
+                        <div class="ft-gallery-cta-button-wrap">
+                            <?php if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php') && isset($productID) && $show_purchase_link == 'yes') {
 
                                     if ($purchase_link_option == 'prod_page') {
                                         $purchase_link = '' . $siteurl . '/product/?p=' . $productID . '';
                                     } elseif ($purchase_link_option == 'add_cart') {
-                                        $purchase_link = '' . get_the_permalink() . '/?add-to-cart=' . $productID . '';
+                                        $purchase_link = '' . $siteurl . '/?add-to-cart=' . $productID . '';
                                     } elseif ($purchase_link_option == 'add_cart_checkout') {
                                         $purchase_link = '' . $siteurl . '/cart/?add-to-cart=' . $productID . '';
                                     } else {
@@ -1146,13 +1144,13 @@ class Display_Gallery extends Gallery {
                                             echo '<a class="ft-gallery-buy-now ft-gallery-link-popup-master" href="' . $purchase_link . '" ">' . $purchase_text . '</a>';
                                         }
                                     }
-                                } // end if woo active and prodcut ID set
-                                // <a href="http://sidebar-support.com/" title="" class="ft-gallery-download ft-gallery-link-popup-master" target="_blank"> _e('Download', 'feed-them-gallery')</a>
-                                ?>
-                            </div>
+                            } // end if woo active and prodcut ID set
+                            // <a href="http://sidebar-support.com/" title="" class="ft-gallery-download ft-gallery-link-popup-master" target="_blank"> _e('Download', 'feed-them-gallery')</a>
+                            ?>
                         </div>
-                        <div class="clear"></div>
-                    <?php } ?>
+                    </div>
+                    <div class="clear"></div>
+                <?php } ?>
                     </div>
                     <?php
                 }
@@ -1164,26 +1162,26 @@ class Display_Gallery extends Gallery {
             $offset = $ftg['offset'];
 
 
-            if($ft_gallery_load_more_option == "yes"){
+           if($ft_gallery_load_more_option == "yes"){
 
-                //******************
+               //******************
                 //Load More BUTTON Start
                 //******************
-                $_REQUEST['ft_gallery_offset'] = $offset;
-                //Make sure it's not ajaxing
-                if (!isset($_GET['load_more_ajaxing'])) {
-                    $offset = 2;
-                    $post_count = $post_count;
-                }
-                else {
-                    $offset = 1 + $ftg['offset'];
-                    $post_count = $post_count + $ftg['media_count'];
-                }
+               $_REQUEST['ft_gallery_offset'] = $offset;
+               //Make sure it's not ajaxing
+               if (!isset($_GET['load_more_ajaxing'])) {
+                   $offset = 2;
+                   $post_count = $post_count;
+               }
+               else {
+                   $offset = 1 + $ftg['offset'];
+                   $post_count = $post_count + $ftg['media_count'];
+               }
 
-                if($post_count > $this->ft_gallery_count_post_images($ftg['id'])){
-                    $post_count = $this->ft_gallery_count_post_images($ftg['id']);
-                }
-                ?><script>var ft_gallery_offset<?php echo $_REQUEST['ft_gallery_dynamic_name']; ?>= "<?php echo $offset ?>";var ft_gallery_posts<?php echo $_REQUEST['ft_gallery_dynamic_name']; ?>= "<?php echo $post_count ?>";jQuery('.ft-gallery-image-loaded-count').html(ft_gallery_posts<?php echo $_REQUEST['ft_gallery_dynamic_name']; ?>)</script><?php
+               if($post_count > $this->ft_gallery_count_post_images($ftg['id'])){
+                   $post_count = $this->ft_gallery_count_post_images($ftg['id']);
+               }
+               ?><script>var ft_gallery_offset<?php echo $_REQUEST['ft_gallery_dynamic_name']; ?>= "<?php echo $offset ?>";var ft_gallery_posts<?php echo $_REQUEST['ft_gallery_dynamic_name']; ?>= "<?php echo $post_count ?>";jQuery('.ft-gallery-image-loaded-count').html(ft_gallery_posts<?php echo $_REQUEST['ft_gallery_dynamic_name']; ?>)</script><?php
                 //Make sure it's not ajaxing
                 if (!isset($_GET['load_more_ajaxing'])) {
 
@@ -1191,14 +1189,14 @@ class Display_Gallery extends Gallery {
                     $time = time();
                     $nonce = wp_create_nonce($time . "load-more-nonce");
                     ?><script> jQuery(document).ready(function () {
-                            <?php if ($scrollMore == 'autoscroll') { // this is where we do SCROLL function to LOADMORE if = autoscroll in shortcode ?>
-                            jQuery(".<?php echo $feed_name_rand_string ?>-scrollable").bind("scroll", function () {
-                                if (jQuery(this).scrollTop() + jQuery(this).innerHeight() >= jQuery(this)[0].scrollHeight) {
-                                    <?php }
-                                    else { // this is where we do CLICK function to LOADMORE if = button in shortcode ?>
-                                    jQuery("#loadMore_<?php echo $ft_gallery_dynamic_name ?>").click(function () {
+                                        <?php if ($scrollMore == 'autoscroll') { // this is where we do SCROLL function to LOADMORE if = autoscroll in shortcode ?>
+                                            jQuery(".<?php echo $feed_name_rand_string ?>-scrollable").bind("scroll", function () {
+                                                if (jQuery(this).scrollTop() + jQuery(this).innerHeight() >= jQuery(this)[0].scrollHeight) {
+                                         <?php }
+                                        else { // this is where we do CLICK function to LOADMORE if = button in shortcode ?>
+                                        jQuery("#loadMore_<?php echo $ft_gallery_dynamic_name ?>").click(function () {
                                         <?php }
-                                        $ft_gallery_bounce_color = isset($ft_gallery_loadmore_text_color) && $ft_gallery_loadmore_text_color == TRUE ? ' style="background:' . $ft_gallery_loadmore_text_color . ';"' : '';
+                                                $ft_gallery_bounce_color = isset($ft_gallery_loadmore_text_color) && $ft_gallery_loadmore_text_color == TRUE ? ' style="background:' . $ft_gallery_loadmore_text_color . ';"' : '';
                                         ?>
                                         jQuery("#loadMore_<?php echo $ft_gallery_dynamic_name ?>").addClass('fts-fb-spinner');
                                         var button = jQuery('#loadMore_<?php echo $ft_gallery_dynamic_name ?>').html('<div class="bounce1"<?php echo $ft_gallery_bounce_color ?>></div><div class="bounce2"<?php echo $ft_gallery_bounce_color ?>></div><div class="bounce3"<?php echo $ft_gallery_bounce_color ?>></div>');
@@ -1235,21 +1233,24 @@ class Display_Gallery extends Gallery {
                                                 }, 500);
                                                 <?php } ?>
                                                 if (ft_gallery_posts<?php echo $_REQUEST['ft_gallery_dynamic_name']; ?> >=  <?php echo $this->ft_gallery_count_post_images($ftg['id']); ?>) {
+
+
                                                     jQuery('#loadMore_<?php echo $ft_gallery_dynamic_name ?>').replaceWith('<?php
-                                                        print'<div style="';
-                                                        if (isset($loadmore_btn_maxwidth) && $loadmore_btn_maxwidth !== '') {
-                                                            print'max-width:' . $loadmore_btn_maxwidth . ';';
-                                                        }
-                                                        if (isset($ft_gallery_loadmore_background_color) && $ft_gallery_loadmore_background_color !== '') {
-                                                            print'background:' . $ft_gallery_loadmore_background_color . ';';
-                                                        }
-                                                        if (isset($ft_gallery_loadmore_text_color) && $ft_gallery_loadmore_text_color !== '') {
-                                                            print'color:' . $ft_gallery_loadmore_text_color . ';';
-                                                        }
-                                                        print'margin:' . $loadmore_btn_margin . ' auto ' . $loadmore_btn_margin . '" class="fts-fb-load-more">' . __('No More Photos', 'feed-them-gallery') . '</div>';
-                                                        ?>'
+                                                            print'<div style="';
+                                                            if (isset($loadmore_btn_maxwidth) && $loadmore_btn_maxwidth !== '') {
+                                                                print'max-width:' . $loadmore_btn_maxwidth . ';';
+                                                            }
+                                                            if (isset($ft_gallery_loadmore_background_color) && $ft_gallery_loadmore_background_color !== '') {
+                                                                print'background:' . $ft_gallery_loadmore_background_color . ';';
+                                                            }
+                                                            if (isset($ft_gallery_loadmore_text_color) && $ft_gallery_loadmore_text_color !== '') {
+                                                                print'color:' . $ft_gallery_loadmore_text_color . ';';
+                                                            }
+                                                            print'margin:' . $loadmore_btn_margin . ' auto ' . $loadmore_btn_margin . '" class="fts-fb-load-more">' . __('No More Photos', 'feed-them-gallery') . '</div>';
+                                                                    ?>'
+
                                                     );
-                                                    //  jQuery('.ft-wp-gallery-scrollable').removeAttr('class');
+                                                  //  jQuery('.ft-wp-gallery-scrollable').removeAttr('class');
                                                     jQuery('.<?php echo $feed_name_rand_string ?>-scrollable').unbind('scroll');
                                                 }
                                                 jQuery('#loadMore_<?php echo $ft_gallery_dynamic_name ?>').html('<?php _e('Load More', 'feed-them-gallery') ?>');
@@ -1258,7 +1259,7 @@ class Display_Gallery extends Gallery {
                                                 jQuery.fn.ftsShare();
                                                 // Reload this function again otherwise the popup won't work correctly for the newly loaded items
                                                 jQuery.fn.slickWordpressPopUpFunction();
-                                                <?php if ($format_type == 'gallery') { ?>if(jQuery( "#ftg-gallery-demo" ).hasClass( "ftg-demo-1" )){outputSRmargin(document.querySelector('#margin').value)} // Reload our margin for the demo
+                                                <?php if ($format_type == 'gallery') { ?>
                                                 // Reload our imagesizing function so the images show up proper
                                                 slickremixFTGalleryImageResizing();
                                                 <?php } ?>
@@ -1346,10 +1347,10 @@ class Display_Gallery extends Gallery {
                     }
                 }//End Check
                 unset($_REQUEST['ft_gallery_offset']);
-            }
-            else {
-                print '</div>'; // closing div for main wrap
-            }
+           }
+           else {
+               print '</div>'; // closing div for main wrap
+           }
 
         } //Error or Empty!
         else {
@@ -1521,12 +1522,12 @@ class Display_Gallery extends Gallery {
             exit('Sorry, You can\'t do that!');
         } else {
 
-            $post_count = $_REQUEST['ft_gallery_post_count'];
-            $offset = $_REQUEST['ft_gallery_offset'];
-            $media = $_REQUEST['ft_gallery_media_count'];
+                $post_count = $_REQUEST['ft_gallery_post_count'];
+                $offset = $_REQUEST['ft_gallery_offset'];
+                $media = $_REQUEST['ft_gallery_media_count'];
 
-            $object = do_shortcode('[feed-them-gallery id='.$_REQUEST['ft_gallery_id'].' offset='.$offset.' media_count='.$media.']');
-            echo $object;
+                $object = do_shortcode('[feed-them-gallery id='.$_REQUEST['ft_gallery_id'].' offset='.$offset.' media_count='.$media.']');
+                echo $object;
         }
         die();
     }
