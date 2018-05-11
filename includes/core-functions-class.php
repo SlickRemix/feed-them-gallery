@@ -10,7 +10,6 @@
  * @category Class
  * @author   SlickRemix
  */
-
 namespace feed_them_gallery;
 /**
  * Class Core_Functions
@@ -46,8 +45,6 @@ class Core_Functions {
         //Re-order Sub-Menu Items
         add_action('admin_menu', array($this, 'ft_gallery_reorder_admin_sub_menus'));
 
-        add_filter('archive_template', array($this, 'ft_gallery_archive_template'), 99);
-
     }
 
     /**
@@ -59,7 +56,7 @@ class Core_Functions {
      */
     function init() {
 
-        add_theme_support('post-thumbnails');
+        add_theme_support( 'post-thumbnails' );
 
 
         if (is_admin()) {
@@ -76,13 +73,7 @@ class Core_Functions {
         if ($ft_gallery_include_custom_css_checked_css == '1') {
             add_action('wp_enqueue_scripts', array($this, 'ft_gallery_color_options_head_css'));
         }
-        add_action('wp_enqueue_scripts', array($this, 'ft_gallery_color_options_head_css_front'));
-
-        //Override default Wordpress Post Template
-        // add_filter('single_template', array($this, 'DAS_post_template'), 999);
-
-
-
+            add_action('wp_enqueue_scripts', array($this, 'ft_gallery_color_options_head_css_front'));
 
     }//end if init
 
@@ -184,8 +175,8 @@ class Core_Functions {
      */
     function ft_gallery_color_options_head_css_front() {
 
-        //  wp_register_style('ss-font-awesome', plugins_url('ft-gallery/admin/icon-picker/dist/css/font-awesome.min.css'));
-        //  wp_enqueue_style('ss-font-awesome');
+      //  wp_register_style('ss-font-awesome', plugins_url('ft-gallery/admin/icon-picker/dist/css/font-awesome.min.css'));
+      //  wp_enqueue_style('ss-font-awesome');
 
         $ft_gallery_text_color = get_option('ft_gallery_text_color');
         $ft_gallery_link_color = get_option('ft_gallery_link_color');
@@ -195,29 +186,13 @@ class Core_Functions {
 
         <style type="text/css">
             <?php
-        if (!empty($ft_gallery_text_color)) { ?>
-            .ft-gallery-simple-fb-wrapper, .ft-gallery-popup {
-                color: <?php echo $ft_gallery_text_color ?> !important;
-            }
-
+        if (!empty($ft_gallery_text_color)) { ?> .ft-gallery-simple-fb-wrapper, .ft-gallery-popup{color: <?php echo $ft_gallery_text_color ?> !important;}
             <?php }
-        if (!empty($ft_gallery_link_color)) { ?>
-            .ft-wp-gallery a, .ft-gallery-popup a, .ft-wp-gallery .fts-mashup-count-wrap .fts-share-wrap a, .ft-wp-gallery .fts-share-wrap a, body .ft-wp-gallery .ft-gallery-cta-button-wrap a {
-                color: <?php echo $ft_gallery_link_color ?> !important;
-            }
-
+        if (!empty($ft_gallery_link_color)) { ?> .ft-wp-gallery a, .ft-gallery-popup a, .ft-wp-gallery .fts-mashup-count-wrap .fts-share-wrap a, .ft-wp-gallery .fts-share-wrap a, body .ft-wp-gallery .ft-gallery-cta-button-wrap a{color: <?php echo $ft_gallery_link_color ?> !important;}
             <?php }
-        if (!empty($ft_gallery_link_color_hover)) { ?>
-            .ft-wp-gallery a:hover, .ft-gallery-popup a:hover, .ft-wp-gallery .fts-share-wrap a:hover, body .ft-wp-gallery .ft-gallery-cta-button-wrap a:hover {
-                color: <?php echo $ft_gallery_link_color_hover ?> !important;
-            }
-
+        if (!empty($ft_gallery_link_color_hover)) { ?> .ft-wp-gallery a:hover, .ft-gallery-popup a:hover, .ft-wp-gallery .fts-share-wrap a:hover, body .ft-wp-gallery .ft-gallery-cta-button-wrap a:hover{color: <?php echo $ft_gallery_link_color_hover ?> !important;}
             <?php }
-        if (!empty($ft_gallery_post_time)) { ?>
-            .ft-gallery-post-time {
-                color: <?php echo $ft_gallery_post_time ?> !important;
-            }
-
+        if (!empty($ft_gallery_post_time)) { ?> .ft-gallery-post-time{color: <?php echo $ft_gallery_post_time ?> !important;}
             <?php } ?>
         </style>
         <?php
@@ -379,32 +354,5 @@ class Core_Functions {
         ?>
         <style type="text/css"><?php echo get_option('ft-gallery-settings-admin-textarea-css'); ?></style><?php
     }
-
-    function ft_gallery_archive_template($template_override_path) {
-        global $post;
-
-        //if (get_query_var('ft_gallery_cats') || $post->post_type == 'ft_gallery_cats') {
-            $ft_gallery_template_folder = 'ft-gallery';
-            $ft_gallery_template_filename = 'ft-gallery-categories-template.php';
-
-            switch (true) {
-                //If located in SUB FOLDER of current active theme
-                case (locate_template($ft_gallery_template_folder . '/' . $ft_gallery_template_filename)):
-                    $template_override_path = wp_make_link_relative(esc_url_raw(get_stylesheet_directory() . '/' . $ft_gallery_template_folder . '/' . $ft_gallery_template_filename));
-                    break;
-                //If located in ROOT of current active theme
-                case (locate_template($ft_gallery_template_filename)):
-                    $template_override_path = wp_make_link_relative(esc_url_raw(get_stylesheet_directory() . $ft_gallery_template_folder . '/' . $ft_gallery_template_filename));
-
-                    break;
-                //If no template file found in current active theme use the one set in plugin
-                default:
-                    $template_override_path = plugin_dir_path(__DIR__).'templates/' . $ft_gallery_template_filename;
-            }
-
-            return $template_override_path;
-        //}
-    }
-
 
 }//END Class
