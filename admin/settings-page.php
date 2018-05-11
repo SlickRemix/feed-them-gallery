@@ -687,10 +687,13 @@ class Settings_Page {
                                     <label><input name="ft_gallery_woo_add_to_cart[ft_gallery_woo_options]" type="radio" value="prod_page" <?php checked('prod_page', $woo_options['ft_gallery_woo_options']); ?>> <strong><?php _e('(Default)', 'ft-gallery'); ?></strong> <?php _e('Take Customers to product page. (Doesn\'t add product to cart)', 'ft-gallery'); ?>
                                     </label>
 
+                                    <label><input name="ft_gallery_woo_add_to_cart[ft_gallery_woo_options]" type="radio" value="cart_checkout" <?php checked('cart_checkout', $woo_options['ft_gallery_woo_options']); ?>> <?php _e('Take user directly to checkout. Useful for variable products.', 'ft-gallery'); ?>
+                                    </label>
+
                                     <label><input name="ft_gallery_woo_add_to_cart[ft_gallery_woo_options]" type="radio" value="add_cart" <?php checked('add_cart', $woo_options['ft_gallery_woo_options']); ?>> <?php _e('Add product to cart. (Adds product to cart but doesn\'t take them to checkout.) This will not work if your product has required variations.', 'ft-gallery'); ?>
                                     </label>
 
-                                    <label><input name="ft_gallery_woo_add_to_cart[ft_gallery_woo_options]" type="radio" value="add_cart_checkout" <?php checked('add_cart_checkout', $woo_options['ft_gallery_woo_options']); ?>> <?php _e('Add product to cart and take them directly to checkout. This will not work if your product has required variations.', 'ft-gallery'); ?>
+                                    <label><input name="ft_gallery_woo_add_to_cart[ft_gallery_woo_options]" type="radio" value="add_cart_checkout" <?php checked('add_cart_checkout', $woo_options['ft_gallery_woo_options']); ?>> <?php _e('Add product to cart and take user directly to checkout. This will not work if your product has required variations.', 'ft-gallery'); ?>
                                     </label>
 
                                     <div class="clear"></div>

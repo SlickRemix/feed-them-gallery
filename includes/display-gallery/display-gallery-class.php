@@ -55,6 +55,7 @@ class Display_Gallery extends Gallery {
         add_action('wp_ajax_nopriv_ft_gallery_load_more', array($this, 'ft_gallery_load_more'));
     }
 
+
     /**
      * FT Gallery Register Gallery Route (REST API)
      *
@@ -87,6 +88,7 @@ class Display_Gallery extends Gallery {
         }
     }
 
+
     /**
      * FT Gallery Header Scripts
      *
@@ -100,6 +102,11 @@ class Display_Gallery extends Gallery {
         wp_enqueue_script('ft-masonry-pkgd', plugins_url('feed-them-gallery/includes/feeds/js/masonry.pkgd.min.js'), array('jquery'));
         wp_enqueue_script('ft-images-loaded', plugins_url('feed-them-gallery/includes/feeds/js/imagesloaded.pkgd.min.js'));
         wp_enqueue_script('ft-front-end-js', plugins_url('feed-them-gallery/includes/js/front-end.js'));
+        if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php')) {
+            wp_enqueue_script('add-to-cart-ajax_ajax', plugins_url() . '/feed-them-gallery/includes/feeds/js/add-to-cart-ajax.js', array('jquery'), '', true);
+        }
+
+
     }
 
     /**
@@ -165,14 +172,14 @@ class Display_Gallery extends Gallery {
             //not doing dates in the future for posts
             $ending = "to go";
         }
-        for ($j = 0; $difference >= $lengths[$j] && $j < count($lengths) - 1; $j++) {
-            $difference /= $lengths[$j];
+        for ($j = 0; $difference >= $lengths[ $j ] && $j < count($lengths) - 1; $j++) {
+            $difference /= $lengths[ $j ];
         }
 
         $difference = round($difference);
 
         if ($difference != 1) {
-            $periods[$j] = $periods_plural[$j];
+            $periods[ $j ] = $periods_plural[ $j ];
         }
         $text = "$difference $periods[$j] $ending";
 
@@ -193,7 +200,7 @@ class Display_Gallery extends Gallery {
         $charactersLength = strlen($characters);
         $randomString = '';
         for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
+            $randomString .= $characters[ rand(0, $charactersLength - 1) ];
         }
 
         return $randomString;
@@ -687,8 +694,7 @@ class Display_Gallery extends Gallery {
         $ft_gallery_dynamic_string = trim($this->ft_gallery_rand_string(10));
 
 
-
-        $post_count = get_post_meta($ftg['id'], 'ft_gallery_photo_count', true) == TRUE ? get_post_meta($ftg['id'], 'ft_gallery_photo_count', true) : '999';
+        $post_count = get_post_meta($ftg['id'], 'ft_gallery_photo_count', true) == true ? get_post_meta($ftg['id'], 'ft_gallery_photo_count', true) : '999';
 
         $scrollMore = get_post_meta($ftg['id'], 'ft_gallery_load_more_style', true);
 
@@ -790,10 +796,9 @@ class Display_Gallery extends Gallery {
         $show_share = get_post_meta($ftg['id'], 'ft_gallery_wp_share', true);
         $show_purchase_link = get_post_meta($ftg['id'], 'ft_gallery_purchase_link', true);
 
-        if(get_post_meta($ftg['id'], 'ft_gallery_purchase_word', true) == TRUE){
+        if (get_post_meta($ftg['id'], 'ft_gallery_purchase_word', true) == true) {
             $purchase_text = get_post_meta($ftg['id'], 'ft_gallery_purchase_word', true);
-        }
-        else {
+        } else {
             $purchase_text = 'Purchase';
         }
 
@@ -839,18 +844,18 @@ class Display_Gallery extends Gallery {
             if ($format_type == 'post-in-grid' || $format_type == 'gallery-collage') {
                 print '<div class="ft-wp-gallery ft-wp-gallery-masonry popup-gallery-fb-posts ' . $feed_name_rand_string . ' ' . $fts_dynamic_class_name . ' masonry js-masonry"';
                 if (isset($center_container) && $center_container == 'yes') {
-                    print 'data-masonry-options=\'{"itemSelector": ".ft-gallery-post-wrap", "isFitWidth": ' . ($center_container == 'no' ? 'false' : 'true') . ' ' . ($stack_animation == 'no' ? ', "transitionDuration": 0' : '') . '}\' style="margin:auto;'. $background_color .'"';
+                    print 'data-masonry-options=\'{"itemSelector": ".ft-gallery-post-wrap", "isFitWidth": ' . ($center_container == 'no' ? 'false' : 'true') . ' ' . ($stack_animation == 'no' ? ', "transitionDuration": 0' : '') . '}\' style="margin:auto;' . $background_color . '"';
                 }
                 print '>';
             } elseif ($format_type == 'gallery') {
-                $scrollable = isset($scrollMore) && $scrollMore == 'autoscroll' ? $feed_name_rand_string.'-scrollable ft-wp-gallery-scrollable' : '';
+                $scrollable = isset($scrollMore) && $scrollMore == 'autoscroll' ? $feed_name_rand_string . '-scrollable ft-wp-gallery-scrollable' : '';
 
                 $ft_gallery_columns = get_post_meta($ftg['id'], 'ft_gallery_columns', true);
                 $ft_gallery_force_columns = get_post_meta($ftg['id'], 'ft_gallery_force_columns', true);
-                $columns = isset($ft_gallery_columns) ? 'data-ftg-columns="'.$ft_gallery_columns.'" ' : '';
-                $force_columns = isset($ft_gallery_force_columns) ? 'data-ftg-force-columns="'.$ft_gallery_force_columns.'" ' : '';
+                $columns = isset($ft_gallery_columns) ? 'data-ftg-columns="' . $ft_gallery_columns . '" ' : '';
+                $force_columns = isset($ft_gallery_force_columns) ? 'data-ftg-force-columns="' . $ft_gallery_force_columns . '" ' : '';
 
-                print '<div '. $columns . $force_columns .'data-ftg-margin='.$space_between_photos.' data-ftg-width="'.$grid_width.'" class="fts-mashup ft-wp-gallery-centered ft-wp-gallery popup-gallery-fb-posts ' . $feed_name_rand_string .' '.$scrollable.'" ' . $style_start . $feed_width . $mashup_margin . $height . $padding . $background_color . $style_end . '>';
+                print '<div ' . $columns . $force_columns . 'data-ftg-margin=' . $space_between_photos . ' data-ftg-width="' . $grid_width . '" class="fts-mashup ft-wp-gallery-centered ft-wp-gallery popup-gallery-fb-posts ' . $feed_name_rand_string . ' ' . $scrollable . '" ' . $style_start . $feed_width . $mashup_margin . $height . $padding . $background_color . $style_end . '>';
                 print '<div class="' . $fts_dynamic_class_name . '">';
 
             } elseif ($format_type == 'post') {
@@ -865,10 +870,10 @@ class Display_Gallery extends Gallery {
             'post_parent' => $ftg['id'],
             'post_type' => 'attachment',
             'post_mime_type' => 'image',
-            'posts_per_page' =>  $post_count,
+            'posts_per_page' => $post_count,
             'orderby' => 'menu_order',
             'order' => 'asc',
-            'paged'          => $paged
+            'paged' => $paged
         ));
 
         // echo '<pre>';
@@ -882,7 +887,7 @@ class Display_Gallery extends Gallery {
 
             if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
                 $gallery_to_woo = new Gallery_to_Woocommerce();
-                $siteurl = get_option('get_bloginfo');
+                $siteurl = get_option('siteurl');
                 $purchase_link = get_option('ft_gallery_woo_add_to_cart');
                 $purchase_link_option = $purchase_link['ft_gallery_woo_options'];
             }
@@ -902,7 +907,7 @@ class Display_Gallery extends Gallery {
                 // found @: https://wordpress.org/ideas/topic/functions-to-get-an-attachments-caption-title-alt-description
                 $image = wp_prepare_attachment_for_js($image->ID);
 
-                $description = make_clickable( $image['description'] );
+                $description = make_clickable($image['description']);
                 $img_title = $image['title'];
 
                 // Going to remove this option for the time being, since unlike facebook we don't have another page to take them to with the rest of the description
@@ -972,9 +977,10 @@ class Display_Gallery extends Gallery {
                     }
                 }
 
-                if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')){
+                if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
                     //Check custom post meta for woo product field
                     $productID = get_post_meta($image['id'], 'ft_gallery_woo_prod', true);
+
                 }
 
                 // Regular Post Format
@@ -1001,11 +1007,14 @@ class Display_Gallery extends Gallery {
                                     <?php if ($title_description == 'title' || $title_description == 'title_description') { ?>
                                         <p><strong><?php print $img_title ?></strong>
                                         </p><?php } ?><?php if ($title_description == 'description' || $title_description == 'title_description') { ?>
-                                        <p><?php print $image_description ?></p><?php } ?>
+                                        <p><?php print $image_description ?></p><?php }
+                                    ?>
                                 </div>
 
                             </div>
                         </div>
+
+
                         <div class="fts-mashup-image-and-video-wrap" <?php if (isset($image_size)){ ?>style="max-width: <?php print $image_size; ?>"<?php } ?>>
 
                             <a href="<?php print $image_source_popup ?>" class="ft-gallery-link-popup-master ft-gallery-link-popup-click-action" style="position: relative; overflow: hidden;"><img class="fts-mashup-instagram-photo " src="<?php print $image_source_page ?>" alt="<?php print $ft_gallery_alt_text ?>"><?php
@@ -1013,15 +1022,20 @@ class Display_Gallery extends Gallery {
                                     ?>
                                     <div class="<?php if (isset($watermark_overlay_enable) && $watermark_overlay_enable == 'popup-only') { ?>ft-image-overlay fts-image-overlay-hide<?php } elseif (isset($watermark_overlay_enable) && $watermark_overlay_enable == 'page-and-popup') { ?>ft-image-overlay<?php } ?>">
                                         <div class="fts-watermark-inside fts-watermark-inside-<?php echo $watermark_image_position ?>" <?php if (isset($watermark_image_opacity) && $watermark_image_opacity == true){ ?>style="opacity:<?php echo $watermark_image_opacity ?>"<?php } ?>>
-                                            <img src="<?php print $watermark_image_url ?>" <?php if (isset($watermark_image_margin) && $watermark_image_margin == true){ ?>style="margin:<?php echo $watermark_image_margin ?>"<?php } ?> alt="<?php print $ft_gallery_alt_text ?>"/>
+                                            <img src="<?php print $watermark_image_url ?>" <?php if (isset($watermark_image_margin) && $watermark_image_margin == true){ ?>style="margin:<?php echo $watermark_image_margin ?>"<?php } ?> alt="<?php print $ft_gallery_alt_text ?>" />
                                         </div>
                                     </div>
                                 <?php } ?></a>
 
                         </div>
-                        <?php
 
+                        <?php print ' <div class="ftg-varation-for-popup">';
+                        if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php') && isset($productID) && $productID !== '') {
 
+                            // Get $product object from product ID
+                            $this->ftg_variable_add_to_cart($productID);
+                        }
+                        print '</div>';
 
                         if ($show_share == 'yes' || is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php') && isset($productID) && $show_purchase_link == 'yes') { ?>
 
@@ -1038,19 +1052,32 @@ class Display_Gallery extends Gallery {
                                             <a href='<?php print $ft_gallery_share_email ?>' target='_blank' class='ft-galleryemail-icon'><i class='fa fa-envelope'></i></a>
                                         </div>
                                     </div>
-                                <?php } ?>
+                                <?php }
+
+
+                                ?>
 
                                 <div class="ft-gallery-cta-button-wrap">
-                                    <?php  if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php') && isset($productID) && $show_purchase_link == 'yes') {
+                                    <?php
+                                    if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php') && isset($productID) && $productID !== '' && $show_purchase_link == 'yes') {
 
-                                        if ($purchase_link_option == 'prod_page') {
-                                            $purchase_link = '' . $siteurl . '/product/?p=' . $productID . '';
-                                        } elseif ($purchase_link_option == 'add_cart') {
-                                            $purchase_link = '' . $siteurl . '/?add-to-cart=' . $productID . '';
-                                        } elseif ($purchase_link_option == 'add_cart_checkout') {
-                                            $purchase_link = '' . $siteurl . '/cart/?add-to-cart=' . $productID . '';
+                                        // Check to see if we are working with a variable product and if so make the purchase link go to cart
+                                        $product = wc_get_product($productID);
+
+                                        if ($product->get_type('variable') == 'variable') {
+                                            $purchase_link = '' . $siteurl . '/cart';
                                         } else {
-                                            $purchase_link = '' . $siteurl . '/product/?p=' . $productID . '';
+                                            if ($purchase_link_option == 'prod_page') {
+                                                $purchase_link = '' . $siteurl . '/product/?p=' . $productID . '';
+                                            } elseif ($purchase_link_option == 'add_cart') {
+                                                $purchase_link = '' . $siteurl . '/?add-to-cart=' . $productID . '';
+                                            } elseif ($purchase_link_option == 'add_cart_checkout') {
+                                                $purchase_link = '' . $siteurl . '/cart/?add-to-cart=' . $productID . '';
+                                            } elseif ($purchase_link_option == 'cart_checkout') {
+                                                $purchase_link = '' . $siteurl . '/cart';
+                                            } else {
+                                                $purchase_link = '' . $siteurl . '/product/?p=' . $productID . '';
+                                            }
                                         }
 
                                         //If Image already has product meta check the product still exists
@@ -1068,7 +1095,6 @@ class Display_Gallery extends Gallery {
                             </div>
                             <div class="clear"></div>
                         <?php } ?>
-
                     </div>
                 <?php } // Instagram Style Post Format "Image gallery squared"
                 elseif ($format_type == 'gallery') {
@@ -1106,14 +1132,28 @@ class Display_Gallery extends Gallery {
                                 ?>
                                 <div class="<?php if (isset($watermark_overlay_enable) && $watermark_overlay_enable == 'popup-only') { ?>ft-image-overlay fts-image-overlay-hide<?php } elseif (isset($watermark_overlay_enable) && $watermark_overlay_enable == 'page-and-popup') { ?>ft-image-overlay<?php } ?>">
                                     <div class="fts-watermark-inside fts-watermark-inside-<?php echo $watermark_image_position ?>" <?php if (isset($watermark_image_opacity) && $watermark_image_opacity == true){ ?>style="opacity:<?php echo $watermark_image_opacity ?>"<?php } ?>>
-                                        <img src="<?php print $watermark_image_url ?>" <?php if (isset($watermark_image_margin) && $watermark_image_margin == true){ ?>style="margin:<?php echo $watermark_image_margin ?>"<?php } ?> alt="<?php print $ft_gallery_alt_text ?>"/>
+                                        <img src="<?php print $watermark_image_url ?>" <?php if (isset($watermark_image_margin) && $watermark_image_margin == true){ ?>style="margin:<?php echo $watermark_image_margin ?>"<?php } ?> alt="<?php print $ft_gallery_alt_text ?>" />
                                     </div>
                                 </div>
                             <?php } ?>
-                            <?php if ($popup == 'yes'){ ?>
+                            <?php if ($popup == 'yes'){
+                            // Get $product object from product ID
+                            ?>
                         </a>
-                        <div class="fts-mashup-count-wrap" style="<?php if ($show_share == 'yes') { ?>display:none !important;<?php } ?>">
-                            <div class="fts-share-wrap">  <?php if ($show_share == 'yes') { ?>
+                   <?php print ' <div class="ftg-varation-for-popup" style="display: none!important;">';
+                    if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php') && isset($productID) && $productID !== '') {
+
+                        // Get $product object from product ID
+                        $this->ftg_variable_add_to_cart($productID);
+                    }
+                        print '</div>';
+
+                    if ($show_share == 'yes' || is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php') && isset($productID) && $productID !== '' && $show_purchase_link == 'yes') { ?>
+
+                        <div class="fts-mashup-count-wrap">
+
+                            <?php if ($show_share == 'yes') { ?>
+                                <div class="fts-share-wrap">
                                     <a href="javascript:;" class="ft-gallery-link-popup"></a>
                                     <div class='ft-gallery-share-wrap'>
                                         <a href='<?php print $ft_gallery_share_facebook ?>' target='_blank' class='ft-galleryfacebook-icon'><i class='fa fa-facebook-square'></i></a>
@@ -1122,19 +1162,31 @@ class Display_Gallery extends Gallery {
                                         <a href='<?php print $ft_gallery_share_linkedin ?>' target='_blank' class='ft-gallerylinkedin-icon'><i class='fa fa-linkedin'></i></a>
                                         <a href='<?php print $ft_gallery_share_email ?>' target='_blank' class='ft-galleryemail-icon'><i class='fa fa-envelope'></i></a>
                                     </div>
-                                <?php } ?>
-                            </div>
-                            <div class="ft-gallery-cta-button-wrap">
-                                <?php if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php') && isset($productID) && $show_purchase_link == 'yes') {
+                                </div>
+                            <?php } ?>
 
-                                    if ($purchase_link_option == 'prod_page') {
-                                        $purchase_link = '' . $siteurl . '/product/?p=' . $productID . '';
-                                    } elseif ($purchase_link_option == 'add_cart') {
-                                        $purchase_link = '' . get_the_permalink() . '/?add-to-cart=' . $productID . '';
-                                    } elseif ($purchase_link_option == 'add_cart_checkout') {
-                                        $purchase_link = '' . $siteurl . '/cart/?add-to-cart=' . $productID . '';
+                            <div class="ft-gallery-cta-button-wrap">
+                                <?php
+                                if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php') && isset($productID) && $productID !== ''  && $show_purchase_link == 'yes') {
+
+
+                                    // Check to see if we are working with a variable product and if so make the purchase link go to cart
+                                    $product = wc_get_product($productID);
+
+                                    if ($product->get_type('variable') == 'variable') {
+                                        $purchase_link = '' . $siteurl . '/cart';
                                     } else {
-                                        $purchase_link = '' . $siteurl . '/product/?p=' . $productID . '';
+                                        if ($purchase_link_option == 'prod_page') {
+                                            $purchase_link = '' . $siteurl . '/product/?p=' . $productID . '';
+                                        } elseif ($purchase_link_option == 'add_cart') {
+                                            $purchase_link = '' . $siteurl . '/?add-to-cart=' . $productID . '';
+                                        } elseif ($purchase_link_option == 'add_cart_checkout') {
+                                            $purchase_link = '' . $siteurl . '/cart/?add-to-cart=' . $productID . '';
+                                        } elseif ($purchase_link_option == 'cart_checkout') {
+                                            $purchase_link = '' . $siteurl . '/cart';
+                                        } else {
+                                            $purchase_link = '' . $siteurl . '/product/?p=' . $productID . '';
+                                        }
                                     }
 
                                     //If Image already has product meta check the product still exists
@@ -1144,11 +1196,16 @@ class Display_Gallery extends Gallery {
                                             echo '<a class="ft-gallery-buy-now ft-gallery-link-popup-master" href="' . $purchase_link . '" ">' . $purchase_text . '</a>';
                                         }
                                     }
-                                } // end if woo active and prodcut ID set
+                                } // end if woo active and product ID set
+
                                 // <a href="http://sidebar-support.com/" title="" class="ft-gallery-download ft-gallery-link-popup-master" target="_blank"> _e('Download', 'feed-them-gallery')</a>
                                 ?>
                             </div>
                         </div>
+                        <div class="clear"></div>
+                    <?php } ?>
+
+
                         <div class="clear"></div>
                     <?php } ?>
                     </div>
@@ -1162,7 +1219,7 @@ class Display_Gallery extends Gallery {
             $offset = $ftg['offset'];
 
 
-            if($ft_gallery_load_more_option == "yes"){
+            if ($ft_gallery_load_more_option == "yes") {
 
                 //******************
                 //Load More BUTTON Start
@@ -1172,23 +1229,26 @@ class Display_Gallery extends Gallery {
                 if (!isset($_GET['load_more_ajaxing'])) {
                     $offset = 2;
                     $post_count = $post_count;
-                }
-                else {
+                } else {
                     $offset = 1 + $ftg['offset'];
                     $post_count = $post_count + $ftg['media_count'];
                 }
 
-                if($post_count > $this->ft_gallery_count_post_images($ftg['id'])){
+                if ($post_count > $this->ft_gallery_count_post_images($ftg['id'])) {
                     $post_count = $this->ft_gallery_count_post_images($ftg['id']);
                 }
-                ?><script>var ft_gallery_offset<?php echo $_REQUEST['ft_gallery_dynamic_name']; ?>= "<?php echo $offset ?>";var ft_gallery_posts<?php echo $_REQUEST['ft_gallery_dynamic_name']; ?>= "<?php echo $post_count ?>";jQuery('.ft-gallery-image-loaded-count').html(ft_gallery_posts<?php echo $_REQUEST['ft_gallery_dynamic_name']; ?>)</script><?php
+                ?>
+                <script>var ft_gallery_offset<?php echo $_REQUEST['ft_gallery_dynamic_name']; ?>= "<?php echo $offset ?>";
+                    var ft_gallery_posts<?php echo $_REQUEST['ft_gallery_dynamic_name']; ?>= "<?php echo $post_count ?>";
+                    jQuery('.ft-gallery-image-loaded-count').html(ft_gallery_posts<?php echo $_REQUEST['ft_gallery_dynamic_name']; ?>)</script><?php
                 //Make sure it's not ajaxing
                 if (!isset($_GET['load_more_ajaxing'])) {
 
                     $ft_gallery_dynamic_name = $_REQUEST['ft_gallery_dynamic_name'];
                     $time = time();
                     $nonce = wp_create_nonce($time . "load-more-nonce");
-                    ?><script> jQuery(document).ready(function () {
+                    ?>
+                    <script> jQuery(document).ready(function () {
                             <?php if ($scrollMore == 'autoscroll') { // this is where we do SCROLL function to LOADMORE if = autoscroll in shortcode ?>
                             jQuery(".<?php echo $feed_name_rand_string ?>-scrollable").bind("scroll", function () {
                                 if (jQuery(this).scrollTop() + jQuery(this).innerHeight() >= jQuery(this)[0].scrollHeight) {
@@ -1196,7 +1256,7 @@ class Display_Gallery extends Gallery {
                                     else { // this is where we do CLICK function to LOADMORE if = button in shortcode ?>
                                     jQuery("#loadMore_<?php echo $ft_gallery_dynamic_name ?>").click(function () {
                                         <?php }
-                                        $ft_gallery_bounce_color = isset($ft_gallery_loadmore_text_color) && $ft_gallery_loadmore_text_color == TRUE ? ' style="background:' . $ft_gallery_loadmore_text_color . ';"' : '';
+                                        $ft_gallery_bounce_color = isset($ft_gallery_loadmore_text_color) && $ft_gallery_loadmore_text_color == true ? ' style="background:' . $ft_gallery_loadmore_text_color . ';"' : '';
                                         ?>
                                         jQuery("#loadMore_<?php echo $ft_gallery_dynamic_name ?>").addClass('fts-fb-spinner');
                                         var button = jQuery('#loadMore_<?php echo $ft_gallery_dynamic_name ?>').html('<div class="bounce1"<?php echo $ft_gallery_bounce_color ?>></div><div class="bounce2"<?php echo $ft_gallery_bounce_color ?>></div><div class="bounce3"<?php echo $ft_gallery_bounce_color ?>></div>');
@@ -1256,7 +1316,13 @@ class Display_Gallery extends Gallery {
                                                 jQuery.fn.ftsShare();
                                                 // Reload this function again otherwise the popup won't work correctly for the newly loaded items
                                                 jQuery.fn.slickWordpressPopUpFunction();
-                                                <?php if ($format_type == 'gallery') { ?>if(jQuery( "#ftg-gallery-demo" ).hasClass( "ftg-demo-1" )){outputSRmargin(document.querySelector('#margin').value)} // Reload our margin for the demo
+ <?php if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php') && isset($productID)) {?>
+                                                jQuery.fn.ftg_apply_quant_btn();
+                                                jQuery.getScript("/wp-content/plugins/woocommerce/assets/js/frontend/add-to-cart-variation.min.js");<?php } ?>
+
+                                                <?php if ($format_type == 'gallery') { ?>if (jQuery("#ftg-gallery-demo").hasClass("ftg-demo-1")) {
+                                                    outputSRmargin(document.querySelector('#margin').value)
+                                                } // Reload our margin for the demo
                                                 // Reload our imagesizing function so the images show up proper
                                                 slickremixFTGalleryImageResizing();
                                                 <?php } ?>
@@ -1275,7 +1341,7 @@ class Display_Gallery extends Gallery {
                 }//End Check
                 // main closing div not included in ajax check so we can close the wrap at all times
 
-                print '</div>'; // closing main div for photos and scroll wrap
+                print '</div><!--closing main div for photos and scroll wrap-->'; // closing main div for photos and scroll wrap
 
 
                 //Make sure it's not ajaxing
@@ -1286,11 +1352,10 @@ class Display_Gallery extends Gallery {
                     print '<div class="fts-clear"></div>';
                     print '<div id="output_' . $fts_dynamic_class_name . '"></div>';
                     if ($scrollMore == 'autoscroll') {
-                        print '<div id="loadMore_' . $ft_gallery_dynamic_name . '" class="fts-fb-load-more fts-fb-autoscroll-loader">'.__('Load More', 'feed-them-instagram').'</div>';
+                        print '<div id="loadMore_' . $ft_gallery_dynamic_name . '" class="fts-fb-load-more fts-fb-autoscroll-loader">' . __('Load More', 'feed-them-instagram') . '</div>';
                     }
                 }
-                ?>
-                <?php //only show this script if the height option is set to a number
+                ?><?php //only show this script if the height option is set to a number
                 if ($height !== '' && empty($height) == NULL) { ?>
                     <script>
                         // this makes it so the page does not scroll if you reach the end of scroll bar or go back to top
@@ -1307,10 +1372,10 @@ class Display_Gallery extends Gallery {
                         };
                         jQuery('.ft-wp-gallery-scrollable').isolatedScrollFTGallery();
                     </script>
-                <?php } //end $height !== 'auto' && empty($height) == NULL ?>
-                <?php
-                if (isset($scrollMore) && $scrollMore == 'autoscroll' || isset($height) && $height !== '') {
-                    print '</div><!--closing height div for scrollable feeds-->'; // closing height div for scrollable feeds
+                <?php } //end $height !== 'auto' && empty($height) == NULL
+                ?><?php
+                if (isset($scrollMore) && $scrollMore == 'autoscroll' || $height !== '' && empty($height) == NULL) {
+                    //  print '</div><!--closing height div for scrollable feeds-->'; // closing height div for scrollable feeds
                 }
                 //Make sure it's not ajaxing
                 if (!isset($_GET['load_more_ajaxing'])) {
@@ -1331,12 +1396,12 @@ class Display_Gallery extends Gallery {
                         print'</div>';
 
                     }
-                    if($pagination == 'yes') {
+                    if ($pagination == 'yes') {
 
                         if (isset($ft_gallery_pagination_text_color) && $ft_gallery_pagination_text_color !== '') {
                             $ft_gallery_pagination_text_color = 'style="color:' . $ft_gallery_pagination_text_color . ';"';
                         }
-                        echo '<div class="ftgallery-image-count-wrap"'.$ft_gallery_pagination_text_color.'>';
+                        echo '<div class="ftgallery-image-count-wrap"' . $ft_gallery_pagination_text_color . '>';
                         echo '<span class="ft-gallery-image-loaded-count">' . $post_count . '</span>';
                         echo '<span class="ft-gallery-count-of">' . __("of", "feed-them-instagram") . '</span>';
                         echo '<span class="ft-gallery-image-count-total"> ' . $this->ft_gallery_count_post_images($ftg['id']) . ' </span>';
@@ -1344,8 +1409,7 @@ class Display_Gallery extends Gallery {
                     }
                 }//End Check
                 unset($_REQUEST['ft_gallery_offset']);
-            }
-            else {
+            } else {
                 print '</div>'; // closing div for main wrap
             }
 
@@ -1441,8 +1505,8 @@ class Display_Gallery extends Gallery {
             $pointer = 0;
             for ($row = 0; $row < $row_count; $row++) {
                 for ($col = 0; $col < $col_count; ++$col) {
-                    if (isset($array[$pointer])) {
-                        $result[$row]['id'] = $array[$pointer];
+                    if (isset($array[ $pointer ])) {
+                        $result[ $row ]['id'] = $array[ $pointer ];
                         $pointer++;
                     }
                 }
@@ -1475,8 +1539,8 @@ class Display_Gallery extends Gallery {
                 $pointer = 0;
                 for ($row = 0; $row < $row_count; $row++) {
                     for ($col = 0; $col < $col_count; ++$col) {
-                        if (isset($array[$pointer])) {
-                            $result[$row]['id'] = $array[$pointer];
+                        if (isset($array[ $pointer ])) {
+                            $result[ $row ]['id'] = $array[ $pointer ];
                             $pointer++;
                         }
                     }
@@ -1494,9 +1558,9 @@ class Display_Gallery extends Gallery {
         echo '<pre>' . print_r($skeys, 1) . '</pre>';
         usort($image_list_sort,
             function ($a, $b) use ($skeys) {
-                $final = isset($skeys[$a['id']]) ? $skeys[$a['id']] : null;
+                $final = isset($skeys[ $a['id'] ]) ? $skeys[ $a['id'] ] : null;
                 $a = $final;
-                $b = $skeys[$b['id']];
+                $b = $skeys[ $b['id'] ];
                 $newlist = $a - $b;
                 echo '<pre>' . print_r($newlist, 1) . '</pre>';
 
@@ -1523,9 +1587,109 @@ class Display_Gallery extends Gallery {
             $offset = $_REQUEST['ft_gallery_offset'];
             $media = $_REQUEST['ft_gallery_media_count'];
 
-            $object = do_shortcode('[feed-them-gallery id='.$_REQUEST['ft_gallery_id'].' offset='.$offset.' media_count='.$media.']');
+            $object = do_shortcode('[feed-them-gallery id=' . $_REQUEST['ft_gallery_id'] . ' offset=' . $offset . ' media_count=' . $media . ']');
             echo $object;
         }
         die();
     }
-}?>
+
+
+    function ftg_variable_add_to_cart($productID) {
+        global $product;
+
+        $product = wc_get_product($productID);
+        //  $variations = $this->find_valid_variations($productID);
+
+        if ($product->get_type('variable') == 'variable') { ?>
+            <div class="ft-gallery-variations-wrap">
+            <div class="ft-gallery-variations-price-wrap">
+                <?php
+                //  Saving commented out items: Use case... if we want to have a From: $10 - $50 option
+                // $prefix = sprintf('%s: ', __('From', 'feed-them-gallery'));
+                $min_price_regular = $product->get_variation_regular_price('min', true);
+                $min_price_sale = $product->get_variation_sale_price('min', true);
+                $max_price = $product->get_variation_price('max', true);
+                // $min_price = $product->get_variation_price('min', true);
+                $price = ($min_price_sale == $min_price_regular) ? wc_price($min_price_regular) . ' - ' . wc_price($max_price) : print  '<del>' . wc_price($min_price_regular) . '</del>' . '<ins>' . wc_price($min_price_sale) . '</ins>';
+                // print ( $min_price == $max_price ) ? $price : sprintf('%s%s', $prefix, $price);
+                print  $price; ?>
+            </div>
+            <div class="ft-gallery-variations-text">
+                <?
+                // Enqueue variation scripts
+                wp_enqueue_script('wc-add-to-cart-variation');
+                // Load the template
+                wc_get_template('single-product/add-to-cart/variable.php', array(
+                    'available_variations' => $product->get_available_variations(),
+                    'attributes' => $product->get_variation_attributes(),
+                    'selected_attributes' => $product->get_default_attributes()
+                ));
+                ?>
+            </div>
+            </div><?php
+        } elseif ($product->get_type('variable') == 'simple') { ?>
+
+            <div class="ft-gallery-variations-wrap">
+                <div class="ft-gallery-variations-price-wrap ft-gallery-simple-price">
+
+                    <?php
+                    $price_regular = $product->get_regular_price('min', true);
+                    $price_sale = $product->get_sale_price('min', true);
+                    $price = $price_sale ? '<del>' . wc_price($price_regular) . '</del>' . '<ins>' . wc_price($price_sale) . '</ins>' : wc_price($price_regular);
+                    // print ( $min_price == $max_price ) ? $price : sprintf('%s%s', $prefix, $price);
+                    print  $price;
+                    ?>
+                </div>
+                <div class="ft-gallery-simple-cart">
+                    <?
+                    // Enqueue variation scripts
+                    wc_get_template('single-product/add-to-cart/simple.php');
+                    ?>
+                </div>
+            </div>
+        <?php }
+    }
+
+    function find_valid_variations($productID) {
+        global $product;
+        $product = wc_get_product($productID);
+        $variations = $product->get_available_variations();
+        $attributes = $product->get_attributes();
+        $new_variants = array();
+
+        // Loop through all variations
+        foreach ($variations as $variation) {
+
+            // Peruse the attributes.
+
+            // 1. If both are explicitly set, this is a valid variation
+            // 2. If one is not set, that means any, and we must 'create' the rest.
+
+            $valid = true; // so far
+            foreach ($attributes as $slug => $args) {
+                if (array_key_exists("attribute_$slug", $variation['attributes']) && !empty($variation['attributes']["attribute_$slug"])) {
+                    // Exists
+
+                } else {
+                    // Not exists, create
+                    $valid = false; // it contains 'anys'
+                    // loop through all options for the 'ANY' attribute, and add each
+                    foreach (explode('|', $attributes[ $slug ]['value']) as $attribute) {
+                        $attribute = trim($attribute);
+                        $new_variant = $variation;
+                        $new_variant['attributes']["attribute_$slug"] = $attribute;
+                        $new_variants[] = $new_variant;
+                    }
+
+                }
+            }
+            // This contains ALL set attributes, and is itself a 'valid' variation.
+            if ($valid)
+                $new_variants[] = $variation;
+        }
+
+        return $new_variants;
+    }
+}
+
+?>

@@ -258,7 +258,7 @@ class Gallery_Options {
                 array(
                     'input_wrap_class' => 'ft-gallery-user-name',
                     'option_type' => 'input',
-                    'label' => __('User Name', 'feed-them-gallery') . '<br/><small>' . __('Company or user who took this photo', 'feed-them-gallery') . '</small>',
+                    'label' => __('User Name', 'feed-them-gallery') . '<br/><small>' . __('Photographer, Company, etc.', 'feed-them-gallery') . '</small>',
                     'type' => 'text',
                     'id' => 'ft_gallery_username',
                     'name' => 'ft_gallery_username',
