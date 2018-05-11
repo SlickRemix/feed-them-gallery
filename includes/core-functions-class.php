@@ -45,6 +45,104 @@ class Core_Functions {
         //Re-order Sub-Menu Items
         add_action('admin_menu', array($this, 'ft_gallery_reorder_admin_sub_menus'));
 
+        //FTG License Page
+        if (isset($_GET['page']) && $_GET['page'] == 'ft-gallery-license-page') {
+            add_action('admin_footer', array($this, 'ftg_plugin_license'));
+        }
+
+    }
+
+    /**
+     * My FTG Plugin License
+     *
+     * Put in place to only show the Activate Plugin license if the input has a value
+     *
+     * @since 1.0.3
+     */
+    function ftg_plugin_license() {
+        wp_enqueue_script('jquery'); ?>
+        <style>.ftg-license-master-form th {
+                background: #f9f9f9;
+                padding: 14px;
+                border-bottom: 1px solid #ccc;
+                margin: -14px -14px 20px;
+                width: 100%;
+                display: block
+            }
+
+            .ftg-license-master-form .form-table tr {
+                float: left;
+                margin: 0 15px 15px 0;
+                background: #fff;
+                border: 1px solid #ccc;
+                width: 30.5%;
+                max-width: 350px;
+                padding: 14px;
+                min-height: 220px;
+                position: relative;
+                box-sizing: border-box
+            }
+
+            .ftg-license-master-form .form-table td {
+                padding: 0;
+                display: block
+            }
+
+            .ftg-license-master-form td input.regular-text {
+                margin: 0 0 8px;
+                width: 100%
+            }
+
+            .ftg-license-master-form .edd-license-data[class*=edd-license-] {
+                position: absolute;
+                background: #fafafa;
+                padding: 14px;
+                border-top: 1px solid #eee;
+                margin: 20px -14px -14px;
+                min-height: 67px;
+                width: 100%;
+                bottom: 14px;
+                box-sizing: border-box
+            }
+
+            .ftg-license-master-form .edd-license-data p {
+                font-size: 13px;
+                margin-top: 0
+            }
+
+            .ftg-license-master-form tr {
+                display: none
+            }
+
+            .ftg-license-master-form tr.ftg-license-wrap {
+                display: block
+            }
+
+            .ftg-license-master-form .edd-license-msg-error {
+                background: rgba(255, 0, 0, 0.49)
+            }
+
+            .ftg-license-master-form tr.ftg-license-wrap {
+                display: block
+            }
+
+            .ftg-license-master-form .edd-license-msg-error {
+                background: #e24e4e !important;
+                color: #FFF
+            }
+
+            .ftg-license-wrap .edd-license-data p {
+                color: #1e981e
+            }
+
+            .edd-license-msg-error p {
+                color: #FFF !important
+            }
+
+            .feed-them_page_fts-license-page .button-secondary {
+                display: none;
+            }</style>
+        <?php
     }
 
     /**
