@@ -24,6 +24,7 @@
  *
  * Need Support? http://www.slickremix.com/my-account
 */
+
 final class Feed_Them_Gallery {
 
     /**
@@ -74,6 +75,11 @@ final class Feed_Them_Gallery {
             // Include Leave feedback, Get support and Plugin info links to plugin activation and update page.
             add_filter('plugin_row_meta', array(self::$instance, 'ft_gallery_leave_feedback_link'), 10, 2);
 
+            if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php')) {
+                /* AJAX add to cart variable  */
+                add_action('wp_ajax_woocommerce_add_to_cart_variable_rc', array(self::$instance, 'woocommerce_add_to_cart_variable_rc_callback2'));
+                add_action('wp_ajax_nopriv_woocommerce_add_to_cart_variable_rc', array(self::$instance, 'woocommerce_add_to_cart_variable_rc_callback2'));
+            }
             //Setup Constants for FT Gallery
             self::$instance->setup_constants();
             //add_action( 'plugins_loaded', array( self::$instance, 'load_textdomain' ) );
@@ -113,6 +119,47 @@ final class Feed_Them_Gallery {
         return self::$instance;
     }
 
+
+    function ajax_add_to_cart_script2() {
+        wp_enqueue_script( 'add-to-cart-ajax_ajax', plugins_url( 'feed-them-gallery/includes/feeds/js/add-to-cart-ajax.js'), array('jquery'), '', true );
+    }
+
+    function woocommerce_add_to_cart_variable_rc_callback2() {
+        ob_start();
+
+        $product_id = apply_filters( 'woocommerce_add_to_cart_product_id', absint( $_POST['product_id'] ) );
+        $quantity = empty( $_POST['quantity'] ) ? 1 : apply_filters( 'woocommerce_stock_amount', $_POST['quantity'] );
+        $variation_id = $_POST['variation_id'];
+        $variation  = $_POST['variation'];
+        $passed_validation = apply_filters( 'woocommerce_add_to_cart_validation', true, $product_id, $quantity );
+
+        if ( $passed_validation && WC()->cart->add_to_cart( $product_id, $quantity, $variation_id, $variation  ) ) {
+            do_action( 'woocommerce_ajax_added_to_cart', $product_id );
+            if ( get_option( 'woocommerce_cart_redirect_after_add' ) == 'yes' ) {
+                wc_add_to_cart_message( $product_id );
+            }
+            // Return fragments
+            WC_AJAX::get_refreshed_fragments();
+        }
+        elseif ( WC()->cart->add_to_cart( $product_id, $quantity) && $variation == '' ) {
+            do_action( 'woocommerce_ajax_added_to_cart', $product_id );
+            if ( get_option( 'woocommerce_cart_redirect_after_add' ) == 'yes' ) {
+                wc_add_to_cart_message( $product_id );
+            }
+            // Return fragments
+            WC_AJAX::get_refreshed_fragments();
+        }
+        else {
+            echo 'Not on our watch';
+            // If there was an error adding to the cart, redirect to the product page to show any errors
+            $data = array(
+                'error' => true,
+                'product_url' => apply_filters( 'woocommerce_cart_redirect_after_error', get_permalink( $product_id ), $product_id )
+            );
+            echo json_encode( $data );
+        }
+        die();
+    }
 
     /**
      * This function runs when WordPress completes its upgrade process
