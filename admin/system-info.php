@@ -54,17 +54,16 @@ class System_Info {
 
         <div class="ft-gallery-settings-admin-wrap" id="theme-settings-wrap">
             <h2>
-                <?php _e('System Info', 'ft-gallery'); ?>
+                <?php _e('System Info', 'feed-them-gallery'); ?>
             </h2>
             <p>
-                <?php _e('Please click the box below and copy the report. You will need to paste this information along with your question when creating a', 'ft-gallery'); ?>
-                <a href="https://www.slickremix.com/my-account/#tab-support" target="_blank">
-                    <?php _e('Support Ticket', 'ft-gallery'); ?></a>.</p>
+                <?php _e('Please click the box below and copy the report. You will need to paste this information along with your question when creating a', 'feed-them-gallery'); ?>
+                <a href="https://www.slickremix.com/my-account/#tab-support" target="_blank"><?php _e('Support Ticket', 'feed-them-gallery'); ?></a>.</p>
             <p>
-                <?php _e('To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'ft-gallery'); ?>
+                <?php _e('To copy the system info, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'feed-them-gallery'); ?>
             </p>
             <form action="<?php echo esc_url(admin_url('admin.php?page=ft-gallery-system-info-submenu-page')); ?>" method="post" dir="ltr">
-		<textarea readonly="readonly" onclick="this.focus();this.select()" id="system-info-textarea" name="ft-gallery-sysinfo" title="<?php _e('To copy the system info, click here then press Ctrl + C (PC) or Cmd + C (Mac).', 'ft-gallery'); ?>">
+		<textarea readonly="readonly" onclick="this.focus();this.select()" id="system-info-textarea" name="ft-gallery-sysinfo" title="<?php _e('To copy the system info, click here then press Ctrl + C (PC) or Cmd + C (Mac).', 'feed-them-gallery'); ?>">
 ### Begin System Info ###
             <?php
             $theme_data = wp_get_theme();
