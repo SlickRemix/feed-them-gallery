@@ -77,8 +77,8 @@ final class Feed_Them_Gallery {
 
             if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php')) {
                 /* AJAX add to cart variable  */
-                add_action('wp_ajax_woocommerce_add_to_cart_variable_rc', array(self::$instance, 'woocommerce_add_to_cart_variable_rc_callback2'));
-                add_action('wp_ajax_nopriv_woocommerce_add_to_cart_variable_rc', array(self::$instance, 'woocommerce_add_to_cart_variable_rc_callback2'));
+                add_action('wp_ajax_woocommerce_add_to_cart_variable_rc', array(self::$instance, 'woocommerce_add_to_cart_variable_rc_callback_ftg'));
+                add_action('wp_ajax_nopriv_woocommerce_add_to_cart_variable_rc', array(self::$instance, 'woocommerce_add_to_cart_variable_rc_callback_ftg'));
             }
             //Setup Constants for FT Gallery
             self::$instance->setup_constants();
@@ -119,12 +119,7 @@ final class Feed_Them_Gallery {
         return self::$instance;
     }
 
-
-    function ajax_add_to_cart_script2() {
-        wp_enqueue_script( 'add-to-cart-ajax_ajax', plugins_url( 'feed-them-gallery/includes/feeds/js/add-to-cart-ajax.js'), array('jquery'), '', true );
-    }
-
-    function woocommerce_add_to_cart_variable_rc_callback2() {
+    function woocommerce_add_to_cart_variable_rc_callback_ftg() {
         ob_start();
 
         $product_id = apply_filters( 'woocommerce_add_to_cart_product_id', absint( $_POST['product_id'] ) );
