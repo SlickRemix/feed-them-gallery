@@ -529,7 +529,7 @@ class Gallery {
 
                 if ($image_list) {
                     echo '<a href="' . get_edit_post_link($post_id) . '"><img src="' . $image_list[0]['media_details']['sizes']['thumbnail']['source_url'] . '" alt="" />';
-                    echo $this->ft_gallery_count_post_images($post_id) . ' '._e('Images', 'feed-them-gallery').'</a>';
+                    echo $this->ft_gallery_count_post_images($post_id) . ' '.__('Images', 'feed-them-gallery').'</a>';
                 }
                 break;
             // display a thumbnail photo
@@ -1405,7 +1405,10 @@ class Gallery {
                                 $gallery_to_woo_class = new Gallery_to_Woocommerce();
                                 echo $gallery_to_woo_class->ft_gallery_image_to_woo_model_prod_select($this->parent_post_id, 'global');
                             }
-                            ?>
+                            else {
+                                $ftg_prem_not_active = '<select disabled="" class="feed-them-gallery-admin-input"><option value="" selected="selected">Premium Required</option></select>';
+                                echo $ftg_prem_not_active;
+                            }?>
                             <span class="tab-section-description"><small><?php _e('Select a Product that will be duplicated when creating a WooCommerce products for individual images. 1 image will turn 1 WooCommerce product. Saves time when creating variable product Example: Printable images that have different print sizes, material, etc.', 'feed-them-gallery'); ?></small></span>
                             <span class="tab-section-description"><a href="https://docs.woocommerce.com/document/variable-product/" target="_blank"><small>
                                         <?php
@@ -1422,7 +1425,7 @@ class Gallery {
 
                             <div class="feed-them-gallery-admin-input-label"><?php _e('Smart Image Orientation Model Products', 'feed-them-gallery'); ?></div><br/>
 
-                            <span class="tab-section-description"><small><?php _e('Select Model Products that will be duplicated when creating a WooCommerce products for Landscape Images (Greater width than height), Square Images (Equal width and height), and Portrait Images (Width less than height). 1 image will turn 1 WooCommerce product. You must have a "Use Smart Image Orientation" checked above for this option to work properly.', 'feed-them-gallery'); ?></small></span>
+                            <span class="tab-section-description"><small><?php _e('Select Model Products that will be duplicated when creating a WooCommerce products for Landscape Images (Greater width than height), Square Images (Equal width and height), and Portrait Images (Width less than height). 1 image will turn 1 WooCommerce product. You must have the "Use Smart Image Orientation" checked above for this option to work properly.', 'feed-them-gallery'); ?></small></span>
                             <span class="tab-section-description"><a href="https://docs.woocommerce.com/document/variable-product/" target="_blank"><small>
                                         <?php
                                         echo sprintf(__('Learn how to create a %1$sVariable product%2$s in WooCommerce.', 'feed-them-gallery'),
@@ -1440,7 +1443,9 @@ class Gallery {
                                 $gallery_to_woo_class = new Gallery_to_Woocommerce();
                                 echo $gallery_to_woo_class->ft_gallery_image_to_woo_model_prod_select($this->parent_post_id, 'landscape');
                             }
-                            ?>
+                            else {
+                                echo $ftg_prem_not_active;
+                            }?>
                             </p>
                             <p>
                             <div class="feed-them-gallery-admin-input-label"><?php _e('Square Image Model Product', 'feed-them-gallery'); ?></div>
@@ -1448,6 +1453,9 @@ class Gallery {
                             if (is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
                                 $gallery_to_woo_class = new Gallery_to_Woocommerce();
                                 echo $gallery_to_woo_class->ft_gallery_image_to_woo_model_prod_select($this->parent_post_id, 'square');
+                            }
+                            else {
+                                echo $ftg_prem_not_active;
                             }
                             ?>
                             </p>
@@ -1458,9 +1466,10 @@ class Gallery {
                                 $gallery_to_woo_class = new Gallery_to_Woocommerce();
                                 echo $gallery_to_woo_class->ft_gallery_image_to_woo_model_prod_select($this->parent_post_id, 'portrait');
                             }
-                            ?>
+                            else {
+                                echo $ftg_prem_not_active;
+                            }?>
                             </p>
-
                         </div>
 
                         <div class="feed-them-gallery-admin-input-wrap ">
@@ -1469,7 +1478,10 @@ class Gallery {
                             if (is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
                                 echo $gallery_to_woo_class->ft_gallery_zip_to_woo_model_prod_select($this->parent_post_id);
                             }
-                            ?><span class="tab-section-description"><small><?php _e('Select a Product that will be duplicated when creating a WooCommerce product for Gallery Digital ZIP. (Turns all images in Gallery into a ZIP for a Simple Virtual/Downloadable WooCommerce product.)', 'feed-them-gallery'); ?></small></span>
+                            else {
+                                echo $ftg_prem_not_active;
+                            }?>
+                            <span class="tab-section-description"><small><?php _e('Select a Product that will be duplicated when creating a WooCommerce product for Gallery Digital ZIP. (Turns all images in Gallery into a ZIP for a Simple Virtual/Downloadable WooCommerce product.)', 'feed-them-gallery'); ?></small></span>
                             <span class="tab-section-description"><a href="https://docs.woocommerce.com/document/managing-products/#section-5" target="_blank"><small>
                                          <?php
                                          echo sprintf(__('Learn how to create a %1$sSimple product%2$s in WooCommerce.', 'feed-them-gallery'),
