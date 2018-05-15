@@ -34,7 +34,7 @@ class Gallery {
      *
      * @var string
      */
-    public $saved_settings_array = '';
+    public $saved_settings_array = array();
 
     /**
      * Global Prefix
@@ -91,6 +91,13 @@ class Gallery {
 
         //Register Gallery CPT
         add_action('init', array($this, 'ft_gallery_cpt'));
+
+        //Register Gallery Categories
+        //add_action( 'init', array($this, 'ft_gallery_categories') );
+
+        //Add Gallery Categories to attachments
+        //add_action( 'init', array($this, 'ft_gallery_add_cats_to_attachments') , 15);
+
         //Response Messages
         add_filter('post_updated_messages', array($this, 'ft_gallery_updated_messages'));
 
@@ -149,7 +156,12 @@ class Gallery {
      * @since 1.0.0
      */
     function ft_gallery_tab_premium_msg() {
-        echo '<div class="ft-gallery-premium-mesg">Please purchase, install and activate <a href="https://www.slickremix.com/downloads/feed-them-gallery/" target="_blank">Feed Them Gallery Premium</a> for these additional awesome features!</div>';
+        echo sprintf(__('%1$sPlease purchase, install and activate %2$sFeed Them Gallery Premium%3$s for these additional awesome features!%4$s', 'feed-them-gallery'),
+            '<div class="ft-gallery-premium-mesg">',
+            '<a href="'.esc_url('https://www.slickremix.com/downloads/feed-them-gallery/').'">',
+            '</a>',
+            '</div>'
+        );
     }
 
     /**
@@ -243,10 +255,10 @@ class Gallery {
 
         // Check for error
         if (is_wp_error($response)) {
-            return 'oops something isn\'t right.';
+            return __('oops something isn\'t right.', 'feed-them-gallery');
         }
 
-        $final_response = isset($response->data) ? $response->data : 'No Images attached to this post.';
+        $final_response = isset($response->data) ? $response->data : __('No Images attached to this post.', 'feed-them-gallery');
 
         return $final_response;
     }
@@ -271,7 +283,7 @@ class Gallery {
         $options_array = array();
 
         //Basic Post Info
-        $options_array['ft_gallery_image_id'] = isset($post_info->ID) ? $post_info->ID : 'This ID does not exist anymore';
+        $options_array['ft_gallery_image_id'] = isset($post_info->ID) ? $post_info->ID : __('This ID does not exist anymore', 'feed-them-gallery');
         $options_array['ft_gallery_author'] = isset($post_info->post_author) ? $post_info->post_author : '';
         //   $options_array['ft_gallery_post_date'] = $post_info->post_date_gmt;
         $options_array['ft_gallery_post_title'] = isset($post_info->post_title) ? $post_info->post_title : '';
@@ -290,7 +302,7 @@ class Gallery {
                         if (!empty($option_name)) {
                             $option_value = get_post_meta($gallery_id['gallery_id'], $option_name, true);
                             //Set value or use Default_value
-                            $options_array[ $option_name ] = !empty($option_value) ? $option_value : $option_default_value;
+                            $options_array[$option_name] = !empty($option_value) ? $option_value : $option_default_value;
                         }
 
                     }
@@ -348,6 +360,52 @@ class Gallery {
             'taxonomies' => array('ft_gallery_topics')
         );
         register_post_type('ft_gallery', $responses_cpt_args);
+    }
+
+    /**
+     * FT Gallery Categories (Custom Taxonomy)
+     *
+     * Create FT Gallery Custom Taxonomy
+     *
+     * @since 1.0.2
+     */
+    public function ft_gallery_categories() {
+
+        $labels = array(
+            'name' => _x( 'Categories', 'feed-them-gallery'),
+            'singular_name' => _x( 'Category', 'feed-them-gallery'),
+            'search_items' =>  __( 'Search Categories', 'feed-them-gallery'),
+            'all_items' => __( 'All Categories', 'feed-them-gallery'),
+            'parent_item' => __( 'Parent Category', 'feed-them-gallery'),
+            'parent_item_colon' => __( 'Parent Category:', 'feed-them-gallery'),
+            'edit_item' => __( 'Edit Category', 'feed-them-gallery'),
+            'update_item' => __( 'Update Category', 'feed-them-gallery'),
+            'add_new_item' => __( 'Add New Category', 'feed-them-gallery'),
+            'new_item_name' => __( 'New Category Name', 'feed-them-gallery'),
+            'menu_name' => __( 'Categories', 'feed-them-gallery'),
+        );
+
+        register_taxonomy('ft_gallery_cats', array('ft_gallery'), array(
+            'hierarchical' => false,
+            'labels' => $labels,
+            'show_ui' => true,
+            'show_admin_column' => true,
+            'query_var' => true,
+            'rewrite' => true,
+            'update_count_callback' => '_update_generic_term_count'
+        ));
+    }
+
+    /**
+     * FT Gallery Register Taxonomy for Attachments
+     *
+     * Registers
+     *
+     * @since 1.0.2
+     */
+    function ft_gallery_add_cats_to_attachments() {
+        register_taxonomy_for_object_type('ft_gallery_cats', 'attachment');
+        // add_post_type_support('attachment', 'ft_gallery_cats');
     }
 
     /**
@@ -415,7 +473,7 @@ class Gallery {
         foreach ($columns as $key => $value) {
 
             if ($key == 'title') {  // when we find the date column
-                $new[ $key ] = $value;
+                $new[$key] = $value;
                 $new['gallery_thumb'] = __('', 'feed-them-gallery');  // put the tags column before it
                 $new['gallery_shortcode'] = __('Gallery Shortcode', 'feed-them-gallery');
 
@@ -428,7 +486,7 @@ class Gallery {
                 $new['gallery_zip'] = $text;
 
             } else {
-                $new[ $key ] = $value;
+                $new[$key] = $value;
             }
         }
 
@@ -471,7 +529,7 @@ class Gallery {
 
                 if ($image_list) {
                     echo '<a href="' . get_edit_post_link($post_id) . '"><img src="' . $image_list[0]['media_details']['sizes']['thumbnail']['source_url'] . '" alt="" />';
-                    echo $this->ft_gallery_count_post_images($post_id) . ' Images</a>';
+                    echo $this->ft_gallery_count_post_images($post_id) . ' '._e('Images', 'feed-them-gallery').'</a>';
                 }
                 break;
             // display a thumbnail photo
@@ -492,10 +550,10 @@ class Gallery {
                             $ft_gallery_get_attachment_info = $this->ft_gallery_get_attachment_info($newest_zip);
                             echo '<a class="ft_gallery_download_button_icon" href="' . $ft_gallery_get_attachment_info['download_url'] . '"><span class="dashicons dashicons-download"></span></a>';
                         } else {
-                            echo 'No ZIP created.';
+                            echo _e('No ZIP created.', 'feed-them-gallery');
                         }
                     } else {
-                        echo 'No ZIP created.';
+                        echo _e('No ZIP created.', 'feed-them-gallery');
                     }
 
                 }
@@ -822,7 +880,7 @@ class Gallery {
                                             <p class="drag-drop-info"><?php _e('Drop images here'); ?></p>
                                             <p><?php _ex('or', 'Uploader: Drop Images here - or - Select Images'); ?></p>
                                             <div class="drag-drop-buttons">
-                                                <input id="<?php echo $id; ?>plupload-browse-button" type="button" value="<?php esc_attr_e('Select Images'); ?>" class="button" />
+                                                <input id="<?php echo $id; ?>plupload-browse-button" type="button" value="<?php esc_attr_e('Select Images'); ?>" class="button"/>
 
                                             </div>
                                             <div class="drag-drop-buttons">
@@ -833,7 +891,7 @@ class Gallery {
                                                     </a>
                                                 <?php else: ?>
                                                     <a href="<?php bloginfo('wpurl'); ?>/wp-admin/media-upload.php?post_id=<?php echo $this->parent_post_id; ?>&amp;tab=library&amp;=&amp;post_mime_type=image&amp;TB_iframe=1&amp;width=640&amp;height=353" class="thickbox add_media button-secondary" id="content-browse_library" title="Browse Media Library" onclick="return false;">
-                                                        <?php _e('Media Library', $this->plugin_locale); ?>
+                                                        <?php _e('Media Library', 'feed-them-gallery'); ?>
                                                     </a>
                                                 <?php endif; ?>
                                             </div>
@@ -868,7 +926,7 @@ class Gallery {
                                 <div class="ftg-number-of-images-wrap"><?php echo $this->ft_gallery_count_post_images($object->ID) ?><?php _e(' Images', 'feed-them-gallery'); ?></div>
                             <?php } ?>
 
-                            <input type="hidden" name="<?php echo $id; ?>" id="<?php echo $id; ?>" value="<?php echo $svalue; ?>" />
+                            <input type="hidden" name="<?php echo $id; ?>" id="<?php echo $id; ?>" value="<?php echo $svalue; ?>"/>
 
                             <div class="plupload-upload-uic hide-if-no-js <?php if ($multiple): ?>plupload-upload-uic-multiple<?php endif; ?>" id="<?php echo $id; ?>plupload-upload-ui">
                                 <span class="ajaxnonceplu" id="ajaxnonceplu<?php echo wp_create_nonce($id . 'pluploadan'); ?>"></span>
@@ -922,7 +980,7 @@ class Gallery {
                         // $images_count = count( $attachments );
 
                         ?>
-                        <input type="submit" class="metabox_submit" value="Submit" style="display: none;" />
+                        <input type="submit" class="metabox_submit" value="Submit" style="display: none;"/>
 
                         <?php // don't show these buttons until the page has been published with some photos in it
                         if (isset($image_list[0])) { ?>
@@ -962,21 +1020,37 @@ class Gallery {
                         <?php } ?>
                         <div class="gallery-edit-question-message gallery-edit-question-download-gallery" style="display: none;">
                             <h3><?php _e('Zip Gallery and Download'); ?></h3>
-                            <?php _e('This button will create a zip of all the full size images in this gallery on the <a href="post.php?post=' . $this->parent_post_id . '&action=edit&tab=ft_zip_gallery" >ZIPs tab</a> and then download a zip onto your computer. If you would like to just download a ZIP you have already made and NOT create a new ZIP of the gallery you may do so from the <a href="post.php?post=' . $this->parent_post_id . '&action=edit&tab=ft_zip_gallery" >ZIPs tab</a>.'); ?>
-                            <?php if (!is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
+                            <?php
+                            echo sprintf(__('This button will create a zip of all the full size images in this gallery on the %1$sZIPs tab%2$s and then download a zip onto your computer. If you would like to just download a ZIP you have already made and NOT create a new ZIP of the gallery you may do so from the %1$sZIPs tab%2$s.', 'feed-them-gallery'),
+                                '<a href="' . esc_url('post.php?post=' . $this->parent_post_id . '&action=edit&tab=ft_zip_gallery') . '" >',
+                                '</a>'
+                            );
+
+                            if (!is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
                                 $this->ft_gallery_tab_premium_msg();
                             } ?>
                         </div>
                         <?php //if (is_plugin_active('woocommerce/woocommerce.php')) { ?>
                         <div class="gallery-edit-question-message gallery-edit-question-digital-gallery-product" style="display: none;">
-                            <h3><?php _e('Create Digital Gallery Zip and Turn into a Product'); ?></h3><?php _e('This button will create a zip on the <a href="post.php?post=' . $this->parent_post_id . '&action=edit&tab=ft_zip_gallery" >ZIPs tab</a> of all the full size images in this gallery and then create a Woocommerce Product out of that ZIP. You must have a "ZIP Model Product" selected on the <a href="post.php?post=' . $this->parent_post_id . '&action=edit&tab=ft_woo_commerce" >Woocommerce tab</a> for this to work.'); ?>
-                            <?php if (!is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
+                            <h3><?php _e('Create Digital Gallery Zip and Turn into a Product'); ?></h3>
+                            <?php echo sprintf(__('This button will create a zip on the  %1$sZIPs tab%2$s of all the full size images in this gallery and then create a WooCommerce Product out of that ZIP. You must have a "ZIP Model Product" selected on the %3$sWoocommerce tab%4$s for this to work.', 'feed-them-gallery'),
+                                '<a href="' . esc_url('post.php?post=' . $this->parent_post_id . '&action=edit&tab=ft_zip_gallery') . '" >',
+                                '</a>',
+                                '<a href="' . esc_url('post.php?post=' . $this->parent_post_id . '&action=edit&tab=ft_woo_commerce') . '" >',
+                                '</a>'
+                            );
+                            if (!is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
                                 $this->ft_gallery_tab_premium_msg();
                             } ?>
                         </div>
                         <div class="gallery-edit-question-message gallery-edit-question-individual-image-product" style="display: none;">
-                            <h3><?php _e('Create Products from Individual Images'); ?></h3><?php _e('This button will create a Woocommerce Product for each of the images selected below. 1 image creates 1 Woocommerce product. You must have a "Single Image Model Product" selected on the  <a href="post.php?post=' . $this->parent_post_id . '&action=edit&tab=ft_woo_commerce" >Woocommerce tab</a> for this to work.'); ?>
-                            <?php if (!is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
+                            <h3><?php _e('Create Products from Individual Images'); ?></h3>
+                            <?php
+                            echo sprintf(__('This button will create a WooCommerce Product for each of the images selected below. 1 image creates 1 WooCommerce product. You must have a "Global Model Product" selected on the %1$sWoocommerce tab%2$s for this to work.', 'feed-them-gallery'),
+                                '<a href="' . esc_url('post.php?post=' . $this->parent_post_id . '&action=edit&tab=ft_woo_commerce') . '" >',
+                                '</a>'
+                            );
+                            if (!is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
                                 $this->ft_gallery_tab_premium_msg();
                             } ?>
                         </div>
@@ -1008,9 +1082,9 @@ class Gallery {
                                     $times = $image->post_date;
                                     $image = wp_prepare_attachment_for_js($image->ID);
 
-                                   //  echo '<pre>';
-                                   //    print_r($image['sizes']);
-                                   //  echo '</pre>';
+                                    // echo '<pre>';
+                                    //   print_r($image);
+                                    // echo '</pre>';
                                     $fts_final_date = $display_gallery->ft_gallery_custom_date($times, 'wp_gallery');
                                     $instagram_date = $fts_final_date;
 
@@ -1040,8 +1114,8 @@ class Gallery {
                                         $image_source_popup = $image_source_thumb[0];
                                     }
 
-                                    $next_img = isset($image_list[ $key + 1 ]) ? $image_list[ $key + 1 ] : $image_list[0];
-                                    $prev_img = isset($image_list[ $key - 1 ]) ? $image_list[ $key - 1 ] : $image_list[ count($image_list) - 1 ];
+                                    $next_img = isset($image_list[$key + 1]) ? $image_list[$key + 1] : $image_list[0];
+                                    $prev_img = isset($image_list[$key - 1]) ? $image_list[$key - 1] : $image_list[count($image_list) - 1];
 
 
                                     //  echo '<pre>';
@@ -1076,16 +1150,16 @@ class Gallery {
                                          }*/
                                     }
 
-                                      //  echo '<pre>';
-                                      //  print_r($image['sizes']['ft_gallery_thumb']);
-                                      //  echo '</pre>';
+                                    //  echo '<pre>';
+                                    //  print_r($image['sizes']['ft_gallery_thumb']);
+                                    //  echo '</pre>';
 
                                     if(isset($image['sizes']['ft_gallery_thumb'])){
                                         $image_url = wp_get_attachment_image_src($attachment_id = $image['id'], 'ft_gallery_thumb', false);
                                         // print_r('proper size<br/>');
                                     }
                                     else {
-                                         $image_url = wp_get_attachment_image_src($attachment_id = $image['id'], 'thumbnail', false);
+                                        $image_url = wp_get_attachment_image_src($attachment_id = $image['id'], 'thumbnail', false);
                                         // print_r(' not set<br/>');
                                     }
 
@@ -1193,7 +1267,20 @@ class Gallery {
                                     });
                                 </script>
                                 <h3><?php _e('Quick Guide to Getting Started', 'feed-them-gallery'); ?></h3>
-                                <p><?php _e('Please look over the options on the  <a href="edit.php?post_type=ft_gallery&page=ft-gallery-settings-page" target="_blank">Settings</a> page before creating your first gallery.<p/><p>1. Enter a title for your gallery at the top of the page in the "Enter title here" input.<br/>2. Add images to the gallery and sort them in the order you want.<br/>3. Publish the gallery by clicking the blue "Publish" button.<br/>4. Now you can edit your images title, description and more.</p>View our <a href="http://feedthemgallery.com/gallery-demo-one/" target="_blank">Image Gallery Demos</a> or <a href="https://www.slickremix.com/feed-them-gallery/" target="_blank">Full documentation</a> for more details.', 'feed-them-gallery'); ?>
+                                <p><?php
+                                    echo sprintf(__('Please look over the options on the %1$sSettings%2$s page before creating your first gallery.%3$s1. Enter a title for your gallery at the top of the page in the "Enter title here" input. %4$s2. Add images to the gallery and sort them in the order you want. %4$s3. Publish the gallery by clicking the blue "Publish" button. %4$s4. Now you can edit your images title, description and more. %5$sView our %6$sImage Gallery Demos%7$s or %8$sFull documentation%9$s for more details.', 'feed-them-gallery'),
+                                        '<a href="' . esc_url('edit.php?post_type=ft_gallery&page=ft-gallery-settings-page') . '" >',
+                                        '</a>',
+                                        '<p/><p>',
+                                        '<br/>',
+                                        '</p>',
+                                        '<a href="' . esc_url('http://feedthemgallery.com/gallery-demo-one/') . '" >',
+                                        '</a>',
+                                        '<a href="' . esc_url('https://www.slickremix.com/feed-them-gallery/') . '" >',
+                                        '</a>'
+
+                                    );
+                                    ?>
                             </div>
                             <?php
                         }
@@ -1211,7 +1298,14 @@ class Gallery {
 
                     <?php echo $this->ft_gallery_settings_html_form($this->parent_post_id, $this->saved_settings_array['layout'], null); ?>
                     <div class="clear"></div>
-                    <div class="ft-gallery-note"><?php _e('Additional Global options available on the <a href="edit.php?post_type=ft_gallery&page=ft-gallery-settings-page">settings page</a>.', 'feed-them-gallery') ?></div>
+                    <div class="ft-gallery-note">
+                        <?php
+                        echo sprintf(__('Additional Global options available on the %1$sSettings Page%2$s', 'feed-them-gallery'),
+                            '<a href="' . esc_url('edit.php?post_type=ft_gallery&page=ft-gallery-settings-page') . '" >',
+                            '</a>'
+                        );
+                        ?>
+                    </div>
 
                 </div>
 
@@ -1222,7 +1316,13 @@ class Gallery {
                     echo $this->ft_gallery_settings_html_form($this->parent_post_id, $this->saved_settings_array['colors'], null); ?>
                     <div class="clear"></div>
 
-                    <div class="ft-gallery-note"><?php _e('Additional global color options available on the <a href="edit.php?post_type=ft_gallery&page=ft-gallery-settings-page">settings page</a>.', 'feed-them-gallery') ?></div>
+                    <div class="ft-gallery-note"> <?php
+                        echo sprintf(__('Additional Global options available on the %1$sSettings Page%2$s', 'feed-them-gallery'),
+                            '<a href="' . esc_url('edit.php?post_type=ft_gallery&page=ft-gallery-settings-page') . '" >',
+                            '</a>'
+                        );
+                        ?>
+                    </div>
 
                 </div>
 
@@ -1248,18 +1348,17 @@ class Gallery {
                             <ul id="ft-gallery-zip-list" class="ftg-free-list">
                                 <li class="ft-gallery-zip zip-list-item-24527">
                                     <div class="ft-gallery-file-name">
-                                        <a href="javascript:;" title="Download">Example-Gallery-Name</a>
+                                        <a href="javascript:;" title="Download"><?php _e('Example-Gallery-Name'); ?></a>
                                     </div>
-                                    <div class="ft-gallery-file-time">October 14, 2020 - 2:45pm</div>
+                                    <div class="ft-gallery-file-time"><?php _e('October 14, 2020 - 2:45pm'); ?></div>
                                     <div class="ft-gallery-file-delete">
-                                        <a class="ft_gallery_delete_zip_button" >Delete</a>
+                                        <a class="ft_gallery_delete_zip_button"><?php _e('Delete'); ?></a>
                                     </div>
                                     <div class="ft-gallery-file-delete ft-gallery-file-zip-to-woo">
-                                        <a class="ft_gallery_create_woo_prod_button">Create
-                                            product</a></div>
+                                        <a class="ft_gallery_create_woo_prod_button"><?php _e('Create product'); ?></a>
+                                    </div>
                                     <div class="ft-gallery-file-view">
-                                        <a class="ft_gallery_view_zip_button">View
-                                            Contents</a></div>
+                                        <a class="ft_gallery_view_zip_button"><?php _e('View Contents'); ?></a></div>
                                     <ol class="zipcontents_list"></ol>
                                 </li>
                             </ul>
@@ -1300,36 +1399,107 @@ class Gallery {
                     <div class="tab-5-extra-options">
 
                         <div class="feed-them-gallery-admin-input-wrap ">
-                            <div class="feed-them-gallery-admin-input-label"><?php _e('Single Image Model Product', 'feed-them-gallery'); ?></div>
+                            <div class="feed-them-gallery-admin-input-label"><?php _e('Global Model Product', 'feed-them-gallery'); ?></div>
                             <?php
                             if (is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
                                 $gallery_to_woo_class = new Gallery_to_Woocommerce();
-                                echo $gallery_to_woo_class->ft_gallery_image_to_woo_model_prod_select($this->parent_post_id);
+                                echo $gallery_to_woo_class->ft_gallery_image_to_woo_model_prod_select($this->parent_post_id, 'global');
                             }
                             ?>
-                            </br><span class="tab-section-description"><small><?php _e('Select a Product that will be duplicated when creating a Woocommerce products for individual images. 1 image will turn 1 woo product. Saves time when creating variable product Example: Printable images that have different print sizes, material, etc.', 'feed-them-gallery'); ?></small></span>
-                            <span class="tab-section-description"><a href="https://docs.woocommerce.com/document/variable-product/" target="_blank"><small><?php _e('Learn how to create a <strong>Variable product</strong> in Woocommerce.', 'feed-them-gallery'); ?></small></a> </span>
+                            <span class="tab-section-description"><small><?php _e('Select a Product that will be duplicated when creating a WooCommerce products for individual images. 1 image will turn 1 WooCommerce product. Saves time when creating variable product Example: Printable images that have different print sizes, material, etc.', 'feed-them-gallery'); ?></small></span>
+                            <span class="tab-section-description"><a href="https://docs.woocommerce.com/document/variable-product/" target="_blank"><small>
+                                        <?php
+                                        echo sprintf(__('Learn how to create a %1$sVariable product%2$s in WooCommerce.', 'feed-them-gallery'),
+                                            '<strong>',
+                                            '</strong>'
+                                        );
+                                        ?>
+                                    </small></a> </span>
+
                         </div>
+
+                        <div class="feed-them-gallery-admin-input-wrap ">
+
+                            <div class="feed-them-gallery-admin-input-label"><?php _e('Smart Image Orientation Model Products', 'feed-them-gallery'); ?></div><br/>
+
+                            <span class="tab-section-description"><small><?php _e('Select Model Products that will be duplicated when creating a WooCommerce products for Landscape Images (Greater width than height), Square Images (Equal width and height), and Portrait Images (Width less than height). 1 image will turn 1 WooCommerce product. You must have a "Use Smart Image Orientation" checked above for this option to work properly.', 'feed-them-gallery'); ?></small></span>
+                            <span class="tab-section-description"><a href="https://docs.woocommerce.com/document/variable-product/" target="_blank"><small>
+                                        <?php
+                                        echo sprintf(__('Learn how to create a %1$sVariable product%2$s in WooCommerce.', 'feed-them-gallery'),
+                                            '<strong>',
+                                            '</strong>'
+                                        );
+                                        ?>
+                                    </small></a> </span>
+
+                            <p>
+                            <div class="feed-them-gallery-admin-input-label"><?php _e('Landscape Image Model Product', 'feed-them-gallery'); ?></div>
+
+                            <?php
+                            if (is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
+                                $gallery_to_woo_class = new Gallery_to_Woocommerce();
+                                echo $gallery_to_woo_class->ft_gallery_image_to_woo_model_prod_select($this->parent_post_id, 'landscape');
+                            }
+                            ?>
+                            </p>
+                            <p>
+                            <div class="feed-them-gallery-admin-input-label"><?php _e('Square Image Model Product', 'feed-them-gallery'); ?></div>
+                            <?php
+                            if (is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
+                                $gallery_to_woo_class = new Gallery_to_Woocommerce();
+                                echo $gallery_to_woo_class->ft_gallery_image_to_woo_model_prod_select($this->parent_post_id, 'square');
+                            }
+                            ?>
+                            </p>
+                            <p>
+                            <div class="feed-them-gallery-admin-input-label"><?php _e('Portrait Image Model Product', 'feed-them-gallery'); ?></div>
+                            <?php
+                            if (is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
+                                $gallery_to_woo_class = new Gallery_to_Woocommerce();
+                                echo $gallery_to_woo_class->ft_gallery_image_to_woo_model_prod_select($this->parent_post_id, 'portrait');
+                            }
+                            ?>
+                            </p>
+
+                        </div>
+
                         <div class="feed-them-gallery-admin-input-wrap ">
                             <div class="feed-them-gallery-admin-input-label"><?php _e('ZIP Model Product', 'feed-them-gallery'); ?></div>
                             <?php
                             if (is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
                                 echo $gallery_to_woo_class->ft_gallery_zip_to_woo_model_prod_select($this->parent_post_id);
                             }
-                            ?>
-                            </br><span class="tab-section-description"><small><?php _e('Select a Product that will be duplicated when creating a Woocommerce product for Gallery Digital ZIP. (Turns all images in Gallery into a ZIP for a Simple Virtual/Downloadable Woocommerce product.)', 'feed-them-gallery'); ?></small></span>
-                            <span class="tab-section-description"><a href="https://docs.woocommerce.com/document/managing-products/#section-5" target="_blank"><small><?php _e('Learn how to create a <strong>Simple product</strong> in Woocommerce.', 'feed-them-gallery'); ?></small></a> </span>
-                            <span class="tab-section-description"><small><?php _e('**NOTE** This Product must have options ', 'feed-them-gallery'); ?>
-                                    <a href="https://docs.woocommerce.com/document/managing-products/#section-14" target="_blank"><?php _e('Virtual', 'feed-them-gallery'); ?></a><?php _e(' and ', 'feed-them-gallery'); ?>
-                                    <a href="https://docs.woocommerce.com/document/managing-products/#section-15" target="_blank"><?php _e('Downloadable', 'feed-them-gallery'); ?></a> <?php _e('checked to appear in select option above. No Download link is needed in product though as it will be auto-filled in when Feed Them Gallery creates a new ZIP product.', 'feed-them-gallery'); ?></small></span>
+                            ?><span class="tab-section-description"><small><?php _e('Select a Product that will be duplicated when creating a WooCommerce product for Gallery Digital ZIP. (Turns all images in Gallery into a ZIP for a Simple Virtual/Downloadable WooCommerce product.)', 'feed-them-gallery'); ?></small></span>
+                            <span class="tab-section-description"><a href="https://docs.woocommerce.com/document/managing-products/#section-5" target="_blank"><small>
+                                         <?php
+                                         echo sprintf(__('Learn how to create a %1$sSimple product%2$s in WooCommerce.', 'feed-them-gallery'),
+                                             '<strong>',
+                                             '</strong>'
+                                         );
+                                         ?>
+                                    </small></a> </span>
+                            <span class="tab-section-description"><small><?php echo sprintf(__('**NOTE** A Zip Model Product must have the options %1$sVirtual%2$s AND %3$sDownloadable%4$s checked to appear in ZIP Model Product select option above. No Download link is needed in product though as it will be auto-filled in when Feed Them Gallery creates a new ZIP product based on the ZIP\'s location.', 'feed-them-gallery'),
+                                        '<a href="' . esc_url('https://docs.woocommerce.com/document/managing-products/#section-14') . '">',
+                                        '</a>',
+                                        '<a href="' . esc_url('https://docs.woocommerce.com/document/managing-products/#section-15') . '">',
+                                        '</a>'
+                                    ); ?></small></span>
 
                         </div>
 
                         <div class="clear"></div>
 
-                        <div class="ft-gallery-note"><?php _e('Additional Global WooCommerce options available on the <a href="edit.php?post_type=ft_gallery&page=ft-gallery-settings-page">settings page</a>.', 'feed-them-gallery') ?></div>
+                        <div class="ft-gallery-note">
+                            <?php
+                            echo sprintf(__('Additional Global WooCommerce options available on the %1$sSettings Page%2$s', 'feed-them-gallery'),
+                                '<a href="' . esc_url('edit.php?post_type=ft_gallery&page=ft-gallery-settings-page') . '" >',
+                                '</a>'
+                            );
+                            ?>
+                        </div>
 
                     </div>
+
 
                 </div>
 
@@ -1347,7 +1517,14 @@ class Gallery {
 
                     <div class="clear"></div>
 
-                    <div class="ft-gallery-note"><?php _e('Please <a href="https://www.slickremix.com/my-account/#tab-support" target="_blank">create a ticket</a> if you are experiencing trouble and one of our team members will be happy to assist you.', 'feed-them-gallery') ?></div>
+                    <div class="ft-gallery-note">
+                        <?php
+                        echo sprintf(__('Please %1$screate a ticket%2$s if you are experiencing trouble and one of our team members will be happy to assist you.', 'feed-them-gallery'),
+                            '<a href="' . esc_url('https://www.slickremix.com/my-account/#tab-support') . '" target="_blank">',
+                            '</a>'
+                        );
+                        ?>
+                    </div>
 
                 </div>
                 <div class="clear"></div>
@@ -1602,7 +1779,7 @@ class Gallery {
         wp_update_post($attachment_date);
 
         if (is_plugin_active('woocommerce/woocommerce.php')) {
-            $auto_woo_pro_option = get_post_meta($post_id, 'ft_gallery_auto_image_woo_prod', true);
+            $auto_woo_pro_option = get_post_meta($post_id, 'ft_gallery_smart_image_orient_prod', true);
             if ($auto_woo_pro_option == 'true') {
                 $gallery_to_woo = new Gallery_to_Woocommerce();
                 $images_array = array($attach_id);
@@ -2188,7 +2365,7 @@ class Gallery {
     function ft_gallery_format_attachment_title($title, $attachment_id = NULL, $update_post = NULL) {
 
         $options = get_option('ft_gallery_format_attachment_titles_options');
-        $cap_options = $options['ft_gallery_cap_options'];
+        $cap_options = isset($options['ft_gallery_cap_options']) ? $options['ft_gallery_cap_options'] : 'dont_alter';
 
         if (!empty($attachment_id)) {
             $uploaded_post_id = get_post($attachment_id);
@@ -2297,7 +2474,7 @@ class Gallery {
     function ft_gallery_duplicate_post_as_draft() {
         global $wpdb;
         if (!(isset($_GET['post']) || isset($_POST['post']) || (isset($_REQUEST['action']) && 'ft_gallery_duplicate_post_as_draft' == $_REQUEST['action']))) {
-            wp_die('No post to duplicate has been supplied!');
+            wp_die(__('No post to duplicate has been supplied!', 'feed-them-gallery'));
         }
 
         /*
@@ -2398,7 +2575,7 @@ class Gallery {
      */
     function ft_gallery_duplicate_post_link($actions, $post) {
         if (current_user_can('edit_posts')) {
-            $actions['duplicate'] = '<a href="' . wp_nonce_url('admin.php?action=ft_gallery_duplicate_post_as_draft&post=' . $post->ID, basename(__FILE__), 'duplicate_nonce') . '" title="Duplicate this item" rel="permalink">Duplicate</a>';
+            $actions['duplicate'] = '<a href="' . wp_nonce_url('admin.php?action=ft_gallery_duplicate_post_as_draft&post=' . $post->ID, basename(__FILE__), 'duplicate_nonce') . '" title="Duplicate this item" rel="permalink">' . __('Duplicate', 'feed-them-gallery') . '</a>';
         }
 
         return $actions;
@@ -2416,8 +2593,7 @@ class Gallery {
             $id = $_GET['post'];
             ?>
             <div id="ht-gallery-duplicate-action">
-                <a href="<?php echo wp_nonce_url('admin.php?action=ft_gallery_duplicate_post_as_draft&post=' . $id, basename(__FILE__), 'duplicate_nonce') ?>" title="Duplicate this item" rel="permalink">Duplicate
-                    Gallery</a>
+                <a href="<?php echo wp_nonce_url('admin.php?action=ft_gallery_duplicate_post_as_draft&post=' . $id, basename(__FILE__), 'duplicate_nonce') ?>" title="Duplicate this item" rel="permalink"><?php _e('Duplicate Gallery', 'feed-them-gallery'); ?></a>
             </div>
             <?php
         }

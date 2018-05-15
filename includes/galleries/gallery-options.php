@@ -832,7 +832,7 @@ class Gallery_Options {
                 array(
                     'option_type' => 'checkbox',
                     'label' =>
-                        sprintf(__('Auto Create a product for each image uploaded.%1$s You must have a "Global Model Product" or "Smart Image Orientation Model Products" selected for this option to work.%2$s', 'feed-them-gallery'),
+                        sprintf(__('Auto Create a product for each image uploaded.%1$s You must have a "Global Model Product" or "Smart Image Orientation Model Product" selected below for this option to work.%2$s', 'feed-them-gallery'),
                             '<br/><small>',
                             '</small>'
                         ),
@@ -846,8 +846,8 @@ class Gallery_Options {
                 array(
                     'option_type' => 'checkbox',
                     'label' =>
-                        sprintf(__('Use Smart Image Orientation %1$s You must have a "Smart Image Orientation Model Products" selected below for this option to work. Checking this option will automatically determine the images orientation and match it to the appropriate Model Product (Landscape, Square or Portrait) when creating a WooCommerce product for each image. This will override using the "Global Model Product" option for this Gallery.%2$s', 'feed-them-gallery'),
-                            '<br/><small>',
+                        sprintf(__('Use Smart Image Orientation %1$s You must have a "Smart Image Orientation Model Product" selected below for this option to work. Checking this option will automatically determine the images orientation and match it to the appropriate Model Product (Landscape, Square or Portrait) when creating a WooCommerce product for each image. This will override the "Global Model Product" option for this Gallery.%2$s', 'feed-them-gallery'),
+                            '<br/><small class="ftg-max-width-overide">',
                             '</small>'
                         ),
                     'class' => 'ft-gallery-smart-image-orient-prod',
