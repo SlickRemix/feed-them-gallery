@@ -141,7 +141,36 @@ class Core_Functions {
 
             .feed-them_page_fts-license-page .button-secondary {
                 display: none;
-            }</style>
+            }
+            .ftg-no-license-overlay {
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                top: 0;
+                left: 0;
+                z-index: 100;
+                background: rgba(255,255,255,.64);
+                text-align: center;
+                vertical-align: middle;
+            }
+            .ftg-no-license-overlay a {
+                padding: 9px 15px;
+                background: #0073aa;
+                color: #FFF;
+                text-decoration: none;
+                border-radius: 3px;
+                font-size: 14px;
+                display: inline-block;
+            }
+            .ftg-no-license-button-wrap {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                -ms-transform: translate(-50%,-50%);
+                transform: translate(-50%,-50%);
+                min-width: 200px;
+            }
+        </style>
         <?php
     }
 

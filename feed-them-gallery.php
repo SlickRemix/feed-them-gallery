@@ -383,7 +383,7 @@ final class Feed_Them_Gallery {
     function ft_gallery_leave_feedback_link($links, $file) {
         if ($file === plugin_basename(__FILE__)) {
             $links['feedback'] = sprintf(
-                __('%1$sRate Plugin  available.%2$s', 'feed-them-social'),
+                __('%1$sRate Plugin%2$s', 'feed-them-social'),
                 '<a href="'.esc_url('http://wordpress.org/support/view/plugin-reviews/feed-them-gallery').'" target="_blank">',
                 '</a>'
             );
