@@ -158,7 +158,7 @@ class Gallery {
     function ft_gallery_tab_premium_msg() {
         echo sprintf(__('%1$sPlease purchase, install and activate %2$sFeed Them Gallery Premium%3$s for these additional awesome features!%4$s', 'feed-them-gallery'),
             '<div class="ft-gallery-premium-mesg">',
-            '<a href="'.esc_url('https://www.slickremix.com/downloads/feed-them-gallery/').'">',
+            '<a href="' . esc_url('https://www.slickremix.com/downloads/feed-them-gallery/') . '">',
             '</a>',
             '</div>'
         );
@@ -372,17 +372,17 @@ class Gallery {
     public function ft_gallery_categories() {
 
         $labels = array(
-            'name' => _x( 'Categories', 'feed-them-gallery'),
-            'singular_name' => _x( 'Category', 'feed-them-gallery'),
-            'search_items' =>  __( 'Search Categories', 'feed-them-gallery'),
-            'all_items' => __( 'All Categories', 'feed-them-gallery'),
-            'parent_item' => __( 'Parent Category', 'feed-them-gallery'),
-            'parent_item_colon' => __( 'Parent Category:', 'feed-them-gallery'),
-            'edit_item' => __( 'Edit Category', 'feed-them-gallery'),
-            'update_item' => __( 'Update Category', 'feed-them-gallery'),
-            'add_new_item' => __( 'Add New Category', 'feed-them-gallery'),
-            'new_item_name' => __( 'New Category Name', 'feed-them-gallery'),
-            'menu_name' => __( 'Categories', 'feed-them-gallery'),
+            'name' => _x('Categories', 'feed-them-gallery'),
+            'singular_name' => _x('Category', 'feed-them-gallery'),
+            'search_items' => __('Search Categories', 'feed-them-gallery'),
+            'all_items' => __('All Categories', 'feed-them-gallery'),
+            'parent_item' => __('Parent Category', 'feed-them-gallery'),
+            'parent_item_colon' => __('Parent Category:', 'feed-them-gallery'),
+            'edit_item' => __('Edit Category', 'feed-them-gallery'),
+            'update_item' => __('Update Category', 'feed-them-gallery'),
+            'add_new_item' => __('Add New Category', 'feed-them-gallery'),
+            'new_item_name' => __('New Category Name', 'feed-them-gallery'),
+            'menu_name' => __('Categories', 'feed-them-gallery'),
         );
 
         register_taxonomy('ft_gallery_cats', array('ft_gallery'), array(
@@ -529,7 +529,7 @@ class Gallery {
 
                 if ($image_list) {
                     echo '<a href="' . get_edit_post_link($post_id) . '"><img src="' . $image_list[0]['media_details']['sizes']['thumbnail']['source_url'] . '" alt="" />';
-                    echo $this->ft_gallery_count_post_images($post_id) . ' '.__('Images', 'feed-them-gallery').'</a>';
+                    echo $this->ft_gallery_count_post_images($post_id) . ' ' . __('Images', 'feed-them-gallery') . '</a>';
                 }
                 break;
             // display a thumbnail photo
@@ -828,7 +828,7 @@ class Gallery {
                             <!-- Current image -->
                             <div id="current-uploaded-image" class="<?php echo has_post_thumbnail() ? 'open' : 'closed'; ?>">
                                 <?php if (has_post_thumbnail()): ?><?php the_post_thumbnail('ft_gallery_thumb'); ?><?php else: ?>
-                                    <img class="attachment-full" src="" />
+                                    <img class="attachment-full" src=""/>
                                 <?php endif; ?>
 
 
@@ -1154,11 +1154,10 @@ class Gallery {
                                     //  print_r($image['sizes']['ft_gallery_thumb']);
                                     //  echo '</pre>';
 
-                                    if(isset($image['sizes']['ft_gallery_thumb'])){
+                                    if (isset($image['sizes']['ft_gallery_thumb'])) {
                                         $image_url = wp_get_attachment_image_src($attachment_id = $image['id'], 'ft_gallery_thumb', false);
                                         // print_r('proper size<br/>');
-                                    }
-                                    else {
+                                    } else {
                                         $image_url = wp_get_attachment_image_src($attachment_id = $image['id'], 'thumbnail', false);
                                         // print_r(' not set<br/>');
                                     }
@@ -1201,10 +1200,11 @@ class Gallery {
                             ?>
                             <style type="text/css">
                                 .slickdocit-videowrapper {
-                                    max-width:100%;
+                                    max-width: 100%;
                                     display: none;
                                     margin-bottom: 15px;
                                 }
+
                                 .slickdocit-fluidMedia {
                                     position: relative;
                                     padding-bottom: 53.5%; /* proportion value to aspect ratio 16:9 (9 / 16 = 0.5625 or 56.25%) */
@@ -1212,6 +1212,7 @@ class Gallery {
                                     height: 0;
                                     overflow: hidden;
                                 }
+
                                 #slickdocit-show-video, #slickdocit-hide-video {
                                     background: #FFFF;
                                     display: inline-block;
@@ -1220,14 +1221,17 @@ class Gallery {
                                     margin-bottom: 15px;
                                     cursor: pointer;
                                     font-size: 13px;
-                                    float:right;
+                                    float: right;
                                 }
+
                                 #slickdocit-show-video:hover, #slickdocit-hide-video {
-                                    opacity:.8;
+                                    opacity: .8;
                                 }
+
                                 #slickdocit-hide-video {
-                                    display:none;
+                                    display: none;
                                 }
+
                                 .slickdocit-fluidMedia iframe {
                                     position: absolute;
                                     top: 0;
@@ -1235,6 +1239,7 @@ class Gallery {
                                     width: 100%;
                                     height: 100%;
                                 }
+
                                 .slickdocit-play:before {
                                     font-family: FontAwesomeSlick;
                                     content: "\f04b ";
@@ -1245,21 +1250,24 @@ class Gallery {
                             <div class="gallery-edit-question-message gallery-edit-question-download-gallery gallery-quick-guide-getting-started">
                                 <div class="slickdocit-videowrapper">
                                     <div class="slickdocit-fluidMedia">
-                                        <iframe id="slickdocit-iframe" src="https://www.youtube.com/embed/Fa2mjmFAGZQ?rel=0" data-autoplay-src="https://www.youtube.com/embed/Fa2mjmFAGZQ?rel=0&autoplay=1" frameborder="0" allowscriptaccess="always" allowfullscreen=""> </iframe>
-                                    </div></div>
-                                <div id="slickdocit-show-video" class="slickdocit-show-video"><?php _e('View Quick Setup Video', 'feed-them-gallery'); ?><span class="slickdocit-play"></span> </div>
-                                <div id="slickdocit-hide-video" class="ftg-close-vid"><?php _e('Close Video', 'feed-them-gallery'); ?><span class="slickdocit-play"></div>
+                                        <iframe id="slickdocit-iframe" src="https://www.youtube.com/embed/Fa2mjmFAGZQ?rel=0" data-autoplay-src="https://www.youtube.com/embed/Fa2mjmFAGZQ?rel=0&autoplay=1" frameborder="0" allowscriptaccess="always" allowfullscreen=""></iframe>
+                                    </div>
+                                </div>
+                                <div id="slickdocit-show-video" class="slickdocit-show-video"><?php _e('View Quick Setup Video', 'feed-them-gallery'); ?>
+                                    <span class="slickdocit-play"></span></div>
+                                <div id="slickdocit-hide-video" class="ftg-close-vid"><?php _e('Close Video', 'feed-them-gallery'); ?>
+                                    <span class="slickdocit-play"></div>
                                 <script>
-                                    jQuery( ".slickdocit-show-video" ).click(function() {
+                                    jQuery(".slickdocit-show-video").click(function () {
                                         var videoURL = jQuery("#slickdocit-iframe");
-                                        videoURL.attr("src", videoURL.data("autoplay-src") );
-                                        jQuery( ".slickdocit-videowrapper" ).slideDown();
+                                        videoURL.attr("src", videoURL.data("autoplay-src"));
+                                        jQuery(".slickdocit-videowrapper").slideDown();
                                         jQuery('.slickdocit-show-video').hide();
                                         jQuery('.ftg-close-vid').show();
                                     });
-                                    jQuery( ".ftg-close-vid" ).click(function() {
+                                    jQuery(".ftg-close-vid").click(function () {
                                         var videoURL = jQuery("#slickdocit-iframe");
-                                        jQuery( ".slickdocit-videowrapper" ).slideUp();
+                                        jQuery(".slickdocit-videowrapper").slideUp();
                                         jQuery('.ftg-close-vid').hide();
                                         //Then assign the src to null, this then stops the video been playing
                                         jQuery('.slickdocit-show-video').show();
@@ -1404,11 +1412,10 @@ class Gallery {
                             if (is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
                                 $gallery_to_woo_class = new Gallery_to_Woocommerce();
                                 echo $gallery_to_woo_class->ft_gallery_image_to_woo_model_prod_select($this->parent_post_id, 'global');
-                            }
-                            else {
+                            } else {
                                 $ftg_prem_not_active = '<select disabled="" class="feed-them-gallery-admin-input"><option value="" selected="selected">Premium Required</option></select>';
                                 echo $ftg_prem_not_active;
-                            }?>
+                            } ?>
                             <span class="tab-section-description"><small><?php _e('Select a Product that will be duplicated when creating a WooCommerce products for individual images. 1 image will turn 1 WooCommerce product. Saves time when creating variable product Example: Printable images that have different print sizes, material, etc.', 'feed-them-gallery'); ?></small></span>
                             <span class="tab-section-description"><a href="https://docs.woocommerce.com/document/variable-product/" target="_blank"><small>
                                         <?php
@@ -1423,7 +1430,8 @@ class Gallery {
 
                         <div class="feed-them-gallery-admin-input-wrap ">
 
-                            <div class="feed-them-gallery-admin-input-label"><?php _e('Smart Image Orientation Model Products', 'feed-them-gallery'); ?></div><br/>
+                            <div class="feed-them-gallery-admin-input-label"><?php _e('Smart Image Orientation Model Products', 'feed-them-gallery'); ?></div>
+                            <br/>
 
                             <span class="tab-section-description"><small><?php _e('Select Model Products that will be duplicated when creating a WooCommerce products for Landscape Images (Greater width than height), Square Images (Equal width and height), and Portrait Images (Width less than height). 1 image will turn 1 WooCommerce product. You must have the "Use Smart Image Orientation" checked above for this option to work properly.', 'feed-them-gallery'); ?></small></span>
                             <span class="tab-section-description"><a href="https://docs.woocommerce.com/document/variable-product/" target="_blank"><small>
@@ -1442,10 +1450,9 @@ class Gallery {
                             if (is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
                                 $gallery_to_woo_class = new Gallery_to_Woocommerce();
                                 echo $gallery_to_woo_class->ft_gallery_image_to_woo_model_prod_select($this->parent_post_id, 'landscape');
-                            }
-                            else {
+                            } else {
                                 echo $ftg_prem_not_active;
-                            }?>
+                            } ?>
                             </p>
                             <p>
                             <div class="feed-them-gallery-admin-input-label"><?php _e('Square Image Model Product', 'feed-them-gallery'); ?></div>
@@ -1453,8 +1460,7 @@ class Gallery {
                             if (is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
                                 $gallery_to_woo_class = new Gallery_to_Woocommerce();
                                 echo $gallery_to_woo_class->ft_gallery_image_to_woo_model_prod_select($this->parent_post_id, 'square');
-                            }
-                            else {
+                            } else {
                                 echo $ftg_prem_not_active;
                             }
                             ?>
@@ -1465,10 +1471,9 @@ class Gallery {
                             if (is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
                                 $gallery_to_woo_class = new Gallery_to_Woocommerce();
                                 echo $gallery_to_woo_class->ft_gallery_image_to_woo_model_prod_select($this->parent_post_id, 'portrait');
-                            }
-                            else {
+                            } else {
                                 echo $ftg_prem_not_active;
-                            }?>
+                            } ?>
                             </p>
                         </div>
 
@@ -1477,10 +1482,9 @@ class Gallery {
                             <?php
                             if (is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
                                 echo $gallery_to_woo_class->ft_gallery_zip_to_woo_model_prod_select($this->parent_post_id);
-                            }
-                            else {
+                            } else {
                                 echo $ftg_prem_not_active;
-                            }?>
+                            } ?>
                             <span class="tab-section-description"><small><?php _e('Select a Product that will be duplicated when creating a WooCommerce product for Gallery Digital ZIP. (Turns all images in Gallery into a ZIP for a Simple Virtual/Downloadable WooCommerce product.)', 'feed-them-gallery'); ?></small></span>
                             <span class="tab-section-description"><a href="https://docs.woocommerce.com/document/managing-products/#section-5" target="_blank"><small>
                                          <?php
@@ -1511,7 +1515,6 @@ class Gallery {
                         </div>
 
                     </div>
-
 
                 </div>
 
@@ -1755,7 +1758,7 @@ class Gallery {
         // $file = $_FILES['async-upload'];
 
         // handle file upload
-        $status = wp_handle_upload($_FILES[ $imgid . 'async-upload' ], array('gallery_form' => true, 'action' => 'plupload_action'));
+        $status = wp_handle_upload($_FILES[$imgid . 'async-upload'], array('gallery_form' => true, 'action' => 'plupload_action'));
 
         // Insert uploaded file as attachment:
         $attach_id = wp_insert_attachment(array(
@@ -1791,12 +1794,9 @@ class Gallery {
         wp_update_post($attachment_date);
 
         if (is_plugin_active('woocommerce/woocommerce.php')) {
-            $auto_woo_pro_option = get_post_meta($post_id, 'ft_gallery_smart_image_orient_prod', true);
-            if ($auto_woo_pro_option == 'true') {
-                $gallery_to_woo = new Gallery_to_Woocommerce();
-                $images_array = array($attach_id);
-                $gallery_to_woo->ft_gallery_image_to_woo_prod($post_id, $images_array);
-            }
+            $gallery_to_woo = new Gallery_to_Woocommerce();
+            $images_array = array($attach_id);
+            $gallery_to_woo->ft_gallery_image_to_woo_prod($post_id, $images_array);
         }
 
         $pre_array = wp_get_attachment_image_src($attach_id, $size = 'ft_gallery_thumb');
@@ -1941,7 +1941,7 @@ class Gallery {
 
         $prem_required_plugins = $this->gallery_options_class->ft_gallery_required_plugins();
 
-        $section_required_prem_plugin = !isset($section_info['required_prem_plugin']) || isset($section_info['required_prem_plugin']) && is_plugin_active($prem_required_plugins[ $section_info['required_prem_plugin'] ]['plugin_url']) ? 'active' : '';
+        $section_required_prem_plugin = !isset($section_info['required_prem_plugin']) || isset($section_info['required_prem_plugin']) && is_plugin_active($prem_required_plugins[$section_info['required_prem_plugin']]['plugin_url']) ? 'active' : '';
 
         //Start creation of fields for each Feed
         $output .= '<div class="ftg-section" class="' . $section_info['section_wrap_class'] . '">';
@@ -1956,9 +1956,9 @@ class Gallery {
         foreach ($section_info['main_options'] as $option) if (!isset($option['no_html']) || isset($option['no_html']) && $option['no_html'] !== 'yes') {
 
             //Is a premium extension required?
-            $required_plugin = !isset($option['req_plugin']) || isset($option['req_plugin']) && is_plugin_active($required_plugins[ $option['req_plugin'] ]['plugin_url']) ? true : false;
-            $or_required_plugin = isset($option['or_req_plugin']) && is_plugin_active($required_plugins[ $option['or_req_plugin'] ]['plugin_url']) ? true : false;
-            $or_required_plugin_three = isset($option['or_req_plugin_three']) && is_plugin_active($required_plugins[ $option['or_req_plugin_three'] ]['plugin_url']) ? true : false;
+            $required_plugin = !isset($option['req_plugin']) || isset($option['req_plugin']) && is_plugin_active($required_plugins[$option['req_plugin']]['plugin_url']) ? true : false;
+            $or_required_plugin = isset($option['or_req_plugin']) && is_plugin_active($required_plugins[$option['or_req_plugin']]['plugin_url']) ? true : false;
+            $or_required_plugin_three = isset($option['or_req_plugin_three']) && is_plugin_active($required_plugins[$option['or_req_plugin_three']]['plugin_url']) ? true : false;
 
             //Sub option output START?
             $output .= isset($option['sub_options']) ? '<div class="' . $option['sub_options']['sub_options_wrap_class'] . (!$required_plugin ? ' not-active-premium-fields' : '') . '">' . (isset($option['sub_options']['sub_options_title']) ? '<h3>' . $option['sub_options']['sub_options_title'] . '</h3>' : '') . (isset($option['sub_options']['sub_options_instructional_txt']) ? '<div class="instructional-text">' . $option['sub_options']['sub_options_instructional_txt'] . '</div>' : '') : '';
@@ -2070,17 +2070,17 @@ class Gallery {
                         $sizes = array();
                         foreach (get_intermediate_image_sizes() as $_size) {
                             if (in_array($_size, array('thumbnail', 'medium', 'medium_large', 'large'))) {
-                                $sizes[ $_size ]['width'] = get_option("{$_size}_size_w");
-                                $sizes[ $_size ]['height'] = get_option("{$_size}_size_h");
-                                $sizes[ $_size ]['crop'] = (bool)get_option("{$_size}_crop");
-                            } elseif (isset($_wp_additional_image_sizes[ $_size ])) {
-                                $sizes[ $_size ] = array(
-                                    'width' => $_wp_additional_image_sizes[ $_size ]['width'],
-                                    'height' => $_wp_additional_image_sizes[ $_size ]['height'],
-                                    'crop' => $_wp_additional_image_sizes[ $_size ]['crop'],
+                                $sizes[$_size]['width'] = get_option("{$_size}_size_w");
+                                $sizes[$_size]['height'] = get_option("{$_size}_size_h");
+                                $sizes[$_size]['crop'] = (bool)get_option("{$_size}_crop");
+                            } elseif (isset($_wp_additional_image_sizes[$_size])) {
+                                $sizes[$_size] = array(
+                                    'width' => $_wp_additional_image_sizes[$_size]['width'],
+                                    'height' => $_wp_additional_image_sizes[$_size]['height'],
+                                    'crop' => $_wp_additional_image_sizes[$_size]['crop'],
                                 );
                             }
-                            $output .= '<label for="' . $_size . '"><input type="checkbox" val="' . $_size . '" name="ft_watermark_image_sizes[image_sizes][' . $_size . ']" id="' . $option['id'] . '-' . $_size . '" ' . (array_key_exists($_size, $final_value_images) ? ' checked="checked"' : '') . '/>' . $_size . ' ' . $sizes[ $_size ]['width'] . ' x ' . $sizes[ $_size ]['height'] . '</label><br/>';
+                            $output .= '<label for="' . $_size . '"><input type="checkbox" val="' . $_size . '" name="ft_watermark_image_sizes[image_sizes][' . $_size . ']" id="' . $option['id'] . '-' . $_size . '" ' . (array_key_exists($_size, $final_value_images) ? ' checked="checked"' : '') . '/>' . $_size . ' ' . $sizes[$_size]['width'] . ' x ' . $sizes[$_size]['height'] . '</label><br/>';
 
                         }
                         $output .= '<label for="full"><input type="checkbox" val="full" id="ft_watermark_image_-full" name="ft_watermark_image_sizes[image_sizes][full]" ' . (array_key_exists('full', $final_value_images) ? 'checked="checked"' : '') . '/>full</label><br/>';
@@ -2103,17 +2103,17 @@ class Gallery {
                         $output .= '<option val="Choose an option" ' . ('not_set' == $final_value_images ? 'selected="selected"' : '') . '>' . __('Choose an option', 'feed-them-gallery') . '</option>';
                         foreach (get_intermediate_image_sizes() as $_size) {
                             if (in_array($_size, array('thumbnail', 'medium', 'medium_large', 'large'))) {
-                                $sizes[ $_size ]['width'] = get_option("{$_size}_size_w");
-                                $sizes[ $_size ]['height'] = get_option("{$_size}_size_h");
-                                $sizes[ $_size ]['crop'] = (bool)get_option("{$_size}_crop");
-                            } elseif (isset($_wp_additional_image_sizes[ $_size ])) {
-                                $sizes[ $_size ] = array(
-                                    'width' => $_wp_additional_image_sizes[ $_size ]['width'],
-                                    'height' => $_wp_additional_image_sizes[ $_size ]['height'],
-                                    'crop' => $_wp_additional_image_sizes[ $_size ]['crop'],
+                                $sizes[$_size]['width'] = get_option("{$_size}_size_w");
+                                $sizes[$_size]['height'] = get_option("{$_size}_size_h");
+                                $sizes[$_size]['crop'] = (bool)get_option("{$_size}_crop");
+                            } elseif (isset($_wp_additional_image_sizes[$_size])) {
+                                $sizes[$_size] = array(
+                                    'width' => $_wp_additional_image_sizes[$_size]['width'],
+                                    'height' => $_wp_additional_image_sizes[$_size]['height'],
+                                    'crop' => $_wp_additional_image_sizes[$_size]['crop'],
                                 );
                             }
-                            $output .= '<option val="' . $_size . '" ' . ($_size . ' ' . $sizes[ $_size ]['width'] . ' x ' . $sizes[ $_size ]['height'] == $final_value_images ? 'selected="selected"' : '') . '>' . $_size . ' ' . $sizes[ $_size ]['width'] . ' x ' . $sizes[ $_size ]['height'] . '</option>';
+                            $output .= '<option val="' . $_size . '" ' . ($_size . ' ' . $sizes[$_size]['width'] . ' x ' . $sizes[$_size]['height'] == $final_value_images ? 'selected="selected"' : '') . '>' . $_size . ' ' . $sizes[$_size]['width'] . ' x ' . $sizes[$_size]['height'] . '</option>';
                         }
                         $output .= '<option val="full" ' . ('full' == $final_value_images ? 'selected="selected"' : '') . '>' . __('full', 'feed-them-gallery') . '</option>';
                         // TESTING AREA
@@ -2136,17 +2136,17 @@ class Gallery {
                         $output .= '<option val="Choose an option" ' . ('not_set' == $final_value_images ? 'selected="selected"' : '') . '>' . __('Choose an option', 'feed-them-gallery') . '</option>';
                         foreach (get_intermediate_image_sizes() as $_size) {
                             if (in_array($_size, array('thumbnail', 'medium', 'medium_large', 'large'))) {
-                                $sizes[ $_size ]['width'] = get_option("{$_size}_size_w");
-                                $sizes[ $_size ]['height'] = get_option("{$_size}_size_h");
-                                $sizes[ $_size ]['crop'] = (bool)get_option("{$_size}_crop");
-                            } elseif (isset($_wp_additional_image_sizes[ $_size ])) {
-                                $sizes[ $_size ] = array(
-                                    'width' => $_wp_additional_image_sizes[ $_size ]['width'],
-                                    'height' => $_wp_additional_image_sizes[ $_size ]['height'],
-                                    'crop' => $_wp_additional_image_sizes[ $_size ]['crop'],
+                                $sizes[$_size]['width'] = get_option("{$_size}_size_w");
+                                $sizes[$_size]['height'] = get_option("{$_size}_size_h");
+                                $sizes[$_size]['crop'] = (bool)get_option("{$_size}_crop");
+                            } elseif (isset($_wp_additional_image_sizes[$_size])) {
+                                $sizes[$_size] = array(
+                                    'width' => $_wp_additional_image_sizes[$_size]['width'],
+                                    'height' => $_wp_additional_image_sizes[$_size]['height'],
+                                    'crop' => $_wp_additional_image_sizes[$_size]['crop'],
                                 );
                             }
-                            $output .= '<option val="' . $_size . '" ' . ($_size . ' ' . $sizes[ $_size ]['width'] . ' x ' . $sizes[ $_size ]['height'] == $final_value_images ? 'selected="selected"' : '') . '>' . $_size . ' ' . $sizes[ $_size ]['width'] . ' x ' . $sizes[ $_size ]['height'] . '</option>';
+                            $output .= '<option val="' . $_size . '" ' . ($_size . ' ' . $sizes[$_size]['width'] . ' x ' . $sizes[$_size]['height'] == $final_value_images ? 'selected="selected"' : '') . '>' . $_size . ' ' . $sizes[$_size]['width'] . ' x ' . $sizes[$_size]['height'] . '</option>';
                         }
                         $output .= '<option val="full" ' . ('full' == $final_value_images ? 'selected="selected"' : '') . '>' . __('full', 'feed-them-gallery') . '</option>';
                         // TESTING AREA
@@ -2251,16 +2251,16 @@ class Gallery {
 
 
                         if ($option['option_type'] == 'checkbox') {
-                            $new = isset($_POST[ $option['name'] ]) && $_POST[ $option['name'] ] !== 'false' ? 'true' : 'false';
+                            $new = isset($_POST[$option['name']]) && $_POST[$option['name']] !== 'false' ? 'true' : 'false';
 
                         } else {
-                            $new = isset($_POST[ $option['name'] ]) ? $_POST[ $option['name'] ] : '';
+                            $new = isset($_POST[$option['name']]) ? $_POST[$option['name']] : '';
                         }
 
-                        if (isset($_POST[ $this->global_prefix . $option['name'] ]) && $_POST[ $this->global_prefix . $option['name'] ] !== 'false') {
+                        if (isset($_POST[$this->global_prefix . $option['name']]) && $_POST[$this->global_prefix . $option['name']] !== 'false') {
                             update_post_meta($post_id, $this->global_prefix . $option['name'], 'true');
                             update_option($this->global_prefix . $option['name'], $new);
-                        } elseif (isset($global_old) && !isset($_POST[ $this->global_prefix . $option['name'] ])) {
+                        } elseif (isset($global_old) && !isset($_POST[$this->global_prefix . $option['name']])) {
                             update_post_meta($post_id, $this->global_prefix . $option['name'], 'false');
                             update_post_meta($post_id, $option['name'], $new);
 
