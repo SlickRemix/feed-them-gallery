@@ -1791,7 +1791,7 @@ class Gallery {
         wp_update_post($attachment_date);
 
         if (is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
-            $auto_woo_pro_option = get_post_meta($post_id, 'ft_gallery_smart_image_orient_prod', true);
+            $auto_woo_pro_option = get_post_meta($post_id, 'ft_gallery_auto_image_woo_prod', true);
             if ($auto_woo_pro_option == 'true') {
                 $gallery_to_woo = new Gallery_to_Woocommerce();
                 $images_array = array($attach_id);
