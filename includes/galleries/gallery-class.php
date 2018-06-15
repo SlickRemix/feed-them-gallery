@@ -1791,9 +1791,12 @@ class Gallery {
         wp_update_post($attachment_date);
 
         if (is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
-            $gallery_to_woo = new Gallery_to_Woocommerce();
-            $images_array = array($attach_id);
-            $gallery_to_woo->ft_gallery_image_to_woo_prod($post_id, $images_array);
+            $auto_woo_pro_option = get_post_meta($post_id, 'ft_gallery_smart_image_orient_prod', true);
+            if ($auto_woo_pro_option == 'true') {
+                $gallery_to_woo = new Gallery_to_Woocommerce();
+                $images_array = array($attach_id);
+                $gallery_to_woo->ft_gallery_image_to_woo_prod($post_id, $images_array);
+            }
         }
 
         $pre_array = wp_get_attachment_image_src($attach_id, $size = 'ft_gallery_thumb');
