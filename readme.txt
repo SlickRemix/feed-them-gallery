@@ -128,8 +128,8 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
-= Version 1.0.4 Thursday, June 14th, 2018 =
-  * FIXED: WooCommerce product category creation from Gallery name. (Fixed is for premium users only)
+= Version 1.0.4 Friday, June 15th, 2018 =
+  * FIXED: WooCommerce Product category creation after gallery name. (for premium users only)
 
 = Version 1.0.3 Friday, May 11th, 2018 =
   * NEW: Made garbage icon red in color and when clicked it reveals an alert with an ok/cancel confirming you want to delete the image from your website.
