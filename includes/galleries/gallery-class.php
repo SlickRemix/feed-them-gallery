@@ -1790,7 +1790,7 @@ class Gallery {
         );
         wp_update_post($attachment_date);
 
-        if (is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active('woocommerce/woocommerce.php') &&  is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
+        if (is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
                 $gallery_to_woo = new Gallery_to_Woocommerce();
                 $images_array = array($attach_id);
                 $gallery_to_woo->ft_gallery_image_to_woo_prod($post_id, $images_array);
