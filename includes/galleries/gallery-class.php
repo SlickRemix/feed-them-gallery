@@ -1174,7 +1174,7 @@ class Gallery {
 
                                     $meta_box .= '<div class="ft-gallery-remove-thumb-btn"><a title="Remove Image from this Gallery" class="ft-gallery-remove-img-ajax" data-ft-gallery-img-remove="true" data-id="' . $image['id'] . '" data-nonce="' . wp_create_nonce('ft_gallery_update_image_nonce') . '" href="javascript:;"></a></div>';
                                     $meta_box .= '<div class="ft-gallery-delete-thumb-btn"><a title="Delete Image Completely" class="ft-gallery-force-delete-img-ajax" data-id="' . $image['id'] . '" data-nonce="' . wp_create_nonce('ft_gallery_delete_image_nonce') . '" href="javascript:;"></a></div> <div class="clear"></div>';
-                                    if (is_plugin_active('woocommerce/woocommerce.php')) {
+                                    if (is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
 
                                         //If Image already has product meta check the product still exists
                                         if (!empty($image_post_meta)) {
@@ -1793,7 +1793,11 @@ class Gallery {
         );
         wp_update_post($attachment_date);
 
+<<<<<<< 1.0.4-updates
+        if (is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
+=======
         if (is_plugin_active('woocommerce/woocommerce.php')) {
+>>>>>>> master
             $gallery_to_woo = new Gallery_to_Woocommerce();
             $images_array = array($attach_id);
             $gallery_to_woo->ft_gallery_image_to_woo_prod($post_id, $images_array);

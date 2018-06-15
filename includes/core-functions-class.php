@@ -440,7 +440,7 @@ class Core_Functions {
 
 
         //If Woocommerce is active add options to save
-        if (is_plugin_active('woocommerce/woocommerce.php')) {
+        if (is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
             //Woocommerce Options
             $settings[] = 'ft_gallery_attch_prod_to_gallery_cat';
             $settings[] = 'ft_gallery_woo_add_to_cart';
