@@ -674,7 +674,7 @@ class Settings_Page {
                                 <div class="settings-sub-wrap">
                                     <h5><?php _e('Product Creation', 'ft-gallery'); ?></h5>
 
-                                    <label><input name="ft_gallery_attch_prod_to_gallery_cat" type="checkbox" value="1" <?php echo checked('true', get_option('ft_gallery_attch_prod_to_gallery_cat')); ?>/> <?php _e('Attach Product to a Category named after Gallery', 'ft-gallery'); ?>
+                                    <label><input name="ft_gallery_attch_prod_to_gallery_cat" type="checkbox" value="" <?php echo checked('true', get_option('ft_gallery_attch_prod_to_gallery_cat')); ?>/> <?php _e('Attach Product to a Category named after Gallery', 'ft-gallery'); ?>
                                     </label>
 
                                     <div class="clear"></div>

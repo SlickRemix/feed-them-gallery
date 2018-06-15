@@ -1791,8 +1791,6 @@ class Gallery {
         wp_update_post($attachment_date);
 
 
-
-
         if (is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
             $gallery_to_woo = new Gallery_to_Woocommerce();
             $images_array = array($attach_id);
@@ -2159,7 +2157,7 @@ class Gallery {
 
 
                     //Repeatable
-                    case 'repeatable':
+                   /* case 'repeatable':
                         echo '<a class="repeatable-add button" href="#">';
                         _e('Add Another design', 'feed-them-gallery');
                         echo '</a><ul id="' . $option['id'] . '-repeatable" class="custom_repeatable">';
@@ -2181,7 +2179,7 @@ class Gallery {
                         }
                         echo '</ul>
 							<span class="description">' . $option['desc'] . '</span>';
-                        break;
+                        break;*/
 
                 }
             }
