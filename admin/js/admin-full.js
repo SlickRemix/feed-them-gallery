@@ -29,7 +29,7 @@ jQuery(document).ready(function () {
 
 
     // SLICKREMIX: MUST HAVE THIS IN PLACE TO BE ABLE TO CHECK WHAT KIND OF VIDEOS ARE BEING CLICKED ON
-    jQuery('body').on('click', '#fts-photo-prev, #fts-photo-next, .ft-gallery-popup .mfp-image-holder .fts-popup-image-position', function (e) {
+    jQuery('body').on('click', '#ftg-photo-prev, #ftg-photo-next, .ft-gallery-popup .mfp-image-holder .fts-popup-image-position', function (e) {
         // alert('test');
         jQuery("body").addClass("fts-using-arrows");
 
@@ -56,9 +56,9 @@ jQuery(document).ready(function () {
 
 // Facebook Posts
     var e = jQuery.magnificPopup.instance;
-    jQuery("body").on("click", "#fts-photo-prev", function () {
+    jQuery("body").on("click", "#ftg-photo-prev", function () {
         e.prev(), jQuery(".fts-popup-image-position, .fts-popup-second-half .mfp-bottom-bar").height() < jQuery(".mfp-img").height() ? jQuery(".fts-popup-image-position, .fts-popup-second-half .mfp-bottom-bar").css("height", jQuery(".mfp-img").height()) : jQuery(".fts-popup-second-half .mfp-bottom-bar").css("height", jQuery(".fts-popup-image-position").height())
-    }), jQuery("body").on("click", "#fts-photo-next", function () {
+    }), jQuery("body").on("click", "#ftg-photo-next", function () {
         e.next(), jQuery(".fts-popup-image-position, .fts-popup-second-half .mfp-bottom-bar").height() < jQuery(".mfp-img").height() ? jQuery(".fts-popup-image-position, .fts-popup-second-half .mfp-bottom-bar").css("height", jQuery(".mfp-img").height()) : jQuery(".fts-popup-second-half .mfp-bottom-bar").css("height", jQuery(".fts-popup-image-position").height())
     }), jQuery("body").on("click", ".fts-facebook-popup .mfp-image-holder .fts-popup-image-position", function () {
         e.next(), jQuery(".fts-popup-image-position, .fts-popup-second-half .mfp-bottom-bar").height() < jQuery(".mfp-img").height() ? jQuery(".fts-popup-image-position, .fts-popup-second-half .mfp-bottom-bar").css("height", jQuery(".mfp-img").height()) : jQuery(".fts-popup-second-half .mfp-bottom-bar").css("height", jQuery(".fts-popup-image-position").height())
@@ -128,7 +128,7 @@ jQuery(document).ready(function () {
                         console.log('Popup is opened');
 
 
-                        jQuery(".fts-popup-image-position, #fts-photo-next").click(function (event) {
+                        jQuery(".fts-popup-image-position, #ftg-photo-next").click(function (event) {
 
                             event.preventDefault(); // stop post action
 
@@ -179,7 +179,7 @@ jQuery(document).ready(function () {
                         }); // end of form.submit
 
 
-                        jQuery(".fts-popup-half").on("click", "#fts-photo-prev", function (event) {
+                        jQuery(".fts-popup-half").on("click", "#ftg-photo-prev", function (event) {
 
                             event.preventDefault(); // stop post action
 
@@ -392,11 +392,11 @@ jQuery(document).ready(function () {
                     '<div class="mfp-figure"><div class="mfp-close">X</div>' +
                     '<div class="fts-popup-wrap">' +
                     '    <div class="fts-popup-half ">' +
-                    '               <button title="previous" type="button" id="fts-photo-prev" class="mfp-arrow mfp-arrow-left mfp-prevent-close"></button>' +
+                    '               <button title="previous" type="button" id="ftg-photo-prev" class="mfp-arrow mfp-arrow-left mfp-prevent-close"></button>' +
                     '           <div class="fts-popup-image-position" style="height:591px;">' +
                     '                   <span class="fts-position-helper"></span><div class="mfp-img"></div>' +
                     '       </div>' +
-                    '               <button title="next" type="button" id="fts-photo-next" class="mfp-arrow mfp-arrow-right mfp-prevent-close"></button>' +
+                    '               <button title="next" type="button" id="ftg-photo-next" class="mfp-arrow mfp-arrow-right mfp-prevent-close"></button>' +
                     '    </div>' +
                     '<div class="fts-popup-second-half">' +
                     '<div class="mfp-bottom-bar">' +
@@ -416,11 +416,11 @@ jQuery(document).ready(function () {
                     '<div class="mfp-figure"><div class="mfp-close">X</div>' +
                     '<div class="fts-popup-wrap">' +
                     '    <div class="fts-popup-half ">' +
-                    '               <button title="previous" type="button" id="fts-photo-prev" class="mfp-arrow mfp-arrow-left mfp-prevent-close"></button>' +
+                    '               <button title="previous" type="button" id="ftg-photo-prev" class="mfp-arrow mfp-arrow-left mfp-prevent-close"></button>' +
                     '           <div class="fts-popup-image-position">' +
                     '                           <div class="mfp-iframe-scaler"><iframe class="mfp-iframe fts-iframe-popup-element" frameborder="0" allowfullscreen></iframe><video class="mfp-iframe fts-video-popup-element" allowfullscreen autoplay controls></video>' +
                     '                           </div>' +
-                    '               <button title="next" type="button" id="fts-photo-next" class="mfp-arrow mfp-arrow-right mfp-prevent-close"></button>' +
+                    '               <button title="next" type="button" id="ftg-photo-next" class="mfp-arrow mfp-arrow-right mfp-prevent-close"></button>' +
                     '<script>' +
                     // SLICKREMIX: MUST HAVE THIS IN PLACE TO BE ABLE TO CHECK WHAT KIND OF VIDEOS ARE BEING CLICKED ON WHEN FIRST LOADED, AFTER THEY ARE LOADED REFER TO THE CLICK FUNCTION FOR THE ERRORS ABOVE
                     'if(jQuery("body").hasClass("fts-video-iframe-choice")){jQuery(".fts-iframe-popup-element").attr("src", "").hide(); } else if(!jQuery("body").hasClass("fts-using-arrows")){jQuery(".fts-video-popup-element").attr("src", "").hide(); };  jQuery(".ft-gallery-popup video").click(function(){jQuery(this).trigger(this.paused ? this.paused ? "play" : "play" : "pause")});</script>' +

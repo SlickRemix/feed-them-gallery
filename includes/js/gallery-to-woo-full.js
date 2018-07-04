@@ -2,7 +2,7 @@ function ft_gallery_image_to_woo(gallery_id){
 
     //Selected Media
     var selectedmedia = [];
-    jQuery('#tab-content1 section li div.ft-gallery-select-thumbn input[type=checkbox]').each(function () {
+    jQuery('#ftg-tab-content1 li div.ft-gallery-select-thumbn input[type=checkbox]').each(function () {
         if (jQuery(this).attr('checked')) {
             selectedmedia.push(jQuery(this).attr('rel'));
         }
@@ -32,6 +32,8 @@ function ft_gallery_image_to_woo(gallery_id){
             //'Woocommerce Product created from Image(s)! '
             jQuery('.ft-gallery-notice').html(response);
             jQuery('.ft-gallery-notice').addClass('updated');
+            jQuery('.ft-gallery-notice').append('<div class="ft-gallery-notice-close"></div>');
+
 
             jQuery('.ft_gallery_download_button').removeAttr('disabled').removeClass('ft_gallery_download_button_loading');
 
@@ -60,6 +62,7 @@ function ft_gallery_zip_to_woo(gallery_id,zipID){
             //'Woocommerce Product created from Image(s)! '
             jQuery('.ft-gallery-notice').html(response);
             jQuery('.ft-gallery-notice').addClass('updated');
+            jQuery('.ft-gallery-notice').append('<div class="ft-gallery-notice-close"></div>');
 
             jQuery('.ft_gallery_download_button').removeAttr('disabled').removeClass('ft_gallery_download_button_loading');
 
