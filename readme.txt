@@ -3,7 +3,7 @@ Contributors: slickremix
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
 Tested up to: 4.9.6
-Stable tag: 1.0.6.1
+Stable tag: 1.0.7
 License: GPLv2 or later
 
 Create customizable Image Galleries and sell your images using woocommerce.
@@ -128,7 +128,7 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
-= Version 1.0.6.1 Wednesday, July 4th, 2018 =
+= Version 1.0.5 - 1.0.6 Wednesday, July 4th, 2018 =
   * NEW: Click through the menu tab options on a gallery post now without the page reloading.
   * NEW: When clicking the update option we now use Ajax to save the page so it does not reload. Only the Image tab page will need to reload completely.
   * NEW: Left side menu slides with page when editing an image gallery making it easier to click to the another tab without having to scroll to the top.
