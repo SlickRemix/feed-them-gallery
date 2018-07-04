@@ -5,7 +5,7 @@ function ft_gallery_create_zip(postID, activate_download, create_woo_prod, downl
     jQuery('.ft_gallery_download_button').attr('disabled', '').addClass('ft_gallery_download_button_loading');
 
     var selectedmedia = [];
-    jQuery('#ftg-tab-content1 section input[type=checkbox]').each(function () {
+    jQuery('#ftg-tab-content1 input[type=checkbox]').each(function () {
         if (jQuery(this).attr('checked')) {
             selectedmedia.push(jQuery(this).attr('rel'));
         }
@@ -48,7 +48,7 @@ function ft_gallery_create_zip(postID, activate_download, create_woo_prod, downl
             jQuery('.ft-gallery-notice').removeClass('updated').addClass('ftg-block');
             jQuery('.ft-gallery-notice').prepend('<div class="fa fa-cog fa-spin fa-3x fa-fw ft-gallery-loader"></div><div>This may take a few minutes based on your gallery size and server speed.</div>');
 
-           // jQuery('#loading').show();
+            // jQuery('#loading').show();
         },
         success: function (data) {
 
@@ -63,11 +63,13 @@ function ft_gallery_create_zip(postID, activate_download, create_woo_prod, downl
                 jQuery('.ft-gallery-notice').html('ZIP Created! You can view it in the <a href="' + window.location.href + '&tab=ft_zip_gallery">ZIPs tab</a>. The Woocommerce product was also created you view it on the <a href="edit.php?post_status=publish&post_type=product&orderby=menu_order+title&order=ASC" target="_blank">Products Page</a>.');
                 jQuery('.ft-gallery-notice').prepend('<div class="fa fa-check-circle fa-3x fa-fw ft-gallery-success" ></div>');
                 jQuery('.ft-gallery-notice').addClass('updated');
+                jQuery('.ft-gallery-notice').append('<div class="ft-gallery-notice-close"></div>');
             }
             else{
                 jQuery('.ft-gallery-notice').html('ZIP Created! You can view it in the <a href="' + window.location.href + '&tab=ft_zip_gallery">ZIPs tab</a>.');
                 jQuery('.ft-gallery-notice').prepend('<div class="fa fa-check-circle fa-3x fa-fw ft-gallery-success" ></div>');
                 jQuery('.ft-gallery-notice').addClass('updated');
+                jQuery('.ft-gallery-notice').append('<div class="ft-gallery-notice-close"></div>');
             }
 
             return false;
@@ -139,10 +141,11 @@ function ft_gallery_delete_zip(zipID, zipname) {
                 jQuery('.ft-gallery-notice').append('<div class="fa fa-check-circle fa-3x fa-fw ft-gallery-success" ></div>');
 
                 if (jQuery('.ft-gallery-notice').is(':empty')){
-                    jQuery('.ft-gallery-notice').html('You have not created any ZIPs yet. You can do so from the <a href="' + window.location.href + '&tab=ft_images>Images tab</a>. ');
+                    jQuery('.ft-gallery-notice').html('You have not created any ZIPs yet. You can do so from the <a href="#images" class="ftg-images-tab">Images tab</a>. Please reload this page if you have already created a ZIP from the Images tab.');
                 }
                 jQuery('.ft-gallery-notice').addClass('updated');
-                
+                jQuery('.ft-gallery-notice').append('<div class="ft-gallery-notice-close"></div>');
+
                 return false;
             },
             error: function (data) {

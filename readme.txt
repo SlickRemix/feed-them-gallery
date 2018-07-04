@@ -131,6 +131,9 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
 = Version 1.0.6 Monday, July 2nd, 2018 =
   * NEW: Click through the menu tab options on a gallery post now without the page reloading.
   * NEW: When clicking the update option we now use Ajax to save the page so it does not reload. Only the Image tab page will need to reload completely.
+  * NEW: Left side menu slides with page when editing an image gallery making it easier to click to the another tab without having to scroll to the top.
+  * FIX: CSS arrows for popup on front end and admin.
+  * FIX PREMIUM: Create products from images that are checked only.
 
 = Version 1.0.4 - 1.0.5 Friday, June 15th, 2018 =
   * FIXED: WooCommerce Product category creation after gallery name. (for premium users only)
