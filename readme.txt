@@ -2,15 +2,15 @@
 Contributors: slickremix
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
-Tested up to: 4.9.6
-Stable tag: 1.0.7
+Tested up to: 4.9.7
+Stable tag: 1.0.8
 License: GPLv2 or later
 
 Create customizable Image Galleries and sell your images using woocommerce.
 
 == Description ==
 
-[View Demo](http://feedthemgallery.com/gallery-demo-one/) and adjust columns, spacing, size & look of the image gallery.
+[View Demo](https://feedthemgallery.com/gallery-demo-one/) and adjust columns, spacing, size & look of the image gallery.
 
 See how fast you can setup a gallery.
 [youtube https://www.youtube.com/watch?v=Fa2mjmFAGZQ&rel=0]
@@ -21,7 +21,7 @@ ALL SlickRemix plugins come with Amazing Support. If you need help or have quest
 If you are a Photographer, Developer, Artist, Someone looking to help others sell their photos, or just looking to create awesome, easy-to-use Galleries this plugin is for you! We made the process of setting up Galleries super simple. We included TONS of options to change the style and layout keeping focus on organization and simplicity. We want to make it so anyone can create a Gallery and sell photos with ease giving your customers/clients a hassle free experience when looking at or buying your images or art!
 
 = What does this plugin do? =
-With this plugin you can create and display clean responsive image galleries in minutes. We have 4 different layouts you can choose from and many options to configure the look and feel of the gallery on your site. In our premium version we've also made it super easy for you to connect your galleries to Woocommerce. In one click you can easily turn a Gallery into a ZIP and Woocommerce product. You can also in one click and based on a model product turn EACH individual photo into a Woocommerce product saving you MANY HOURS of tedious product creation!
+With this plugin you can create and display clean responsive image galleries in minutes. We have 4 different layouts you can choose from and many options to configure the look and feel of the gallery on your site. In our premium version we've also made it super easy for you to connect your galleries to Woocommerce. In one click you can easily turn a Gallery into a ZIP and WooCommerce product. You can also in one click and based on a model product turn EACH individual photo into a WooCommerce product saving you MANY HOURS of tedious product creation!
 
 
 FREE PLUGIN OPTIONS
@@ -106,9 +106,9 @@ FREE PLUGIN OPTIONS
  * Easy Edit Product buttons for each image in the admin of our galleries
  * Create a custom product to be used in association with your single image products or full gallery products.
  * Purchase button can appear on the page under the photo and in the popup
- * Variable Options displayed. [Demos](http://feedthemgallery.com/gallery-demo-one/)
+ * Variable Options displayed. [Demos](https://feedthemgallery.com/gallery-demo-one/)
  * Add to Cart using Ajax. Makes it easy to scroll or click through photos in popup and quickly add photos to your cart.
- * Variable Options displayed. [Demos](http://feedthemgallery.com/gallery-demo-one/)
+ * Variable Options displayed. [Demos](https://feedthemgallery.com/gallery-demo-one/)
 
 = Zip Options =
  * Zip any gallery to create backups
@@ -128,6 +128,12 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.0.8 Wednesday, July 18th, 2018 =
+  * FIXED: php warning when activating the plugin if wp_debug mode was set to yes.
+  * FIXED: Reverted the menu that scrolls with the page to a stationary one, since in some situations it may not be possible to see the menu.
+  * FIXED: Alignment of misc items on our System Info page.
+  * NEW: Create Image Gallery link and request review option after a few weeks of having this version activated.
+
 = Version 1.0.6 - 1.0.7 Wednesday, July 4th, 2018 =
   * NEW: Click through the menu tab options on a gallery post now without the page reloading.
   * NEW: When clicking the update option we now use Ajax to save the page so it does not reload. Only the Image tab page will need to reload completely.
@@ -164,4 +170,4 @@ You can find answers to your questions in our [documentation](https://www.slickr
 
 == Screenshots ==
 
-Please view our [super fun demo](http://feed-them-gallery.com) for the most up to date screenshots.
+Please view our [super fun demo](https://feed-them-gallery.com) for the most up to date screenshots.
