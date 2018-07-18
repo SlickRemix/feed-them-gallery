@@ -36,7 +36,7 @@ FREE PLUGIN OPTIONS
  * Choose images already uploaded and add to your gallery
 
 = Layout Options =
- * Image Gallery Squared, similar to Instagram. [Demos](http://feedthemgallery.com/gallery-demo-one/)
+ * Image Gallery Squared, similar to Instagram. [Demos](https://feedthemgallery.com/gallery-demo-one/)
  * Image Post Gallery that looks similar to a blog post.
  * Image Post in Grid Gallery.
  * Image Gallery Collage, were different heights and width images will stack.
