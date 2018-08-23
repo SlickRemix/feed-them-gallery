@@ -3,7 +3,7 @@ Contributors: slickremix
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
 Tested up to: 4.9.7
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 License: GPLv2 or later
 
 Create customizable Image Galleries and sell your images using woocommerce.
@@ -22,7 +22,6 @@ If you are a Photographer, Developer, Artist, Someone looking to help others sel
 
 = What does this plugin do? =
 With this plugin you can create and display clean responsive image galleries in minutes. We have 4 different layouts you can choose from and many options to configure the look and feel of the gallery on your site. In our premium version we've also made it super easy for you to connect your galleries to Woocommerce. In one click you can easily turn a Gallery into a ZIP and WooCommerce product. You can also in one click and based on a model product turn EACH individual photo into a WooCommerce product saving you MANY HOURS of tedious product creation!
-
 
 FREE PLUGIN OPTIONS
 = Image Options =
@@ -128,10 +127,15 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.0.9 Wednesday, August 22nd, 2018 =
+  * NEW: Added constant FTG_CURRENT_VERSION at the end of our css and js files so updated files in new version will reload right away. ie * ...styles?ver=1.0.9
+  * FIX: Duplicate Gallery link displays strictly on ft_gallery post types now.
+  * FIX: Minor CSS and text changes throughout admin pages.
+  * PREMIUM: Please upgrade to version 1.0.4. See update notices in our [sidebar](https://www.slickremix.com/downloads/feed-them-gallery/).
+
 = Version 1.0.8 Wednesday, July 18th, 2018 =
-  * FIXED: php warning when activating the plugin if wp_debug mode was set to yes.
-  * FIXED: Reverted the menu that scrolls with the page to a stationary one, since in some situations it may not be possible to see the menu.
-  * FIXED: Alignment of misc items on our System Info page.
+  * FIX: php warning when activating the plugin if wp_debug mode was set to yes.
+  * FIX: Reverted the menu that scrolls with the page to a stationary one, since in some situations it may not be possible to see the menu.
   * NEW: Create Image Gallery link and request review option after a few weeks of having this version activated.
 
 = Version 1.0.6 - 1.0.7 Wednesday, July 4th, 2018 =
@@ -142,21 +146,21 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * FIX PREMIUM: Create products from images that are checked only.
 
 = Version 1.0.4 - 1.0.5 Friday, June 15th, 2018 =
-  * FIXED: WooCommerce Product category creation after gallery name. (for premium users only)
+  * FIX: WooCommerce Product category creation after gallery name. (for premium users only)
 
 = Version 1.0.3 Friday, May 11th, 2018 =
   * NEW: Made garbage icon red in color and when clicked it reveals an alert with an ok/cancel confirming you want to delete the image from your website.
-  * FIXED: Add existing images in your Media Library to a gallery.
-  * FIXED CSS: Select Images and Media Library button not aligned next to each other on the edit gallery page.
-  * FIXED PREMIUM: Add to cart permalink not working correctly in some cases for the direct add to cart option.
+  * FIX: Add existing images in your Media Library to a gallery.
+  * FIX CSS: Select Images and Media Library button not aligned next to each other on the edit gallery page.
+  * FIX PREMIUM: Add to cart permalink not working correctly in some cases for the direct add to cart option.
   * NEW PREMIUM: WooCommerce Variables and Ajax Add to Cart button added along with Image orientation detection for model products.
 
 = Version 1.0.2 Tuesday, March 13th, 2018 =
-  * FIXED: Skipping Image if Feed Them Social Premium plugin was active.
-  * FIXED: Misc CSS Tweaks for missing X button on popup because some theme overrides and CSS tweak for share button spacing.
+  * FIX: Skipping Image if Feed Them Social Premium plugin was active.
+  * FIX: Misc CSS Tweaks for missing X button on popup because some theme overrides and CSS tweak for share button spacing.
 
 = Version 1.0.1 Saturday, December 2nd, 2017 =
-  * FIXED: Display Gallery Class to have Woocommerce Purchase buttons show properly.
+  * FIX: Display Gallery Class to have Woocommerce Purchase buttons show properly.
 
 = Version 1.0.0 Monday, October 16th, 2017 =
   * Initial Release

@@ -1,6 +1,234 @@
 //SLICKREMIX START OUR CUSTOM POPUPS
 jQuery(document).ready(function () {
 
+
+
+
+
+
+    jQuery('#ft_gallery_smart_image_orient_prod').appendTo('.ft_gallery_smart_image_orient_prod_holder');
+
+
+
+    // WooCommerce Tab where if the orientation checkbox is checked we show an overlay over the global
+    // product tab so as not to confuse people of its purpose.
+    var ftg_orientation_checkbox = jQuery('#ft_gallery_smart_image_orient_prod');
+    // On click action
+    jQuery('body').on('click', '#ft_gallery_smart_image_orient_prod', function () {
+        if(ftg_orientation_checkbox.is(':checked')){
+            jQuery(".ftg-global-model-product-wrap .ftg-settings-overlay").show();
+        }
+        else{
+            jQuery(".ftg-global-model-product-wrap .ftg-settings-overlay").hide();
+        }
+    });
+    // On page loaded action
+    if(ftg_orientation_checkbox.is(':checked')){
+        jQuery(".ftg-global-model-product-wrap .ftg-settings-overlay").show();
+    }
+    else{
+        jQuery(".ftg-global-model-product-wrap .ftg-settings-overlay").hide();
+    }
+
+
+
+    jQuery('#ft_gallery_image_to_woo_model_prod').on('change', function (e) {
+        var ftgGlobalValue = jQuery("select#ft_gallery_image_to_woo_model_prod").val();
+        console.log(ftgGlobalValue);
+        if(ftgGlobalValue) {
+            jQuery('.ftg-settings-overlay-smart-images').show();
+        }
+        else{
+            jQuery('.ftg-settings-overlay-smart-images').hide();
+        }
+    });
+
+
+    var ftgGlobalValue = jQuery("select#ft_gallery_image_to_woo_model_prod").val();
+    console.log(ftgGlobalValue);
+    if(ftgGlobalValue) {
+        jQuery('.ftg-settings-overlay-smart-images').show();
+    }
+    else{
+        jQuery('.ftg-settings-overlay-smart-images').hide();
+    }
+
+
+    jQuery('#ft_gallery_image_to_woo_model_prod').on('change', function (e) {
+        var ftgGlobalValue = jQuery("select#ft_gallery_image_to_woo_model_prod").val();
+        console.log(ftgGlobalValue);
+        if(ftgGlobalValue) {
+            jQuery('#ftg-tab-content1 .ft-gallery-create-woo').attr('disabled', false   );
+
+        }
+        else{
+            jQuery('#ftg-tab-content1 .ft-gallery-create-woo').attr('disabled', true);
+        }
+    });
+
+
+    var ftgGlobalValue = jQuery("select#ft_gallery_image_to_woo_model_prod").val();
+    var ftgLandscapeValue = jQuery("select#ft_gallery_landscape_to_woo_model_prod").val();
+    var ftgSquareValue = jQuery("select#ft_gallery_square_to_woo_model_prod").val();
+    var ftgPortraitValue = jQuery("select#ft_gallery_portrait_to_woo_model_prod").val();
+    var ftgorientationValueCheck = jQuery("#ft_gallery_smart_image_orient_prod").is(':checked');
+
+    console.log(ftgGlobalValue);
+    if(ftgGlobalValue || ftgLandscapeValue && ftgSquareValue && ftgPortraitValue && ftgorientationValueCheck) {
+        jQuery('#ftg-tab-content1 .ft-gallery-create-woo').attr('disabled', false);
+    }
+    else{
+        jQuery('#ftg-tab-content1 .ft-gallery-create-woo').attr('disabled', true);
+    }
+
+
+    jQuery('.ft-gallery-settings-tabs-meta-wrap .tab1').click(function (e) {
+        var ftgGlobalValue = jQuery("select#ft_gallery_image_to_woo_model_prod").val();
+        var ftgLandscapeValue = jQuery("select#ft_gallery_landscape_to_woo_model_prod").val();
+        var ftgSquareValue = jQuery("select#ft_gallery_square_to_woo_model_prod").val();
+        var ftgPortraitValue = jQuery("select#ft_gallery_portrait_to_woo_model_prod").val();
+        var ftgorientationValueCheck = jQuery("#ft_gallery_smart_image_orient_prod").is(':checked');
+
+        console.log(ftgGlobalValue);
+        if(ftgGlobalValue || ftgLandscapeValue && ftgSquareValue && ftgPortraitValue && ftgorientationValueCheck) {
+            jQuery('#ftg-tab-content1 .ft-gallery-create-woo').attr('disabled', false);
+        }
+        else{
+            jQuery('#ftg-tab-content1 .ft-gallery-create-woo').attr('disabled', true);
+        }
+    });
+
+
+
+
+    jQuery('#ft_gallery_zip_to_woo_model_prod').on('change', function (e) {
+        var ftgGlobalValue = jQuery("select#ft_gallery_zip_to_woo_model_prod").val();
+        console.log(ftgGlobalValue);
+        if(ftgGlobalValue) {
+            jQuery('#ftg-tab-content1 .ft-gallery-zip-gallery').attr('disabled', false   );
+
+        }
+        else{
+            jQuery('#ftg-tab-content1 .ft-gallery-zip-gallery').attr('disabled', true);
+        }
+    });
+
+
+    var ftgGlobalValue = jQuery("select#ft_gallery_zip_to_woo_model_prod").val();
+    console.log(ftgGlobalValue);
+    if(ftgGlobalValue) {
+        jQuery('#ftg-tab-content1 .ft-gallery-zip-gallery').attr('disabled', false);
+    }
+    else{
+        jQuery('#ftg-tab-content1 .ft-gallery-zip-gallery').attr('disabled', true);
+    }
+
+
+
+
+
+
+
+
+
+
+    jQuery('#ft_gallery_image_to_woo_model_prod').on('change', function (e) {
+        var ftgGlobalValue = jQuery("select#ft_gallery_image_to_woo_model_prod").val();
+        console.log(ftgGlobalValue);
+        if(ftgGlobalValue) {
+            jQuery('.ftg-global-model-product-wrap .ftg-hide-me').hide();
+            jQuery('.ftg-js-edit-button-holder').html('<div class="ft-gallery-edit-woo-model-prod ftg-fadein" style="display: none"><a href="' + ftg_woo.admin_url + 'post.php?post=' + ftgGlobalValue + '&action=edit" target="_blank">' + ftg_woo.global_product_option + '</a></div>');
+            jQuery('.ftg-global-model-product-wrap .ftg-fadein').fadeIn();
+
+        }
+        else{
+            jQuery('.ftg-global-model-product-wrap .ftg-hide-me, .ftg-global-model-product-wrap .ftg-fadein').fadeOut();
+        }
+    });
+
+
+
+
+
+    jQuery('#ft_gallery_landscape_to_woo_model_prod').on('change', function (e) {
+        var ftgGlobalValue = jQuery("select#ft_gallery_landscape_to_woo_model_prod").val();
+        console.log(ftgGlobalValue);
+        if(ftgGlobalValue){
+            jQuery( '.ftg-landscape-option-wrapper .ftg-hide-me').hide();
+            jQuery( '.ftg-js-edit-button-holder-landscape').html( '<div class="ft-gallery-edit-woo-model-prod ftg-fadein" style="display: none"><a href="'+ ftg_woo.admin_url+'post.php?post='+ftgGlobalValue+'&action=edit" target="_blank">'+ ftg_woo.global_product_option+'</a></div>' );
+            jQuery('.ftg-landscape-option-wrapper .ftg-fadein').fadeIn();
+        }
+        else{
+            jQuery( '.ftg-landscape-option-wrapper .ftg-hide-me, .ftg-landscape-option-wrapper .ftg-fadein').fadeOut();
+        }
+    });
+
+    jQuery('#ft_gallery_square_to_woo_model_prod').on('change', function (e) {
+        var ftgGlobalValue = jQuery("select#ft_gallery_square_to_woo_model_prod").val();
+        console.log(ftgGlobalValue);
+        if(ftgGlobalValue) {
+            jQuery('.ftg-square-option-wrapper .ftg-hide-me').hide();
+            jQuery('.ftg-js-edit-button-holder-square').html('<div class="ft-gallery-edit-woo-model-prod ftg-fadein" style="display: none"><a href="' + ftg_woo.admin_url + 'post.php?post=' + ftgGlobalValue + '&action=edit" target="_blank">' + ftg_woo.global_product_option + '</a></div>');
+            jQuery('.ftg-square-option-wrapper .ftg-fadein').fadeIn();
+        }
+        else{
+            jQuery( '.ftg-square-option-wrapper .ftg-hide-me, .ftg-square-option-wrapper .ftg-fadein').fadeOut();
+        }
+    });
+    jQuery('#ft_gallery_portrait_to_woo_model_prod').on('change', function (e) {
+        var ftgGlobalValue = jQuery("select#ft_gallery_portrait_to_woo_model_prod").val();
+        console.log(ftgGlobalValue);
+        if(ftgGlobalValue) {
+            jQuery('.ftg-portrait-option-wrapper .ftg-hide-me').hide();
+            jQuery('.ftg-js-edit-button-holder-portrait').html('<div class="ft-gallery-edit-woo-model-prod ftg-fadein" style="display: none"><a href="' + ftg_woo.admin_url + 'post.php?post=' + ftgGlobalValue + '&action=edit" target="_blank">' + ftg_woo.global_product_option + '</a></div>');
+            jQuery('.ftg-portrait-option-wrapper .ftg-fadein').fadeIn();
+        }
+        else{
+            jQuery( '.ftg-portrait-option-wrapper .ftg-hide-me, .ftg-portrait-option-wrapper .ftg-fadein').fadeOut();
+        }
+    });
+
+
+
+
+    jQuery('#ft_gallery_zip_to_woo_model_prod').on('change', function (e) {
+        var ftgGlobalValue = jQuery("select#ft_gallery_zip_to_woo_model_prod").val();
+        console.log(ftgGlobalValue);
+        if(ftgGlobalValue) {
+            jQuery('.ftg-zip-option-wrapper .ftg-hide-me').hide();
+            jQuery('.ftg-js-edit-button-holder-zip').html('<div class="ft-gallery-edit-woo-model-prod ftg-fadein" style="display: none"><a href="' + ftg_woo.admin_url + 'post.php?post=' + ftgGlobalValue + '&action=edit" target="_blank">' + ftg_woo.global_product_option + '</a></div>');
+            jQuery('.ftg-zip-option-wrapper .ftg-fadein').fadeIn();
+        }
+        else{
+            jQuery( '.ftg-zip-option-wrapper .ftg-hide-me, .ftg-zip-option-wrapper .ftg-fadein').fadeOut();
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     jQuery('#fts-gallery-checkAll').toggle(function (event) {
         event.preventDefault(); // stop post action
         jQuery('#img1plupload-thumbs input:checkbox').attr('checked', 'checked');
@@ -534,7 +762,7 @@ jQuery(document).ready(function () {
             success: function (response) {
                 // Complete Sucess
                 console.log('Well Done and got this from sever: ' + response);
-                jQuery(thisDelete).parents('.thumb').addClass('hidden').hide();
+                jQuery(thisDelete).parents('.thumb').remove();
 
 
             },

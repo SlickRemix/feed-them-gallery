@@ -79,8 +79,8 @@ class Display_Gallery extends Gallery {
         $current_screen = get_current_screen();
 
         if ($current_screen->post_type == 'ft_gallery' && $current_screen->base == 'post') {
-            wp_enqueue_script('js_color', plugins_url('/feed-them-gallery/admin/js/jscolor/jscolor.js'), array('jquery'));
-            wp_enqueue_script('ft_gallery_display_gallery_scripts', plugins_url('/feed-them-gallery/admin/js/admin.js'), array('jquery'));
+            wp_enqueue_script('js_color', plugins_url('/feed-them-gallery/admin/js/jscolor/jscolor.js'), array('jquery'), FTG_CURRENT_VERSION);
+            wp_enqueue_script('ft_gallery_display_gallery_scripts', plugins_url('/feed-them-gallery/admin/js/admin.js'), array('jquery'), FTG_CURRENT_VERSION);
             wp_enqueue_script('jquery');
             wp_localize_script('ft_gallery_display_gallery_scripts', 'ssAjax', array('ajaxurl' => admin_url('admin-ajax.php')));
             wp_enqueue_script('ft_gallery_display_gallery_scripts');
@@ -96,12 +96,12 @@ class Display_Gallery extends Gallery {
      */
     function ft_gallery_head() {
 
-        wp_enqueue_style('ft-gallery-feeds', plugins_url('feed-them-gallery/includes/feeds/css/styles.css'));
-        wp_enqueue_script('ft-masonry-pkgd', plugins_url('feed-them-gallery/includes/feeds/js/masonry.pkgd.min.js'), array('jquery'));
-        wp_enqueue_script('ft-images-loaded', plugins_url('feed-them-gallery/includes/feeds/js/imagesloaded.pkgd.min.js'));
-        wp_enqueue_script('ft-front-end-js', plugins_url('feed-them-gallery/includes/js/front-end.js'));
+        wp_enqueue_style('ft-gallery-feeds', plugins_url('feed-them-gallery/includes/feeds/css/styles.css'), array(), FTG_CURRENT_VERSION);
+        wp_enqueue_script('ft-masonry-pkgd', plugins_url('feed-them-gallery/includes/feeds/js/masonry.pkgd.min.js'), array('jquery'), FTG_CURRENT_VERSION);
+        wp_enqueue_script('ft-images-loaded', plugins_url('feed-them-gallery/includes/feeds/js/imagesloaded.pkgd.min.js'), array(), FTG_CURRENT_VERSION);
+        wp_enqueue_script('ft-front-end-js', plugins_url('feed-them-gallery/includes/js/front-end.js'), array(), FTG_CURRENT_VERSION);
         if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php') && is_plugin_active('woocommerce/woocommerce.php')) {
-            wp_enqueue_script('add-to-cart-ajax_ajax', plugins_url() . '/feed-them-gallery/includes/feeds/js/add-to-cart-ajax.js', array('jquery'), '', true);
+            wp_enqueue_script('add-to-cart-ajax_ajax', plugins_url() . '/feed-them-gallery/includes/feeds/js/add-to-cart-ajax.js', array('jquery'), FTG_CURRENT_VERSION, true);
         }
 
 
@@ -777,15 +777,15 @@ class Display_Gallery extends Gallery {
             // it's ok if these styles & scripts load at the bottom of the page
             $fts_fix_magnific = get_option('ft_gallery_fix_magnific') ? get_option('ft_gallery_fix_magnific') : '';
             if (isset($fts_fix_magnific) && $fts_fix_magnific !== '1') {
-                wp_enqueue_style('ft-gallery-popup', plugins_url('feed-them-gallery/includes/feeds/css/magnific-popup.css'));
+                wp_enqueue_style('ft-gallery-popup', plugins_url('feed-them-gallery/includes/feeds/css/magnific-popup.css'), array(), FTG_CURRENT_VERSION);
             }
             if (is_plugin_active('feed-them-premium/feed-them-premium.php')) {
                 // run our magnific popup.js in fts instead of double loading
             } else {
-                wp_enqueue_script('ft-gallery-popup-js', plugins_url('feed-them-gallery/includes/feeds/js/magnific-popup.js'));
+                wp_enqueue_script('ft-gallery-popup-js', plugins_url('feed-them-gallery/includes/feeds/js/magnific-popup.js'), array(), FTG_CURRENT_VERSION);
             }
             // here is the click function for our custom popup
-            wp_enqueue_script('ft-gallery-popup-click-js', plugins_url('feed-them-gallery/includes/feeds/js/magnific-popup-click.js'));
+            wp_enqueue_script('ft-gallery-popup-click-js', plugins_url('feed-them-gallery/includes/feeds/js/magnific-popup-click.js'), array(), FTG_CURRENT_VERSION);
         }
 
 

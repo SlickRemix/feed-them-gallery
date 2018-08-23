@@ -67,7 +67,7 @@ class updater_check_class {
         ?>
 
         <div class="error notice">
-            <p><?php _e($this->plugin_name . ' needs a valid License Key! <a href="admin.php?page=fts-license-page">Click here to add one</a> or you won\'t recieve updates. - <a href="http://www.slickremix.com/my-account/" target="_blank">You can get License Key Here.</a>', 'feed-them-social'); ?></p>
+            <p><?php _e($this->plugin_name . ' needs a valid License Key! <a href="admin.php?page=fts-license-page">Click here to add one</a> or you won\'t recieve updates. - <a href="https://www.slickremix.com/my-account/" target="_blank">You can get License Key Here.</a>', 'feed-them-social'); ?></p>
         </div>
 
         <?php
@@ -82,7 +82,7 @@ class updater_check_class {
         ?>
 
         <div class="error notice">
-            <p><?php _e($this->plugin_name . ' - Your License Key is not active, expired, or is invalid. <a href="admin.php?page=fts-license-page">Click here to add one</a> or you won\'t recieve updates. - <a href="http://www.slickremix.com/my-account/" target="_blank">You can get License Key Here.</a>', 'feed-them-social'); ?></p>
+            <p><?php _e($this->plugin_name . ' - Your License Key is not active, expired, or is invalid. <a href="admin.php?page=fts-license-page">Click here to add one</a> or you won\'t recieve updates. - <a href="https://www.slickremix.com/my-account/" target="_blank">You can get License Key Here.</a>', 'feed-them-social'); ?></p>
         </div>
 
         <?php

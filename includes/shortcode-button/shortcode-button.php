@@ -47,7 +47,7 @@ class Shortcode_Button {
         }
 
         // Enqueue the gallery / album selection script
-        wp_enqueue_script('gallery-select-script', plugins_url('feed-them-gallery/includes/shortcode-button/js/gallery-select.js'), array('jquery'), false, true);
+        wp_enqueue_script('gallery-select-script', plugins_url('feed-them-gallery/includes/shortcode-button/js/gallery-select.js'), array('jquery'), FTG_CURRENT_VERSION, true);
         wp_localize_script('gallery-select-script', 'ft_gallery_select', array(
             'get_galleries_nonce' => wp_create_nonce('ft-gallery-editor-get-galleries'),
             'modal_title' => __('Insert', 'feed-them-gallery'),
@@ -55,7 +55,7 @@ class Shortcode_Button {
         ));
 
         // Enqueue the script that will trigger the editor button.
-        wp_enqueue_script('editor-script', plugins_url('feed-them-gallery/includes/shortcode-button/js/editor.js'), array('jquery'), false, true);
+        wp_enqueue_script('editor-script', plugins_url('feed-them-gallery/includes/shortcode-button/js/editor.js'), array('jquery'), FTG_CURRENT_VERSION, true);
         wp_localize_script('gallery-select-script', 'ft_gallery_editor', array(
             'modal_title' => __('Insert Gallery', 'feed-them-gallery'),
             'insert_button_label' => __('Insert', 'feed-them-gallery'),

@@ -49,7 +49,7 @@ class updater_init {
             'feed_them_gallery_premium' => array(
                 'title' => 'Feed Them Gallery Premium',
                 'plugin_url' => 'feed-them-gallery-premium/feed-them-gallery-premium.php',
-                'demo_url' => 'http://feedthemgallery.com/',
+                'demo_url' => 'https://feedthemgallery.com/',
                 'purchase_url' => 'https://www.slickremix.com/downloads/feed-them-gallery/',
             ),
         );
