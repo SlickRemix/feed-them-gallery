@@ -127,8 +127,9 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
-= Version 1.0.9 Wednesday, August 22nd, 2018 =
+= Version 1.0.9 Thursday, August 23rd, 2018 =
   * NEW: Added constant FTG_CURRENT_VERSION at the end of our css and js files so updated files in new version will reload right away. ie * ...styles?ver=1.0.9
+  * NEW: Success Message when dragging files to upload area or using Select Images button and all images have fininshed uploading.
   * FIX: Duplicate Gallery link displays strictly on ft_gallery post types now.
   * FIX: Minor CSS and text changes throughout admin pages.
   * PREMIUM: Please upgrade to version 1.0.4. See update notices in our [sidebar](https://www.slickremix.com/downloads/feed-them-gallery/).
