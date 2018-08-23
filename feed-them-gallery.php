@@ -24,6 +24,9 @@
  *
  * Need Support? http://www.slickremix.com/my-account
  */
+// Makes sure any js or css changes are reloaded properly. Added to enqued css and js files throughout
+define('FTG_CURRENT_VERSION', '1.0.8');
+
 final class Feed_Them_Gallery {
 
     /**
@@ -66,7 +69,7 @@ final class Feed_Them_Gallery {
             register_activation_hook(__FILE__, array(self::$instance, 'ftg_activate'));
             add_action('admin_notices', array(self::$instance, 'ft_gallery_display_install_notice'));
             add_action('admin_notices', array(self::$instance, 'ft_gallery_display_update_notice'));
-            add_action('upgrader_process_complete', array(self::$instance, 'ft_gallery_upgrade_completed'), 10, 2);
+            add_action('upgrader_process_complete', array(self::$instance, 'ft_gallery_upgrade_completed', 10, 2));
 
             // Include our own Settings link to plugin activation and update page.
             add_filter('plugin_action_links_' . plugin_basename(__FILE__), array(self::$instance, 'ft_gallery_free_plugin_actions'), 10, 4);
@@ -206,9 +209,9 @@ final class Feed_Them_Gallery {
         // Check the transient to see if we've just activated the plugin
         if (get_transient('ftgallery_activated')) {
 
-            echo sprintf(__('%1$sThanks for installing Feed Them Gallery. To get started please create a new image gallery %2$sSettings%3$s page.%4$s', 'feed-them-gallery'),
+            echo sprintf(__('%1$sThanks for installing Feed Them Gallery. To get started please view our %2$sSettings%3$s page.%4$s', 'feed-them-gallery'),
                 '<div class="notice notice-success updated is-dismissible"><p>',
-                '<a href="'.esc_url('post-new.php?post_type=ft_gallery').'">',
+                '<a href="'.esc_url('edit.php?post_type=ft_gallery&page=ft-gallery-settings-page').'">',
                 '</a>',
                 '</p></div>'
             );
@@ -360,12 +363,10 @@ final class Feed_Them_Gallery {
     function ft_gallery_free_plugin_actions($actions, $plugin_file, $plugin_data, $context) {
         array_unshift(
             $actions,
-            sprintf(__('%1$sCreate Image Gallery%2$s | %3$sSettings%4$s\' | %3$sSupport%4$s', 'feed-them-gallery'),
-                '<a href="'.esc_url('post-new.php?post_type=ft_gallery').'">',
-                '</a>',
+            sprintf(__('%1$sSettings%2$s | %3$sSupport%4$s', 'feed-them-gallery'),
                 '<a href="'.esc_url('edit.php?post_type=ft_gallery&page=ft-gallery-settings-page').'">',
                 '</a>',
-                '<a href="'.esc_url('https://wordpress.org/support/plugin/feed-them-gallery').'">',
+                '<a href="'.esc_url('https://www.slickremix.com/support/').'">',
                 '</a>'
             )
         );
@@ -385,8 +386,8 @@ final class Feed_Them_Gallery {
     function ft_gallery_leave_feedback_link($links, $file) {
         if ($file === plugin_basename(__FILE__)) {
             $links['feedback'] = sprintf(
-                __('%1$sRate Plugin%2$s', 'feed-them-gallery'),
-                '<a href="'.esc_url('http://wordpress.org/support/view/plugin-reviews/feed-them-gallery').'" target="_blank">',
+                __('%1$sRate Plugin%2$s', 'feed-them-social'),
+                '<a href="'.esc_url('https://wordpress.org/support/plugin/feed-them-gallery/reviews/').'" target="_blank">',
                 '</a>'
             );
 
@@ -454,6 +455,7 @@ function feed_them_gallery_load_plugin() {
 }
 
 add_action('admin_init', 'feed_them_gallery_load_plugin');
+
 
 /**
  * FTG Review Check

@@ -35,7 +35,7 @@ FREE PLUGIN OPTIONS
  * Choose images already uploaded and add to your gallery
 
 = Layout Options =
- * Image Gallery Squared, similar to Instagram. [Demos](http://feedthemgallery.com/gallery-demo-one/)
+ * Image Gallery Squared, similar to Instagram. [Demos](https://feedthemgallery.com/gallery-demo-one/)
  * Image Post Gallery that looks similar to a blog post.
  * Image Post in Grid Gallery.
  * Image Gallery Collage, were different heights and width images will stack.
@@ -128,9 +128,10 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
 
 == Changelog ==
 = Version 1.0.9 Wednesday, August 22nd, 2018 =
+  * NEW: Added constant FTG_CURRENT_VERSION so we can track the version of the plugin visually at the end of our css and js files. ie * ...styles?ver=1.0.8
   * FIX: Duplicate Gallery link displays strictly on ft_gallery post types now.
   * FIX: Minor CSS and text changes throughout admin pages.
-  * PREMIUM: Please upgrade to v1.0.4. See update notices in our [sidebar](https://www.slickremix.com/downloads/feed-them-gallery/).
+  * PREMIUM: Please upgrade to version 1.0.4. See update notices in our [sidebar](https://www.slickremix.com/downloads/feed-them-gallery/).
 
 = Version 1.0.8 Wednesday, July 18th, 2018 =
   * FIX: php warning when activating the plugin if wp_debug mode was set to yes.

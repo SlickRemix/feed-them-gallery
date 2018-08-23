@@ -1,4 +1,5 @@
 jQuery(document).ready(function ($) {
+
     // Media Library button hook (WP >= 3.5):
     $('a#dgd_library_button').click(function (e) {
 
@@ -265,16 +266,19 @@ jQuery.fn.exists = function () {
 };
 jQuery(document).ready(function ($) {
 
+
+
     if ($(".plupload-upload-uic").exists()) {
         var pconfig = false;
+
         $(".plupload-upload-uic").each(function () {
+
+
             var $this = $(this);
             var id1 = $this.attr("id");
             var imgId = id1.replace("plupload-upload-ui", "");
 
-
             plu_show_thumbs(imgId);
-
 
             pconfig = JSON.parse(JSON.stringify(base_plupload_config));
 
@@ -321,6 +325,23 @@ jQuery(document).ready(function ($) {
                     $('#drag-drop-area').unbind('.wp-uploader');
                 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             });
 
             uploader.init();
@@ -356,7 +377,9 @@ jQuery(document).ready(function ($) {
             uploader.bind('FileUploaded', function (up, file, response) {
 
 
+
                 $('#' + file.id).fadeOut();
+                $('#' + file.id).addClass('ftg-upload-complete');
                 response = JSON.parse(response["response"]);
                 console.log(response['url']);
                 // add url to the hidden field
@@ -377,6 +400,38 @@ jQuery(document).ready(function ($) {
 
                 // show thumb
                 plu_show_thumbs(imgId, response['id']);
+
+                // We add a class to the wrapper when the create woocommerce create on image upload is checked.
+                // So here we are checking to see if that class is on the wrapper and if so then run this function to create the product now that the image is about to be complete.
+                // I'm sure in the future there may be a quicker way to do this but If your server has decent speed you should be able to do over 400 images with products in under 30 minutes.
+                // The reason the process takes so long is because we are duplicating each product post and adding in the info, then doing that over and over. Servers with low memory or timelimits will suffer the most.
+                // One server I tested took over 3 hours to do 436 products. So if you really want to sell photos and get things done quickly then make sure your server is as nice as your Camera.
+                // We do this check with either the hassclass method or if the checkbox is checked because if you are using ajax to save the page the class may not have been applied yet.
+                var ftgGlobalValue = jQuery("select#ft_gallery_image_to_woo_model_prod").val();
+                var ftgLandscapeValue = jQuery("select#ft_gallery_landscape_to_woo_model_prod").val();
+                var ftgSquareValue = jQuery("select#ft_gallery_square_to_woo_model_prod").val();
+                var ftgPortraitValue = jQuery("select#ft_gallery_portrait_to_woo_model_prod").val();
+                var ftgorientationValueCheck = jQuery("#ft_gallery_smart_image_orient_prod").is(':checked');
+
+                console.log(ftgGlobalValue);
+                if (jQuery("#uploaderSection").hasClass("ftg-auto-create-product-on-upload") || jQuery("#ft_gallery_auto_image_woo_prod").is(':checked')) {
+
+                    if (ftgGlobalValue || ftgLandscapeValue && ftgSquareValue && ftgPortraitValue && ftgorientationValueCheck) {
+                        ft_gallery_image_to_woo_on_upload(response['id'], jQuery('#img1plupload-thumbs').attr('data-post-id'));
+                        jQuery('#ftg-tab-content1 .ft-gallery-notice').removeClass('error');
+                        jQuery('#ftg-tab-content1 .ft-gallery-notice').removeClass('ftg-block');
+                        jQuery('#ftg-tab-content1 .ft-gallery-notice').html('');
+                    }
+                    else{
+                        jQuery('#ftg-tab-content1 .ft-gallery-notice').addClass('error');
+                        jQuery('#ftg-tab-content1 .ft-gallery-notice').addClass('ftg-block');
+                        jQuery('#ftg-tab-content1 .ft-gallery-notice').html(ftg_woo.must_have_option_selected_to_create_products + '<div class="ft-gallery-notice-close"></div>');
+                        console.log('error');
+                    }
+                }
+
+
+
             });
         });
     }
@@ -392,6 +447,10 @@ function plu_show_thumbs(imgId, attachmentId) {
     var attachID = 'list_item_' + attachmentId;
     var imagesS = $("#" + imgId).val();
     var images = imagesS.split(",");
+
+
+
+
     for (var i = 0; i < images.length; i++) {
         console.log("#" + attachmentId + ":visible");
         console.log(images);
@@ -451,3 +510,6 @@ function plu_show_thumbs(imgId, attachmentId) {
     thumbsC.disableSelection();
     //  }
 }
+
+
+
