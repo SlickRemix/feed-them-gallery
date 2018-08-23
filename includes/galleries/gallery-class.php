@@ -1415,14 +1415,14 @@ class Gallery {
                                         <h3><?php _e('Quick Guide to Getting Started', 'feed-them-gallery'); ?></h3>
                                         <p><?php
                                             echo sprintf(__('Please look over the options on the %1$sSettings%2$s page before creating your first gallery.%3$s1. Enter a title for your gallery at the top of the page in the "Enter title here" input. %4$s2. Add images to the gallery and sort them in the order you want. %4$s3. Publish the gallery by clicking the blue "Publish" button. %4$s4. Now you can edit your images title, description and more. %5$sView our %6$sImage Gallery Demos%7$s or %8$sFull documentation%9$s for more details.', 'feed-them-gallery'),
-                                                '<a href="' . esc_url('edit.php?post_type=ft_gallery&page=ft-gallery-settings-page') . '" >',
+                                                '<a href="' . esc_url('edit.php?post_type=ft_gallery&page=ft-gallery-settings-page') . '"  target="_blank">',
                                                 '</a>',
                                                 '<p/><p>',
                                                 '<br/>',
                                                 '</p>',
-                                                '<a href="' . esc_url('https://feedthemgallery.com/gallery-demo-one/') . '" >',
+                                                '<a href="' . esc_url('https://feedthemgallery.com/gallery-demo-one/') . '" target="_blank">',
                                                 '</a>',
-                                                '<a href="' . esc_url('https://www.slickremix.com/feed-them-gallery/') . '" >',
+                                                '<a href="' . esc_url('https://www.slickremix.com/feed-them-gallery/') . '" target="_blank">',
                                                 '</a>'
 
                                             );
