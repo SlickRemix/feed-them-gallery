@@ -659,6 +659,8 @@ class Gallery {
                 'publishing' => __('Publishing...', 'feed-them-gallery'),
                 'updating' => __('Updating...', 'feed-them-gallery'),
                 'totop' => __('To top', 'feed-them-gallery'),
+                // used in the success message for when images have been completely uploaded in the drag and drop are or file add button.
+                'images_complete_on_auto_upload' => sprintf(__('The Image(s) are done uploading. Please click the Publish or Update button now to edit your image(s).', 'feed-them-gallery')),
             );
             # Localize strings to javascript
             wp_localize_script('updatefrombottom-admin-script', 'updatefrombottomParams', $js_data);

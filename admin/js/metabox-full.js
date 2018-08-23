@@ -429,6 +429,26 @@ jQuery(document).ready(function ($) {
                         console.log('error');
                     }
                 }
+                else {
+                    // we check to see if we are just uploading images by dragging them
+                    // and when all the divs in the container have display none we then set our success message
+                    var allDivs = jQuery('.file');
+                    var classedDivs = jQuery('.file.ftg-upload-complete');
+
+                    var allDivsHaveClass = (allDivs.length === classedDivs.length);
+                    if (allDivsHaveClass) {
+                        // we setTimout because sometimes the last image will lag and want to show this message twice
+                        // so we try to stop that by holing out a second more before showing the message
+                        setTimeout(function(){
+                            jQuery('#ftg-tab-content1 .ft-gallery-notice').addClass('updated');
+                            jQuery('#ftg-tab-content1 .ft-gallery-notice').addClass('ftg-block');
+                            jQuery('#ftg-tab-content1 .ft-gallery-notice').html(updatefrombottomParams.images_complete_on_auto_upload);
+                            jQuery('#ftg-tab-content1 .ft-gallery-notice').append('<div class="ft-gallery-notice-close"></div>');
+                            console.log('made it');
+                        }, 500);
+                        // alert('made it');
+                    }
+                }
 
 
 
@@ -510,6 +530,3 @@ function plu_show_thumbs(imgId, attachmentId) {
     thumbsC.disableSelection();
     //  }
 }
-
-
-
