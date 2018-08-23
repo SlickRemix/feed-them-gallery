@@ -128,7 +128,7 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
 
 == Changelog ==
 = Version 1.0.9 Wednesday, August 22nd, 2018 =
-  * NEW: Added constant FTG_CURRENT_VERSION so we can track the version of the plugin visually at the end of our css and js files. ie * ...styles?ver=1.0.9
+  * NEW: Added constant FTG_CURRENT_VERSION at the end of our css and js files so updated files in new version will reload right away. ie * ...styles?ver=1.0.9
   * FIX: Duplicate Gallery link displays strictly on ft_gallery post types now.
   * FIX: Minor CSS and text changes throughout admin pages.
   * PREMIUM: Please upgrade to version 1.0.4. See update notices in our [sidebar](https://www.slickremix.com/downloads/feed-them-gallery/).
