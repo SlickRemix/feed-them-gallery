@@ -7,23 +7,26 @@
  * Plugin Name: Feed Them Gallery
  * Plugin URI: http://slickremix.com/
  * Description: Create Beautiful Responsive Galleries in Minutes. Choose the number of columns a loadmore button, popup and more!  Sell your galleries or individual images, watermark them and even zip galleries with our premium version.
- * Version: 1.0.4
+ * Version: 1.0.9
  * Author: SlickRemix
  * Author URI: http://slickremix.com/
  * Text Domain: feed-them-gallery
  * Domain Path: /languages
  * Requires at least: Wordpress 4.7.0
- * Tested up to: WordPress 4.9.6
- * Stable tag: 1.0.4
+ * Tested up to: WordPress 4.9.7
+ * Stable tag: 1.0.9
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  *
- * @version  1.0.4
+ * @version  1.0.9
  * @package  FeedThemSocial/Core
  * @copyright  	Copyright (c) 2012-2018 SlickRemix
  *
  * Need Support? http://www.slickremix.com/my-account
  */
+// Makes sure any js or css changes are reloaded properly. Added to enqued css and js files throughout
+define('FTG_CURRENT_VERSION', '1.0.9');
+
 final class Feed_Them_Gallery {
 
     /**
@@ -99,6 +102,8 @@ final class Feed_Them_Gallery {
             //Galleries (Custom Post Type)
             self::$instance->gallery = new feed_them_gallery\Gallery();
 
+            //Albums
+            self::$instance->albums = new feed_them_gallery\Albums();
 
             if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
                 //Gallery to Woocommerce
@@ -113,6 +118,9 @@ final class Feed_Them_Gallery {
 
             //Core
             self::$instance->functions = new feed_them_gallery\Core_Functions();
+
+            //Shortcodes
+            self::$instance->functions = new feed_them_gallery\Shortcodes();
 
             //Updater Init
             self::$instance->plugin_license_page = new feed_them_gallery\updater_init();
@@ -287,6 +295,9 @@ final class Feed_Them_Gallery {
         //Display Gallery
         include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/display-gallery/display-gallery-class.php');
 
+        //Albums
+        include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/albums/albums-class.php');
+
         // Create Image
         include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/galleries/create-image.php');
 
@@ -307,6 +318,9 @@ final class Feed_Them_Gallery {
 
         //Core Functions Class
         include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/core-functions-class.php');
+
+        //Include Shortcodes
+        include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . '/shortcodes.php');
 
         //Updater Classes
         include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'updater/updater-license-page.php');
@@ -384,7 +398,7 @@ final class Feed_Them_Gallery {
         if ($file === plugin_basename(__FILE__)) {
             $links['feedback'] = sprintf(
                 __('%1$sRate Plugin%2$s', 'feed-them-social'),
-                '<a href="'.esc_url('http://wordpress.org/support/view/plugin-reviews/feed-them-gallery').'" target="_blank">',
+                '<a href="'.esc_url('https://wordpress.org/support/plugin/feed-them-gallery/reviews/').'" target="_blank">',
                 '</a>'
             );
 
@@ -452,6 +466,104 @@ function feed_them_gallery_load_plugin() {
 }
 
 add_action('admin_init', 'feed_them_gallery_load_plugin');
+
+
+/**
+ * FTG Review Check
+ *
+ * Checks $_GET to see if the nag variable is set and what it's value is
+ *
+ * @param $get
+ * @param $nag
+ * @param $option
+ * @param $transient
+ * @return mixed
+ * @since 1.0.8
+ */
+function ftg_check_nag_get( $get, $nag, $option, $transient ) {
+    if ( isset( $_GET[$nag] ) && $get[$nag] == 1 ) {
+        update_option( $option, 'dismissed' );
+    } elseif ( isset( $_GET[$nag] ) && $get[$nag] == 'later' ) {
+        $time = 2 * WEEK_IN_SECONDS;
+        set_transient( $transient, 'ftg-review-waiting', $time );
+        update_option( $option, 'pending' );
+    }
+}
+
+/**
+ * FTG Set Review Transient
+ *
+ * Set a transient if the notice has not been dismissed or has not been set yet
+ *
+ * @param $transient
+ * @param $option
+ * @return mixed
+ * @since 1.0.8
+ */
+function ftg_maybe_set_transient( $transient, $option ) {
+    $ftg_rating_notice_waiting = get_transient( $transient );
+    $notice_status = get_option( $option, false );
+
+    if ( ! $ftg_rating_notice_waiting && !( $notice_status === 'dismissed' || $notice_status === 'pending' ) ) {
+        $time = 2 * WEEK_IN_SECONDS;
+        set_transient( $transient, 'ftg-review-waiting', $time );
+        update_option( $option, 'pending' );
+    }
+}
+
+/**
+ * FTG Ratings Notice
+ *
+ * Generates the html for the admin notice
+ *
+ * @return mixed
+ * @since 1.0.8
+ */
+function ftg_rating_notice_html() {
+
+    //Only show to admins
+    if ( current_user_can( 'manage_options' ) ){
+
+        global $current_user;
+        $user_id = $current_user->ID;
+
+        /* Has the user already clicked to ignore the message? */
+        if ( ! get_user_meta( $user_id, 'ftg_slick_ignore_rating_notice') ) {
+            $output =  "<div class='ftg_notice ftg_review_notice'>";
+            $output .=  "<img src='". plugins_url( 'feed-them-gallery/admin/css/ft-gallery-logo.png' ) ."' alt='Feed Them Gallery'>";
+            $output .=  "<div class='ftg-notice-text'>";
+            $output .=  '<p>'. __('It\'s great to see that you\'ve been using our Feed Them Gallery plugin for a while now. Hopefully you\'re happy with it!  If so, would you consider leaving a positive review? It really helps support the plugin and helps others discover it too!' , 'feed-them-social').'</p>';
+            $output .=  "<p class='ftg-links'>";
+            $output .=  '<a class="ftg_notice_dismiss" href="https://wordpress.org/support/plugin/feed-them-gallery/reviews/#new-post" target="_blank">'. __('Sure, I\'de love to' , 'feed-them-social').'</a>';
+            $output .=  '<a class="ftg_notice_dismiss" href="' .esc_url( add_query_arg( 'ftg_slick_ignore_rating_notice_nag', '1' ) ). '">'. __('I\'ve already given a review' , 'feed-them-social').'</a>';
+            $output .=  '<a class="ftg_notice_dismiss" href="'.esc_url( add_query_arg( 'ftg_slick_ignore_rating_notice_nag', 'later' ) ).'">'. __('Ask me later' , 'feed-them-social').'</a>';
+            $output .=  '<a class="ftg_notice_dismiss" href="https://wordpress.org/support/plugin/feed-them-gallery/#new-post" target="_blank">'. __('Not working, I need support' , 'feed-them-social').'</a>';
+            $output .=  '<a class="ftg_notice_dismiss" href="'. esc_url( add_query_arg( 'ftg_slick_ignore_rating_notice_nag', '1' ) ).'">'. __('No thanks' , 'feed-them-social').'</a>';
+            $output .=  "</p>";
+            $output .=  "</div>";
+            $output .=  " </div>";
+            echo $output;
+        }
+    }
+}
+
+// Variables to define specific terms
+$transient = 'ftg_slick_rating_notice_waiting';
+$option = 'ftg_slick_rating_notice';
+$nag = 'ftg_slick_ignore_rating_notice_nag';
+
+ftg_check_nag_get( $_GET, $nag, $option, $transient );
+ftg_maybe_set_transient( $transient, $option );
+$notice_status = get_option( $option, false );
+
+// only display the notice if the time offset has passed and the user hasn't already dismissed it
+if ( get_transient( $transient ) !== 'ftg-review-waiting' && $notice_status !== 'dismissed' ) {
+    add_action( 'admin_notices', 'ftg_rating_notice_html' );
+}
+//print get_transient( $transient );
+//print  ' & ';
+//print  $notice_status;
+/* END ftg Ratings Notice */
 
 /**
  * Feed Them Gallery

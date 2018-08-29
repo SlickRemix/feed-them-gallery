@@ -70,52 +70,52 @@ class System_Info {
             $theme_data = wp_get_theme();
             $theme = $theme_data->Name . ' ' . $theme_data->Version; ?>
 
-            SITE_URL: <?php echo site_url() . "\n"; ?>
-            Feed Them Gallery Version: <?php echo ft_gallery_check_version() . "\n"; ?>
+SITE_URL: <?php echo site_url() . "\n"; ?>
+Feed Them Gallery Version: <?php echo ft_gallery_check_version() . "\n"; ?>
 
-            -- Wordpress Configuration
+-- Wordpress Configuration:
 
 WordPress Version: <?php echo get_bloginfo('version') . "\n"; ?>
-            Multisite: <?php echo is_multisite() ? 'Yes' . "\n" : 'No' . "\n" ?>
-            Permalink Structure: <?php echo get_option('permalink_structure') . "\n"; ?>
-            Active Theme: <?php echo $theme . "\n"; ?>
-            PHP Memory Limit: <?php echo ini_get('memory_limit') . "\n"; ?>
-            WP_DEBUG: <?php echo defined('WP_DEBUG') ? WP_DEBUG ? 'Enabled' . "\n" : 'Disabled' . "\n" : 'Not set' . "\n" ?>
+Multisite: <?php echo is_multisite() ? 'Yes' . "\n" : 'No' . "\n" ?>
+Permalink Structure: <?php echo get_option('permalink_structure') . "\n"; ?>
+Active Theme: <?php echo $theme . "\n"; ?>
+PHP Memory Limit: <?php echo ini_get('memory_limit') . "\n"; ?>
+WP_DEBUG: <?php echo defined('WP_DEBUG') ? WP_DEBUG ? 'Enabled' . "\n" : 'Disabled' . "\n" : 'Not set' . "\n" ?>
 
-            -- Webserver Configuration
+-- Webserver Configuration:
 
 PHP Version: <?php echo PHP_VERSION . "\n"; ?>
-            Web Server Info: <?php echo $_SERVER['SERVER_SOFTWARE'] . "\n"; ?>
+Web Server Info: <?php echo $_SERVER['SERVER_SOFTWARE'] . "\n"; ?>
 
-            -- PHP Configuration:
+-- PHP Configuration:
 
 Safe Mode: <?php echo ini_get('safe_mode') ? "Yes" : "No\n"; ?>
-            Upload Max Size: <?php echo ini_get('upload_max_filesize') . "\n"; ?>
-            Post Max Size: <?php echo ini_get('post_max_size') . "\n"; ?>
-            Upload Max Filesize: <?php echo ini_get('upload_max_filesize') . "\n"; ?>
-            Time Limit: <?php echo ini_get('max_execution_time') . "\n"; ?>
-            Max Input Vars: <?php echo ini_get('max_input_vars') . "\n"; ?>
-            Allow URL File Open: <?php echo (ini_get('allow_url_fopen')) ? 'On (' . ini_get('display_errors') . ')' : 'N/A'; ?><?php echo "\n"; ?>
-            Display Erros: <?php echo (ini_get('display_errors')) ? 'On (' . ini_get('display_errors') . ')' : 'N/A'; ?><?php echo "\n"; ?>
+Upload Max Size: <?php echo ini_get('upload_max_filesize') . "\n"; ?>
+Post Max Size: <?php echo ini_get('post_max_size') . "\n"; ?>
+Upload Max Filesize: <?php echo ini_get('upload_max_filesize') . "\n"; ?>
+Time Limit: <?php echo ini_get('max_execution_time') . "\n"; ?>
+Max Input Vars: <?php echo ini_get('max_input_vars') . "\n"; ?>
+Allow URL File Open: <?php echo (ini_get('allow_url_fopen')) ? 'On (' . ini_get('display_errors') . ')' : 'N/A'; ?><?php echo "\n"; ?>
+Display Erros: <?php echo (ini_get('display_errors')) ? 'On (' . ini_get('display_errors') . ')' : 'N/A'; ?><?php echo "\n"; ?>
 
-            -- PHP Extensions:
+ -- PHP Extensions:
 
 FSOCKOPEN: <?php echo (function_exists('fsockopen')) ? 'Your server supports fsockopen.' : 'Your server does not support fsockopen.'; ?><?php echo "\n"; ?>
-            cURL: <?php echo (function_exists('curl_init')) ? 'Your server supports cURL.' : 'Your server does not support cURL.'; ?><?php echo "\n"; ?>
+cURL: <?php echo (function_exists('curl_init')) ? 'Your server supports cURL.' : 'Your server does not support cURL.'; ?><?php echo "\n"; ?>
 
-            -- Active Plugins:
+-- Active Plugins:
 
-            <?php $plugins = get_plugins();
-            $active_plugins = get_option('active_plugins', array());
-            foreach ($plugins as $plugin_path => $plugin) {
+<?php $plugins = get_plugins();
+$active_plugins = get_option('active_plugins', array());
+ foreach ($plugins as $plugin_path => $plugin) {
                 // If the plugin isn't active, don't show it.
-                if (!in_array($plugin_path, $active_plugins))
+if (!in_array($plugin_path, $active_plugins))
                     continue;
-                echo $plugin['Name'] . ': ' . $plugin['Version'] . "\n";
+echo $plugin['Name'] . ': ' . $plugin['Version'] . "\n";
             }
-            if (is_multisite()) :
+if (is_multisite()) :
                 ?>
-                -- Network Active Plugins:
+-- Network Active Plugins:
 
                 <?php
                 $plugins = wp_get_active_network_plugins();
@@ -130,20 +130,20 @@ FSOCKOPEN: <?php echo (function_exists('fsockopen')) ? 'Your server supports fso
 
                     $plugin = get_plugin_data($plugin_path);
 
-                    echo $plugin['Name'] . ' :' . $plugin['Version'] . "\n";
+ echo $plugin['Name'] . ' :' . $plugin['Version'] . "\n";
                 }
-
             endif;
 
             if (is_plugin_active('feed-them-gallery/feed-them-gallery.php')) {
                 $feed_them_gallery_license_key = get_option('feed_them_gallery_license_key');
                 ?>
-                -- License
 
-                License Active:           <?php echo isset($feed_them_gallery_license_key) && $feed_them_gallery_license_key !== '' ? 'Yes' . "\n" : 'No' . "\n";
+-- License
+
+License Active: <?php echo isset($feed_them_gallery_license_key) && $feed_them_gallery_license_key !== '' ? 'Yes' . "\n" : 'No' . "\n";
             } ?>
 
-            ### End System Info ###</textarea>
+### End System Info ###</textarea>
             </form>
         </div>
         </div>

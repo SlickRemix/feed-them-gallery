@@ -41,7 +41,7 @@ class Gallery_Options {
             'feed_them_gallery_premium' => array(
                 'title' => 'Feed Them Gallery Premium',
                 'plugin_url' => 'feed-them-gallery-premium/feed-them-gallery-premium.php',
-                'demo_url' => 'http://feedthemgallery.com/',
+                'demo_url' => 'https://feedthemgallery.com/',
                 'purchase_url' => 'https://www.slickremix.com/downloads/feed-them-gallery/',
             ),);
 
@@ -83,7 +83,7 @@ class Gallery_Options {
                     'option_type' => 'select',
                     'label' => trim(sprintf(__('Choose the gallery type%1$s View all Gallery %2$sDemos%3$s', 'feed-them-gallery'),
                         '<br/><small>',
-                        '<a href="'.esc_url('http://feedthemgallery.com/gallery-demo-one/').'" target="_blank">',
+                        '<a href="'.esc_url('https://feedthemgallery.com/gallery-demo-one/').'" target="_blank">',
                         '</a></small>'
                     )),
                     'type' => 'text',
@@ -390,7 +390,7 @@ class Gallery_Options {
                         sprintf(__('%1$sNOTE:%2$s If for some reason the image size you choose does not appear on the front end you may need to regenerate your images. This free plugin called %3$sRegenerate Thumbnails%4$s does an amazing job of that.', 'feed-them-gallery'),
                             '<strong>',
                             '</strong>',
-                            '<a href="'.esc_url('http://sidebar-support.com/wp-admin/plugin-install.php?s=regenerate+thumbnails&tab=search&type=term').'" target="_blank">',
+                            '<a href="'.esc_url('plugin-install.php?s=regenerate+thumbnails&tab=search&type=term').'" target="_blank">',
                             '</a>'
                         ),
                     'label' => __('Image Size on Page', 'feed-them-gallery'),
@@ -428,7 +428,7 @@ class Gallery_Options {
                     'input_wrap_class' => 'ft-gallery-height',
                     'option_type' => 'input',
                     'label' =>
-                        sprintf(__('Gallery Height%1$s Set the height to have a scrolling feed%2$s', 'feed-them-gallery'),
+                        sprintf(__('Gallery Height%1$s Set the height to have a scrolling feed. Only works for Responsive Image Gallery and the Image Post option.%2$s', 'feed-them-gallery'),
                             '<br/><small>',
                             '</small>'
                         ),
@@ -497,7 +497,7 @@ class Gallery_Options {
                         sprintf(__('%1$sNOTE:%2$s If for some reason the image size you choose does not appear on the front end you may need to regenerate your images. This free plugin called %3$sRegenerate Thumbnails%4$s does an amazing job of that.', 'feed-them-gallery'),
                             '<strong>',
                             '</strong>',
-                            '<a href="'.esc_url('http://sidebar-support.com/wp-admin/plugin-install.php?s=regenerate+thumbnails&tab=search&type=term').'" target="_blank">',
+                            '<a href="'.esc_url('plugin-install.php?s=regenerate+thumbnails&tab=search&type=term').'" target="_blank">',
                             '</a>'
                         ),
                     'label' => __('Image Size in Popup', 'feed-them-gallery'),
@@ -796,7 +796,7 @@ class Gallery_Options {
                     'input_wrap_class' => 'ft-gallery-purchase-link',
                     'option_type' => 'select',
                     'label' =>
-                        sprintf(__('Show Purchase Link%1$s Appears on the page and popup%2$s', 'feed-them-gallery'),
+                        sprintf(__('Show Purchase Link%1$s Appears on the page and popup. Only appears in popup for the Responsive Image Gallery.%2$s', 'feed-them-gallery'),
                             '<br/><small>',
                             '</small>'
                         ),
@@ -819,7 +819,7 @@ class Gallery_Options {
                 array(
                     'option_type' => 'input',
                     'label' =>
-                        sprintf(__('Change Purchase Link text%1$s The default word is Purchase%2$s', 'feed-them-gallery'),
+                        sprintf(__('Change Purchase Link text%1$s The default word is Purchase or add a single space to show the cart icon only.%2$s', 'feed-them-gallery'),
                             '<br/><small>',
                             '</small>'
                         ),
@@ -844,12 +844,11 @@ class Gallery_Options {
 
                 ),
                 array(
+                    //this is just in place to save the option. Using jquery to move the checkbox to the other
+                    // smart image area options
+                    'input_wrap_class' => 'ft-gallery-smart-image-checkbox-wrap',
                     'option_type' => 'checkbox',
-                    'label' =>
-                        sprintf(__('Use Smart Image Orientation %1$s You must have a "Smart Image Orientation Model Product" selected below for this option to work. Checking this option will automatically determine the images orientation and match it to the appropriate Model Product (Landscape, Square or Portrait) when creating a WooCommerce product for each image. This will override the "Global Model Product" option for this Gallery.%2$s', 'feed-them-gallery'),
-                            '<br/><small class="ftg-max-width-overide">',
-                            '</small>'
-                        ),
+                    'label' => '',
                     'class' => 'ft-gallery-smart-image-orient-prod',
                     'type' => 'checkbox',
                     'id' => 'ft_gallery_smart_image_orient_prod',

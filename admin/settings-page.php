@@ -37,11 +37,11 @@ class Settings_Page {
 
         if (isset($_GET['page']) && $_GET['page'] == 'ft-gallery-settings-page' || is_admin() && $current_screen->post_type == 'ft_gallery' && $current_screen->base == 'post') {
 
-            wp_enqueue_script('js_color', plugins_url('/feed-them-gallery/admin/js/jscolor/jscolor.js'), array('jquery'));
+            wp_enqueue_script('js_color', plugins_url('/feed-them-gallery/admin/js/jscolor/jscolor.js'), array('jquery'), FTG_CURRENT_VERSION);
             wp_enqueue_script('jquery');
 
             //Settings Page CSS
-            wp_register_style('ft_gallery_settings_css', plugins_url('css/admin-pages.css', __FILE__));
+            wp_register_style('ft_gallery_settings_css', plugins_url('css/admin-pages.css', __FILE__), array(), FTG_CURRENT_VERSION);
             wp_enqueue_style('ft_gallery_settings_css');
         }
     }
@@ -61,7 +61,7 @@ class Settings_Page {
 
             <div class="ft-gallery-settings-admin-wrap" id="theme-settings-wrap">
                 <h2><img src="<?php echo plugins_url('css/ft-gallery-logo.png', __FILE__) ?>" /></h2>
-                <a class="buy-extensions-btn" href="http://www.slickremix.com/ft-gallery-documentation/" target="_blank"><?php _e('Setup Documentation', 'ft-gallery'); ?></a>
+                <a class="buy-extensions-btn" href="https://www.slickremix.com/ft-gallery-documentation/" target="_blank"><?php _e('Setup Documentation', 'ft-gallery'); ?></a>
 
                 <div class="ft-gallery-settings-admin-input-wrap company-info-style ft-gallery-cache-wrap" style="padding-bottom: 0px;">
                     <?php
@@ -674,7 +674,7 @@ class Settings_Page {
                                 <div class="settings-sub-wrap">
                                     <h5><?php _e('Product Creation', 'ft-gallery'); ?></h5>
 
-                                    <label><input name="ft_gallery_attch_prod_to_gallery_cat" type="checkbox" value="1" <?php echo checked('true', get_option('ft_gallery_attch_prod_to_gallery_cat')); ?>/> <?php _e('Attach Product to a Category named after Gallery', 'ft-gallery'); ?>
+                                    <label><input name="ft_gallery_attch_prod_to_gallery_cat" type="checkbox" value="true" <?php echo checked('true', get_option('ft_gallery_attch_prod_to_gallery_cat')); ?>/> <?php _e('Attach Product to a Category named after Gallery', 'ft-gallery'); ?>
                                     </label>
 
                                     <div class="clear"></div>
@@ -702,7 +702,7 @@ class Settings_Page {
 
                             <?php }
                             else{
-                                echo '<div class="ft-gallery-premium-mesg">Please purchase <a href="https://www.slickremix.com/downloads/feed-them-gallery/">Feed Them Gallery Premium</a> for the Awesome additional features!</div>  ';
+                                echo '<div class="ft-gallery-premium-mesg">Please purchase <a href="https://www.slickremix.com/downloads/feed-them-gallery/" target="_blank">Feed Them Gallery Premium</a> for the Awesome additional features!</div>  ';
                             }
                             ?>
                             <div class="clear"></div>
@@ -725,7 +725,7 @@ class Settings_Page {
             </div>
             <div class="fts-plugin-reviews-support">If you're having troubles getting setup please contact us. We will
                 respond within 24hrs, but usually within 1-6hrs.
-                <a href="https://www.slickremix.com/support/" target="_blank">Support Forum</a>
+                <a href="https://www.slickremix.com/support/" target="_blank">Create Support Ticket</a>
                 <div class="fts-text-align-center">
                     <a class="feed-them-gallery-admin-slick-logo" href="https://www.slickremix.com" target="_blank"></a>
                 </div>

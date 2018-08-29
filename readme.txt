@@ -2,15 +2,15 @@
 Contributors: slickremix
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
-Tested up to: 4.9.6
-Stable tag: 1.0.4
+Tested up to: 4.9.7
+Stable tag: 1.0.9
 License: GPLv2 or later
 
 Create customizable Image Galleries and sell your images using woocommerce.
 
 == Description ==
 
-[View Demo](http://feedthemgallery.com/gallery-demo-one/) and adjust columns, spacing, size & look of the image gallery.
+[View Demo](https://feedthemgallery.com/gallery-demo-one/) and adjust columns, spacing, size & look of the image gallery.
 
 See how fast you can setup a gallery.
 [youtube https://www.youtube.com/watch?v=Fa2mjmFAGZQ&rel=0]
@@ -21,8 +21,7 @@ ALL SlickRemix plugins come with Amazing Support. If you need help or have quest
 If you are a Photographer, Developer, Artist, Someone looking to help others sell their photos, or just looking to create awesome, easy-to-use Galleries this plugin is for you! We made the process of setting up Galleries super simple. We included TONS of options to change the style and layout keeping focus on organization and simplicity. We want to make it so anyone can create a Gallery and sell photos with ease giving your customers/clients a hassle free experience when looking at or buying your images or art!
 
 = What does this plugin do? =
-With this plugin you can create and display clean responsive image galleries in minutes. We have 4 different layouts you can choose from and many options to configure the look and feel of the gallery on your site. In our premium version we've also made it super easy for you to connect your galleries to Woocommerce. In one click you can easily turn a Gallery into a ZIP and Woocommerce product. You can also in one click and based on a model product turn EACH individual photo into a Woocommerce product saving you MANY HOURS of tedious product creation!
-
+With this plugin you can create and display clean responsive image galleries in minutes. We have 4 different layouts you can choose from and many options to configure the look and feel of the gallery on your site. In our premium version we've also made it super easy for you to connect your galleries to Woocommerce. In one click you can easily turn a Gallery into a ZIP and WooCommerce product. You can also in one click and based on a model product turn EACH individual photo into a WooCommerce product saving you MANY HOURS of tedious product creation!
 
 FREE PLUGIN OPTIONS
 = Image Options =
@@ -36,7 +35,7 @@ FREE PLUGIN OPTIONS
  * Choose images already uploaded and add to your gallery
 
 = Layout Options =
- * Image Gallery Squared, similar to Instagram. [Demos](http://feedthemgallery.com/gallery-demo-one/)
+ * Image Gallery Squared, similar to Instagram. [Demos](https://feedthemgallery.com/gallery-demo-one/)
  * Image Post Gallery that looks similar to a blog post.
  * Image Post in Grid Gallery.
  * Image Gallery Collage, were different heights and width images will stack.
@@ -106,9 +105,9 @@ FREE PLUGIN OPTIONS
  * Easy Edit Product buttons for each image in the admin of our galleries
  * Create a custom product to be used in association with your single image products or full gallery products.
  * Purchase button can appear on the page under the photo and in the popup
- * Variable Options displayed. [Demos](http://feedthemgallery.com/gallery-demo-one/)
+ * Variable Options displayed. [Demos](https://feedthemgallery.com/gallery-demo-one/)
  * Add to Cart using Ajax. Makes it easy to scroll or click through photos in popup and quickly add photos to your cart.
- * Variable Options displayed. [Demos](http://feedthemgallery.com/gallery-demo-one/)
+ * Variable Options displayed. [Demos](https://feedthemgallery.com/gallery-demo-one/)
 
 = Zip Options =
  * Zip any gallery to create backups
@@ -128,22 +127,41 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
-= Version 1.0.4 Friday, June 15th, 2018 =
-  * FIXED: WooCommerce Product category creation after gallery name. (for premium users only)
+= Version 1.0.9 Thursday, August 23rd, 2018 =
+  * NEW: Added constant FTG_CURRENT_VERSION at the end of our css and js files so updated files in new version will reload right away. ie * ...styles?ver=1.0.9
+  * NEW: Success Message when dragging files to upload area or using Select Images button and all images have fininshed uploading.
+  * FIX: Duplicate Gallery link displays strictly on ft_gallery post types now.
+  * FIX: Minor CSS and text changes throughout admin pages.
+  * PREMIUM: Please upgrade to version 1.0.4. See update notices in our [sidebar](https://www.slickremix.com/downloads/feed-them-gallery/).
+
+= Version 1.0.8 Wednesday, July 18th, 2018 =
+  * FIX: php warning when activating the plugin if wp_debug mode was set to yes.
+  * FIX: Reverted the menu that scrolls with the page to a stationary one, since in some situations it may not be possible to see the menu.
+  * NEW: Create Image Gallery link and request review option after a few weeks of having this version activated.
+
+= Version 1.0.6 - 1.0.7 Wednesday, July 4th, 2018 =
+  * NEW: Click through the menu tab options on a gallery post now without the page reloading.
+  * NEW: When clicking the update option we now use Ajax to save the page so it does not reload. Only the Image tab page will need to reload completely.
+  * NEW: Left side menu slides with page when editing an image gallery making it easier to click to the another tab without having to scroll to the top.
+  * FIX: CSS arrows for popup on front end and admin.
+  * FIX PREMIUM: Create products from images that are checked only.
+
+= Version 1.0.4 - 1.0.5 Friday, June 15th, 2018 =
+  * FIX: WooCommerce Product category creation after gallery name. (for premium users only)
 
 = Version 1.0.3 Friday, May 11th, 2018 =
   * NEW: Made garbage icon red in color and when clicked it reveals an alert with an ok/cancel confirming you want to delete the image from your website.
-  * FIXED: Add existing images in your Media Library to a gallery.
-  * FIXED CSS: Select Images and Media Library button not aligned next to each other on the edit gallery page.
-  * FIXED PREMIUM: Add to cart permalink not working correctly in some cases for the direct add to cart option.
+  * FIX: Add existing images in your Media Library to a gallery.
+  * FIX CSS: Select Images and Media Library button not aligned next to each other on the edit gallery page.
+  * FIX PREMIUM: Add to cart permalink not working correctly in some cases for the direct add to cart option.
   * NEW PREMIUM: WooCommerce Variables and Ajax Add to Cart button added along with Image orientation detection for model products.
 
 = Version 1.0.2 Tuesday, March 13th, 2018 =
-  * FIXED: Skipping Image if Feed Them Social Premium plugin was active.
-  * FIXED: Misc CSS Tweaks for missing X button on popup because some theme overrides and CSS tweak for share button spacing.
+  * FIX: Skipping Image if Feed Them Social Premium plugin was active.
+  * FIX: Misc CSS Tweaks for missing X button on popup because some theme overrides and CSS tweak for share button spacing.
 
 = Version 1.0.1 Saturday, December 2nd, 2017 =
-  * FIXED: Display Gallery Class to have Woocommerce Purchase buttons show properly.
+  * FIX: Display Gallery Class to have Woocommerce Purchase buttons show properly.
 
 = Version 1.0.0 Monday, October 16th, 2017 =
   * Initial Release
@@ -157,4 +175,4 @@ You can find answers to your questions in our [documentation](https://www.slickr
 
 == Screenshots ==
 
-Please view our [super fun demo](http://feed-them-gallery.com) for the most up to date screenshots.
+Please view our [super fun demo](https://feed-them-gallery.com) for the most up to date screenshots.
