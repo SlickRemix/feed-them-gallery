@@ -62,7 +62,7 @@ function ft_gallery_image_to_woo(gallery_id){
 
         // We use this special ajaxQueue to make sure the create product function is not run again until the previous one sent is complete.
         // https://github.com/gnarf/jquery-ajaxQueue
-        $.ajaxQueue({
+        jQuery.ajaxQueue({
             data: {
                 action: "ft_gallery_image_to_woo_prod",
                 GalleryID: gallery_id,
@@ -142,7 +142,7 @@ function ft_gallery_image_to_woo_on_upload(imgId, postID){
 
     // We use this special ajaxQueue to make sure the create product function is not run again until the previous one sent is complete.
     // https://github.com/gnarf/jquery-ajaxQueue
-    $.ajaxQueue({
+    jQuery.ajaxQueue({
         data: {
             action: "ft_gallery_image_to_woo_prod",
             GalleryID: postID,
