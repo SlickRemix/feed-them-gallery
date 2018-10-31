@@ -32,7 +32,7 @@ define('FTG_CURRENT_VERSION', '1.1.1');
 final class Feed_Them_Gallery {
 
     /**
-     * Main Instance of Display Posts Feed
+     * Main Instance of Display Posts Feed.
      * @var
      */
     private static $instance;
