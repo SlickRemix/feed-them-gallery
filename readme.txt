@@ -2,8 +2,8 @@
 Contributors: slickremix
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
-Tested up to: 4.9.7
-Stable tag: 1.0.9
+Tested up to: 4.9.8
+Stable tag: 1.1.0
 License: GPLv2 or later
 
 Create customizable Image Galleries and sell your images using woocommerce.
@@ -127,6 +127,9 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.1.0 Wednesday, October 31st, 2018 =
+  * FIX: Variation script for WooCommerce not being loaded correctly.
+
 = Version 1.0.9 Thursday, August 23rd, 2018 =
   * NEW: Added constant FTG_CURRENT_VERSION at the end of our css and js files so updated files in new version will reload right away. ie * ...styles?ver=1.0.9
   * NEW: Success Message when dragging files to upload area or using Select Images button and all images have fininshed uploading.

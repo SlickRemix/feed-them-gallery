@@ -1328,7 +1328,7 @@ class Display_Gallery extends Gallery {
                                     }; // end of scroll ajax load.
                                     <?php } ?>
                                 }
-                                ); // end of document.ready
+                            ); // end of document.ready
                         }); // end of form.submit
                     </script>
                     <?php
@@ -1610,7 +1610,7 @@ class Display_Gallery extends Gallery {
                 // print ( $min_price == $max_price ) ? $price : sprintf('%s%s', $prefix, $price);
                 print  $price; ?>
             </div>
-            <div class="ft-gallery-variations-text">
+            <div class="ft-gallery-variations-text ft-gallery-js-load">
                 <?
                 // Enqueue variation scripts
                 wp_enqueue_script('wc-add-to-cart-variation');
