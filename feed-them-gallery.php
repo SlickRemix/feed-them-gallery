@@ -17,6 +17,8 @@
  * Stable tag: 1.1.0
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ * WC requires at least: 3.0.0
+ * WC tested up to: 3.5.1
  *
  * @version  1.1.0
  * @package  FeedThemSocial/Core
