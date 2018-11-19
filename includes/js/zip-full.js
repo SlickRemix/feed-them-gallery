@@ -44,33 +44,32 @@ function ft_gallery_create_zip(postID, activate_download, create_woo_prod, downl
             return xhr;
         },
         beforeSend: function () {
-            jQuery('#ftg-tab-content1 .ft-gallery-notice').empty().removeClass('ftg-block');
-            jQuery('#ftg-tab-content1 .ft-gallery-notice').removeClass('updated').addClass('ftg-block');
-            jQuery('#ftg-tab-content1 .ft-gallery-notice').prepend('<div class="fa fa-cog fa-spin fa-3x fa-fw ft-gallery-loader"></div><div>This may take a few minutes based on your gallery size and server speed.</div>');
+            jQuery('.ft-gallery-notice').empty().removeClass('ftg-block');
+            jQuery('.ft-gallery-notice').removeClass('updated').addClass('ftg-block');
+            jQuery('.ft-gallery-notice').prepend('<div class="fa fa-cog fa-spin fa-3x fa-fw ft-gallery-loader"></div><div>This may take a few minutes based on your gallery size and server speed.</div>');
 
             // jQuery('#loading').show();
         },
         success: function (data) {
 
             jQuery("#loading").hide();
-            jQuery('#ftg-tab-content1 ft-gallery-notice').removeClass('ftg-block');
+            jQuery('.ft-gallery-notice').removeClass('ftg-block');
             console.log('Well Done and got this from sever: ' + data);
             //Download & Zip
             if (data != 'false' && (activate_download == 'yes' || download_newest_zip == 'yes')) {
-                jQuery('#ftg-tab-content1 .ft-gallery-notice').html('Downloading ZIP file to your computer now. You can also view it in the <a href="' + window.location.href + '" target="_blank">ZIPs tab</a>.');
-                jQuery('#ftg-tab-content1 .ft-gallery-notice').addClass('updated');
-                jQuery('#ftg-tab-content1 .ft-gallery-notice').append('<div class="ft-gallery-notice-close"></div>');
                 window.location.assign(data);
             }
             else if(activate_download !== 'yes' && download_newest_zip !== 'yes' && create_woo_prod == 'yes'){
-                jQuery('#ftg-tab-content1 .ft-gallery-notice').html('ZIP Created! You can view it in the <a href="' + window.location.href + '" target="_blank">ZIPs tab</a>. The Woocommerce product was also created you view it on the <a href="edit.php?post_status=publish&post_type=product&orderby=date&order=desc" target="_blank">Products Page</a>.');
-                jQuery('#ftg-tab-content1 .ft-gallery-notice').addClass('updated');
-                jQuery('#ftg-tab-content1 .ft-gallery-notice').append('<div class="ft-gallery-notice-close"></div>');
+                jQuery('.ft-gallery-notice').html('ZIP Created! You can view it in the <a href="' + window.location.href + '&tab=ft_zip_gallery">ZIPs tab</a>. The Woocommerce product was also created you view it on the <a href="edit.php?post_status=publish&post_type=product&orderby=menu_order+title&order=ASC" target="_blank">Products Page</a>.');
+                jQuery('.ft-gallery-notice').prepend('<div class="fa fa-check-circle fa-3x fa-fw ft-gallery-success" ></div>');
+                jQuery('.ft-gallery-notice').addClass('updated');
+                jQuery('.ft-gallery-notice').append('<div class="ft-gallery-notice-close"></div>');
             }
             else{
-                jQuery('#ftg-tab-content1 .ft-gallery-notice').html('ZIP Created! You can view it in the <a href="' + window.location.href + '" target="_blank">ZIPs tab</a>.');
-                jQuery('#ftg-tab-content1 .ft-gallery-notice').addClass('updated');
-                jQuery('#ftg-tab-content1 .ft-gallery-notice').append('<div class="ft-gallery-notice-close"></div>');
+                jQuery('.ft-gallery-notice').html('ZIP Created! You can view it in the <a href="' + window.location.href + '&tab=ft_zip_gallery">ZIPs tab</a>.');
+                jQuery('.ft-gallery-notice').prepend('<div class="fa fa-check-circle fa-3x fa-fw ft-gallery-success" ></div>');
+                jQuery('.ft-gallery-notice').addClass('updated');
+                jQuery('.ft-gallery-notice').append('<div class="ft-gallery-notice-close"></div>');
             }
 
             return false;
@@ -128,10 +127,9 @@ function ft_gallery_delete_zip(zipID, zipname) {
             async: false,
             url: ftgalleryAjax.ajaxurl,
             beforeSend: function () {
-                jQuery('#ftg-tab-content6 .ft-gallery-notice').empty();
-                jQuery('#ftg-tab-content6 .ft-gallery-notice').removeClass('ftg-block');
-                jQuery('#ftg-tab-content6 .ft-gallery-notice').removeClass('updated');
-                jQuery('#ftg-tab-content6 .ft-gallery-notice').prepend('<div class="fa fa-cog fa-spin fa-3x fa-fw ft-gallery-loader"></div>');
+                jQuery('.ft-gallery-notice').empty();
+                jQuery('.ft-gallery-notice').removeClass('updated');
+                jQuery('.ft-gallery-notice').prepend('<div class="fa fa-cog fa-spin fa-3x fa-fw ft-gallery-loader"></div>');
             },
             success: function (data) {
                 jQuery('.ft-gallery-file-delete').removeAttr('disabled').removeClass('ft_gallery_download_button_loading');
@@ -139,17 +137,14 @@ function ft_gallery_delete_zip(zipID, zipname) {
 
                 jQuery("#ft-gallery-zip-list li.zip-list-item-" + zipID).remove();
 
-                jQuery('#ftg-tab-content6 .ft-gallery-notice').addClass('ftg-block');
-                jQuery('#ftg-tab-content6 .ft-gallery-notice').html('ZIP Deleted');
-                jQuery('#ftg-tab-content6 .ft-gallery-notice').addClass('updated');
-                jQuery('#ftg-tab-content6 .ft-gallery-notice').append('<div class="ft-gallery-notice-close"></div>');
+                jQuery('.ft-gallery-notice').html('ZIP Deleted! ');
+                jQuery('.ft-gallery-notice').append('<div class="fa fa-check-circle fa-3x fa-fw ft-gallery-success" ></div>');
 
-                if (jQuery('#ft-gallery-zip-list li').length == 0){
-                    jQuery('#ftg-tab-content6 .ft-gallery-notice').addClass('ftg-block');
-                    jQuery('#ftg-tab-content6 .ft-gallery-notice').removeClass('updated');
-                    jQuery('#ftg-tab-content6 .ft-gallery-notice').addClass('error');
-                    jQuery('.ft-gallery-notice').html('You have not created any ZIPs yet. You can do so from the <a href="#images" class="ftg-images-tab">Images tab</a>. Please refresh this page if you have already created a ZIP from the Images tab.');
+                if (jQuery('.ft-gallery-notice').is(':empty')){
+                    jQuery('.ft-gallery-notice').html('You have not created any ZIPs yet. You can do so from the <a href="#images" class="ftg-images-tab">Images tab</a>. Please reload this page if you have already created a ZIP from the Images tab.');
                 }
+                jQuery('.ft-gallery-notice').addClass('updated');
+                jQuery('.ft-gallery-notice').append('<div class="ft-gallery-notice-close"></div>');
 
                 return false;
             },

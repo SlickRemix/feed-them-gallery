@@ -19,467 +19,407 @@ class Core_Functions {
     public $feeds_core = "";
 
     /**
+     * Global Prefix
+     * Sets Prefix for global options
+     *
+     * @var string
+     */
+    public $global_prefix = 'global_';
+
+    /**
      * Core_Functions constructor.
      */
     function __construct() {
 
-        $this->init();
+        add_filter('single_template', array($this, 'ft_gallery_locate_template'), 999);
+    }
 
-        /*
-       * Add Feed Them Gallery Bar to Admin
-       */
-        if (is_admin()) {
+    /**
+     * FT Gallery Tab Notice HTML
+     *
+     * creates notice html for return
+     *
+     * @since 1.0.0
+     */
+    function ft_gallery_tab_notice_html() {
+        echo '<div class="ft-gallery-notice"></div>';
+    }
 
-            add_action('admin_init', array($this, 'ft_gallery_settings_page_options'));
+    /**
+     * FT Gallery Required Plugins
+     *
+     * Return an array of required plugins.
+     *
+     * @return array
+     * @since 1.0.0
+     */
+    function ft_gallery_required_plugins() {
+        $required_premium_plugins = array(
+            'feed_them_gallery_premium' => array(
+                'title' => 'Feed Them Gallery Premium',
+                'plugin_url' => 'feed-them-gallery-premium/feed-them-gallery-premium.php',
+                'demo_url' => 'https://feedthemgallery.com/',
+                'purchase_url' => 'https://www.slickremix.com/downloads/feed-them-gallery/',
+            ),);
+
+        return $required_premium_plugins;
+    }
+
+    /**
+     * FT Gallery Settings HTML Form
+     *
+     * Used to return settings form fields output for Gallery Options
+     *
+     * @param $gallery_id
+     * @param $section_info
+     * @param $required_plugins
+     * @return string
+     * @since @since 1.0.0
+     */
+    function ft_gallery_settings_html_form($gallery_id, $section_info, $required_plugins) {
+        $output = '';
+
+        $prem_required_plugins = $this->ft_gallery_required_plugins();
+
+        $section_required_prem_plugin = !isset($section_info['required_prem_plugin']) || isset($section_info['required_prem_plugin']) && is_plugin_active($prem_required_plugins[ $section_info['required_prem_plugin'] ]['plugin_url']) ? 'active' : '';
+
+        //Start creation of fields for each Feed
+        $output .= '<div class="ftg-section" class="' . $section_info['section_wrap_class'] . '">';
+
+        //Section Title
+        $output .= isset($section_info['section_title']) ? '<h3>' . $section_info['section_title'] . '</h3>' : '';
+
+        //Happens in JS file
+        $this->ft_gallery_tab_notice_html();
+
+        //Create settings fields for Feed OPTIONS
+        foreach ($section_info['main_options'] as $option) if (!isset($option['no_html']) || isset($option['no_html']) && $option['no_html'] !== 'yes') {
+
+            //Is a premium extension required?
+            $required_plugin = !isset($option['req_plugin']) || isset($option['req_plugin']) && is_plugin_active($required_plugins[ $option['req_plugin'] ]['plugin_url']) ? true : false;
+            $or_required_plugin = isset($option['or_req_plugin']) && is_plugin_active($required_plugins[ $option['or_req_plugin'] ]['plugin_url']) ? true : false;
+            $or_required_plugin_three = isset($option['or_req_plugin_three']) && is_plugin_active($required_plugins[ $option['or_req_plugin_three'] ]['plugin_url']) ? true : false;
+
+            //Sub option output START?
+            $output .= isset($option['sub_options']) ? '<div class="' . $option['sub_options']['sub_options_wrap_class'] . (!$required_plugin ? ' not-active-premium-fields' : '') . '">' . (isset($option['sub_options']['sub_options_title']) ? '<h3>' . $option['sub_options']['sub_options_title'] . '</h3>' : '') . (isset($option['sub_options']['sub_options_instructional_txt']) ? '<div class="instructional-text">' . $option['sub_options']['sub_options_instructional_txt'] . '</div>' : '') : '';
+
+            $output .= isset($option['grouped_options_title']) ? '<h3 class="sectioned-options-title">' . $option['grouped_options_title'] . '</h3>' : '';
+
+            //Only on a few options generally
+            $output .= isset($option['outer_wrap_class']) || isset($option['outer_wrap_display']) ? '<div ' . (isset($option['outer_wrap_class']) ? 'class="' . $option['outer_wrap_class'] . '"' : '') . ' ' . (isset($option['outer_wrap_display']) && !empty($option['outer_wrap_display']) ? 'style="display:' . $option['outer_wrap_display'] . '"' : '') . '>' : '';
+            //Main Input Wrap
+            $output .= '<div class="feed-them-gallery-admin-input-wrap ' . (isset($option['input_wrap_class']) ? $option['input_wrap_class'] : '') . '" ' . (isset($section_info['input_wrap_id']) ? 'id="' . $section_info['input_wrap_id'] . '"' : '') . '>';
+            //Instructional Text
+            $output .= !empty($option['instructional-text']) && !is_array($option['instructional-text']) ? '<div class="instructional-text ' . (isset($option['instructional-class']) ? $option['instructional-class'] : '') . '">' . $option['instructional-text'] . '</div>' : '';
+
+            if (!empty($option['instructional-text']) && is_array($option['instructional-text'])) {
+                foreach ($option['instructional-text'] as $instructional_txt) {
+                    //Instructional Text
+                    $output .= '<div class="instructional-text ' . (isset($instructional_txt['class']) ? $instructional_txt['class'] : '') . '">' . $instructional_txt['text'] . '</div>';
+                }
+            }
+
+            //Label Text
+            $output .= isset($option['label']) && !is_array($option['label']) ? '<div class="feed-them-gallery-admin-input-label ' . (isset($option['label_class']) ? $option['label_class'] : '') . '">' . $option['label'] . '</div>' : '';
+
+            if (!empty($option['label']) && is_array($option['label'])) {
+                foreach ($option['label'] as $label_txt) {
+                    //Label Text
+                    $output .= '<div class="feed-them-gallery-admin-input-label ' . (isset($label_txt['class']) ? $label_txt['class'] : '') . '">' . $label_txt['text'] . '</div>';
+                }
+            }
+
+            //Post Meta option (non-global)
+            $input_value = get_post_meta($gallery_id, $option['name'], true);
+            //Post Meta Global checkbox Option
+            $global_value = get_post_meta($gallery_id, $this->global_prefix . $option['name'], true);
+            //Actual Global Option
+            $get_global_option = get_option($this->global_prefix . $option['name']);
+
+            if ($global_value && $global_value == 'true') {
+                if (isset($get_global_option)) {
+                    $final_value = !empty($get_global_option) ? $get_global_option : $option['default_value'];
+                }
+            } else {
+                $final_value = !empty($input_value) || !isset($input_value) ? $input_value : $option['default_value'];
+            }
+            //Post Meta option (non-global)
+            $input_value = get_post_meta($gallery_id, $option['name'], true);
+            //Post Meta Global checkbox Option
+            $global_value = get_post_meta($gallery_id, $this->global_prefix . $option['name'], true);
+            //Actual Global Option
+            $get_global_option = get_option($this->global_prefix . $option['name']);
+
+            if ($global_value && $global_value == 'true') {
+                if (isset($get_global_option)) {
+                    $final_value = !empty($get_global_option) ? $get_global_option : $option['default_value'];
+                }
+            } else {
+                $final_value = !empty($input_value) || !isset($input_value) ? $input_value : $option['default_value'];
+            }
+            $input_option = $option['option_type'];
+
+            $gallery_class = new Gallery();
+            $gallery_id = isset($_GET['post']) ? $_GET['post'] : '';
+            $gallery_options_returned = $gallery_class->ft_gallery_get_gallery_options_rest($gallery_id);
+
+            if (isset($input_option)) {
+                switch ($input_option) {
+                    //Input
+                    case 'input':
+                        $output .= '<input ' . (isset($section_required_prem_plugin) && $section_required_prem_plugin !== 'active' ? 'disabled ' : '') . 'type="' . $option['type'] . '" name="' . $option['name'] . '" id="' . $option['id'] . '" class="feed-them-gallery-admin-input ' . (isset($option['class']) ? $option['class'] : '') . '" placeholder="' . (isset($option['placeholder']) ? $option['placeholder'] : '') . '" value="' . $final_value . '"' . (isset($option['autocomplete']) ? ' autocomplete="' . $option['autocomplete'] . '"' : '') . ' />';
+                        break;
+
+                    //Select
+                    case 'select':
+                        $output .= '<select ' . (isset($section_required_prem_plugin) && $section_required_prem_plugin !== 'active' ? 'disabled ' : '') . 'name="' . $option['name'] . '" id="' . $option['id'] . '"  class="feed-them-gallery-admin-input">';
+                        $i = 0;
+                        foreach ($option['options'] as $select_option) {
+                            $output .= '<option value="' . $select_option['value'] . '" ' . (!empty($final_value) && $final_value == $select_option['value'] || empty($input_value) && $i == 0 ? 'selected="selected"' : '') . '>' . $select_option['label'] . '</option>';
+                            $i++;
+                        }
+                        $output .= '</select>';
+                        break;
+
+                    //Checkbox
+                    case 'checkbox':
+                        $output .= '<input ' . (isset($section_required_prem_plugin) && $section_required_prem_plugin !== 'active' ? 'disabled ' : '') . 'type="checkbox" name="' . $option['name'] . '" id="' . $option['id'] . '" ' . (!empty($final_value) && $final_value == 'true' ? ' checked="checked"' : '') . '/>';
+                        break;
+
+                    //Checkbox for image sizes COMMENTING OUT BUT LEAVING FOR FUTURE QUICK USE
+                    //   case 'checkbox-image-sizes':
+                    // $final_value_images = array('thumbnailzzz','mediummmm', 'large', 'full');
+                    //Get Gallery Options via the Rest API
+                    //        $final_value_images = $gallery_options_returned['ft_watermark_image_sizes']['image_sizes'];
+                    // print_r($final_value_images);
+                    //array('thumbnailzzz','mediummmm', 'largeee', 'fullll');
+                    //        $output .= '<label for="'. $option['id'] . '"><input type="checkbox" val="' . $option['default_value'] . '" name="ft_watermark_image_sizes[image_sizes][' . $option['default_value'] . ']" id="'.$option['id'] . '" '. ( array_key_exists($option['default_value'], $final_value_images) ? ' checked="checked"' : '') .'/>';
+                    //        $output .= '' . $option['default_value'] . '</label>';
+                    //        break;
+
+
+                    //Checkbox for image sizes used so you can check the image sizes you want to be water marked after you save the page.
+                    case 'checkbox-dynamic-image-sizes':
+
+                        $final_value_images = isset($gallery_options_returned['ft_watermark_image_sizes']['image_sizes']) ? $gallery_options_returned['ft_watermark_image_sizes']['image_sizes'] : array();
+                        $output .= '<div class="clear"></div>';
+
+                        global $_wp_additional_image_sizes;
+
+                        $sizes = array();
+                        foreach (get_intermediate_image_sizes() as $_size) {
+                            if (in_array($_size, array('thumbnail', 'medium', 'medium_large', 'large'))) {
+                                $sizes[ $_size ]['width'] = get_option("{$_size}_size_w");
+                                $sizes[ $_size ]['height'] = get_option("{$_size}_size_h");
+                                $sizes[ $_size ]['crop'] = (bool)get_option("{$_size}_crop");
+                            } elseif (isset($_wp_additional_image_sizes[ $_size ])) {
+                                $sizes[ $_size ] = array(
+                                    'width' => $_wp_additional_image_sizes[ $_size ]['width'],
+                                    'height' => $_wp_additional_image_sizes[ $_size ]['height'],
+                                    'crop' => $_wp_additional_image_sizes[ $_size ]['crop'],
+                                );
+                            }
+                            $output .= '<label for="' . $_size . '"><input type="checkbox" val="' . $_size . '" name="ft_watermark_image_sizes[image_sizes][' . $_size . ']" id="' . $option['id'] . '-' . $_size . '" ' . (array_key_exists($_size, $final_value_images) ? ' checked="checked"' : '') . '/>' . $_size . ' ' . $sizes[ $_size ]['width'] . ' x ' . $sizes[ $_size ]['height'] . '</label><br/>';
+
+                        }
+                        $output .= '<label for="full"><input type="checkbox" val="full" id="ft_watermark_image_-full" name="ft_watermark_image_sizes[image_sizes][full]" ' . (array_key_exists('full', $final_value_images) ? 'checked="checked"' : '') . '/>full</label><br/>';
+                        $output .= '<br/><br/>';
+                        // TESTING AREA
+                        // echo $final_value_images;
+                        // echo '<pre>';
+                        // print_r($sizes);
+                        // echo '</pre>';
+                        break;
+
+
+                    //Image sizes for page
+                    case 'ft-images-sizes-page':
+                        $final_value_images = $gallery_options_returned['ft_gallery_images_sizes_page'];
+                        $output .= '<select name="' . $option['name'] . '" id="' . $option['id'] . '"  class="feed-them-gallery-admin-input">';
+
+                        global $_wp_additional_image_sizes;
+
+                        $sizes = array();
+                        $output .= '<option val="Choose an option" ' . ('not_set' == $final_value_images ? 'selected="selected"' : '') . '>' . __('Choose an option', 'feed-them-gallery') . '</option>';
+                        foreach (get_intermediate_image_sizes() as $_size) {
+                            if (in_array($_size, array('thumbnail', 'medium', 'medium_large', 'large'))) {
+                                $sizes[ $_size ]['width'] = get_option("{$_size}_size_w");
+                                $sizes[ $_size ]['height'] = get_option("{$_size}_size_h");
+                                $sizes[ $_size ]['crop'] = (bool)get_option("{$_size}_crop");
+                            } elseif (isset($_wp_additional_image_sizes[ $_size ])) {
+                                $sizes[ $_size ] = array(
+                                    'width' => $_wp_additional_image_sizes[ $_size ]['width'],
+                                    'height' => $_wp_additional_image_sizes[ $_size ]['height'],
+                                    'crop' => $_wp_additional_image_sizes[ $_size ]['crop'],
+                                );
+                            }
+                            $output .= '<option val="' . $_size . '" ' . ($_size . ' ' . $sizes[ $_size ]['width'] . ' x ' . $sizes[ $_size ]['height'] == $final_value_images ? 'selected="selected"' : '') . '>' . $_size . ' ' . $sizes[ $_size ]['width'] . ' x ' . $sizes[ $_size ]['height'] . '</option>';
+                        }
+                        $output .= '<option val="full" ' . ('full' == $final_value_images ? 'selected="selected"' : '') . '>' . __('full', 'feed-them-gallery') . '</option>';
+                        // TESTING AREA
+                        // echo $final_value_images;
+                        // echo '<pre>';
+                        // print_r($sizes);
+                        // echo '</pre>';
+                        $output .= '</select>';
+                        break;
+
+                    //Image sizes for popup
+                    case 'ft-images-sizes-popup':
+                        $final_value_images = $gallery_options_returned['ft_gallery_images_sizes_popup'];
+                        $output .= '<select name="' . $option['name'] . '" id="' . $option['id'] . '"  class="feed-them-gallery-admin-input">';
+
+                        global $_wp_additional_image_sizes;
+
+                        $sizes = array();
+
+                        $output .= '<option val="Choose an option" ' . ('not_set' == $final_value_images ? 'selected="selected"' : '') . '>' . __('Choose an option', 'feed-them-gallery') . '</option>';
+                        foreach (get_intermediate_image_sizes() as $_size) {
+                            if (in_array($_size, array('thumbnail', 'medium', 'medium_large', 'large'))) {
+                                $sizes[ $_size ]['width'] = get_option("{$_size}_size_w");
+                                $sizes[ $_size ]['height'] = get_option("{$_size}_size_h");
+                                $sizes[ $_size ]['crop'] = (bool)get_option("{$_size}_crop");
+                            } elseif (isset($_wp_additional_image_sizes[ $_size ])) {
+                                $sizes[ $_size ] = array(
+                                    'width' => $_wp_additional_image_sizes[ $_size ]['width'],
+                                    'height' => $_wp_additional_image_sizes[ $_size ]['height'],
+                                    'crop' => $_wp_additional_image_sizes[ $_size ]['crop'],
+                                );
+                            }
+                            $output .= '<option val="' . $_size . '" ' . ($_size . ' ' . $sizes[ $_size ]['width'] . ' x ' . $sizes[ $_size ]['height'] == $final_value_images ? 'selected="selected"' : '') . '>' . $_size . ' ' . $sizes[ $_size ]['width'] . ' x ' . $sizes[ $_size ]['height'] . '</option>';
+                        }
+                        $output .= '<option val="full" ' . ('full' == $final_value_images ? 'selected="selected"' : '') . '>' . __('full', 'feed-them-gallery') . '</option>';
+
+                        $output .= '</select>';
+                        break;
+
+
+
+                    //Image sizes for Free download icon
+                    case 'ftg-free-download-size':
+                       
+                        $final_value_images = $gallery_options_returned['ftg_free_download_size'];
+                        $output .= '<select name="' . $option['name'] . '" id="' . $option['id'] . '"  class="feed-them-gallery-admin-input">';
+
+                        global $_wp_additional_image_sizes;
+
+                        $sizes = array();
+                        $output .= '<option val="Choose an option" ' . ('not_set' == $final_value_images ? 'selected="selected"' : '') . '>' . __('Choose an option', 'feed-them-gallery') . '</option>';
+                        foreach (get_intermediate_image_sizes() as $_size) {
+                            if (in_array($_size, array('thumbnail', 'medium', 'medium_large', 'large'))) {
+                                $sizes[ $_size ]['width'] = get_option("{$_size}_size_w");
+                                $sizes[ $_size ]['height'] = get_option("{$_size}_size_h");
+                                $sizes[ $_size ]['crop'] = (bool)get_option("{$_size}_crop");
+                            } elseif (isset($_wp_additional_image_sizes[ $_size ])) {
+                                $sizes[ $_size ] = array(
+                                    'width' => $_wp_additional_image_sizes[ $_size ]['width'],
+                                    'height' => $_wp_additional_image_sizes[ $_size ]['height'],
+                                    'crop' => $_wp_additional_image_sizes[ $_size ]['crop'],
+                                );
+                            }
+                            $output .= '<option val="' . $_size . '" ' . ($_size . ' ' . $sizes[ $_size ]['width'] . ' x ' . $sizes[ $_size ]['height'] == $final_value_images ? 'selected="selected"' : '') . '>' . $_size . ' ' . $sizes[ $_size ]['width'] . ' x ' . $sizes[ $_size ]['height'] . '</option>';
+                        }
+                        $output .= '<option val="full" ' . ('full' == $final_value_images ? 'selected="selected"' : '') . '>' . __('full', 'feed-them-gallery') . '</option>';
+                        // TESTING AREA
+                        // echo $final_value_images;
+                        // echo '<pre>';
+                        // print_r($sizes);
+                        // echo '</pre>';
+                        $output .= '</select>';
+                        break;
+
+                }
+            }
+
+            //GLOBAL checkbox
+            $output .= '<div class="feed-them-gallery-admin-global-checkbox ft-global-option-wrap-' . $option['name'] . '">';
+            $output .= '<input type="checkbox" name="' . $this->global_prefix . $option['name'] . '" id="' . $this->global_prefix . $option['id'] . '" ' . (!empty($global_value) && $global_value == 'true' ? ' checked="checked"' : '') . '/>';
+            $output .= '<label for="' . $this->global_prefix . $option['name'] . '"> Use/Set Global Option </label>';
+            $output .= '</div>';
+
+            $output .= '<div class="clear"></div>';
+            $output .= '</div><!--/feed-them-gallery-admin-input-wrap-->';
+
+            $output .= isset($option['outer_wrap_class']) || isset($option['outer_wrap_display']) ? '</div>' : '';
+
+            //Sub option output END?
+            if (isset($option['sub_options_end'])) {
+                $output .= !is_numeric($option['sub_options_end']) ? '</div>' : '';
+                //Multiple Div needed?
+                if (is_numeric($option['sub_options_end'])) {
+                    $x = 1;
+                    while ($x <= $option['sub_options_end']) {
+                        $output .= '</div>';
+                        $x++;
+                    }
+                }
+            }
         }
 
-        //Settings option. Add Custom CSS to the header of Feed Them Gallery pages only
-        $ft_gallery_custom_css_checked_css = get_option('ft-gallery-options-settings-custom-css-second');
-        if ($ft_gallery_custom_css_checked_css == '1') {
-            add_action('wp_head', array($this, 'ft_gallery_head_css'));
+        $output .= '</div> <!--/Section Wrap Class END -->';
+
+        return $output;
+    }
+
+    function ft_gallery_locate_template($located) {
+        global $post;
+
+        $post_type = $post->post_type;
+
+        switch($post_type){
+
+            case 'ft_gallery':
+                //Set The Template name
+                $template_name = 'gallery-template.php';
+
+                $use_template = true;
+                break;
+            case 'ft_gallery_albums':
+                //Set The Template name
+                $template_name = 'album-template.php';
+
+                $use_template = true;
+                break;
+
+            default:
+                $use_template = false;
+                break;
         }
 
-        // Widget Code to allow shortcodes
-        add_filter('widget_text', 'do_shortcode');
+        if ($use_template == true) {
+            // No file found yet
+            $located = false;
+            // Continue if template is empty
+            if ( empty( $template_name ) )
+                // Trim off any slashes from the template name
+                $template_name = ltrim( $template_name, '/' );
 
-        //Re-order Sub-Menu Items
-        add_action('admin_menu', array($this, 'ft_gallery_reorder_admin_sub_menus'));
+            // Check child theme first
+            if ( file_exists( trailingslashit( get_stylesheet_directory() ) . 'ft-gallery/' . $template_name ) ) {
+                $located = trailingslashit( get_stylesheet_directory() ) . 'ft-gallery/' . $template_name;
+                // Check parent theme next
+            } elseif ( file_exists( trailingslashit( get_template_directory() ) . 'ft-gallery/' . $template_name ) ) {
+                $located = trailingslashit( get_template_directory() ) . 'ft-gallery/' . $template_name;
+                // Check theme compatibility last
+            } elseif ( file_exists( trailingslashit( FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'templates/' . $template_name ) )) {
+                $located = trailingslashit( FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'templates/' . $template_name);
+            }
+            //Use Plugins Album template
+            if(empty($located )){
 
-        //FTG License Page
-        if (isset($_GET['page']) && $_GET['page'] == 'ft-gallery-license-page') {
-            add_action('admin_footer', array($this, 'ftg_plugin_license'));
+                $plugin_location = FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'templates/'. $template_name;
+
+                load_template( $plugin_location);
+
+                return $plugin_location;
+            }
         }
 
-    }
+        if (!empty( $located ) ){
+            load_template( $located);
 
-    /**
-     * My FTG Plugin License
-     *
-     * Put in place to only show the Activate Plugin license if the input has a value
-     *
-     * @since 1.0.3
-     */
-    function ftg_plugin_license() {
-        wp_enqueue_script('jquery'); ?>
-        <style>.ftg-license-master-form th {
-                background: #f9f9f9;
-                padding: 14px;
-                border-bottom: 1px solid #ccc;
-                margin: -14px -14px 20px;
-                width: 100%;
-                display: block
-            }
-
-            .ftg-license-master-form .form-table tr {
-                float: left;
-                margin: 0 15px 15px 0;
-                background: #fff;
-                border: 1px solid #ccc;
-                width: 30.5%;
-                max-width: 350px;
-                padding: 14px;
-                min-height: 220px;
-                position: relative;
-                box-sizing: border-box
-            }
-
-            .ftg-license-master-form .form-table td {
-                padding: 0;
-                display: block
-            }
-
-            .ftg-license-master-form td input.regular-text {
-                margin: 0 0 8px;
-                width: 100%
-            }
-
-            .ftg-license-master-form .edd-license-data[class*=edd-license-] {
-                position: absolute;
-                background: #fafafa;
-                padding: 14px;
-                border-top: 1px solid #eee;
-                margin: 20px -14px -14px;
-                min-height: 67px;
-                width: 100%;
-                bottom: 14px;
-                box-sizing: border-box
-            }
-
-            .ftg-license-master-form .edd-license-data p {
-                font-size: 13px;
-                margin-top: 0
-            }
-
-            .ftg-license-master-form tr {
-                display: none
-            }
-
-            .ftg-license-master-form tr.ftg-license-wrap {
-                display: block
-            }
-
-            .ftg-license-master-form .edd-license-msg-error {
-                background: rgba(255, 0, 0, 0.49)
-            }
-
-            .ftg-license-master-form tr.ftg-license-wrap {
-                display: block
-            }
-
-            .ftg-license-master-form .edd-license-msg-error {
-                background: #e24e4e !important;
-                color: #FFF
-            }
-
-            .ftg-license-wrap .edd-license-data p {
-                color: #1e981e
-            }
-
-            .edd-license-msg-error p {
-                color: #FFF !important
-            }
-
-            .feed-them_page_fts-license-page .button-secondary {
-                display: none;
-            }
-            .ftg-no-license-overlay {
-                position: absolute;
-                height: 100%;
-                width: 100%;
-                top: 0;
-                left: 0;
-                z-index: 100;
-                background: rgba(255,255,255,.64);
-                text-align: center;
-                vertical-align: middle;
-            }
-            .ftg-no-license-overlay a {
-                padding: 9px 15px;
-                background: #0073aa;
-                color: #FFF;
-                text-decoration: none;
-                border-radius: 3px;
-                font-size: 14px;
-                display: inline-block;
-            }
-            .ftg-no-license-button-wrap {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                -ms-transform: translate(-50%,-50%);
-                transform: translate(-50%,-50%);
-                min-width: 200px;
-            }
-        </style>
-        <?php
-    }
-
-    /**
-     * Init
-     *
-     * For Loading in the Front End
-     *
-     * @since
-     */
-    function init() {
-
-        add_theme_support( 'post-thumbnails' );
-
-
-        if (is_admin()) {
-            // Adds setting page to Feed Them Gallery menu
-            add_action('admin_menu', array($this, 'ft_gallery_submenu_pages'));
-            // THIS GIVES US SOME OPTIONS FOR STYLING THE ADMIN AREA
-            add_action('admin_enqueue_scripts', array($this, 'ft_gallery_admin_css'));
-        }//end if admin
-        //Feed Them Gallery Admin Bar
-        add_action('wp_before_admin_bar_render', array($this, 'ft_gallery_admin_bar_menu'), 999);
-
-        //Settings option. Add Custom CSS to the header of Feed Them Gallery pages only
-        $ft_gallery_include_custom_css_checked_css = get_option('ft-gallery-color-options-settings-custom-css');
-        if ($ft_gallery_include_custom_css_checked_css == '1') {
-            add_action('wp_enqueue_scripts', array($this, 'ft_gallery_color_options_head_css'));
+            return $located;
         }
-            add_action('wp_enqueue_scripts', array($this, 'ft_gallery_color_options_head_css_front'));
-
-    }//end if init
-
-    /**
-     * FT Gallery Submenu Pages
-     *
-     * Admin Submenu buttons // add the word setting in place of the default menu page name 'Feed Them Gallery'
-     *
-     * @since 1.0.0
-     */
-    function ft_gallery_submenu_pages() {
-        //Feed Them Gallery Options Page
-        $main_settings_page = new Settings_Page();
-        //add_menu_page('Feed Them Gallery', 'Feed Them Gallery', 'manage_options', 'ft-gallery-main-menu',  '');
-        add_submenu_page(
-            'edit.php?post_type=ft_gallery',
-            __('Settings', 'ft-gallery'),
-            __('Settings', 'ft-gallery'),
-            'manage_options',
-            'ft-gallery-settings-page',
-            array($main_settings_page, 'Settings_Page')
-        );
-        //System Info
-        $system_info_page = new System_Info();
-        add_submenu_page(
-            'edit.php?post_type=ft_gallery',
-            __('System Info', 'ft-gallery'),
-            __('System Info', 'ft-gallery'),
-            'manage_options',
-            'ft-gallery-system-info-submenu-page',
-            array($system_info_page, 'ft_gallery_system_info_page')
-        );
-    }
-
-    /**
-     * FT Gallery Admin CSS
-     *
-     * Add CSS to the wordpress Admin (backend)
-     *
-     * @since 1.0.0
-     */
-    function ft_gallery_admin_css() {
-        wp_register_style('ft_gallery_admin', plugins_url('admin/css/admin.css', dirname(__FILE__)));
-        wp_enqueue_style('ft_gallery_admin');
-    }
-
-    /**
-     * FT Gallery Reorder Admin Sub Menus
-     *
-     * Get Global Menu then Reorder FT Gallery's Admin Sub Menu
-     *
-     * @return mixed
-     * @since 1.0.0
-     */
-    function ft_gallery_reorder_admin_sub_menus() {
-        global $submenu;
-
-        //Unset Menu Items We don't want them to have.
-        //unset($submenu['edit.php?post_type=ft_gallery'][5]);
-        //unset($submenu['edit.php?post_type=ft_gallery'][10]);
-        //unset($submenu['edit.php?post_type=ft_gallery'][15]);
-
-        return $submenu;
-    }
-
-    /**
-     * FT Gallery Register Settings
-     *
-     * Generic function for registering settings
-     *
-     * @param $settings_name
-     * @param $settings
-     * @since 1.0.0
-     */
-    function ft_gallery_register_settings($settings_name, $settings) {
-        foreach ($settings as $key => $setting) {
-            register_setting($settings_name, $setting);
-        }
-    }
-
-    /**
-     * FT Gallery Color Options Head CSS
-     *
-     * Set the color options in the header
-     *
-     * @since 1.0.0
-     */
-    function ft_gallery_color_options_head_css() { ?>
-        <style type="text/css"><?php echo get_option('ft-gallery-color-options-main-wrapper-css-input'); ?></style>
-        <?php
-    }
-
-    /**
-     * FT Gallery Color Options CSS
-     *
-     * Set the font in the header
-     *
-     * @since 1.0.0
-     */
-    function ft_gallery_color_options_head_css_front() {
-
-      //  wp_register_style('ss-font-awesome', plugins_url('ft-gallery/admin/icon-picker/dist/css/font-awesome.min.css'));
-      //  wp_enqueue_style('ss-font-awesome');
-
-        $ft_gallery_text_color = get_option('ft_gallery_text_color');
-        $ft_gallery_link_color = get_option('ft_gallery_link_color');
-        $ft_gallery_link_color_hover = get_option('ft_gallery_link_color_hover');
-        $ft_gallery_post_time = get_option('ft_gallery_post_time');
-        ?>
-
-        <style type="text/css">
-            <?php
-        if (!empty($ft_gallery_text_color)) { ?> .ft-gallery-simple-fb-wrapper, .ft-gallery-popup{color: <?php echo $ft_gallery_text_color ?> !important;}
-            <?php }
-        if (!empty($ft_gallery_link_color)) { ?> .ft-wp-gallery a, .ft-gallery-popup a, .ft-wp-gallery .fts-mashup-count-wrap .fts-share-wrap a, .ft-wp-gallery .fts-share-wrap a, body .ft-wp-gallery .ft-gallery-cta-button-wrap a{color: <?php echo $ft_gallery_link_color ?> !important;}
-            <?php }
-        if (!empty($ft_gallery_link_color_hover)) { ?> .ft-wp-gallery a:hover, .ft-gallery-popup a:hover, .ft-wp-gallery .fts-share-wrap a:hover, body .ft-wp-gallery .ft-gallery-cta-button-wrap a:hover{color: <?php echo $ft_gallery_link_color_hover ?> !important;}
-            <?php }
-        if (!empty($ft_gallery_post_time)) { ?> .ft-gallery-post-time{color: <?php echo $ft_gallery_post_time ?> !important;}
-            <?php } ?>
-        </style>
-        <?php
-    }
-
-    /**
-     * FT Gallery Admin Bar Menu
-     *
-     * Create our custom menu in the WordPress admin bar.
-     *
-     * @since 1.0.0
-     */
-    function ft_gallery_admin_bar_menu() {
-        global $wp_admin_bar;
-
-        isset($ft_gallery_AdminBarMenu) ? $ft_gallery_AdminBarMenu : "";
-
-        $ft_gallery_AdminBarMenu = get_option('ft-gallery-admin-bar-menu');
-        if (!is_super_admin() || !is_admin_bar_showing() || $ft_gallery_AdminBarMenu == 'hide-admin-bar-menu')
-            return;
-
-        $wp_admin_bar->add_menu(array(
-            'id' => 'ft_gallery_admin_bar',
-            'title' => __('Feed Them Gallery', 'ft-gallery'),
-            'href' => false));
-        // Galleries
-        $wp_admin_bar->add_menu(array(
-                'id' => 'ft_gallery_admin_bar_view_galleries',
-                'parent' => 'ft_gallery_admin_bar',
-                'title' => __('Galleries ', 'ft-gallery'),
-                'href' => admin_url('edit.php?post_type=ft_gallery'))
-        );
-        // Add Gallery
-        $wp_admin_bar->add_menu(array(
-                'id' => 'ft_gallery_admin_bar_new_gallery',
-                'parent' => 'ft_gallery_admin_bar',
-                'title' => __('Add Gallery ', 'ft-gallery'),
-                'href' => admin_url('post-new.php?post_type=ft_gallery'))
-        );
-        //Settings
-        $wp_admin_bar->add_menu(array(
-                'id' => 'ft_gallery_admin_bar_settings',
-                'parent' => 'ft_gallery_admin_bar',
-                'title' => __('Settings', 'ft-gallery'),
-                'href' => admin_url('edit.php?post_type=ft_gallery&page=ft-gallery-settings-page'))
-        );
-        //System info
-        $wp_admin_bar->add_menu(array(
-                'id' => 'ft_gallery_admin_bar_system_info',
-                'parent' => 'ft_gallery_admin_bar',
-                'title' => __('System Info', 'ft-gallery'),
-                'href' => admin_url('edit.php?post_type=ft_gallery&page=ft-gallery-system-info-submenu-page'))
-        );
-        if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
-            //Plugin License
-            $wp_admin_bar->add_menu(array(
-                    'id' => 'ft_gallery_admin_bar_plugin_license',
-                    'parent' => 'ft_gallery_admin_bar',
-                    'title' => __('Plugin License', 'ft-gallery'),
-                    'href' => admin_url('edit.php?post_type=ft_gallery&page=ft-gallery-license-page'))
-            );
-        }
-    }
-
-    /**
-     * FT Gallery Settings Page Options
-     *
-     * @since 1.0.0
-     */
-    function ft_gallery_settings_page_options() {
-
-        $settings = array(
-            'ft-gallery-powered-text-options-settings',
-            'ft_gallery_fix_magnific',
-            //Color Options
-            'ft-gallery-admin-bar-menu',
-            'ft-gallery-options-settings-custom-css-second',
-            'ft_gallery_text_color',
-            'ft_gallery_link_color',
-            'ft_gallery_link_color_hover',
-            'ft_gallery_post_time',
-            'ft-gallery-main-wrapper-css-input',
-            'ft-gallery-settings-admin-textarea-css',
-            //Attachment Filename Renaming
-            'ft-gallery-use-attachment-naming',
-            'ft_gallery_attch_name_gallery_name',
-            'ft_gallery_attch_name_post_id',
-            'ft_gallery_attch_name_date',
-            //Attachment Title Renaming
-            'ft_gallery_attch_title_gallery_name',
-            'ft_gallery_attch_title_post_id',
-            'ft_gallery_attch_title_date',
-            //Format Attachment Title Options
-            'ft_gallery_format_attachment_titles_options',
-            //date options
-            'ft-gallery-date-and-time-format',
-            'ft-gallery-timezone',
-            'ft-gallery-custom-date',
-            'ft-gallery-custom-time',
-            'ft_gallery_language_second',
-            'ft_gallery_language_seconds',
-            'ft_gallery_language_minute',
-            'ft_gallery_language_minutes',
-            'ft_gallery_language_hour',
-            'ft_gallery_language_hours',
-            'ft_gallery_language_day',
-            'ft_gallery_language_days',
-            'ft_gallery_language_week',
-            'ft_gallery_language_weeks',
-            'ft_gallery_language_month',
-            'ft_gallery_language_months',
-            'ft_gallery_language_year',
-            'ft_gallery_language_years',
-            'ft_gallery_language_ago',
-            'ft_gallery_language_ago',
-            'ft_gallery_duplicate_post_show',
-        );
-
-
-        //If Woocommerce is active add options to save
-        if (is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
-            //Woocommerce Options
-            $settings[] = 'ft_gallery_attch_prod_to_gallery_cat';
-            $settings[] = 'ft_gallery_woo_add_to_cart';
-
-
-        }
-
-        //Add Custom Post Types to settings
-        $args = array(
-            'public' => true,
-            '_builtin' => false
-        );
-
-        $output = 'names'; // names or objects, note names is the default
-        $operator = 'and'; // 'and' or 'or'
-
-        $post_types = get_post_types($args, $output, $operator);
-
-        foreach ($post_types as $post_type) {
-            //Lowercase for setting name
-            $lower_post_type = strtolower($post_type);
-            $final_post_type_name = 'ft-gallery-settings-pt-' . $lower_post_type;
-
-            $settings[] = $final_post_type_name;
-        }
-
-        $this->ft_gallery_register_settings('ft-gallery-settings', $settings);
-    }
-
-    /**
-     * Feed Them Gallery Head CSS
-     *
-     * Add CSS to the wordpress front end Header
-     *
-     * @since 1.0.0
-     */
-    function ft_gallery_head_css() {
-        ?>
-        <style type="text/css"><?php echo get_option('ft-gallery-settings-admin-textarea-css'); ?></style><?php
     }
 
 }//END Class

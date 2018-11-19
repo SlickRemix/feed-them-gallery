@@ -7,32 +7,30 @@
  * Plugin Name: Feed Them Gallery
  * Plugin URI: http://slickremix.com/
  * Description: Create Beautiful Responsive Galleries in Minutes. Choose the number of columns a loadmore button, popup and more!  Sell your galleries or individual images, watermark them and even zip galleries with our premium version.
- * Version: 1.1.1
+ * Version: 1.1.2
  * Author: SlickRemix
  * Author URI: http://slickremix.com/
  * Text Domain: feed-them-gallery
  * Domain Path: /languages
  * Requires at least: Wordpress 4.7.0
- * Tested up to: WordPress 4.9.7
- * Stable tag: 1.1.1
+ * Tested up to: WordPress 4.9.8
+ * Stable tag: 1.1.2
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
- * WC requires at least: 3.0.0
- * WC tested up to: 3.5.1
  *
- * @version  1.1.1
+ * @version  1.1.2
  * @package  FeedThemSocial/Core
  * @copyright  	Copyright (c) 2012-2018 SlickRemix
  *
  * Need Support? http://www.slickremix.com/my-account
  */
 // Makes sure any js or css changes are reloaded properly. Added to enqued css and js files throughout
-define('FTG_CURRENT_VERSION', '1.1.1');
+define('FTG_CURRENT_VERSION', '1.1.2');
 
 final class Feed_Them_Gallery {
 
     /**
-     * Main Instance of Display Posts Feed.
+     * Main Instance of Display Posts Feed
      * @var
      */
     private static $instance;
@@ -95,15 +93,22 @@ final class Feed_Them_Gallery {
             self::$instance->system_info = new feed_them_gallery\System_Info();
             self::$instance->settings_page = new feed_them_gallery\Settings_Page();
 
-            //Shortcodes
-            //self::$instance->shortcodes = new feed_them_gallery\Shortcodes();
+            //Media Taxonomies
+            self::$instance->media_taxonomies = new feed_them_gallery\Media_Taxonomies();
 
-            //Display Gallery
+            //Setup Plugin functions
+            self::$instance->setup_functions = new feed_them_gallery\Setup_Functions();
+
+            //Core
+            self::$instance->core_functions = new feed_them_gallery\Core_Functions();
+
             self::$instance->display_list = new feed_them_gallery\Display_Gallery();
 
             //Galleries (Custom Post Type)
             self::$instance->gallery = new feed_them_gallery\Gallery();
 
+            //Albums
+            self::$instance->albums = new feed_them_gallery\Albums();
 
             if (is_plugin_active('feed-them-gallery-premium/feed-them-gallery-premium.php')) {
                 //Gallery to Woocommerce
@@ -116,8 +121,8 @@ final class Feed_Them_Gallery {
             //Shortcode Button for Admin page, posts and cpt's
             self::$instance->shortcode_button = new feed_them_gallery\Shortcode_Button();
 
-            //Core
-            self::$instance->functions = new feed_them_gallery\Core_Functions();
+            //Shortcodes
+            self::$instance->shortcodes = new feed_them_gallery\Shortcodes();
 
             //Updater Init
             self::$instance->plugin_license_page = new feed_them_gallery\updater_init();
@@ -283,6 +288,15 @@ final class Feed_Them_Gallery {
         include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'admin/system-info.php');
         include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'admin/settings-page.php');
 
+        //Tags/Taxonomies for images
+        include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/taxonomies/media-taxonomies.php');
+
+        //Setup Functions Class
+        include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/setup-functions-class.php');
+
+        //Core Functions Class
+        include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/core-functions-class.php');
+
         //Gallery Options
         include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/galleries/gallery-options.php');
 
@@ -291,6 +305,12 @@ final class Feed_Them_Gallery {
 
         //Display Gallery
         include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/display-gallery/display-gallery-class.php');
+
+        //Album Options
+        include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/albums/album-options.php');
+
+        //Albums
+        include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/albums/albums-class.php');
 
         // Create Image
         include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/galleries/create-image.php');
@@ -310,8 +330,9 @@ final class Feed_Them_Gallery {
         //Shortcode Button
         include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/shortcode-button/shortcode-button.php');
 
-        //Core Functions Class
-        include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/core-functions-class.php');
+
+        //Include Shortcodes
+        include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . '/shortcodes.php');
 
         //Updater Classes
         include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'updater/updater-license-page.php');
@@ -520,19 +541,19 @@ function ftg_rating_notice_html() {
 
         /* Has the user already clicked to ignore the message? */
         if ( ! get_user_meta( $user_id, 'ftg_slick_ignore_rating_notice') ) {
-            $output =  "<div class='ftg_notice ftg_review_notice'>";
+            $output =  '<div class="ftg_notice ftg_review_notice">';
             $output .=  "<img src='". plugins_url( 'feed-them-gallery/admin/css/ft-gallery-logo.png' ) ."' alt='Feed Them Gallery'>";
             $output .=  "<div class='ftg-notice-text'>";
             $output .=  '<p>'. __('It\'s great to see that you\'ve been using our Feed Them Gallery plugin for a while now. Hopefully you\'re happy with it!  If so, would you consider leaving a positive review? It really helps support the plugin and helps others discover it too!' , 'feed-them-social').'</p>';
-            $output .=  "<p class='ftg-links'>";
+            $output .=  '<p class="ftg-links">';
             $output .=  '<a class="ftg_notice_dismiss" href="https://wordpress.org/support/plugin/feed-them-gallery/reviews/#new-post" target="_blank">'. __('Sure, I\'de love to' , 'feed-them-social').'</a>';
             $output .=  '<a class="ftg_notice_dismiss" href="' .esc_url( add_query_arg( 'ftg_slick_ignore_rating_notice_nag', '1' ) ). '">'. __('I\'ve already given a review' , 'feed-them-social').'</a>';
             $output .=  '<a class="ftg_notice_dismiss" href="'.esc_url( add_query_arg( 'ftg_slick_ignore_rating_notice_nag', 'later' ) ).'">'. __('Ask me later' , 'feed-them-social').'</a>';
             $output .=  '<a class="ftg_notice_dismiss" href="https://wordpress.org/support/plugin/feed-them-gallery/#new-post" target="_blank">'. __('Not working, I need support' , 'feed-them-social').'</a>';
             $output .=  '<a class="ftg_notice_dismiss" href="'. esc_url( add_query_arg( 'ftg_slick_ignore_rating_notice_nag', '1' ) ).'">'. __('No thanks' , 'feed-them-social').'</a>';
-            $output .=  "</p>";
-            $output .=  "</div>";
-            $output .=  " </div>";
+            $output .=  '</p>';
+            $output .=  '</div>';
+            $output .=  '</div>';
             echo $output;
         }
     }

@@ -1,11 +1,6 @@
 //SLICKREMIX START OUR CUSTOM POPUPS
 jQuery(document).ready(function () {
 
-
-
-
-
-
     jQuery('#ft_gallery_smart_image_orient_prod').appendTo('.ft_gallery_smart_image_orient_prod_holder');
 
 
@@ -46,58 +41,12 @@ jQuery(document).ready(function () {
 
     var ftgGlobalValue = jQuery("select#ft_gallery_image_to_woo_model_prod").val();
     console.log(ftgGlobalValue);
-    if(ftgGlobalValue) {
+    if(ftgGlobalValue ) {
         jQuery('.ftg-settings-overlay-smart-images').show();
     }
     else{
         jQuery('.ftg-settings-overlay-smart-images').hide();
     }
-
-
-    jQuery('#ft_gallery_image_to_woo_model_prod').on('change', function (e) {
-        var ftgGlobalValue = jQuery("select#ft_gallery_image_to_woo_model_prod").val();
-        console.log(ftgGlobalValue);
-        if(ftgGlobalValue) {
-            jQuery('#ftg-tab-content1 .ft-gallery-create-woo').attr('disabled', false   );
-
-        }
-        else{
-            jQuery('#ftg-tab-content1 .ft-gallery-create-woo').attr('disabled', true);
-        }
-    });
-
-
-    var ftgGlobalValue = jQuery("select#ft_gallery_image_to_woo_model_prod").val();
-    var ftgLandscapeValue = jQuery("select#ft_gallery_landscape_to_woo_model_prod").val();
-    var ftgSquareValue = jQuery("select#ft_gallery_square_to_woo_model_prod").val();
-    var ftgPortraitValue = jQuery("select#ft_gallery_portrait_to_woo_model_prod").val();
-    var ftgorientationValueCheck = jQuery("#ft_gallery_smart_image_orient_prod").is(':checked');
-
-    console.log(ftgGlobalValue);
-    if(ftgGlobalValue || ftgLandscapeValue && ftgSquareValue && ftgPortraitValue && ftgorientationValueCheck) {
-        jQuery('#ftg-tab-content1 .ft-gallery-create-woo').attr('disabled', false);
-    }
-    else{
-        jQuery('#ftg-tab-content1 .ft-gallery-create-woo').attr('disabled', true);
-    }
-
-
-    jQuery('.ft-gallery-settings-tabs-meta-wrap .tab1').click(function (e) {
-        var ftgGlobalValue = jQuery("select#ft_gallery_image_to_woo_model_prod").val();
-        var ftgLandscapeValue = jQuery("select#ft_gallery_landscape_to_woo_model_prod").val();
-        var ftgSquareValue = jQuery("select#ft_gallery_square_to_woo_model_prod").val();
-        var ftgPortraitValue = jQuery("select#ft_gallery_portrait_to_woo_model_prod").val();
-        var ftgorientationValueCheck = jQuery("#ft_gallery_smart_image_orient_prod").is(':checked');
-
-        console.log(ftgGlobalValue);
-        if(ftgGlobalValue || ftgLandscapeValue && ftgSquareValue && ftgPortraitValue && ftgorientationValueCheck) {
-            jQuery('#ftg-tab-content1 .ft-gallery-create-woo').attr('disabled', false);
-        }
-        else{
-            jQuery('#ftg-tab-content1 .ft-gallery-create-woo').attr('disabled', true);
-        }
-    });
-
 
 
 
@@ -228,15 +177,27 @@ jQuery(document).ready(function () {
 
 
 
-
     jQuery('#fts-gallery-checkAll').toggle(function (event) {
         event.preventDefault(); // stop post action
         jQuery('#img1plupload-thumbs input:checkbox').attr('checked', 'checked');
         jQuery(this).html('Clear All')
         jQuery(".wp-core-ui .button-primary.ft-gallery-download-selection-option").show();
+        var ftgGlobalValue = jQuery("select#ft_gallery_image_to_woo_model_prod").val();
+        var ftgLandscapeValue = jQuery("select#ft_gallery_landscape_to_woo_model_prod").val();
+        var ftgSquareValue = jQuery("select#ft_gallery_square_to_woo_model_prod").val();
+        var ftgPortraitValue = jQuery("select#ft_gallery_portrait_to_woo_model_prod").val();
+        var ftgorientationValueCheck = jQuery("#ft_gallery_smart_image_orient_prod").is(':checked');
+        var ftgchechecked = jQuery(".ft-gallery-myCheckbox input").is(':checked');
+
+        if(ftgGlobalValue && ftgchechecked === true || ftgLandscapeValue && ftgSquareValue && ftgPortraitValue && ftgorientationValueCheck && ftgchechecked === true) {
+            jQuery('#ftg-tab-content1 .ft-gallery-create-woo').attr('disabled', false);
+        }
+
+
     }, function () {
         jQuery('#img1plupload-thumbs input:checkbox').removeAttr('checked');
         jQuery(".wp-core-ui .button-primary.ft-gallery-download-selection-option").hide();
+        jQuery('#ftg-tab-content1 .ft-gallery-create-woo').attr('disabled', true);
         jQuery(this).html('Select All');
     });
 
@@ -246,12 +207,25 @@ jQuery(document).ready(function () {
         if (jQuery("#img1plupload-thumbs input").length > 0) {
             jQuery(".wp-core-ui .button-primary.ft-gallery-download-selection-option").show();
         }
+
         jQuery(this).parents('.thumb').find('input:checkbox').attr('checked', 'checked');
+
+        var ftgGlobalValue = jQuery("select#ft_gallery_image_to_woo_model_prod").val();
+        var ftgLandscapeValue = jQuery("select#ft_gallery_landscape_to_woo_model_prod").val();
+        var ftgSquareValue = jQuery("select#ft_gallery_square_to_woo_model_prod").val();
+        var ftgPortraitValue = jQuery("select#ft_gallery_portrait_to_woo_model_prod").val();
+        var ftgorientationValueCheck = jQuery("#ft_gallery_smart_image_orient_prod").is(':checked');
+        var ftgchechecked = jQuery(".ft-gallery-myCheckbox input").is(':checked');
+
+        if(ftgGlobalValue && ftgchechecked === true || ftgLandscapeValue && ftgSquareValue && ftgPortraitValue && ftgorientationValueCheck && ftgchechecked === true) {
+            jQuery('#ftg-tab-content1 .ft-gallery-create-woo').attr('disabled', false);
+        }
     }, function () {
         jQuery(this).parents('.thumb').find('input:checkbox').removeAttr('checked');
         if (!jQuery("#img1plupload-thumbs input").is(":checked")) {
 
             jQuery(".wp-core-ui .button-primary.ft-gallery-download-selection-option").hide();
+            jQuery('#ftg-tab-content1 .ft-gallery-create-woo').attr('disabled', true);
         }
     });
 
@@ -617,52 +591,52 @@ jQuery(document).ready(function () {
                 },
                 image: {
                     markup: '' +
-                    '<div class="mfp-figure"><div class="mfp-close">X</div>' +
-                    '<div class="fts-popup-wrap">' +
-                    '    <div class="fts-popup-half ">' +
-                    '               <button title="previous" type="button" id="ftg-photo-prev" class="mfp-arrow mfp-arrow-left mfp-prevent-close"></button>' +
-                    '           <div class="fts-popup-image-position" style="height:591px;">' +
-                    '                   <span class="fts-position-helper"></span><div class="mfp-img"></div>' +
-                    '       </div>' +
-                    '               <button title="next" type="button" id="ftg-photo-next" class="mfp-arrow mfp-arrow-right mfp-prevent-close"></button>' +
-                    '    </div>' +
-                    '<div class="fts-popup-second-half">' +
-                    '<div class="mfp-bottom-bar">' +
-                    '<div class="mfp-title"></div>' +
-                    '<a class="fts-powered-by-text" href="https://slickremix.com" target="_blank">Powered by Feed Them Gallery</a>' +
-                    '<div class="mfp-counter"></div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>', // Popup HTML markup. `.mfp-img` div will be replaced with img tag, `.mfp-close` by close button
+                        '<div class="mfp-figure"><div class="mfp-close">X</div>' +
+                        '<div class="fts-popup-wrap">' +
+                        '    <div class="fts-popup-half ">' +
+                        '               <button title="previous" type="button" id="ftg-photo-prev" class="mfp-arrow mfp-arrow-left mfp-prevent-close"></button>' +
+                        '           <div class="fts-popup-image-position" style="height:591px;">' +
+                        '                   <span class="fts-position-helper"></span><div class="mfp-img"></div>' +
+                        '       </div>' +
+                        '               <button title="next" type="button" id="ftg-photo-next" class="mfp-arrow mfp-arrow-right mfp-prevent-close"></button>' +
+                        '    </div>' +
+                        '<div class="fts-popup-second-half">' +
+                        '<div class="mfp-bottom-bar">' +
+                        '<div class="mfp-title"></div>' +
+                        '<a class="fts-powered-by-text" href="https://slickremix.com" target="_blank">Powered by Feed Them Gallery</a>' +
+                        '<div class="mfp-counter"></div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>', // Popup HTML markup. `.mfp-img` div will be replaced with img tag, `.mfp-close` by close button
 
                     tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
 
                 },
                 iframe: {
                     markup: '' +
-                    '<div class="mfp-figure"><div class="mfp-close">X</div>' +
-                    '<div class="fts-popup-wrap">' +
-                    '    <div class="fts-popup-half ">' +
-                    '               <button title="previous" type="button" id="ftg-photo-prev" class="mfp-arrow mfp-arrow-left mfp-prevent-close"></button>' +
-                    '           <div class="fts-popup-image-position">' +
-                    '                           <div class="mfp-iframe-scaler"><iframe class="mfp-iframe fts-iframe-popup-element" frameborder="0" allowfullscreen></iframe><video class="mfp-iframe fts-video-popup-element" allowfullscreen autoplay controls></video>' +
-                    '                           </div>' +
-                    '               <button title="next" type="button" id="ftg-photo-next" class="mfp-arrow mfp-arrow-right mfp-prevent-close"></button>' +
-                    '<script>' +
-                    // SLICKREMIX: MUST HAVE THIS IN PLACE TO BE ABLE TO CHECK WHAT KIND OF VIDEOS ARE BEING CLICKED ON WHEN FIRST LOADED, AFTER THEY ARE LOADED REFER TO THE CLICK FUNCTION FOR THE ERRORS ABOVE
-                    'if(jQuery("body").hasClass("fts-video-iframe-choice")){jQuery(".fts-iframe-popup-element").attr("src", "").hide(); } else if(!jQuery("body").hasClass("fts-using-arrows")){jQuery(".fts-video-popup-element").attr("src", "").hide(); };  jQuery(".ft-gallery-popup video").click(function(){jQuery(this).trigger(this.paused ? this.paused ? "play" : "play" : "pause")});</script>' +
-                    '       </div>' +
-                    '    </div>' +
-                    '<div class="fts-popup-second-half">' +
-                    '<div class="mfp-bottom-bar">' +
-                    '<div class="mfp-title"></div>' +
-                    '<a class="fts-powered-by-text" href="https://slickremix.com" target="_blank">Powered by Feed Them Social</a>' +
-                    '<div class="mfp-counter"></div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>', // Popup HTML markup. `.mfp-img` div will be replaced with img tag, `.mfp-close` by close button
+                        '<div class="mfp-figure"><div class="mfp-close">X</div>' +
+                        '<div class="fts-popup-wrap">' +
+                        '    <div class="fts-popup-half ">' +
+                        '               <button title="previous" type="button" id="ftg-photo-prev" class="mfp-arrow mfp-arrow-left mfp-prevent-close"></button>' +
+                        '           <div class="fts-popup-image-position">' +
+                        '                           <div class="mfp-iframe-scaler"><iframe class="mfp-iframe fts-iframe-popup-element" frameborder="0" allowfullscreen></iframe><video class="mfp-iframe fts-video-popup-element" allowfullscreen autoplay controls></video>' +
+                        '                           </div>' +
+                        '               <button title="next" type="button" id="ftg-photo-next" class="mfp-arrow mfp-arrow-right mfp-prevent-close"></button>' +
+                        '<script>' +
+                        // SLICKREMIX: MUST HAVE THIS IN PLACE TO BE ABLE TO CHECK WHAT KIND OF VIDEOS ARE BEING CLICKED ON WHEN FIRST LOADED, AFTER THEY ARE LOADED REFER TO THE CLICK FUNCTION FOR THE ERRORS ABOVE
+                        'if(jQuery("body").hasClass("fts-video-iframe-choice")){jQuery(".fts-iframe-popup-element").attr("src", "").hide(); } else if(!jQuery("body").hasClass("fts-using-arrows")){jQuery(".fts-video-popup-element").attr("src", "").hide(); };  jQuery(".ft-gallery-popup video").click(function(){jQuery(this).trigger(this.paused ? this.paused ? "play" : "play" : "pause")});</script>' +
+                        '       </div>' +
+                        '    </div>' +
+                        '<div class="fts-popup-second-half">' +
+                        '<div class="mfp-bottom-bar">' +
+                        '<div class="mfp-title"></div>' +
+                        '<a class="fts-powered-by-text" href="https://slickremix.com" target="_blank">Powered by Feed Them Social</a>' +
+                        '<div class="mfp-counter"></div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>', // Popup HTML markup. `.mfp-img` div will be replaced with img tag, `.mfp-close` by close button
 
                     srcAction: 'iframe_src', // Templating object key. First part defines CSS selector, second attribute. "iframe_src" means: find "iframe" and set attribute "src".  
                 }

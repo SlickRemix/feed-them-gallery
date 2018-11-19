@@ -26,26 +26,7 @@ class Gallery_Options {
         $this->watermark_options();
         $this->woocommerce_options();
         $this->woocommerce_extra_options();
-    }
-
-    /**
-     * FT Gallery Required Plugins
-     *
-     * Return an array of required plugins.
-     *
-     * @return array
-     * @since 1.0.0
-     */
-    function ft_gallery_required_plugins() {
-        $required_premium_plugins = array(
-            'feed_them_gallery_premium' => array(
-                'title' => 'Feed Them Gallery Premium',
-                'plugin_url' => 'feed-them-gallery-premium/feed-them-gallery-premium.php',
-                'demo_url' => 'https://feedthemgallery.com/',
-                'purchase_url' => 'https://www.slickremix.com/downloads/feed-them-gallery/',
-            ),);
-
-        return $required_premium_plugins;
+        $this->pagination_options();
     }
 
     /**
@@ -96,7 +77,7 @@ class Gallery_Options {
                             'value' => 'gallery',
                         ),
                         array(
-                            'label' => __('Image Gallery Collage', 'feed-them-gallery'),
+                            'label' => __('Image Gallery Collage (Masonry)', 'feed-them-gallery'),
                             'value' => 'gallery-collage',
                         ),
                         array(
@@ -104,7 +85,7 @@ class Gallery_Options {
                             'value' => 'post',
                         ),
                         array(
-                            'label' => __('Image Post in Grid', 'feed-them-gallery'),
+                            'label' => __('Image Post in Grid (Masonry)', 'feed-them-gallery'),
                             'value' => 'post-in-grid',
                         ),
                     ),
@@ -213,6 +194,80 @@ class Gallery_Options {
                     ),
                 ),
                 array(
+                    'input_wrap_class' => 'ftg-masonry-columns-option-hide',
+                    'option_type' => 'select',
+                    'label' => __('Number of Columns', 'feed-them-gallery'),
+                    'type' => 'text',
+                    'instructional-text' => sprintf(__('%1$sNOTE:%2$s Using the Columns option will make this gallery fully responsive and it will adapt in size to your containers width. Choose the Number of Columns and Space between each image below.', 'feed-them-gallery'),
+                        '<strong>',
+                        '</strong>'
+                    ),
+                    'id' => 'ft_gallery_columns_masonry2',
+                    'name' => 'ft_gallery_columns_masonry2',
+                    'default_value' => '3',
+                    'options' => array(
+                        array(
+                            'label' => __('2', 'feed-them-gallery'),
+                            'value' => '2',
+                        ),
+                        array(
+                            'label' => __('3', 'feed-them-gallery'),
+                            'value' => '3',
+                        ),
+                        array(
+                            'label' => __('4', 'feed-them-gallery'),
+                            'value' => '4',
+                        ),
+                        array(
+                            'label' => __('5', 'feed-them-gallery'),
+                            'value' => '5',
+                        ),
+                    ),
+                ),
+                array(
+                    'input_wrap_class' => 'ftg-masonry-columns-option-hide',
+                    'option_type' => 'select',
+                    'label' => __('Space between Images', 'feed-them-gallery'),
+                    'type' => 'text',
+                    'id' => 'ft_gallery_columns_masonry_margin',
+                    'name' => 'ft_gallery_columns_masonry_margin',
+                    'default_value' => '5',
+                    'options' => array(
+                        array(
+                            'label' => __('1px', 'feed-them-gallery'),
+                            'value' => '1',
+                        ),
+                        array(
+                            'label' => __('2px', 'feed-them-gallery'),
+                            'value' => '2',
+                        ),
+                        array(
+                            'label' => __('3px', 'feed-them-gallery'),
+                            'value' => '3',
+                        ),
+                        array(
+                            'label' => __('4px', 'feed-them-gallery'),
+                            'value' => '4',
+                        ),
+                        array(
+                            'label' => __('5px', 'feed-them-gallery'),
+                            'value' => '5',
+                        ),
+                        array(
+                            'label' => __('10px', 'feed-them-gallery'),
+                            'value' => '10',
+                        ),
+                        array(
+                            'label' => __('15px', 'feed-them-gallery'),
+                            'value' => '15',
+                        ),
+                        array(
+                            'label' => __('20px', 'feed-them-gallery'),
+                            'value' => '20',
+                        ),
+                    ),
+                ),
+                array(
                     'input_wrap_class' => 'fb-page-columns-option-hide',
                     'option_type' => 'select',
                     'label' =>
@@ -237,38 +292,38 @@ class Gallery_Options {
                     ),
                 ),
                 //Grid Column Width
-                array(
-                    'input_wrap_class' => 'fb-page-grid-option-hide fb-page-columns-option-hide ftg-hide-for-columns',
-                    'option_type' => 'input',
-                    'label' => __('Grid Column Width', 'feed-them-gallery'),
-                    'type' => 'text',
-                    'id' => 'ft_gallery_grid_column_width',
-                    'name' => 'ft_gallery_grid_column_width',
-                    'instructional-text' =>
-                        sprintf(__('%1$sNOTE:%2$s Define the Width of each post and the Space between each post below. You must add px after any number.', 'feed-them-gallery'),
-                            '<strong>',
-                            '</strong>'
-                        ),
-                    'placeholder' => '310px ' . __('for example', 'feed-them-gallery'),
-                    'default_value' => '310px',
-                    'value' => '',
+             //   array(
+             //       'input_wrap_class' => 'fb-page-grid-option-hide fb-page-columns-option-hide ftg-hide-for-columns',
+             //       'option_type' => 'input',
+             //       'label' => __('Grid Column Width', 'feed-them-gallery'),
+             //       'type' => 'text',
+             //       'id' => 'ft_gallery_grid_column_width',
+             //       'name' => 'ft_gallery_grid_column_width',
+             //       'instructional-text' =>
+             //           sprintf(__('%1$sNOTE:%2$s Define the Width of each post and the Space between each post below. You must add px after any number.', 'feed-them-gallery'),
+             //               '<strong>',
+             //               '</strong>'
+             //           ),
+             //       'placeholder' => '310px ' . __('for example', 'feed-them-gallery'),
+             //       'default_value' => '310px',
+             //       'value' => '',
                     //         //This should be placed in the STARTING field of sub options that way wrap and instruction text is above this div (end will be in final options for div output)
                     //  'sub_options' => array(
                     //      'sub_options_wrap_class' => 'fts-facebook-grid-options-wrap',
                     //  ),
-                ),
+             //   ),
                 //Grid Spaces Between Posts
-                array(
-                    'input_wrap_class' => 'fb-page-grid-option-hide fb-page-grid-option-border-bottom',
-                    'option_type' => 'input',
-                    'label' => __('Space between Images', 'feed-them-gallery'),
-                    'type' => 'text',
-                    'id' => 'ft_gallery_grid_space_between_posts',
-                    'name' => 'ft_gallery_grid_space_between_posts',
-                    'placeholder' => '1px ' . __('for example', 'feed-them-gallery'),
-                    'default_value' => '1px',
-                    // 'sub_options_end' => 2,
-                ),
+             //   array(
+             //       'input_wrap_class' => 'fb-page-grid-option-hide fb-page-grid-option-border-bottom',
+             //       'option_type' => 'input',
+             //       'label' => __('Space between Images', 'feed-them-gallery'),
+             //       'type' => 'text',
+             //       'id' => 'ft_gallery_grid_space_between_posts',
+             //       'name' => 'ft_gallery_grid_space_between_posts',
+             //       'placeholder' => '1px ' . __('for example', 'feed-them-gallery'),
+             //       'default_value' => '1px',
+             //       // 'sub_options_end' => 2,
+             //   ),
                 //Show Name
                 array(
                     'input_wrap_class' => 'ft-gallery-user-name',
@@ -538,25 +593,14 @@ class Gallery_Options {
                 // Gallery Load More Options
                 //******************************************
                 //Load More Button
-
-                //# of Photos
                 array(
-                    'grouped_options_title' => __('Load More', 'feed-them-gallery'),
-                    'option_type' => 'input',
-                    'label' => __('# of Photos', 'feed-them-gallery'),
-                    'type' => 'text',
-                    'id' => 'ft_gallery_photo_count',
-                    'name' => 'ft_gallery_photo_count',
-                    'default_value' => '',
-                    'placeholder' => __('', 'feed-them-gallery'),
-                    'sub_options' => array(
-                        'sub_options_wrap_class' => 'facebook-loadmore-wrap',
-                    ),
-                ),
-                array(
-
+                    'grouped_options_title' => __('Load More Images', 'feed-them-gallery'),
                     'option_type' => 'select',
-                    'label' => __('Load More Button', 'feed-them-gallery'),
+                    'label' =>
+                        sprintf(__('Load More Button%1$s Load More unavailable while using the Pagination option.%2$s', 'feed-them-gallery'),
+                            '<br/><small class="ftg-loadmore-notice-colored" style="display: none;">',
+                            '</small>'
+                        ),
                     'type' => 'text',
                     'id' => 'ft_gallery_load_more_option',
                     'name' => 'ft_gallery_load_more_option',
@@ -570,8 +614,31 @@ class Gallery_Options {
                             'label' => __('Yes', 'feed-them-gallery'),
                             'value' => 'yes',
                         ),
-                    )
+                    ),
+                    'sub_options' => array(
+                        'sub_options_wrap_class' => 'facebook-loadmore-wrap',
+                    ),
                 ),
+
+
+                //# of Photos
+                array(
+
+                    'option_type' => 'input',
+                    'label' => __('# of Photos Visible', 'feed-them-gallery'),
+                    'type' => 'text',
+                    'id' => 'ft_gallery_photo_count',
+                    'name' => 'ft_gallery_photo_count',
+                    'default_value' => '',
+                    'placeholder' => __('', 'feed-them-gallery'),
+                    //This should be placed in the STARTING field of sub options that way wrap and instruction text is above this div (end will be in final options for div output)
+                    'sub_options' => array(
+                        'sub_options_wrap_class' => 'fts-facebook-load-more-options-wrap',
+                    ),
+
+                ),
+
+
                 //Load More Style
                 array(
                     'option_type' => 'select',
@@ -595,12 +662,10 @@ class Gallery_Options {
                             'value' => 'autoscroll',
                         ),
                     ),
-                    //This should be placed in the STARTING field of sub options that way wrap and instruction text is above this div (end will be in final options for div output)
-                    'sub_options' => array(
-                        'sub_options_wrap_class' => 'fts-facebook-load-more-options-wrap',
-                    ),
                     'sub_options_end' => true,
                 ),
+
+
 
                 //Load more Button Width
                 array(
@@ -633,14 +698,14 @@ class Gallery_Options {
                     'sub_options_end' => 2,
                 ),
 
+
                 //******************************************
-                // Gallery Pagination Options
+                // Gallery Image Count Options
                 //******************************************
                 //Load More Style
                 array(
-                    'grouped_options_title' => __('Pagination', 'feed-them-gallery'),
                     'option_type' => 'select',
-                    'label' => __('Show pagination', 'feed-them-gallery'),
+                    'label' => __('Show Image Count', 'feed-them-gallery'),
                     'type' => 'text',
                     'id' => 'ft_gallery_show_pagination',
                     'name' => 'ft_gallery_show_pagination',
@@ -666,7 +731,133 @@ class Gallery_Options {
                     ),
                     'sub_options_end' => true,
                 ),
+
+
+                //******************************************
+                // Gallery Sort Options
+                //******************************************
+                array(
+                    'grouped_options_title' => __('Order of Images', 'feed-them-gallery'),
+                    'option_type' => 'select',
+                    'label' => __('Choose the order of Images', 'feed-them-gallery'),
+                    'type' => 'text',
+                    'id' => 'ftg_sort_type',
+                    'name' => 'ftg_sort_type',
+                    'default_value' => 'above-below',
+                    'options' => array(
+                        1 => array(
+                            'label' => __('The order you manually sorted images', 'feed-them-gallery'),
+                            'value' => 'menu_order',
+                        ),
+                        2 => array(
+                            'label' => __('Sort alphabetically (A-Z)', 'feed-them-gallery'),
+                            'value' => 'title',
+                        ),
+                        3 => array(
+                            'label' => __('Sort by date', 'feed-them-gallery'),
+                            'value' => 'date',
+                        ),
+                    ),
+                ),
+
+                array(
+                    'option_type' => 'select',
+                    'label' => __('Display Options', 'feed-them-gallery'),
+                    'label' =>
+                        sprintf(__('Display Options%1$s Display a select option for this gallery so your users can select the sort order.%2$s', 'feed-them-gallery'),
+                            '<br/><small>',
+                            '</small>'
+                        ),
+                    'type' => 'text',
+                    'id' => 'ftg_sorting_options',
+                    'name' => 'ftg_sorting_options',
+                    'default_value' => 'no',
+                    'options' => array(
+                        array(
+                            'label' => __('No', 'feed-them-gallery'),
+                            'value' => 'no',
+                        ),
+                        array(
+                            'label' => __('Yes', 'feed-them-gallery'),
+                            'value' => 'yes',
+                        ),
+                    ),
+                ),
+
+                array(
+                    'option_type' => 'select',
+                    'label' => __('Position of Select Option', 'feed-them-gallery'),
+                    'type' => 'text',
+                    'id' => 'ftg_position_of_sort_select',
+                    'name' => 'ftg_position_of_sort_select',
+                    'default_value' => 'above-below',
+                    'options' => array(
+                        1 => array(
+                            'label' => __('Top', 'feed-them-gallery'),
+                            'value' => 'above',
+                        ),
+                        2 => array(
+                            'label' => __('Bottom', 'feed-them-gallery'),
+                            'value' => 'below',
+                        ),
+                        3 => array(
+                            'label' => __('Top and Bottom', 'feed-them-gallery'),
+                            'value' => 'above-below',
+                        ),
+                    ),
+                    'sub_options' => array(
+                        'sub_options_wrap_class' => 'ftg-sorting-options-wrap',
+                    ),
+                ),
+
+                array(
+                    'option_type' => 'select',
+                    'label' => __('Align Select Option', 'feed-them-gallery'),
+                    'type' => 'text',
+                    'id' => 'ftg_align_sort_select',
+                    'name' => 'ftg_align_sort_select',
+                    'default_value' => 'left',
+                    'options' => array(
+                        1 => array(
+                            'label' => __('Left', 'feed-them-gallery'),
+                            'value' => 'left',
+                        ),
+                        2 => array(
+                            'label' => __('Right', 'feed-them-gallery'),
+                            'value' => 'right',
+                        ),
+                    ),
+                    'sub_options_end' => true,
+                ),
+
+
+                //******************************************
+                // Download Free Image Button Sort Options
+                //******************************************
+
+                array(
+                    'grouped_options_title' => __('Free Image Download', 'feed-them-gallery'),
+                    'option_type' => 'ftg-free-download-size',
+                    'instructional-text' =>
+                        sprintf(__('%1$sNOTE:%2$s To turn this option on simply choose an image size. A download icon will appear under the image to the right and in the popup. If for some reason the image size you choose does not appear on the front end you may need to regenerate your images. This free plugin called %3$sRegenerate Thumbnails%4$s does an amazing job of that.', 'feed-them-gallery'),
+                            '<strong>',
+                            '</strong>',
+                            '<a href="'.esc_url('plugin-install.php?s=regenerate+thumbnails&tab=search&type=term').'" target="_blank">',
+                            '</a>'
+                        ),
+                    'label' => __('Choose the size', 'feed-them-gallery'),
+                    'class' => 'ft-images-sizes-free-download-button',
+                    'type' => 'select',
+                    'id' => 'ftg_free_download_size',
+                    'name' => 'ftg_free_download_size',
+                    'default_value' => '',
+                    'placeholder' => __('', 'feed-them-gallery'),
+                    'autocomplete' => 'off',
+                ),
+
             ),
+
+
         );
 
         return $this->all_options['layout'];
@@ -751,11 +942,10 @@ class Gallery_Options {
                     'placeholder' => __('#ddd', 'feed-them-gallery'),
                     'autocomplete' => 'off',
                 ),
-                //Pagination Color
+                //Loadmore Count Color
                 array(
-                    'grouped_options_title' => __('Pagination Color', 'feed-them-gallery'),
                     'option_type' => 'input',
-                    'label' => __('Text Color', 'feed-them-gallery'),
+                    'label' => __('Image Count Text Color', 'feed-them-gallery'),
                     'class' => 'fb-border-bottom-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:\'#eee\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'white\'}',
                     'type' => 'text',
                     'id' => 'ft-gallery-pagination-text-color-input',
@@ -764,6 +954,7 @@ class Gallery_Options {
                     'placeholder' => __('#ddd', 'feed-them-gallery'),
                     'autocomplete' => 'off',
                 ),
+
             )
         );
 
@@ -1216,7 +1407,222 @@ class Gallery_Options {
         );
 
         return $this->all_options['watermark'];
+    } //END WATERMARK OPTIONS
+
+    /**
+     * Pagination Options
+     *
+     * Options for the Layout Tab
+     *
+     * @return mixed
+     * @since 1.0.0
+     */
+    function pagination_options() {
+        $this->all_options['pagination'] = array(
+            'required_prem_plugin' => 'feed_them_gallery_premium',
+            'section_attr_key' => 'facebook_',
+            'section_title' => __('Pagination', 'feed-them-gallery'),
+            'section_wrap_class' => 'ftg-section-options',
+            //Form Info
+            'form_wrap_classes' => 'fb-page-shortcode-form',
+            'form_wrap_id' => 'fts-fb-page-form',
+            //Token Check // We'll use these option for premium messages in the future
+            'premium_msg_boxes' => array(
+                'album_videos' => array(
+                    'req_plugin' => 'fts_premium',
+                    'msg' => '',
+                ),
+                'reviews' => array(
+                    'req_plugin' => 'facebook_reviews',
+                    'msg' => '',
+                ),
+            ),
+
+            'main_options' => array(
+
+                //******************************************
+                // Gallery Pagination Options
+                //******************************************
+                array(
+                    'option_type' => 'select',
+                    'label' => __('Display Pagination', 'feed-them-gallery'),
+                    'label' =>
+                        sprintf(__('Display Pagination%1$s Pagination unavailable while using the Load More option.%2$s', 'feed-them-gallery'),
+                            '<br/><small class="ftg-pagination-notice-colored" style="display: none;">',
+                            '</small>'
+                        ),
+                    'type' => 'text',
+                    'id' => 'ft_gallery_show_true_pagination',
+                    'name' => 'ft_gallery_show_true_pagination',
+                    'default_value' => 'no',
+                    'options' => array(
+                        array(
+                            'label' => __('No', 'feed-them-gallery'),
+                            'value' => 'no',
+                        ),
+                        array(
+                            'label' => __('Yes', 'feed-them-gallery'),
+                            'value' => 'yes',
+                        ),
+                    ),
+                ),
+
+                //# of Photos
+                array(
+
+                    'option_type' => 'input',
+                    'label' => __('# of Photos Visible', 'feed-them-gallery'),
+                    'type' => 'text',
+                    'id' => 'ft_gallery_pagination_photo_count',
+                    'name' => 'ft_gallery_pagination_photo_count',
+                    'default_value' => '',
+                    'placeholder' => __('', 'feed-them-gallery'),
+                ),
+
+                array(
+                    'option_type' => 'select',
+                    'label' => __('Position of Pagination', 'feed-them-gallery'),
+                    'type' => 'text',
+                    'id' => 'ft_gallery_position_of_pagination',
+                    'name' => 'ft_gallery_position_of_pagination',
+                    'default_value' => 'above-below',
+                    'options' => array(
+                        1 => array(
+                            'label' => __('Top', 'feed-them-gallery'),
+                            'value' => 'above',
+                        ),
+                        2 => array(
+                            'label' => __('Bottom', 'feed-them-gallery'),
+                            'value' => 'below',
+                        ),
+                        3 => array(
+                            'label' => __('Top and Bottom', 'feed-them-gallery'),
+                            'value' => 'above-below',
+                        ),
+                    ),
+                    //This should be placed in the STARTING field of sub options that way wrap and instruction text is above this div (end will be in final options for div output)
+                    //  'sub_options' => array(
+                    //   'sub_options_wrap_class' => 'ftg-pagination-options-wrap',
+                    //  ),
+                ),
+
+                array(
+                    'option_type' => 'select',
+                    'label' => __('Align Pagination', 'feed-them-gallery'),
+                    'type' => 'text',
+                    'id' => 'ftg_align_pagination',
+                    'name' => 'ftg_align_pagination',
+                    'default_value' => 'right',
+                    'options' => array(
+                        1 => array(
+                            'label' => __('Left', 'feed-them-gallery'),
+                            'value' => 'left',
+                        ),
+                        2 => array(
+                            'label' => __('Right', 'feed-them-gallery'),
+                            'value' => 'right',
+                        ),
+                    ),
+                ),
+                //Pagination Color
+                // JUST NEED TO FINISH THE COLOR OPTIONS FOR THE PAGINATION AND APPLY THEM TO THE FRONT END
+                //Loadmore background Color
+                array(
+                    'option_type' => 'input',
+                    'label' => __('Button Color', 'feed-them-gallery'),
+                    'class' => 'fb-border-bottom-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:\'#eee\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'white\'}',
+                    'type' => 'text',
+                    'id' => 'ft-pagination-background-color-input',
+                    'name' => 'ft_gallery_pagination_button_color',
+                    'default_value' => '',
+                    'placeholder' => __('#ddd', 'feed-them-gallery'),
+                    'autocomplete' => 'off',
+                ),
+                array(
+                    'option_type' => 'input',
+                    'label' => __('Active Button', 'feed-them-gallery'),
+                    'class' => 'fb-border-bottom-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:\'#eee\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'white\'}',
+                    'type' => 'text',
+                    'id' => 'ft-gallery-pagination-background-color-input',
+                    'name' => 'ft_gallery_pagination_active_button_color',
+                    'default_value' => '',
+                    'placeholder' => __('#ddd', 'feed-them-gallery'),
+                    'autocomplete' => 'off',
+                ),
+                //Loadmore background Color
+                array(
+                    'option_type' => 'input',
+                    'label' => __('Numbers Color', 'feed-them-gallery'),
+                    'class' => 'fb-border-bottom-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:\'#eee\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'white\'}',
+                    'type' => 'text',
+                    'id' => 'ft-gallery-pagination-text-color-input',
+                    'name' => 'ft_gallery_pagination_text_color',
+                    'default_value' => '',
+                    'placeholder' => __('#ddd', 'feed-them-gallery'),
+                    'autocomplete' => 'off',
+                ),
+
+                array(
+                    'grouped_options_title' => __('Image Count  Options', 'feed-them-gallery'),
+                    'option_type' => 'select',
+                    'label' =>
+                        sprintf(__('Display Image Count%1$s For Example: Showing 1-50 of 800 Images.%2$s', 'feed-them-gallery'),
+                            '<br/><small>',
+                            '</small>'
+                        ),
+                    'type' => 'text',
+                    'id' => 'ftg_display_image_count',
+                    'name' => 'ftg_display_image_count',
+                    'default_value' => 'yes',
+                    'options' => array(
+                        1 => array(
+                            'label' => __('Yes', 'feed-them-gallery'),
+                            'value' => 'yes',
+                        ),
+                        2 => array(
+                            'label' => __('No', 'feed-them-gallery'),
+                            'value' => 'no',
+                        ),
+                    ),
+                ),
+
+                array(
+                    'option_type' => 'select',
+                    'label' => __('Align Image Count', 'feed-them-gallery'),
+                    'type' => 'text',
+                    'id' => 'ftg_align_count',
+                    'name' => 'ftg_align_count',
+                    'default_value' => 'left',
+                    'options' => array(
+                        1 => array(
+                            'label' => __('Left', 'feed-them-gallery'),
+                            'value' => 'left',
+                        ),
+                        2 => array(
+                            'label' => __('Right', 'feed-them-gallery'),
+                            'value' => 'right',
+                        ),
+                    ),
+                ),
+
+                array(
+                    'option_type' => 'input',
+                    'label' => __('Image count Text Color', 'feed-them-gallery'),
+                    'class' => 'fb-border-bottom-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:\'#eee\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'white\'}',
+                    'type' => 'text',
+                    'id' => 'ft-gallery-true-pagination-count-text-color-input',
+                    'name' => 'ft_gallery_true_pagination_count_text_color',
+                    'default_value' => '',
+                    'placeholder' => __('#ddd', 'feed-them-gallery'),
+                    'autocomplete' => 'off',
+                ),
+
+            ),
+        );
+
+        return $this->all_options['pagination'];
     } //END LAYOUT OPTIONS
+
 
     /**
      * All Gallery Options
