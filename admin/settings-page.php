@@ -35,7 +35,7 @@ class Settings_Page {
     public function ft_gallery_settings_page_scripts_styles() {
         $current_screen = get_current_screen();
 
-        if (isset($_GET['page']) && $_GET['page'] == 'ft-gallery-settings-page' || is_admin() && $current_screen->post_type == 'ft_gallery' && $current_screen->base == 'post') {
+        if (isset($_GET['page']) && $_GET['page'] == 'ft-gallery-settings-page' || is_admin() && $current_screen->post_type == 'ft_gallery' && $current_screen->base == 'post' || is_admin() && $current_screen->post_type == 'ft_gallery_albums' && $current_screen->base == 'post') {
 
             wp_enqueue_script('js_color', plugins_url('/feed-them-gallery/admin/js/jscolor/jscolor.js'), array('jquery'), FTG_CURRENT_VERSION);
             wp_enqueue_script('jquery');
@@ -203,19 +203,19 @@ class Settings_Page {
                         <div class="settings-sub-wrap">
                             <h5><?php _e('Capitalization Method', 'ft-gallery'); ?></h5>
 
-                            <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_cap_options]" type="radio" value="cap_all" <?php checked('cap_all', $options['ft_gallery_cap_options']); ?>> <?php _e('Capitalize All Words', 'ft-gallery'); ?>
+                            <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_cap_options]" type="radio" value="cap_all" <?php if (isset($options['ft_gallery_cap_options'])){ checked('cap_all', $options['ft_gallery_cap_options']);} ?>> <?php _e('Capitalize All Words', 'ft-gallery'); ?>
                             </label>
 
-                            <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_cap_options]" type="radio" value="cap_first" <?php checked('cap_first', $options['ft_gallery_cap_options']); ?>> <?php _e('Capitalize First Word Only', 'ft-gallery'); ?>
+                            <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_cap_options]" type="radio" value="cap_first" <?php if (isset($options['ft_gallery_cap_options'])){ checked('cap_first', $options['ft_gallery_cap_options']);} ?>> <?php _e('Capitalize First Word Only', 'ft-gallery'); ?>
                             </label>
 
-                            <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_cap_options]" type="radio" value="all_lower" <?php checked('all_lower', $options['ft_gallery_cap_options']); ?>> <?php _e('All Words Lower Case', 'ft-gallery'); ?>
+                            <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_cap_options]" type="radio" value="all_lower" <?php if (isset($options['ft_gallery_cap_options'])){ checked('all_lower', $options['ft_gallery_cap_options']);} ?>> <?php _e('All Words Lower Case', 'ft-gallery'); ?>
                             </label>
 
-                            <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_cap_options]" type="radio" value="all_upper" <?php checked('all_upper', $options['ft_gallery_cap_options']); ?>> <?php _e('All Words Upper Case', 'ft-gallery'); ?>
+                            <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_cap_options]" type="radio" value="all_upper" <?php if (isset($options['ft_gallery_cap_options'])){ checked('all_upper', $options['ft_gallery_cap_options']);} ?>> <?php _e('All Words Upper Case', 'ft-gallery'); ?>
                             </label>
 
-                            <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_cap_options]" type="radio" value="dont_alter" <?php checked('dont_alter', $options['ft_gallery_cap_options']); ?>> <?php _e('Don\'t Alter (title text isn\'t modified in any way)', 'ft-gallery'); ?>
+                            <label><input name="ft_gallery_format_attachment_titles_options[ft_gallery_cap_options]" type="radio" value="dont_alter" <?php if (isset($options['ft_gallery_cap_options'])){ checked('dont_alter', $options['ft_gallery_cap_options']);} ?>> <?php _e('Don\'t Alter (title text isn\'t modified in any way)', 'ft-gallery'); ?>
                             </label>
                             <div class="clear"></div>
                             <div class="description"><?php _e('Capitalization works on individual words separated by spaces. If the title contains NO spaces after formatting then only the first letter will be capitalized.', 'ft-gallery'); ?></div>

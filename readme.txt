@@ -3,7 +3,7 @@ Contributors: slickremix
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
 Tested up to: 4.9.8
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 
 Create customizable Image Galleries and sell your images using woocommerce.
@@ -127,6 +127,17 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.1.2 Monday, November 19th, 2018 =
+  * FIX: PHP warnings on the Settings page.
+  * FIX: Some settings not hiding under the layout when choosing a different layout option.
+  * FIX: Missing closing div for the Responsive Gallery layout option.
+  * NEW: The 2 masonry layout options are now fully responsive. You can choose the column amount and spacing.
+  * NEW: Choose the sorted order of images on the front end, either by the order you sorted them manually, Date or Alphabetically.
+  * NEW: The 2 masonry layout options are now fully responsive. You can choose the column amount and spacing.
+  * PREMIUM NEW: Pagination Tab which allows you to add pagination to the front end and customize the placement and colors.
+  * PREMIUM NEW: Now you can display a select option to allow your users to sort the order of the images, either by the order you sorted them manually, Date or Alphabetically.
+  * PREMIUM NEW: Display a download image icon on the front end allowing your users to download a free version of the image.
+
 = Version 1.1.0 - 1.1.1 Wednesday, October 31st, 2018 =
   * FIX: Variation script for WooCommerce not being loaded correctly.
   * FIX: Incorrect $.ajaxQueue instead of jQuery.ajaxQueue instance.

@@ -1,5 +1,16 @@
-jQuery(window).on("load",function(){jQuery.fn.masonry&&jQuery(".masonry").hasClass("ft-wp-gallery-masonry")&&(jQuery(".ft-wp-gallery-masonry").masonry(),setTimeout(function(){jQuery(".ft-wp-gallery-masonry").masonry("reloadItems"),jQuery(".ft-wp-gallery-masonry").masonry("layout")},600))}),jQuery(document).ready(function(){jQuery.fn.ftsShare=function(){jQuery(".fts-share-wrap").each(function(){var r=jQuery(this);r.find(".ft-gallery-link-popup").unbind().bind("click",function(){r.find(".ft-gallery-share-wrap").toggle()})})},jQuery.fn.ftsShare&&jQuery.fn.ftsShare()});
+jQuery(window).on("load",function(){
 
+    jQuery('.ft-wp-gallery-masonry .ft-gallery-variations-text select').on('change', function() {
+        // Additional JavaScript
+        jQuery('.ft-wp-gallery-masonry').masonry('reloadItems');
+        setTimeout(function () {
+            // Do something after 3 seconds
+            jQuery('.ft-wp-gallery-masonry').masonry('layout');
+        }, 200);
+    });
+
+
+    jQuery.fn.masonry&&jQuery(".masonry").hasClass("ft-wp-gallery-masonry")&&(jQuery(".ft-wp-gallery-masonry").masonry(),setTimeout(function(){jQuery(".ft-wp-gallery-masonry").masonry("reloadItems"),jQuery(".ft-wp-gallery-masonry").masonry("layout")},600))}),jQuery(document).ready(function(){jQuery.fn.ftsShare=function(){jQuery(".fts-share-wrap").each(function(){var r=jQuery(this);r.find(".ft-gallery-link-popup").unbind().bind("click",function(){r.find(".ft-gallery-share-wrap").toggle()})})},jQuery.fn.ftsShare&&jQuery.fn.ftsShare()});
 
 // https://www.w3schools.com/js/js_comparisons.asp
 // >	greater than   x > 8	true
@@ -9,6 +20,14 @@ jQuery(document).ready(slickremixFTGalleryImageResizing);
 jQuery(window).on('resize',slickremixFTGalleryImageResizing);
 
 function slickremixFTGalleryImageResizing() {
+
+
+    setTimeout(function () {
+        // Do something after 3 seconds
+        jQuery('.ft-gallery-download').removeClass('lightbox-added');
+    }, 200);
+
+    
     // This is the container for our instagram images
     var ftsBlockCenteredAttr = jQuery('.ft-wp-gallery-centered');
     // This is the container for the instagram image post
@@ -87,4 +106,6 @@ function slickremixFTGalleryImageResizing() {
         });
         return false;
     }
+
 }
+
