@@ -313,17 +313,17 @@ class Gallery_Options {
                     //  ),
              //   ),
                 //Grid Spaces Between Posts
-             //   array(
-             //       'input_wrap_class' => 'fb-page-grid-option-hide fb-page-grid-option-border-bottom',
-             //       'option_type' => 'input',
-             //       'label' => __('Space between Images', 'feed-them-gallery'),
-             //       'type' => 'text',
-             //       'id' => 'ft_gallery_grid_space_between_posts',
-             //       'name' => 'ft_gallery_grid_space_between_posts',
-             //       'placeholder' => '1px ' . __('for example', 'feed-them-gallery'),
-             //       'default_value' => '1px',
-             //       // 'sub_options_end' => 2,
-             //   ),
+                array(
+                    'input_wrap_class' => 'fb-page-grid-option-hide fb-page-grid-option-border-bottom',
+                    'option_type' => 'input',
+                    'label' => __('Space between Images', 'feed-them-gallery'),
+                    'type' => 'text',
+                    'id' => 'ft_gallery_grid_space_between_posts',
+                    'name' => 'ft_gallery_grid_space_between_posts',
+                    'placeholder' => '1px ' . __('for example', 'feed-them-gallery'),
+                    'default_value' => '1px',
+                    // 'sub_options_end' => 2,
+                ),
                 //Show Name
                 array(
                     'input_wrap_class' => 'ft-gallery-user-name',

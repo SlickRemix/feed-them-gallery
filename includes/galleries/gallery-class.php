@@ -2025,11 +2025,6 @@ endif;
                     jQuery('.ftg-sorting-options-wrap').show();
                 }
 
-
-
-
-
-
                 // facebook show load more options
                 jQuery('#ft_gallery_show_true_pagination').bind('change', function (e) {
                     if (jQuery('#ft_gallery_show_true_pagination').val() == 'yes') {

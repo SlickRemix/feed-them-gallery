@@ -1057,7 +1057,7 @@ class Display_Gallery extends Gallery {
                 $columns = isset($ft_gallery_columns) ? 'data-ftg-columns="'.$ft_gallery_columns.'" ' : '';
                 $force_columns = isset($ft_gallery_force_columns) ? 'data-ftg-force-columns="'.$ft_gallery_force_columns.'" ' : '';
 
-                print '<div '. $columns . $force_columns .'data-ftg-margin='.$masonry_margin.' data-ftg-width="'.$grid_width.'" class="fts-mashup ft-wp-gallery-centered ft-wp-gallery popup-gallery-fb-posts ' . $feed_name_rand_string .' '.$scrollable.'" ' . $style_start . $feed_width . $mashup_margin . $height . $padding . $background_color . $style_end . '>';
+                print '<div '. $columns . $force_columns .'data-ftg-margin='.$space_between_photos.' data-ftg-width="'.$grid_width.'" class="fts-mashup ft-wp-gallery-centered ft-wp-gallery popup-gallery-fb-posts ' . $feed_name_rand_string .' '.$scrollable.'" ' . $style_start . $feed_width . $mashup_margin . $height . $padding . $background_color . $style_end . '>';
                 print '<div class="' . $fts_dynamic_class_name . '">';
 
             } elseif ($format_type == 'post') {
