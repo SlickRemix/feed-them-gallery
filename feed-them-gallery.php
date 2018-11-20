@@ -96,7 +96,7 @@ final class Feed_Them_Gallery {
             self::$instance->settings_page = new feed_them_gallery\Settings_Page();
 
             //Media Taxonomies
-            self::$instance->media_taxonomies = new feed_them_gallery\Media_Taxonomies();
+           // self::$instance->media_taxonomies = new feed_them_gallery\Media_Taxonomies();
 
             //Setup Plugin functions
             self::$instance->setup_functions = new feed_them_gallery\Setup_Functions();
@@ -291,7 +291,7 @@ final class Feed_Them_Gallery {
         include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'admin/settings-page.php');
 
         //Tags/Taxonomies for images
-        include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/taxonomies/media-taxonomies.php');
+       // include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/taxonomies/media-taxonomies.php');
 
         //Setup Functions Class
         include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/setup-functions-class.php');
