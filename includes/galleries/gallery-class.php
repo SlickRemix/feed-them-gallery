@@ -960,7 +960,7 @@ class Gallery {
 
 					<div class="tab-pane images-tab-pane " id="images">
 
-						<div id="ftg-tab-content1" class="tab-content 
+						<div id="ftg-tab-content1" class="tab-content
 						<?php
 						if ( isset( $_GET['tab'] ) && $_GET['tab'] == 'ft_images' || ! isset( $_GET['tab'] ) ) {
 							echo ' pane-active';
@@ -1085,7 +1085,7 @@ endif;
                                         }</script>
                                     <?php
                                     $post_count = isset($_GET['images']) ? sanitize_text_field(  $_GET['images'] ) : $post_count;
-                                    $pagenum = $_GET['pagenum'] ? sanitize_text_field( $_GET['pagenum'] ) : '1';
+                                    $pagenum = isset($_GET['pagenum']) ? sanitize_text_field( $_GET['pagenum'] ) : '1';
                                     $paged = $pagenum;
 									// $image_list = $display_gallery->ft_gallery_get_media_rest($this->parent_post_id, '100');
 									$args       = array(
@@ -1107,7 +1107,7 @@ endif;
 
 									<input type="hidden" name="<?php echo $id; ?>" id="<?php echo $id; ?>" value="<?php echo $svalue; ?>" />
 
-									<div class="plupload-upload-uic hide-if-no-js 
+									<div class="plupload-upload-uic hide-if-no-js
 									<?php
 									if ( $multiple ) :
 										?>
@@ -1222,7 +1222,7 @@ endif;
 											</div>
 										<?php } ?>
 										<div class="gallery-edit-button-wrap">
-											<button 
+											<button
 											<?php
 											if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 												echo 'disabled ';
@@ -1294,7 +1294,7 @@ endif;
 								<?php // } ?>
 								<div class="clear"></div>
 
-								<ul class="plupload-thumbs 
+								<ul class="plupload-thumbs
 								<?php
 								if ( $multiple ) :
 									?>
@@ -1561,7 +1561,7 @@ endif;
 
 					<div class="tab-pane layout-tab-pane" id="layout">
 
-						<div id="ftg-tab-content2" class="tab-content 
+						<div id="ftg-tab-content2" class="tab-content
 						<?php
 						if ( isset( $_GET['tab'] ) && $_GET['tab'] == 'ft_layout' ) {
 							echo ' pane-active';
@@ -1586,7 +1586,7 @@ endif;
 					</div><!-- /.tab-pane -->
 
 					<div class="tab-pane colors-tab-pane" id="colors">
-						<div id="ftg-tab-content3" class="tab-content 
+						<div id="ftg-tab-content3" class="tab-content
 						<?php
 						if ( isset( $_GET['tab'] ) && $_GET['tab'] == 'ft_colors' ) {
 							echo ' pane-active';
@@ -1598,7 +1598,7 @@ endif;
 							?>
 							<div class="clear"></div>
 
-							<div class="ft-gallery-note ft-gallery-note-footer"> 
+							<div class="ft-gallery-note ft-gallery-note-footer">
 							<?php
 								echo sprintf(
 									__( 'Additional Global options available on the %1$sSettings Page%2$s', 'feed-them-gallery' ),
@@ -1677,7 +1677,7 @@ endif;
 					</div><!-- /.tab-pane -->
 
 					<div class="tab-pane woocommerce-tab-pane" id="woocommerce">
-						<div id="ftg-tab-content5" class="tab-content 
+						<div id="ftg-tab-content5" class="tab-content
 						<?php
 						if ( isset( $_GET['tab'] ) && $_GET['tab'] == 'ft_woo_commerce' ) {
 							echo ' pane-active';
@@ -1852,7 +1852,7 @@ endif;
 				</div><!-- /.tab-pane -->
 
 				<div class="tab-pane watermark-tab-pane" id="watermark">
-					<div id="ftg-tab-content7" class="tab-content 
+					<div id="ftg-tab-content7" class="tab-content
 					<?php
 					if ( isset( $_GET['tab'] ) && $_GET['tab'] == 'ft_watermark' ) {
 						echo ' pane-active';

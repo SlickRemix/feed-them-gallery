@@ -127,6 +127,12 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.1.3 Tuesday, November 20th, 2018 =
+  * FIX: Error causing default product page to not load correctly.
+  * FIX: CSS tweak for responsive galleries.
+  * FIX: New margin string missing on the Layout option for Image Gallery Collage (Masonry).
+  * FIX: Sanitize output of the Loadmore Ajax Function
+
 = Version 1.1.2 Monday, November 19th, 2018 =
   * FIX: PHP warnings on the Settings page.
   * FIX: Some settings not hiding under the layout when choosing a different layout option.
