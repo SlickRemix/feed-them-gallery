@@ -914,7 +914,7 @@ class Display_Gallery extends Gallery {
         $watermark_right_click_disable = get_post_meta($ftg['id'], 'ft_gallery_watermark_disable_right_click', true);
 
         // Option to disable the right click to inspect element on page so people can't just steal image easily
-        if (isset($watermark_right_click_disable) && $watermark_right_click_disable == 'yes') { ?>
+        if (isset($watermark_right_click_disable) && 'yes' === $watermark_right_click_disable) { ?>
             <script>
                 jQuery(document).bind("contextmenu", function (event) {
                     event.preventDefault();
@@ -932,10 +932,10 @@ class Display_Gallery extends Gallery {
         $edit_url = get_admin_url() . 'post.php?post=' . $ftg['id'] . '&action=edit';
         $popup = get_post_meta($ftg['id'], 'ft_gallery_popup', true);
         //   $popup = 'yes';
-        if ($popup == 'yes') {
+        if (isset($popup) && 'yes' === $popup) {
             // it's ok if these styles & scripts load at the bottom of the page
             $fts_fix_magnific = get_option('ft_gallery_fix_magnific') ? get_option('ft_gallery_fix_magnific') : '';
-            if (isset($fts_fix_magnific) && $fts_fix_magnific !== '1') {
+            if (isset($fts_fix_magnific) && '1' !== $fts_fix_magnific ) {
                 wp_enqueue_style('ft-gallery-popup', plugins_url('feed-them-gallery/includes/feeds/css/magnific-popup.css'), array(), FTG_CURRENT_VERSION);
             }
             if (is_plugin_active('feed-them-premium/feed-them-premium.php')) {
@@ -953,15 +953,15 @@ class Display_Gallery extends Gallery {
         $show_share = get_post_meta($ftg['id'], 'ft_gallery_wp_share', true);
         $show_purchase_link = get_post_meta($ftg['id'], 'ft_gallery_purchase_link', true);
 
-        if(get_post_meta($ftg['id'], 'ft_gallery_purchase_word', true) == TRUE){
+        if(TRUE === get_post_meta($ftg['id'], 'ft_gallery_purchase_word', true)){
             $purchase_text = get_post_meta($ftg['id'], 'ft_gallery_purchase_word', true);
         }
         else {
             $purchase_text = 'Purchase';
         }
 
-        $username = get_post_meta($ftg['id'], 'ft_gallery_username', true) == true ? get_post_meta($ftg['id'], 'ft_gallery_username', true) : '';
-        $username_link = get_post_meta($ftg['id'], 'ft_gallery_user_link', true) == true ? get_post_meta($ftg['id'], 'ft_gallery_user_link', true) : 'javacript:;';
+        $username = TRUE === get_post_meta($ftg['id'], 'ft_gallery_username', true) ? get_post_meta($ftg['id'], 'ft_gallery_username', true) : '';
+        $username_link = TRUE === get_post_meta($ftg['id'], 'ft_gallery_user_link', true) ? get_post_meta($ftg['id'], 'ft_gallery_user_link', true) : 'javacript:;';
         // link target options are: _blank, _self
         $link_target = '_self';
         ob_start();
@@ -1057,7 +1057,7 @@ class Display_Gallery extends Gallery {
                 $columns = isset($ft_gallery_columns) ? 'data-ftg-columns="'.$ft_gallery_columns.'" ' : '';
                 $force_columns = isset($ft_gallery_force_columns) ? 'data-ftg-force-columns="'.$ft_gallery_force_columns.'" ' : '';
 
-                print '<div '. $columns . $force_columns .'data-ftg-margin='.$space_between_photos.' data-ftg-width="'.$grid_width.'" class="fts-mashup ft-wp-gallery-centered ft-wp-gallery popup-gallery-fb-posts ' . $feed_name_rand_string .' '.$scrollable.'" ' . $style_start . $feed_width . $mashup_margin . $height . $padding . $background_color . $style_end . '>';
+                print '<div '. $columns . $force_columns .'data-ftg-margin='.$masonry_margin.' data-ftg-width="'.$grid_width.'" class="fts-mashup ft-wp-gallery-centered ft-wp-gallery popup-gallery-fb-posts ' . $feed_name_rand_string .' '.$scrollable.'" ' . $style_start . $feed_width . $mashup_margin . $height . $padding . $background_color . $style_end . '>';
                 print '<div class="' . $fts_dynamic_class_name . '">';
 
             } elseif ($format_type == 'post') {
@@ -1228,7 +1228,7 @@ class Display_Gallery extends Gallery {
 
 
 
-                if ($popup == 'yes') {
+                if (isset($popup) && 'yes' === $popup) {
 
                     if (isset($image_size_name) && $image_size_page !== 'Choose an option') {
                         $image_source_popup = $item_final_popup[0];
@@ -1251,7 +1251,7 @@ class Display_Gallery extends Gallery {
                 // Regular Post Format
                 if ($format_type == 'post' || $format_type == 'post-in-grid' || $format_type == 'gallery-collage') {
                     ?>
-                    <div class="ft-gallery-post-wrap fts-feed-type-wp_gallery ft-post-format <?php echo $masonry_class . $masonry_margin; if ($format_type == 'gallery-collage') { ?> ft-gallery-collage<?php } ?> ft-gallery-<?php echo $ft_gallery_dynamic_string ?>" style="<?php if ($format_type == 'post-in-grid' || $format_type == 'gallery-collage') { ?>width:<?php print $grid_width ?>;margin:<?php print $space_between_photos ?>;<?php }
+                    <div class="ft-gallery-post-wrap fts-feed-type-wp_gallery ft-post-format <?php echo $masonry_class . $masonry_margin; if ($format_type == 'gallery-collage') { ?> ft-gallery-collage<?php } ?> ft-gallery-<?php echo $ft_gallery_dynamic_string ?>" style="<?php if ($format_type == 'post-in-grid' || $format_type == 'gallery-collage') { ?>width:<?php print $grid_width ?>;margin:<?php print $masonry_margin ?>;<?php }
                     print $background_color_grid_posts ?>;<?php print $padding; ?>;<?php print $border_bottom_color ?>">
 
                         <div class="ft-text-for-popup" style="<?php if (isset($hide_icon) && $hide_icon == 'no' && isset($username) && $username == 'none' && isset($hide_date) && $hide_date == 'no' && isset($title_description) && $title_description == 'none' || $format_type == 'gallery-collage') { ?>display:none !important;<?php } ?>">
@@ -1382,7 +1382,7 @@ class Display_Gallery extends Gallery {
 
 
 
-                        if ($popup == 'yes'){ ?>
+                        if (isset($popup) && 'yes' === $popup){ ?>
                         <div class='slicker-instaG-backg-link'>
                             <div class="ft-text-for-popup">
                                 <div class="ft-text-for-popup-content">
@@ -1418,7 +1418,7 @@ class Display_Gallery extends Gallery {
                                     </div>
                                 </div>
                             <?php } ?>
-                            <?php if ($popup == 'yes'){
+                            <?php if (isset($popup) && 'yes' === $popup){
                             // Get $product object from product ID
                             ?>
                         </a>
@@ -1550,12 +1550,12 @@ class Display_Gallery extends Gallery {
                                         console.log(button);
 
                                         var yes_ajax = "yes";
-                                        var ft_gallery_id = "<?php echo $ftg['id']; ?>";
-                                        var ft_gallery_offset = ft_gallery_offset<?php echo $_REQUEST['ft_gallery_dynamic_name']; ?>;
-                                        var ft_gallery_post_count = ft_gallery_posts<?php echo $_REQUEST['ft_gallery_dynamic_name']; ?>;
-                                        var fts_security = "<?php echo $nonce;?>";
-                                        var fts_time = "<?php echo $time;?>";
-                                        var fts_d_name = "<?php echo $ft_gallery_dynamic_name;?>";
+                                        var ft_gallery_id = "<?php echo esc_html( $ftg['id'] ); ?>";
+                                        var ft_gallery_offset = ft_gallery_offset<?php echo sanitize_text_field( $_REQUEST['ft_gallery_dynamic_name'] ); ?>;
+                                        var ft_gallery_post_count = ft_gallery_posts<?php echo sanitize_text_field( $_REQUEST['ft_gallery_dynamic_name'] ); ?>;
+                                        var fts_security = "<?php echo esc_html( $nonce );?>";
+                                        var fts_time = "<?php echo esc_html( $time );?>";
+                                        var fts_d_name = "<?php echo esc_html( $ft_gallery_dynamic_name );?>";
                                         jQuery.ajax({
                                             data: {
                                                 action: "ft_gallery_load_more",
@@ -1907,11 +1907,11 @@ class Display_Gallery extends Gallery {
             exit('Sorry, You can\'t do that!');
         } else {
 
-            $post_count = $_REQUEST['ft_gallery_post_count'];
-            $offset = $_REQUEST['ft_gallery_offset'];
-            $media = $_REQUEST['ft_gallery_media_count'];
+            $post_count = sanitize_text_field( $_REQUEST['ft_gallery_post_count'] );
+            $offset = sanitize_text_field( $_REQUEST['ft_gallery_offset'] );
+            $media = sanitize_text_field( $_REQUEST['ft_gallery_media_count'] );
 
-            $object = do_shortcode('[feed-them-gallery id=' . $_REQUEST['ft_gallery_id'] . ' offset=' . $offset . ' media_count=' . $media . ']');
+            $object = do_shortcode('[feed-them-gallery id=' . sanitize_text_field( $_REQUEST['ft_gallery_id'] ) . ' offset=' . sanitize_text_field( $offset ) . ' media_count=' . sanitize_text_field( $media ) . ']');
             echo $object;
         }
         die();

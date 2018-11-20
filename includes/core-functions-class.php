@@ -30,8 +30,8 @@ class Core_Functions {
      * Core_Functions constructor.
      */
     function __construct() {
-
-        add_filter('single_template', array($this, 'ft_gallery_locate_template'), 999);
+        // Commenting this out until we get back to the albums.
+      //  add_filter('single_template', array($this, 'ft_gallery_locate_template'), 999);
     }
 
     /**
@@ -386,7 +386,7 @@ class Core_Functions {
                 break;
         }
 
-        if ($use_template == true) {
+        if ($use_template === true) {
             // No file found yet
             $located = false;
             // Continue if template is empty
