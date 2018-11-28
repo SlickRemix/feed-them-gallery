@@ -3,10 +3,10 @@ Contributors: slickremix
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
 Tested up to: 4.9.8
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 License: GPLv2 or later
 
-Create customizable Image Galleries and sell your images using woocommerce.
+Create customizable Image Galleries and sell your images using WooCommerce.
 
 == Description ==
 
@@ -21,7 +21,7 @@ ALL SlickRemix plugins come with Amazing Support. If you need help or have quest
 If you are a Photographer, Developer, Artist, Someone looking to help others sell their photos, or just looking to create awesome, easy-to-use Galleries this plugin is for you! We made the process of setting up Galleries super simple. We included TONS of options to change the style and layout keeping focus on organization and simplicity. We want to make it so anyone can create a Gallery and sell photos with ease giving your customers/clients a hassle free experience when looking at or buying your images or art!
 
 = What does this plugin do? =
-With this plugin you can create and display clean responsive image galleries in minutes. We have 4 different layouts you can choose from and many options to configure the look and feel of the gallery on your site. In our premium version we've also made it super easy for you to connect your galleries to Woocommerce. In one click you can easily turn a Gallery into a ZIP and WooCommerce product. You can also in one click and based on a model product turn EACH individual photo into a WooCommerce product saving you MANY HOURS of tedious product creation!
+With this plugin you can create and display clean responsive image galleries in minutes. We have 4 different layouts you can choose from and many options to configure the look and feel of the gallery on your site. In our premium version we've also made it super easy for you to connect your galleries to WooCommerce. In one click you can easily turn a Gallery into a ZIP and WooCommerce product. You can also in one click and based on a model product turn EACH individual photo into a WooCommerce product saving you MANY HOURS of tedious product creation!
 
 FREE PLUGIN OPTIONS
 = Image Options =
@@ -127,6 +127,12 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.1.5 Wednesday, November 28th, 2018 =
+  * FIX: Watermark button to add an image
+  * FIX: Customizing the Purchase Product button
+  * FIX: Custom username and link option
+  * FIX: Extra Image spacing option showing for layout types
+
 = Version 1.1.4 Wednesday, November 21st, 2018 =
   * FIX: Error causing customizer to not load correctly.
 

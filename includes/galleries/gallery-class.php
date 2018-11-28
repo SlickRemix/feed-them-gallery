@@ -631,13 +631,22 @@ class Gallery {
 
 		if ( is_admin() && $current_screen->post_type == 'ft_gallery' && $current_screen->base == 'post' ) {
 
+            // Set the post_id for localization.
+            $post_id = isset($post->ID) ? $post->ID : (int)$id;
 
-			// add_filter( 'wp_insert_post_data', array( $this, 'ft_gallery_sort_images_meta_save' ), 99, 2 );
-			wp_enqueue_style( 'ft-gallery-feeds', plugins_url( 'feed-them-gallery/includes/feeds/css/styles.css' ), array(), FTG_CURRENT_VERSION );
-			wp_enqueue_style( 'ft-gallery-popup', plugins_url( 'feed-them-gallery/includes/feeds/css/magnific-popup.css' ), array(), FTG_CURRENT_VERSION );
-			wp_enqueue_script( 'ft-gallery-popup-js', plugins_url( 'feed-them-gallery/includes/feeds/js/magnific-popup.js' ), array(), FTG_CURRENT_VERSION );
-			wp_register_style( 'side_sup_settings_css', plugins_url( 'feed-them-gallery/admin/css/metabox.css' ), array(), FTG_CURRENT_VERSION );
-			wp_enqueue_style( 'side_sup_settings_css' );
+            // Image Uploader
+            wp_enqueue_media(array(
+                'post' => $post_id,
+            ));
+            add_filter('plupload_init', array($this, 'plupload_init'));
+            // Updates the attachments when saving
+            //  add_filter( 'wp_insert_post_data', array( $this, 'ft_gallery_sort_images_meta_save' ), 99, 2 );
+
+            wp_enqueue_style('ft-gallery-feeds', plugins_url('feed-them-gallery/includes/feeds/css/styles.css'), array(), FTG_CURRENT_VERSION);
+            wp_enqueue_style('ft-gallery-popup', plugins_url('feed-them-gallery/includes/feeds/css/magnific-popup.css'), array(), FTG_CURRENT_VERSION);
+            wp_enqueue_script('ft-gallery-popup-js', plugins_url('feed-them-gallery/includes/feeds/js/magnific-popup.js'), array(), FTG_CURRENT_VERSION);
+            wp_register_style('side_sup_settings_css', plugins_url('feed-them-gallery/admin/css/metabox.css'), array(), FTG_CURRENT_VERSION);
+            wp_enqueue_style('side_sup_settings_css');
 
 			wp_register_script( 'jquery-nested-sortable', plugins_url( 'feed-them-gallery/admin/js/jquery.mjs.nestedSortable.js' ), array( 'jquery-ui-core', 'jquery-ui-draggable', 'jquery-ui-sortable, ' ), FTG_CURRENT_VERSION );
 			wp_enqueue_script( 'jquery-nested-sortable' );
@@ -650,7 +659,13 @@ class Gallery {
 			wp_enqueue_script( 'ft-gallery-metabox' );
 			wp_enqueue_script( 'jquery-form' );
 
-
+            // Localize JavaScript:
+            wp_localize_script('ft-gallery-metabox', 'dgd_strings', array(
+                'panel' => array(
+                    'title' => __('Upload Images for Feed Them Gallery'),
+                    'button' => __('Save and Close Popup')
+                )
+            ));
 
 			// Add buttons that appears at the bottom of pages to publish, update or go to top of page
 			wp_enqueue_script( 'updatefrombottom-admin-script', plugins_url( 'feed-them-gallery/includes/js/update-from-bottom.js' ), array( 'jquery' ), FTG_CURRENT_VERSION );
@@ -2082,48 +2097,51 @@ endif;
 					jQuery(".feed-them-gallery-admin-input-label:contains('Center Facebook Container?')").parent('div').show();
 				}
 
-				if (jQuery('#ft_gallery_type').val() == 'post-in-grid' || jQuery('#ft_gallery_type').val() == 'gallery' || jQuery('#ft_gallery_type').val() == 'gallery-collage') {
-					jQuery('.fb-page-grid-option-hide').show();
-					if (jQuery('#ft_gallery_type').val() == 'gallery') {
-						jQuery('#ft_gallery_height').show();
-						jQuery('.fb-page-columns-option-hide').show();
-						jQuery('.ftg-hide-for-columns').hide();
-                        jQuery('.ftg-masonry-columns-option-hide').hide();
-					}
-					else {
-						jQuery('.ft_gallery_height').hide();
-						jQuery('.fb-page-columns-option-hide').hide();
-						jQuery('.ftg-hide-for-columns').show();
-                        jQuery('.ftg-masonry-columns-option-hide').show();
-					}
-				}
-				else {
-					jQuery('.fb-page-grid-option-hide, .ft_gallery_height').hide();
-                    jQuery('.ftg-masonry-columns-option-hide').hide();
-				}
+                if (jQuery('#ft_gallery_type').val() == 'post-in-grid' || jQuery('#ft_gallery_type').val() == 'gallery' || jQuery('#ft_gallery_type').val() == 'gallery-collage') {
 
-				// FTG show grid options
-				jQuery('#ft_gallery_type').bind('change', function (e) {
-					if (jQuery('#ft_gallery_type').val() == 'post-in-grid' || jQuery('#ft_gallery_type').val() == 'gallery' || jQuery('#ft_gallery_type').val() == 'gallery-collage') {
-						jQuery('.fb-page-grid-option-hide').show();
-						if (jQuery('#ft_gallery_type').val() == 'gallery') {
-							jQuery('#ft_gallery_height').show();
-							jQuery('.fb-page-columns-option-hide').show();
-							jQuery('.ftg-hide-for-columns').hide();
-                            jQuery('.ftg-masonry-columns-option-hide').hide();
-						}
-						else {
-							jQuery('.ft_gallery_height').hide();
-							jQuery('.fb-page-columns-option-hide').hide();
-							jQuery('.ftg-hide-for-columns').show();
-                            jQuery('.ftg-masonry-columns-option-hide').show();
-						}
-					}
-					else {
-						jQuery('.fb-page-grid-option-hide').hide();
+                    if (jQuery('#ft_gallery_type').val() == 'gallery') {
+                        jQuery('#ft_gallery_height').show();
+                        jQuery('.fb-page-columns-option-hide').show();
+                        jQuery('.ftg-hide-for-columns').hide();
                         jQuery('.ftg-masonry-columns-option-hide').hide();
-					}
-				});
+                        jQuery('.fb-page-grid-option-hide').show();
+                    }
+                    else {
+                        jQuery('.ft_gallery_height').hide();
+                        jQuery('.fb-page-columns-option-hide').hide();
+                        jQuery('.ftg-hide-for-columns').show();
+                        jQuery('.ftg-masonry-columns-option-hide').show();
+                        jQuery('.fb-page-grid-option-hide').hide();
+                    }
+                }
+                else {
+                    jQuery('.fb-page-grid-option-hide, .ft_gallery_height').hide();
+                    jQuery('.ftg-masonry-columns-option-hide').hide();
+                }
+
+                // FTG show grid options
+                jQuery('#ft_gallery_type').bind('change', function (e) {
+                    if (jQuery('#ft_gallery_type').val() == 'post-in-grid' || jQuery('#ft_gallery_type').val() == 'gallery' || jQuery('#ft_gallery_type').val() == 'gallery-collage') {
+                        if (jQuery('#ft_gallery_type').val() == 'gallery') {
+                            jQuery('#ft_gallery_height').show();
+                            jQuery('.fb-page-columns-option-hide').show();
+                            jQuery('.ftg-hide-for-columns').hide();
+                            jQuery('.ftg-masonry-columns-option-hide').hide();
+                            jQuery('.fb-page-grid-option-hide').show();
+                        }
+                        else {
+                            jQuery('.ft_gallery_height').hide();
+                            jQuery('.fb-page-columns-option-hide').hide();
+                            jQuery('.ftg-hide-for-columns').show();
+                            jQuery('.ftg-masonry-columns-option-hide').show();
+                            jQuery('.fb-page-grid-option-hide').hide();
+                        }
+                    }
+                    else {
+                        jQuery('.fb-page-grid-option-hide').hide();
+                        jQuery('.ftg-masonry-columns-option-hide').hide();
+                    }
+                });
 
                 <?php
                 if (!is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
