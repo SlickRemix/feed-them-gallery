@@ -83,7 +83,6 @@ FREE PLUGIN OPTIONS
  * Say you set 10 image to show and you have 50 images. Then you would see 10 of 50. And when you loadmore the number will increase.
  * Change the color of the pagination numbers
 
-
 [PREMIUM PLUGIN FEATURES](https://www.slickremix.com/downloads/feed-them-gallery/)
 = Watermark Options =
  * Disable the right click option for desktop computers

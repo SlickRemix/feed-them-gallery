@@ -67,7 +67,6 @@ final class Feed_Them_Gallery {
                 }
             } // end ftg_required_php_check
 
-
             register_activation_hook(__FILE__, array(self::$instance, 'ftg_activate'));
             add_action('admin_notices', array(self::$instance, 'ft_gallery_display_install_notice'));
             add_action('admin_notices', array(self::$instance, 'ft_gallery_display_update_notice'));

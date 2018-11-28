@@ -2098,7 +2098,6 @@ endif;
 				}
 
                 if (jQuery('#ft_gallery_type').val() == 'post-in-grid' || jQuery('#ft_gallery_type').val() == 'gallery' || jQuery('#ft_gallery_type').val() == 'gallery-collage') {
-
                     if (jQuery('#ft_gallery_type').val() == 'gallery') {
                         jQuery('#ft_gallery_height').show();
                         jQuery('.fb-page-columns-option-hide').show();

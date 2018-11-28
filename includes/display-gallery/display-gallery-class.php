@@ -970,7 +970,6 @@ class Display_Gallery extends Gallery {
             <div class="ft-gallery-main-title"><?php print $title ?></div>
         <?php }
 
-
         $ftg_sorting_options = null !== get_post_meta($ftg['id'], 'ftg_sorting_options', true) && 'yes' === get_post_meta($ftg['id'], 'ftg_sorting_options', true)  ? get_post_meta($ftg['id'], 'ftg_sorting_options', true) : '';
         $ft_gallery_pagination_photo_count = null !== get_post_meta($ftg['id'], 'ft_gallery_pagination_photo_count', true) ? get_post_meta($ftg['id'], 'ft_gallery_pagination_photo_count', true) : '50';
         $ftg_loadmore_option = null !== get_post_meta($ftg['id'], 'ft_gallery_load_more_option', true) && 'yes' === get_post_meta($ftg['id'], 'ft_gallery_load_more_option', true)  ? get_post_meta($ftg['id'], 'ft_gallery_load_more_option', true) : '';
