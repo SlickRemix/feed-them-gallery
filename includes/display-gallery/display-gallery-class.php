@@ -953,23 +953,22 @@ class Display_Gallery extends Gallery {
         $show_share = get_post_meta($ftg['id'], 'ft_gallery_wp_share', true);
         $show_purchase_link = get_post_meta($ftg['id'], 'ft_gallery_purchase_link', true);
 
-        if(TRUE === get_post_meta($ftg['id'], 'ft_gallery_purchase_word', true)){
+        if(null !== get_post_meta($ftg['id'], 'ft_gallery_purchase_word', true)){
             $purchase_text = get_post_meta($ftg['id'], 'ft_gallery_purchase_word', true);
         }
         else {
             $purchase_text = 'Purchase';
         }
 
-        $username = TRUE === get_post_meta($ftg['id'], 'ft_gallery_username', true) ? get_post_meta($ftg['id'], 'ft_gallery_username', true) : '';
-        $username_link = TRUE === get_post_meta($ftg['id'], 'ft_gallery_user_link', true) ? get_post_meta($ftg['id'], 'ft_gallery_user_link', true) : 'javacript:;';
+        $username = null !== get_post_meta($ftg['id'], 'ft_gallery_username', true) ? get_post_meta($ftg['id'], 'ft_gallery_username', true) : '';
+        $username_link = null !== get_post_meta($ftg['id'], 'ft_gallery_user_link', true) ? get_post_meta($ftg['id'], 'ft_gallery_user_link', true) : 'javacript:;';
         // link target options are: _blank, _self
-        $link_target = '_self';
+        $link_target = '_blank';
         ob_start();
         if (isset($title)) {
             ?>
             <div class="ft-gallery-main-title"><?php print $title ?></div>
         <?php }
-
 
         $ftg_sorting_options = null !== get_post_meta($ftg['id'], 'ftg_sorting_options', true) && 'yes' === get_post_meta($ftg['id'], 'ftg_sorting_options', true)  ? get_post_meta($ftg['id'], 'ftg_sorting_options', true) : '';
         $ft_gallery_pagination_photo_count = null !== get_post_meta($ftg['id'], 'ft_gallery_pagination_photo_count', true) ? get_post_meta($ftg['id'], 'ft_gallery_pagination_photo_count', true) : '50';
