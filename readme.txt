@@ -126,6 +126,10 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.1.5.1 Friday, March 1st, 2019 =
+  * Works with Wordpress 5.1
+  * Text Updates
+  
 = Version 1.1.5 Wednesday, November 28th, 2018 =
   * FIX: Watermark button to add an image
   * FIX: Customizing the Purchase Product button

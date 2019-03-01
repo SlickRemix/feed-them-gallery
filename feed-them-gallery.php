@@ -5,7 +5,7 @@
  * This class is what initiates the Feed Them Gallery class
  *
  * Plugin Name: Feed Them Gallery
- * Plugin URI: http://slickremix.com/
+ * Plugin URI: https://slickremix.com/
  * Description: Create Beautiful Responsive Galleries in Minutes. Choose the number of columns a loadmore button, popup and more!  Sell your galleries or individual images, watermark them and even zip galleries with our premium version.
  * Version: 1.1.5.1
  * Author: SlickRemix
@@ -22,7 +22,7 @@
  *
  * @version  1.1.5.1
  * @package  FeedThemSocial/Core
- * @copyright  	Copyright (c) 2012-2018 SlickRemix
+ * @copyright  	Copyright (c) 2012-2019 SlickRemix
  *
  * Need Support? http://www.slickremix.com/my-account
  */
@@ -95,7 +95,7 @@ final class Feed_Them_Gallery {
             self::$instance->settings_page = new feed_them_gallery\Settings_Page();
 
             //Media Taxonomies
-           // self::$instance->media_taxonomies = new feed_them_gallery\Media_Taxonomies();
+            // self::$instance->media_taxonomies = new feed_them_gallery\Media_Taxonomies();
 
             //Setup Plugin functions
             self::$instance->setup_functions = new feed_them_gallery\Setup_Functions();
@@ -290,7 +290,7 @@ final class Feed_Them_Gallery {
         include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'admin/settings-page.php');
 
         //Tags/Taxonomies for images
-       // include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/taxonomies/media-taxonomies.php');
+        // include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/taxonomies/media-taxonomies.php');
 
         //Setup Functions Class
         include(FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/setup-functions-class.php');
