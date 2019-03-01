@@ -2,7 +2,7 @@
 Contributors: slickremix
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
-Tested up to: 4.9.8
+Tested up to: 5.1
 Stable tag: 1.1.5
 License: GPLv2 or later
 
