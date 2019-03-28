@@ -1938,7 +1938,7 @@ class Display_Gallery extends Gallery {
                 print  $price; ?>
             </div>
             <div class="ft-gallery-variations-text ft-gallery-js-load">
-                <?
+                <?php
                 // Enqueue variation scripts
                 wp_enqueue_script('wc-add-to-cart-variation');
                 // Load the template
@@ -1964,7 +1964,7 @@ class Display_Gallery extends Gallery {
                     ?>
                 </div>
                 <div class="ft-gallery-simple-cart">
-                    <?
+                    <?php
                     // Enqueue variation scripts
                     wc_get_template('single-product/add-to-cart/simple.php');
                     ?>
