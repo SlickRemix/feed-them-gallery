@@ -29,7 +29,7 @@ jQuery(document).ready(function () {
 
     jQuery('#ft_gallery_image_to_woo_model_prod').on('change', function (e) {
         var ftgGlobalValue = jQuery("select#ft_gallery_image_to_woo_model_prod").val();
-        console.log(ftgGlobalValue);
+        //console.log(ftgGlobalValue);
         if(ftgGlobalValue) {
             jQuery('.ftg-settings-overlay-smart-images').show();
         }
@@ -40,7 +40,7 @@ jQuery(document).ready(function () {
 
 
     var ftgGlobalValue = jQuery("select#ft_gallery_image_to_woo_model_prod").val();
-    console.log(ftgGlobalValue);
+    //console.log(ftgGlobalValue);
     if(ftgGlobalValue ) {
         jQuery('.ftg-settings-overlay-smart-images').show();
     }
@@ -52,7 +52,7 @@ jQuery(document).ready(function () {
 
     jQuery('#ft_gallery_zip_to_woo_model_prod').on('change', function (e) {
         var ftgGlobalValue = jQuery("select#ft_gallery_zip_to_woo_model_prod").val();
-        console.log(ftgGlobalValue);
+        //console.log(ftgGlobalValue);
         if(ftgGlobalValue) {
             jQuery('#ftg-tab-content1 .ft-gallery-zip-gallery').attr('disabled', false   );
 
@@ -64,7 +64,7 @@ jQuery(document).ready(function () {
 
 
     var ftgGlobalValue = jQuery("select#ft_gallery_zip_to_woo_model_prod").val();
-    console.log(ftgGlobalValue);
+    //console.log(ftgGlobalValue);
     if(ftgGlobalValue) {
         jQuery('#ftg-tab-content1 .ft-gallery-zip-gallery').attr('disabled', false);
     }
@@ -83,7 +83,7 @@ jQuery(document).ready(function () {
 
     jQuery('#ft_gallery_image_to_woo_model_prod').on('change', function (e) {
         var ftgGlobalValue = jQuery("select#ft_gallery_image_to_woo_model_prod").val();
-        console.log(ftgGlobalValue);
+       //console.log(ftgGlobalValue);
         if(ftgGlobalValue) {
             jQuery('.ftg-global-model-product-wrap .ftg-hide-me').hide();
             jQuery('.ftg-js-edit-button-holder').html('<div class="ft-gallery-edit-woo-model-prod ftg-fadein" style="display: none"><a href="' + ftg_woo.admin_url + 'post.php?post=' + ftgGlobalValue + '&action=edit" target="_blank">' + ftg_woo.global_product_option + '</a></div>');
@@ -101,7 +101,7 @@ jQuery(document).ready(function () {
 
     jQuery('#ft_gallery_landscape_to_woo_model_prod').on('change', function (e) {
         var ftgGlobalValue = jQuery("select#ft_gallery_landscape_to_woo_model_prod").val();
-        console.log(ftgGlobalValue);
+       //console.log(ftgGlobalValue);
         if(ftgGlobalValue){
             jQuery( '.ftg-landscape-option-wrapper .ftg-hide-me').hide();
             jQuery( '.ftg-js-edit-button-holder-landscape').html( '<div class="ft-gallery-edit-woo-model-prod ftg-fadein" style="display: none"><a href="'+ ftg_woo.admin_url+'post.php?post='+ftgGlobalValue+'&action=edit" target="_blank">'+ ftg_woo.global_product_option+'</a></div>' );
@@ -114,7 +114,7 @@ jQuery(document).ready(function () {
 
     jQuery('#ft_gallery_square_to_woo_model_prod').on('change', function (e) {
         var ftgGlobalValue = jQuery("select#ft_gallery_square_to_woo_model_prod").val();
-        console.log(ftgGlobalValue);
+       //console.log(ftgGlobalValue);
         if(ftgGlobalValue) {
             jQuery('.ftg-square-option-wrapper .ftg-hide-me').hide();
             jQuery('.ftg-js-edit-button-holder-square').html('<div class="ft-gallery-edit-woo-model-prod ftg-fadein" style="display: none"><a href="' + ftg_woo.admin_url + 'post.php?post=' + ftgGlobalValue + '&action=edit" target="_blank">' + ftg_woo.global_product_option + '</a></div>');
@@ -126,7 +126,7 @@ jQuery(document).ready(function () {
     });
     jQuery('#ft_gallery_portrait_to_woo_model_prod').on('change', function (e) {
         var ftgGlobalValue = jQuery("select#ft_gallery_portrait_to_woo_model_prod").val();
-        console.log(ftgGlobalValue);
+       //console.log(ftgGlobalValue);
         if(ftgGlobalValue) {
             jQuery('.ftg-portrait-option-wrapper .ftg-hide-me').hide();
             jQuery('.ftg-js-edit-button-holder-portrait').html('<div class="ft-gallery-edit-woo-model-prod ftg-fadein" style="display: none"><a href="' + ftg_woo.admin_url + 'post.php?post=' + ftgGlobalValue + '&action=edit" target="_blank">' + ftg_woo.global_product_option + '</a></div>');
@@ -142,7 +142,7 @@ jQuery(document).ready(function () {
 
     jQuery('#ft_gallery_zip_to_woo_model_prod').on('change', function (e) {
         var ftgGlobalValue = jQuery("select#ft_gallery_zip_to_woo_model_prod").val();
-        console.log(ftgGlobalValue);
+       //console.log(ftgGlobalValue);
         if(ftgGlobalValue) {
             jQuery('.ftg-zip-option-wrapper .ftg-hide-me').hide();
             jQuery('.ftg-js-edit-button-holder-zip').html('<div class="ft-gallery-edit-woo-model-prod ftg-fadein" style="display: none"><a href="' + ftg_woo.admin_url + 'post.php?post=' + ftgGlobalValue + '&action=edit" target="_blank">' + ftg_woo.global_product_option + '</a></div>');
@@ -327,7 +327,7 @@ jQuery(document).ready(function () {
 
                     },
                     open: function () {
-                        console.log('Popup is opened');
+                       //console.log('Popup is opened');
 
 
                         jQuery(".fts-popup-image-position, #ftg-photo-next").click(function (event) {
@@ -361,12 +361,14 @@ jQuery(document).ready(function () {
                                 success: function (response) {
                                     // Complete Sucess
                                     var jsArray = JSON.parse(response);
-                                    console.log('Well Done and got this from sever: ' + response);
+
+                                   //console.log('Well Done and got this from sever: ' + JSON.parse(response));
 
 
                                     jQuery('.fts-gallery-title').val(jsArray['title']);
                                     jQuery('.fts-gallery-alttext').show().val(jsArray['alt']);
                                     jQuery('.fts-gallery-description').show().val(jsArray['description']);
+                                    jQuery('.fts-gallery-tags-edit-wrap').show().val(jsArray['tags']);
 
                                     //  jQuery(thisDelete).parents('.thumb').fadeOut();
 
@@ -412,14 +414,25 @@ jQuery(document).ready(function () {
                                 success: function (response) {
                                     // Complete Sucess
                                     var jsArray = JSON.parse(response)
-                                    console.log('Well Done and got this from sever: ' + response);
+                                   //console.log('Well Done and got this from sever: ' + JSON.parse(response));
 
 
                                     jQuery('.fts-gallery-title').val(jsArray['title']);
                                     jQuery('.fts-gallery-alttext').show().val(jsArray['alt']);
                                     jQuery('.fts-gallery-description').show().val(jsArray['description']);
+                                    jQuery('.fts-gallery-tags-edit-wrap').show().val(jsArray['tags']);
 
-                                    //  jQuery(thisDelete).parents('.thumb').fadeOut();
+
+                                    var tags = jsArray['tags'];
+
+                                    if( tags !== 'no tags'){
+                                        //jQuery(".fts-gallery-tags-edit-wrap").show();
+
+                                        tags.forEach(function(element) {
+                                            console.log(element);
+                                            jQuery("#media-tag ul.tagchecklist").append( '<li><button type="button" id="media-tag-check-num-0" class="ntdelbutton"><span class="remove-tag-icon" aria-hidden="true"></span><span class="screen-reader-text">Remove Tag: ' + element.name +'</span></button>&nbsp; ' + element.name +'</li>');
+                                        });
+                                    }
 
                                 },
                                 error: function () {
@@ -444,6 +457,7 @@ jQuery(document).ready(function () {
                             var title = jQuery(this).parents('.mfp-title').find('.fts-gallery-title').val();
                             var alttext = jQuery(this).parents('.mfp-title').find('.fts-gallery-alttext').val();
                             var description = jQuery(this).parents('.mfp-title').find('.fts-gallery-description').val();
+                            var tags = jQuery(this).parents('.mfp-title').find('.fts-gallery-tags-edit-wrap').val();
 
                             jQuery.ajax({
                                 data: {
@@ -454,7 +468,9 @@ jQuery(document).ready(function () {
                                     //  'ft_gallery_img_edit': remove,
                                     'title': title,
                                     'alttext': alttext,
-                                    'description': description
+                                    'description': description,
+                                    'tags': tags
+
                                 },
                                 type: 'POST',
                                 url: ssAjax.ajaxurl,
@@ -464,13 +480,17 @@ jQuery(document).ready(function () {
                                     jQuery(".ft-gallery-success").remove();
                                 },
                                 success: function (response) {
+
                                     // Complete Sucess
-                                    console.log('Well Done and got this from sever: ' + response);
+                                    //console.log('Well Done and got this from sever: ' + response);
 
                                     var thumbimg = '#thumbimg' + id;
                                     jQuery(thumbimg).find('.fts-gallery-title').val(title);
                                     jQuery(thumbimg).find('.fts-gallery-alttext').val(alttext);
                                     jQuery(thumbimg).find('.fts-gallery-description').val(description);
+
+
+                                    jQuery(thumbimg).find('.fts-gallery-tags-edit-wrap').val(tags);
 
 
                                     //     jQuery('.mfp-title').find('.fts-gallery-title').val(title);
@@ -515,7 +535,7 @@ jQuery(document).ready(function () {
                             var video = jQuery('.fts-fb-vid-popup video');
                             video.attr('poster', videoposter);
                             //	alert(videoposter);
-                            console.log(videoposter);
+                           //console.log(videoposter);
                         }
                         // SLICKREMIX: MUST HAVE THIS IN PLACE TO BE ABLE TO ADD THE CLASS TO BODY SO WE CAN DO ACTIONS ON OUR CUSTOM PREV AND NEXT BUTTONS
                         // alert('added fts-using-arrows class on popup open')
@@ -524,8 +544,8 @@ jQuery(document).ready(function () {
 
                     },
                     change: function () {
-                        console.log('Content changed');
-                        console.log(this.content); // Direct reference to your popup element
+                       //console.log('Content changed');
+                       //console.log(this.content); // Direct reference to your popup element
                         if (jQuery("body").hasClass("fts-using-arrows")) {
 
 
@@ -540,11 +560,7 @@ jQuery(document).ready(function () {
 
                                 }
                             }
-
-
                         }
-
-
                     },
 
                     imageLoadComplete: function () {
@@ -564,7 +580,7 @@ jQuery(document).ready(function () {
                     },
                     markupParse: function (template, values, item) {
                         // Triggers each time when content of popup changes 
-                        console.log('Parsing:', template, values, item);
+                       //console.log('Parsing:', template, values, item);
 
                         // SLICKREMIX: MUST HAVE THIS IN PLACE TO BE ABLE TO CHECK WHAT KIND OF VIDEOS ARE BEING CLICKED ON
                         if (!jQuery("body").hasClass("fts-using-arrows")) {
@@ -586,7 +602,7 @@ jQuery(document).ready(function () {
                     },
                     afterClose: function () {
                         jQuery("body").removeClass("fts-using-arrows");
-                        console.log('Popup is completely closed');
+                       //console.log('Popup is completely closed');
                     },
                 },
                 image: {
@@ -690,7 +706,7 @@ jQuery(document).ready(function () {
             },
             success: function (response) {
                 // Complete Sucess
-                console.log('Well Done and got this from sever: ' + response);
+               //console.log('Well Done and got this from sever: ' + JSON.parse(response));
                 jQuery(thisDelete).parents('.thumb').hide();
 
             },
@@ -735,7 +751,7 @@ jQuery(document).ready(function () {
             },
             success: function (response) {
                 // Complete Sucess
-                console.log('Well Done and got this from sever: ' + response);
+                //console.log('Well Done and got this from sever: ' + JSON.parse(response));
                 jQuery(thisDelete).parents('.thumb').remove();
 
 
@@ -777,13 +793,26 @@ jQuery(document).ready(function () {
             },
             success: function (response) {
                 // Complete Sucess
-                var jsArray = JSON.parse(response)
-                console.log('Well Done and got this from sever: ' + response);
+                var jsArray = JSON.parse(response);
+
+                for (var [key, value] of jsArray['tags']) {
+                    //console.log( value );
+                }
+
+                //console.log(jsArray);
+                //console.log('Well Done and got this from sever: ' + response);
 
 
                 jQuery('.fts-gallery-title').val(jsArray['title']);
                 jQuery('.fts-gallery-alttext').show().val(jsArray['alt']);
                 jQuery('.fts-gallery-description').show().val(jsArray['description']);
+                jQuery('.fts-gallery-tags-edit-wrap').val(jsArray['tags']);
+
+                for (var [key, value] of jsArray['tags']) {
+                    if ('name' === key) {
+                        //console.log( value );
+                    }
+                }
 
                 //  jQuery(thisDelete).parents('.thumb').fadeOut();
 

@@ -73,11 +73,19 @@ jQuery(document).ready(function() {
 
                             jQuery(window).trigger('resize');
                         }
+
                     },
                     change: function() {
-                        console.log("Content changed"), console.log(this.content), jQuery("body").hasClass("fts-using-arrows") && (jQuery(".fts-popup-half .mfp-iframe-scaler")[0] ? jQuery(".fts-popup-image-position").css("height", "591px") : "auto" == jQuery(".fts-popup-image-position").css("height") && (jQuery(".fts-popup-image-position, .fts-popup-second-half .mfp-bottom-bar").css("height", jQuery(".mfp-img").height()), alert("image")))
+                        console.log("Content changed"), console.log(this.content), jQuery("body").hasClass("fts-using-arrows") && (jQuery(".fts-popup-half .mfp-iframe-scaler")[0] ? jQuery(".fts-popup-image-position").css("height", "591px") : "auto" == jQuery(".fts-popup-image-position").css("height") && (jQuery(".fts-popup-image-position, .fts-popup-second-half .mfp-bottom-bar").css("height", jQuery(".mfp-img").height()), alert("image")));
+
+
                     },
                     imageLoadComplete: function() {
+
+                        if(wcpaInit) {
+                            jQuery.wcpaInit();
+                        }
+
                         if(jQuery('.ft-gallery-popup .ft-gallery-variations-text').hasClass('ft-gallery-js-load')) {
                             jQuery('.ft-gallery-popup .single_add_to_cart_button').addClass('disabled');
                         }

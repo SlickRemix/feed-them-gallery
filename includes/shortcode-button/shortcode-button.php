@@ -20,14 +20,21 @@ if (!defined('ABSPATH')) exit;
 class Shortcode_Button {
     public $all_options = '';
 
-    public function __construct() {
-        $this->ft_gallery_shortcode_media_button();
+    public static function load() {
+        $instance = new self();
 
+        // Initiate Shortcode_media_button.
+        $instance->ft_gallery_shortcode_media_button();
+        $instance->add_actions_filters();
+    }
+
+    public function __construct() {}
+
+    public function add_actions_filters(){
         add_action('wp_ajax_ft_gallery_editor_get_galleries', array($this, 'ft_gallery_editor_get_galleries'));
         add_filter('media_buttons_context', array($this, 'ft_gallery_shortcode_media_button'));
         add_action('admin_enqueue_scripts', array($this, 'ft_gallery_shortcode_get_all_options'));
         add_action('print_media_templates', array($this, 'ft_gallery_print_media_templates'));
-
     }
 
     /**
@@ -40,9 +47,10 @@ class Shortcode_Button {
     public function ft_gallery_shortcode_get_all_options() {
 
         $current_screen = get_current_screen();
+        $is_admin = is_admin();
 
         // We must only show contents below if we're on a post page in the wp admin
-        if ($current_screen->base !== 'post') {
+        if ($is_admin && 'post' !== $current_screen->base || $is_admin && 'ft_gallery' === $current_screen->post_type || $is_admin && 'ft_gallery_albums' === $current_screen->post_type) {
             return;
         }
 

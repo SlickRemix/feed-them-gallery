@@ -1,50 +1,46 @@
 <?php
+
 /**
- * The template for displaying the Feed Them Gallery - Gallery page
+ * Template Name: Feed Them Gallery Template
  *
- * @link http://feedthemgallery.com/
+ * @link https://feedthemgallery.com/
  *
  * @package Feed Them Gallery
- * @since 1.0.8
- * @version 1.0.8
+ * @since 1.1.6
+ * @version 1.1.6
  */
 
-get_header();
+get_header(); ?>
 
+<?php   while ( have_posts() ) : the_post(); ?>
 
-global $post;
+    <div id="top">
+        <div class="title_container">
+            <div class="page-header container">
+                <h2><?php
+                the_title( );
+                ?></h2>
+            </div><!-- .page-header -->
+        </div>
+    </div>
 
-$Gallery_ID = $post->ID;
+    <div id="primary" class="content-area container">
+        <main id="main" class="site-main" role="main">
+            <?php
 
-?>
+            global $post;
 
-    <div class="wrap">
+            $gallery_id = $post->ID;
+            if(!empty($gallery_id)){
+                print do_shortcode('[feed-them-gallery id="'.esc_html( $gallery_id ).'"]');
+            }
 
-        <?php if ( have_posts() ) : ?>
-            <header class="page-header">
-               <h1 class="page-title"> <?php
-                the_title(); ?></h1>
-                <?php
-                the_archive_description( '<div class="taxonomy-description">', '</div>' );
-                ?>
-            </header><!-- .page-header -->
-        <?php endif; ?>
-
-        <div id="primary" class="content-area">
-            <main id="main" class="site-main" role="main">
-
-                <?php
-
-                if(!empty($Gallery_ID)){
-                   echo do_shortcode('[feed-them-gallery id="'.$Gallery_ID.'"]');
-                }
-
-                ?>
-
-            </main><!-- #main -->
-        </div><!-- #primary -->
-        <?php get_sidebar(); ?>
-    </div><!-- .wrap -->
+            ?>
+        </main>
+        <!-- #main -->
+    </div>
+    <!-- #primary -->
+<?php endwhile;  // End of the loop. ?>
 
 <?php
 get_footer();
