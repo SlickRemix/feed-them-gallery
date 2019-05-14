@@ -1751,7 +1751,8 @@ class Display_Gallery  {
                             <?php } ?>
                         </div>
                         <?php
-                        if ( !isset( $ftg['is_album'] ) || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET['type'] ) {
+
+                        if ( isset( $ftg['is_album'] ) && 'yes' !== $ftg['is_album'] || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET['type']  ) {
                             print ' <div class="ftg-varation-for-popup">';
                             if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $productID ) && $productID !== '' && empty( $ftg['is_album'] ) ) {
 

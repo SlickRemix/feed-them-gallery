@@ -94,7 +94,7 @@ class Gallery_Options {
 					'type'             => 'text',
 					'id'               => 'ft_gallery_type',
 					'name'             => 'ft_gallery_type',
-					'default_value'    => 'yes',
+					'default_value'    => 'gallery',
 					'options'          => array(
 						array(
 							'label' => __( 'Responsive Image Gallery ', 'feed-them-gallery' ),
