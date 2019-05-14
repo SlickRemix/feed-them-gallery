@@ -1249,6 +1249,9 @@ class Display_Gallery  {
         $ftg_photo_count                   = null !== $option['ft_gallery_photo_count'] ? $option['ft_gallery_photo_count'] : '50';
         $ft_gallery_show_true_pagination   = null !== $option['ft_gallery_show_true_pagination'] && 'yes' === $option['ft_gallery_show_true_pagination'] ? $option['ft_gallery_show_true_pagination'] : '';
 
+
+
+
         // $show_title = get_post_meta($object->ID, 'ft_gallery_show_title', true);
 
         if ( isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] || isset( $_GET['ftg-tags'] ) && 'page' === $_GET['type'] ) {
@@ -1514,7 +1517,6 @@ class Display_Gallery  {
         }
 
 
-
         if ( is_array( $image_list ) && isset( $image_list[0] ) ) {
 
             if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
@@ -1531,7 +1533,7 @@ class Display_Gallery  {
                 $ftg['offset'] = '0';
             }
 
-            if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
+             if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && FTGP_CURRENT_VERSION > '1.0.5' ) {
                  $albums_class = new Albums();
              }
 
@@ -1539,7 +1541,7 @@ class Display_Gallery  {
 
                 $date = isset( $image->post_date ) ? $image->post_date : '';
 
-                if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] || is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && isset( $_GET['ftg-tags'] ) && 'page' === $_GET['type'] ) {
+                if ( FTGP_CURRENT_VERSION > '1.0.5' && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] || FTGP_CURRENT_VERSION > '1.0.5' && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && isset( $_GET['ftg-tags'] ) && 'page' === $_GET['type'] ) {
 
                     $gallery_id = $image->ID;
 
@@ -2582,4 +2584,5 @@ class Display_Gallery  {
 
         return $new_variants;
     }
-} ?>
+}
+?>
