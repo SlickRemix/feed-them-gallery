@@ -113,45 +113,46 @@ class Settings_Page {
 							<h5><?php _e( 'Filename', 'ft-gallery' ); ?></h5>
 
 							<label><input name="ft_gallery_attch_name_gallery_name" type="checkbox" value="1" <?php echo checked( '1', get_option( 'ft_gallery_attch_name_gallery_name' ) ); ?>/> <?php _e( 'Include Gallery Name', 'ft-gallery' ); ?>
-								(Example: this-gallery-name)</label>
+								( Example: this-gallery-name )</label>
 
 							<label><input name="ft_gallery_attch_name_post_id" type="checkbox" value="1" <?php echo checked( '1', get_option( 'ft_gallery_attch_name_post_id' ) ); ?>/> <?php _e( 'Include Gallery ID Number', 'ft-gallery' ); ?>
-								(Example: 20311)</label>
+								( Example: 20311 )</label>
 
 							<label><input name="ft_gallery_attch_name_date" type="checkbox" value="1" <?php echo checked( '1', get_option( 'ft_gallery_attch_name_date' ) ); ?>/> <?php _e( 'Include Date', 'ft-gallery' ); ?>
-								(Example: 08-11-17)</label>
+								( Example: 08-11-17 )</label>
 
                             <label><input name="ft_gallery_attch_name_file_name" type="checkbox" value="1" <?php echo checked( '1', get_option( 'ft_gallery_attch_name_file_name' ) ); ?>/> <?php _e( 'Include File Name', 'ft-gallery' ); ?>
-                                (Example: my-image-name)</label>
+                                ( Example: my-image-name )</label>
 
                             <label><input name="ft_gallery_attch_name_attch_id" type="checkbox" value="1" <?php echo checked( '1', get_option( 'ft_gallery_attch_name_attch_id' ) ); ?>/> <?php _e( 'Include Attachment ID', 'ft-gallery' ); ?>
-                                (Example: 1234)</label>
+                                ( Example: 1234 )</label>
 
                             <div class="ft-gallery-attch-name-example">
                                 <?php
                                 $attch_name_output = '';
                                 //Attachment Filename Gallery Name
-                                if (get_option('ft_gallery_attch_name_gallery_name') == '1') {
-                                    $attch_name_output .= '<span class="ft_gallery_attch_name_gallery_name">this-gallery-name-</span>';
+                                if ( '1' === get_option('ft_gallery_attch_name_gallery_name') ) {
+                                    $attch_name_output .= '<span class="ft_gallery_attch_name_gallery_name">this-gallery-name</span>-';
                                 }
                                 //Attachment Filename Gallery ID
-                                if (get_option('ft_gallery_attch_name_post_id') == '1') {
-                                    $attch_name_output .= '<span class="ft_gallery_attch_name_post_id">20311-</span>';
+                                if ( '1' === get_option('ft_gallery_attch_name_post_id') ) {
+                                    $attch_name_output .= '<span class="ft_gallery_attch_name_post_id">20311</span>-';
                                 }
                                 //Attachment Filename Date
-                                if (get_option('ft_gallery_attch_name_date') == '1') {
-                                    $attch_name_output .= '<span class="ft_gallery_attch_name_date">08-11-17-</span>';
+                                if ( '1' === get_option('ft_gallery_attch_name_date') ) {
+                                    $attch_name_output .= '<span class="ft_gallery_attch_name_date">08-11-17</span>-';
                                 }
                                 //Attachment Filename Date
-                                if (get_option('ft_gallery_attch_name_file_name') == '1') {
-                                    $attch_name_output .= '<span class="ft_gallery_attch_name_file_name">my-image-name-</span>';
+                                if ( '1' === get_option('ft_gallery_attch_name_file_name') ) {
+                                    $attch_name_output .= '<span class="ft_gallery_attch_name_file_name">my-image-name</span>-';
                                 }
                                 //Attachment Filename Date
-                                if (get_option('ft_gallery_attch_name_attch_id') == '1') {
+                                if ( '1' === get_option('ft_gallery_attch_name_attch_id') ) {
                                     $attch_name_output .= '<span class="ft_gallery_attch_name_attch_id">1234</span>';
                                 }
+                                $final_output = $attch_name_output.'.jpg';
                                 //Output Filename Example
-                                echo '<div class="clear"></div><div class="ftg-filename-renaming-example"><strong><em>Example Filename:</em></strong> ' . $attch_name_output . '.jpg</div>';
+                                echo '<div class="clear"></div><div class="ftg-filename-renaming-example"><strong><em>Example Filename:</em></strong> ' . str_replace('-.jpg','.jpg',$final_output) .'</div>';
                                 ?>
                             </div>
                         </div>
@@ -160,19 +161,19 @@ class Settings_Page {
                             <h5><?php _e('Title', 'ft-gallery'); ?></h5>
 
                             <label><input name="ft_gallery_attch_title_gallery_name" type="checkbox" value="1" <?php echo checked('1', get_option('ft_gallery_attch_title_gallery_name')); ?>/> <?php _e('Include Gallery Name', 'ft-gallery'); ?>
-                                (Example: This Gallery Name)</label>
+                                ( Example: This Gallery Name )</label>
 
                             <label><input name="ft_gallery_attch_title_post_id" type="checkbox" value="1" <?php echo checked('1', get_option('ft_gallery_attch_title_post_id')); ?>/> <?php _e('Include Gallery ID Number', 'ft-gallery'); ?>
-                                (Example: 20311)</label>
+                                ( Example: 20311 )</label>
 
                             <label><input name="ft_gallery_attch_title_date" type="checkbox" value="1" <?php echo checked('1', get_option('ft_gallery_attch_title_date')); ?>/> <?php _e('Include Date', 'ft-gallery'); ?>
-                                (Example: 08-11-17)</label>
+                                ( Example: 08-11-17 )</label>
 
                             <label><input name="ft_gallery_attch_title_file_name" type="checkbox" value="1" <?php echo checked('1', get_option('ft_gallery_attch_title_file_name')); ?>/> <?php _e('Include File Name', 'ft-gallery'); ?>
-                                (Example: my-image-name)</label>
+                                ( Example: My Image Name )</label>
 
                             <label><input name="ft_gallery_attch_title_attch_id" type="checkbox" value="1" <?php echo checked( '1', get_option( 'ft_gallery_attch_title_attch_id' ) ); ?>/> <?php _e( 'Include Attachment ID', 'ft-gallery' ); ?>
-                                (Example: 1234)</label>
+                                ( Example: 1234 )</label>
 
                             <div class="clear"></div>
 
@@ -180,28 +181,31 @@ class Settings_Page {
                                 <?php
                                 $attch_title_output = '';
                                 //Attachment Title Gallery Name
-                                if (get_option('ft_gallery_attch_title_gallery_name') == '1') {
+                                if ( '1' === get_option('ft_gallery_attch_title_gallery_name') ) {
                                     $attch_title_output .= '<span class="ft_gallery_attch_title_gallery_name">This Gallery Name </span>';
                                 }
                                 //Attachment Title Gallery ID
-                                if (get_option('ft_gallery_attch_title_post_id') == '1') {
-                                    $attch_title_output .= '<span class="ft_gallery_attch_title_post_id">20311-</span>';
+                                if ( '1' === get_option('ft_gallery_attch_title_post_id') ) {
+                                    $attch_title_output .= '<span class="ft_gallery_attch_title_post_id">20311 </span>';
                                 }
                                 //Attachment Title Date
-                                if (get_option('ft_gallery_attch_title_date') == '1') {
-                                    $attch_title_output .= '<span class="ft_gallery_attch_title_date">08-11-17-</span>';
+                                if ( '1' === get_option('ft_gallery_attch_title_date') ) {
+                                    $attch_title_output .= '<span class="ft_gallery_attch_title_date">08-11-17 </span>';
                                 }
                                 //Attachment Title File Name
-                                if (get_option('ft_gallery_attch_title_file_name') == '1') {
-                                    $attch_title_output .= '<span class="ft_gallery_attch_title_file_name">my-file-name-</span>';
+                                if ( '1' === get_option('ft_gallery_attch_title_file_name') ) {
+                                    $attch_title_output .= '<span class="ft_gallery_attch_title_file_name">My Image Name </span>';
                                 }
                                 //Attachment Filename Date
-                                if (get_option('ft_gallery_attch_title_attch_id') == '1') {
+                                if ( '1' === get_option('ft_gallery_attch_title_attch_id') ) {
                                     $attch_title_output .= '<span class="ft_gallery_attch_title_attch_id">1234</span>';
                                 }
 
                                 //Output Filename Example
-                                echo '<div class="clear"></div><div class="ftg-title-renaming-example"><strong><em>Example Title:</em></strong> ' . $attch_title_output . '</div>';
+                                $final_output = $attch_title_output.'.jpg';
+                                echo $final_output;
+                                //Output Filename Example
+                                echo '<div class="clear"></div><div class="ftg-title-renaming-example"><strong><em>Example Filename:</em></strong> ' .  $attch_title_output .'</div>';
                                 ?>
                             </div>
 

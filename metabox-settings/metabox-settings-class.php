@@ -148,14 +148,15 @@ class Metabox_Settings {
 
 		// SRL: THESE SCRIPTS CAN BE LOADED ON ALL OF OUR PAGES, BUT SHOULD ONLY LOAD ON OUR PLUGINS PAGES
 		if ( $this->main_post_type === $current_info['post_type'] ) {
-			// Enqueue Admin Page CSS.
-			wp_enqueue_style( 'slick-admin-page' );
-
 			// Register Admin Page CSS.
 			wp_register_style( 'slick-admin-page', plugins_url( 'feed-them-gallery/metabox-settings/css/admin-pages.css' ), array(), FTG_CURRENT_VERSION );
+            // Enqueue Admin Page CSS.
+            wp_enqueue_style( 'slick-admin-page' );
 
-			// Enqueue Styles CSS.
-			wp_enqueue_style( 'slick-styles', plugins_url( 'feed-them-gallery/includes/feeds/css/styles.css' ), array(), FTG_CURRENT_VERSION );
+            // Enqueue Styles CSS.
+            wp_register_style( 'slick-styles', plugins_url( 'feed-them-gallery/includes/feeds/css/styles.css' ), array(), FTG_CURRENT_VERSION );
+            // Enqueue Admin Styles CSS.
+            wp_enqueue_style( 'slick-styles' );
 
 			// Register Metabox CSS.
 			wp_register_style( 'slick-metabox', plugins_url( 'feed-them-gallery/metabox-settings/css/metabox.css' ), array(), FTG_CURRENT_VERSION );

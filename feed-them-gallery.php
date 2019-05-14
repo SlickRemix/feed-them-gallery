@@ -5,11 +5,11 @@
  * This class is what initiates the Feed Them Gallery class
  *
  * Plugin Name: Feed Them Gallery
- * Plugin URI: http://slickremix.com/
+ * Plugin URI: https://www.slickremix.com/
  * Description: Create Beautiful Responsive Galleries in Minutes. Choose the number of columns a loadmore button, popup and more!  Sell your galleries or individual images, watermark them and even zip galleries with our premium version.
  * Version: 1.1.6
  * Author: SlickRemix
- * Author URI: http://slickremix.com/
+ * Author URI: https://www.slickremix.com/
  * Text Domain: feed-them-gallery
  * Domain Path: /languages
  * Requires at least: WordPress 4.7.0
@@ -26,7 +26,7 @@
  *
  * Need Support? http://www.slickremix.com/my-account
  */
-// Makes sure any js or css changes are reloaded properly. Added to enqued css and js files throughout!
+// Doing this ensure's any js or css changes are reloaded properly. Added to enqued css and js files throughout.
 define( 'FTG_CURRENT_VERSION', '1.1.6' );
 
 // Require file for plugin loading.
