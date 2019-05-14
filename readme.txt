@@ -2,11 +2,11 @@
 Contributors: slickremix
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
-Tested up to: 4.9.8
-Stable tag: 1.1.2
+Tested up to: 5.6.2
+Stable tag: 1.1.6
 License: GPLv2 or later
 
-Create customizable Image Galleries and sell your images using woocommerce.
+Create customizable Image Galleries and sell your images using WooCommerce.
 
 == Description ==
 
@@ -21,7 +21,7 @@ ALL SlickRemix plugins come with Amazing Support. If you need help or have quest
 If you are a Photographer, Developer, Artist, Someone looking to help others sell their photos, or just looking to create awesome, easy-to-use Galleries this plugin is for you! We made the process of setting up Galleries super simple. We included TONS of options to change the style and layout keeping focus on organization and simplicity. We want to make it so anyone can create a Gallery and sell photos with ease giving your customers/clients a hassle free experience when looking at or buying your images or art!
 
 = What does this plugin do? =
-With this plugin you can create and display clean responsive image galleries in minutes. We have 4 different layouts you can choose from and many options to configure the look and feel of the gallery on your site. In our premium version we've also made it super easy for you to connect your galleries to Woocommerce. In one click you can easily turn a Gallery into a ZIP and WooCommerce product. You can also in one click and based on a model product turn EACH individual photo into a WooCommerce product saving you MANY HOURS of tedious product creation!
+With this plugin you can create and display clean responsive image galleries in minutes. We have 4 different layouts you can choose from and many options to configure the look and feel of the gallery on your site. In our premium version we've also made it super easy for you to connect your galleries to WooCommerce. In one click you can easily turn a Gallery into a ZIP and WooCommerce product. You can also in one click and based on a model product turn EACH individual photo into a WooCommerce product saving you MANY HOURS of tedious product creation!
 
 FREE PLUGIN OPTIONS
 = Image Options =
@@ -83,7 +83,6 @@ FREE PLUGIN OPTIONS
  * Say you set 10 image to show and you have 50 images. Then you would see 10 of 50. And when you loadmore the number will increase.
  * Change the color of the pagination numbers
 
-
 [PREMIUM PLUGIN FEATURES](https://www.slickremix.com/downloads/feed-them-gallery/)
 = Watermark Options =
  * Disable the right click option for desktop computers
@@ -127,6 +126,34 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.1.6 Tuesday, May 13th, 2019 =
+   * NOTE: Thanks to everyone who has been waiting so patiently for this update. It's taken us over 7 months to complete these additions between the 2 of us.
+   * NEW: Optimized the plugins framework to be more streamlined.
+   * NEW: Add your own text for the Free Download option under the Layout tab of your galleries.
+   * NEW: Now you can view the gallery using the gallery link as well as the shortcode option. This speeds up the time it takes to get galleries completed and also makes it perfect if you are using the premium version and have created albums.
+   * PAGINATION FIX: On some themes the pagination was not working correctly.
+   * SETTINGS PAGE NEW: Added options to show the gallery name and or choose to show the attachment ID or not.
+   * PREMIUM NEW: Create Albums of Galleries. We made it easy to add the galleries you want and then even drag and drop to sort them.
+   * PREMIUM NEW: Add Tags to Galleries and images in a gallery.
+   * PREMIUM NEW: Tags Template page where you can customize the look of the tags page for images and galleries. In our next update we will be creating a search option on the tags page as well.
+
+= Version 1.1.5.2 Thursday, March 28th, 2019 =
+  * Fixed a few non php tags like <? to <?php as some servers do not support the <? method.
+  * Works with Wordpress 5.1.1
+
+= Version 1.1.5.1 Friday, March 1st, 2019 =
+  * Works with Wordpress 5.1
+  * Text Updates
+
+= Version 1.1.5 Wednesday, November 28th, 2018 =
+  * FIX: Watermark button to add an image
+  * FIX: Customizing the Purchase Product button
+  * FIX: Custom username and link option
+  * FIX: Extra Image spacing option showing for layout types
+
+= Version 1.1.4 Wednesday, November 21st, 2018 =
+  * FIX: Error causing customizer to not load correctly.
+
 = Version 1.1.3 Tuesday, November 20th, 2018 =
   * FIX: Error causing default product page to not load correctly.
   * FIX: CSS tweak for responsive galleries.

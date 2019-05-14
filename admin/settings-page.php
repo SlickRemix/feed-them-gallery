@@ -30,9 +30,6 @@ class Settings_Page {
 		if ( is_admin() ) {
 			// Adds setting page to Feed Them Gallery menu.
 			add_action( 'admin_menu', array( $this, 'add_submenu_page' ) );
-
-			// Enqueue Admin Scripts.
-			add_action( 'admin_enqueue_scripts', array( $this, 'ft_gallery_settings_page_scripts_styles' ) );
 		}
 	}
 	/**
@@ -59,26 +56,6 @@ class Settings_Page {
 		);
 	}
 
-	/**
-	 * Settings Page Scripts Styles
-	 *
-	 * Registers and Enqueues (in the admin) scripts and styles for settings page
-	 *
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_settings_page_scripts_styles() {
-		$current_screen = get_current_screen();
-
-		if ( isset( $_GET['page'] ) && $_GET['page'] == 'ft-gallery-settings-page' || is_admin() && $current_screen->post_type == 'ft_gallery' && $current_screen->base == 'post' || is_admin() && $current_screen->post_type == 'ft_gallery_albums' && $current_screen->base == 'post' ) {
-
-			wp_enqueue_script( 'js_color', plugins_url( '/feed-them-gallery/admin/js/jscolor/jscolor.js' ), array( 'jquery' ), FTG_CURRENT_VERSION );
-			wp_enqueue_script( 'jquery' );
-
-			// Settings Page CSS.
-			wp_register_style( 'ft_gallery_settings_css', plugins_url( 'css/admin-pages.css', __FILE__ ), array(), FTG_CURRENT_VERSION );
-			wp_enqueue_style( 'ft_gallery_settings_css' );
-		}
-	}
 
 	/**
 	 * Settings Page
