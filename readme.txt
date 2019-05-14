@@ -2,8 +2,8 @@
 Contributors: slickremix
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
-Tested up to: 5.6.2
-Stable tag: 1.1.6
+Tested up to: 5.2
+Stable tag: 1.1.6.0
 License: GPLv2 or later
 
 Create customizable Image Galleries and sell your images using WooCommerce.
