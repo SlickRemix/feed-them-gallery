@@ -13,7 +13,7 @@
  * Text Domain: feed-them-gallery
  * Domain Path: /languages
  * Requires at least: WordPress 4.7.0
- * Tested up to: WordPress 5.0.2
+ * Tested up to: WordPress 5.2.0
  * Stable tag: 1.1.6
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
