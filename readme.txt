@@ -129,6 +129,7 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
 = Version 1.1.6 Tuesday, May 14th, 2019 =
    * Thanks to everyone who has been waiting so patiently for this update. It's taken us over 7 months to complete these additions between the 2 of us, we hope you enjoy them.
    * NEW: Optimized the plugins framework to be more streamlined. Including the options for Galleries. This will speed up the time the galleries takes to save and the front end loading.
+   * NEW: The gallery page now has a template you can customize by adding it to your theme. If you have the premium version you can utalize the albums and tags templates too. [See how to do this](https://www.slickremix.com/docs/overriding-templates/).
    * NEW: Now you can view the gallery using the gallery link as well as the shortcode option. This speeds up the time it takes to get galleries completed and also makes it perfect if you are using the premium version and have created albums.
    * PAGINATION FIX: On some themes the pagination was not working correctly.
    * SETTINGS PAGE NEW: Added options to show the gallery name and or choose to show the attachment ID or not.
