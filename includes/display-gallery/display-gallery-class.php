@@ -1249,9 +1249,6 @@ class Display_Gallery  {
         $ftg_photo_count                   = null !== $option['ft_gallery_photo_count'] ? $option['ft_gallery_photo_count'] : '50';
         $ft_gallery_show_true_pagination   = null !== $option['ft_gallery_show_true_pagination'] && 'yes' === $option['ft_gallery_show_true_pagination'] ? $option['ft_gallery_show_true_pagination'] : '';
 
-
-
-
         // $show_title = get_post_meta($object->ID, 'ft_gallery_show_title', true);
 
         if ( isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] || isset( $_GET['ftg-tags'] ) && 'page' === $_GET['type'] ) {
@@ -2583,5 +2580,4 @@ class Display_Gallery  {
 
         return $new_variants;
     }
-}
-?>
+} ?>
