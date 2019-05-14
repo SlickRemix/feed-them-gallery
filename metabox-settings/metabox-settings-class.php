@@ -1,0 +1,735 @@
+<?php
+/**
+ * Metabox Settings Class
+ *
+ * This class is for creating a metabox settings pages/sections!
+ *
+ * @version  1.1.6
+ * @package  FeedThemGalley/Core
+ * @author   SlickRemix
+ */
+
+namespace feed_them_gallery;
+
+/**
+ * Class Metabox_Settings
+ *
+ * @package feed_them_gallery
+ */
+class Metabox_Settings {
+
+	/**
+	 * Current This
+	 *
+	 * The $this variable data from where call Metabox_Settings is being constructed.
+	 *
+	 * @var array
+	 */
+	public $current_this = '';
+
+	public $hook_id = '';
+
+	/**
+	 * Settings Page Name
+	 *
+	 * This is the page name set for the edit settings page (ie. page=template_settings_page) generally set in URL
+	 *
+	 * @var array
+	 */
+	public $settings_page_name = '';
+
+	/**
+	 * Main Post Type
+	 *
+	 * The post type to be checked
+	 *
+	 * @var string
+	 */
+	public $main_post_type = '';
+
+	/**
+	 * Is Page
+	 *
+	 * Is the class being loaded on a page?
+	 *
+	 * @var boolean
+	 */
+	public $is_page = '';
+
+	/**
+	 * Parent Post ID
+	 * used to set Gallery ID
+	 *
+	 * @var string
+	 */
+	public $parent_post_id = '';
+
+	/**
+	 * Core Functions Class
+	 * initiates Core Functions Class
+	 *
+	 * @var \feed_them_gallery\Core_Functions|string
+	 */
+	public $core_functions_class = '';
+
+	/**
+	 * Option Prefix
+	 * Set for pages this way options have prefix so no options names get set the same. Set in Construct.
+	 *
+	 * @var string
+	 */
+	public $option_prefix = '';
+
+	/**
+	 * Specific Form Options
+	 * This allows us to add Specific Metabox Inputs from the constructing class using '' function we add to that class.
+	 *
+	 * @var string
+	 */
+	private $metabox_specific_form_inputs = '';
+
+	/**
+	 * Saved Settings Array
+	 * an array of settings to save when saving page
+	 *
+	 * @var string
+	 */
+	public $settings_array = array();
+
+	public function __construct( $current_this, $settings_array, $is_page = null ) {
+
+		$this->core_functions_class = new Core_Functions();
+
+		// Set Class Variables.
+		$this->current_this = $current_this;
+
+		// Set Settings Array.
+		$this->set_settings_array( $settings_array );
+
+		// Is Page.
+		$this->is_page = $is_page;
+
+		// Add Actions & Filters.
+		$this->add_actions_filters();
+
+		// Set Default main post type.
+		$this->set_main_post_type();
+	}
+
+	public function add_actions_filters() {
+		// Save Page Metaboxes.
+		if ( true === $this->is_page ) {
+			// Add Save Metabox if Settings page is a page.
+			add_action( 'admin_init', array( $this, 'add_submit_meta_box' ) );
+
+			// Save Admin Page Metabox.
+			add_action( 'admin_post_slickmetabox_form', array( $this, 'save_meta_box' ) );
+		} else {
+			// Save Post Metaboxes.
+			add_action( 'save_post', array( $this, 'save_meta_box' ), 10, 2 );
+		}
+
+		// Load Metabox Scripts.
+		add_action( 'admin_enqueue_scripts', array( $this, 'metabox_scripts_styles' ) );
+	}
+
+	/**
+	 * Settings Page Scripts Styles
+	 *
+	 * Registers and Enqueues (in the admin) scripts and styles for settings page
+	 *
+	 * @since 1.0.0
+	 */
+	public function metabox_scripts_styles( $hook_suffix ) {
+
+		$current_info = $this->current_info_array();
+
+		$page_base = $this->main_post_type . '_page_' . $this->settings_page_name;
+
+		// SRL: THESE SCRIPTS CAN BE LOADED ON ALL OF OUR PAGES, BUT SHOULD ONLY LOAD ON OUR PLUGINS PAGES
+		if ( $this->main_post_type === $current_info['post_type'] ) {
+			// Register Admin Page CSS.
+			wp_register_style( 'slick-admin-page', plugins_url( 'feed-them-gallery/metabox-settings/css/admin-pages.css' ), array(), FTG_CURRENT_VERSION );
+            // Enqueue Admin Page CSS.
+            wp_enqueue_style( 'slick-admin-page' );
+
+            // Enqueue Styles CSS.
+            wp_register_style( 'slick-styles', plugins_url( 'feed-them-gallery/includes/feeds/css/styles.css' ), array(), FTG_CURRENT_VERSION );
+            // Enqueue Admin Styles CSS.
+            wp_enqueue_style( 'slick-styles' );
+
+			// Register Metabox CSS.
+			wp_register_style( 'slick-metabox', plugins_url( 'feed-them-gallery/metabox-settings/css/metabox.css' ), array(), FTG_CURRENT_VERSION );
+			// Enqueue Metabox CSS.
+			wp_enqueue_style( 'slick-metabox' );
+		}
+
+		// Is a 'Page' edit page. (aka Settings Class )
+		// if ( $this->main_post_type === $current_info['post_type'] && $page_base === $current_info['base'] ) {
+		// SRL: THESE SCRIPTS SHOULD ONLY BE LOADED ON THE GALLERY, ALBUM AND TEMPLATE SETTINGS PAGE
+		if ( isset( $_GET['page'] ) && 'template_settings_page' === $_GET['page'] || $this->main_post_type === $current_info['post_type'] && 'post' === $current_info['base'] && in_array( $hook_suffix, array( 'post.php', 'post-new.php' ) ) ) {
+
+			// Enqueue jQuery. (Registered in WordPress Core)!
+			wp_enqueue_script( 'jquery' );
+
+			// Enqueue jQuery Form JS. (Registered in WordPress Core)!
+			wp_enqueue_script( 'jquery-form' );
+
+			// Enqueue jQuery UI Progressbar JS. (Registered in WordPress Core)!
+			wp_enqueue_script( 'jquery-ui-progressbar' );
+
+			// Enqueue JS Color JS.
+			wp_enqueue_script( 'js_color', plugins_url( '/feed-them-gallery/metabox-settings/js/jscolor/jscolor.js' ), array( 'jquery' ), FTG_CURRENT_VERSION );
+
+			// Register Metabox JS.
+			wp_register_script( 'slick-metabox-js', plugins_url( 'feed-them-gallery/metabox-settings/js/metabox.js' ), array(), FTG_CURRENT_VERSION );
+
+			// Localize Metabox JS.
+			wp_localize_script(
+				'slick-metabox-js',
+				'dgd_strings',
+				array(
+					'panel' => array(
+						'title'  => __( 'Upload Images for Feed Them Gallery' ),
+						'button' => __( 'Save and Close Popup' ),
+					),
+				)
+			);
+
+			// Enqueue Metabox JS.
+			wp_enqueue_script( 'slick-metabox-js' );
+
+			// Register Metabox Tabs JS.
+			wp_register_script( 'slick-metabox-tabs', plugins_url( 'feed-them-gallery/metabox-settings/js/metabox-tabs.js' ), array(), FTG_CURRENT_VERSION );
+
+			// Localize Metabox Tabs JS.
+			wp_localize_script(
+				'slick-metabox-tabs',
+				'ftg_mb_tabs',
+				array(
+					'submit_msgs' => array(
+						'saving_msg'  => __( 'Saving Options' ),
+						'success_msg' => __( 'Settings Saved Successfully' ),
+					),
+				)
+			);
+
+			// Enqueue Metabox Tabs JS.
+			wp_enqueue_script( 'slick-metabox-tabs' );
+
+			// Register jQuery Nested Sortable JS.
+			wp_register_script( 'jquery-nested-sortable-js', plugins_url( 'feed-them-gallery/metabox-settings/js/jquery.mjs.nestedSortable.js' ), array( 'jquery-ui-core', 'jquery-ui-draggable', 'jquery-ui-sortable, ' ), FTG_CURRENT_VERSION );
+			// Enqueue jQuery Nested Sortable JS.
+			wp_enqueue_script( 'jquery-nested-sortable-js' );
+		}
+
+		// SRL: THESE SCRIPTS SHOULD ONLY BE LOADED ON THE GALLERY, ALBUM AND TEMPLATE SETTINGS PAGE, BUT THEY ARE ALSO LOADING ON THE GALLERY LIST AND ALBUM LIST PAGE TOO
+		// If is page we need to load extra metabox scripts usually loaded on a post page.
+		if ( in_array( $hook_suffix, array( 'post.php', 'post-new.php' ) ) || isset( $_GET['page'] ) && 'template_settings_page' === $_GET['page'] ) {
+				wp_enqueue_script( 'common' );
+				wp_enqueue_script( 'wp-lists' );
+				wp_enqueue_script( 'postbox' );
+
+				// Register Update From Bottom JS.
+				wp_register_script( 'updatefrombottom-admin-js', plugins_url( 'feed-them-gallery/metabox-settings/js/update-from-bottom.js' ), array( 'jquery' ), FTG_CURRENT_VERSION );
+				// Localize Update From Bottom JS.
+				wp_localize_script(
+					'updatefrombottom-admin-js',
+					'updatefrombottomParams',
+					array(
+						'update'                         => __( 'Update', 'feed-them-gallery' ),
+						'publish'                        => __( 'Publish', 'feed-them-gallery' ),
+						'publishing'                     => __( 'Publishing...', 'feed-them-gallery' ),
+						'updating'                       => __( 'Updating...', 'feed-them-gallery' ),
+						'totop'                          => __( 'To top', 'feed-them-gallery' ),
+						// used in the success message for when images have been completely uploaded in the drag and drop are or file add button.
+						'images_complete_on_auto_upload' => sprintf( __( 'The Image(s) are done uploading. Please click the Publish or Update button now to edit your image(s).', 'feed-them-gallery' ) ),
+					)
+				);
+
+				// Enqueue Update From Bottom JS.
+				wp_enqueue_script( 'updatefrombottom-admin-js' );
+		}
+	}
+
+	public function set_hook_id( $hook_id ) {
+		global $hook_suffix;
+
+		// Set Custom Hook ID or used Global Hook Suffix for hook naming.
+		$this->hook_id = ! empty( $hook_id ) ? $hook_id : $hook_suffix;
+	}
+
+	public function set_settings_page_name( $settings_page_name ) {
+		// This is the page name set for the edit settings page (ie. page=template_settings_page) generally set in URL.
+		$this->settings_page_name = $settings_page_name;
+	}
+
+	public function set_option_prefix( $option_prefix ) {
+		// Option Prefix. (needed if is_page = true). Posts don't need this because ID is used to set option name.
+		$this->option_prefix = $option_prefix;
+	}
+
+	public function set_metabox_specific_form_inputs( $metabox_specific_form_inputs ) {
+		// This allows us to add Metabox Specific Form Inputs from the constructing class using 'metabox_specific_form_inputs' function we add to that class.
+		$this->metabox_specific_form_inputs = $metabox_specific_form_inputs;
+	}
+
+	public function set_main_post_type( $main_post_type = null ) {
+		if ( $main_post_type ) {
+			$this->main_post_type = $main_post_type;
+		} else {
+			$this->main_post_type = isset( $this->current_this->main_post_type ) ? $this->current_this->main_post_type : 'post';
+		}
+	}
+
+	public function set_settings_array( $settings_array ) {
+		// Settings Array.
+		$this->saved_settings_array = is_array( $settings_array ) ? $settings_array : array();
+	}
+
+	public function get_saved_settings_array( $post_id = null ) {
+		// Get Current info.
+		$current_info = $this->current_info_array();
+		// Saved Settings!
+		$old_settings_page = get_option( $this->hook_id . '_settings_options' );
+		$old_settings_post = get_post_meta( $post_id, $current_info['post_type'] . '_settings_options', true );
+
+		// Get Old Settings Array if set.
+		$old_settings = true === $this->is_page ? $old_settings_page : $old_settings_post;
+
+		return isset( $old_settings ) && ! empty( $old_settings ) ? $old_settings : __( 'No Settings Saved.', 'feed-them-gallery' );
+	}
+
+
+	public function current_info_array() {
+		// Current Info!
+		$current_info['info'] = get_current_screen();
+
+		// Current Base!
+		$current_info['base'] = isset( $current_info['info']->base ) ? $current_info['info']->base : null;
+
+		// Current Post type!
+		$current_info['post_type'] = isset( $current_info['info'] ) && $this->main_post_type === $current_info['info']->post_type ? $current_info['info']->post_type : null;
+
+		return $current_info;
+	}
+
+	public function add_submit_meta_box() {
+		add_meta_box( 'submitdiv', 'Save Options', array( $this, 'submit_meta_box' ), $this->hook_id, 'side', 'high' );
+	}
+
+	/**
+	 * Submit Meta Box Callback
+	 *
+	 * @since 0.1.0
+	 */
+	public function submit_meta_box() {
+
+		/* Reset URL */
+		$reset_url = '#';
+
+		?>
+		<div id="submitpost" class="submitbox">
+
+			<div id="major-publishing-actions">
+
+				<?php
+				// <div id="delete-action">
+				// <a href=" echo esc_url( $reset_url ); " class="submitdelete deletion">Reset Settings</a>
+				// </div><!-- #delete-action -->
+				?>
+
+				<div id="publishing-action">
+					<span class="spinner"></span>
+					<input type="submit" value="Save" class="button button-primary button-large">
+				</div>
+
+				<div class="clear"></div>
+
+			</div><!-- #major-publishing-actions -->
+
+		</div><!-- #submitpost -->
+
+		<?php
+	}
+
+
+	/**
+	 * Metabox Tabs Menu
+	 *
+	 * Outputs the metabox tabs menu html
+	 *
+	 * @param $current_info Array Info for the current page.
+	 * @param $tabs_list Array List of tabs.
+	 *
+	 * @since 1.1.6
+	 */
+	public function metabox_tabs_menu( $current_info, $tabs_list ) {
+
+		if ( $tabs_list ) {
+			foreach ( $tabs_list['base_tabs'] as $base_key => $base_items ) {
+				// If Base array key is equal to current base (page)!
+				if ( $base_key === $current_info['base'] ) {
+					?>
+					<div class="tabs-menu-wrap" id="tabs-menu">
+						<ul class="nav nav-tabs nav-append-content">
+							<?php
+							// Display the Tabs Menu Items that are in the base items list!
+							foreach ( $tabs_list['tabs_list'] as $tab_key => $tab_item ) {
+								if ( in_array( $tab_key, $base_items, true ) ) {
+									?>
+									<li class="tabbed <?php echo esc_attr( $tab_item['menu_li_class'] ); ?>">
+										<a href="#<?php echo esc_attr( $tab_key ); ?>" data-toggle="tab"<?php echo isset( $tab_item['menu_a_class'] ) ? 'class="' . esc_attr( $tab_item['menu_a_class'] ) . '"' : ''; ?><?php echo isset( $tab_item['menu_aria_expanded'] ) ? ' aria-expanded="' . esc_attr( $tab_item['menu_aria_expanded'] ) . '"' : ''; ?>>
+											<div class="ft_icon"></div>
+											<span class="das-text"><?php echo esc_html( $tab_item['menu_a_text'] ); ?></span>
+										</a>
+									</li>
+									<?php
+								}
+							}
+							?>
+						</ul>
+					</div>
+					<?php
+				}
+			}
+		}
+	}
+
+	/**
+	 * Display Metabox Content
+	 *
+	 * Display the Metabox content for each tab based on menu key 'cont_func'!
+	 *
+	 * @param $tabs_list
+	 * @param $params
+	 *
+	 * @since 1.1.6
+	 */
+	public function display_metabox_content( $tabs_list, $params = null ) {
+
+		wp_nonce_field( basename( __FILE__ ), 'slick-metabox-settings-options-nonce' );
+
+		// Set Current Params.
+		$params['this'] = $this->current_this;
+
+		$current_info = $this->current_info_array();
+
+		// Get Base of Current Screen.
+		if ( isset( $current_info['base'] ) ) {
+			?>
+
+		<div class="ft-gallery-settings-tabs-meta-wrap">
+
+		<div class="tabs" id="tabs">
+			<?php
+			// Tabs Menu!
+			$this->metabox_tabs_menu( $current_info, $tabs_list );
+			?>
+			<div class="tab-content-wrap">
+				<?php
+				if ( $tabs_list['base_tabs'] ) {
+					foreach ( $tabs_list['base_tabs'] as $base_key => $base_items ) {
+						// If Base array key is equal to current base (page)!
+						if ( $base_key === $current_info['base'] ) {
+							foreach ( $base_items as $base_item ) {
+								foreach ( $tabs_list['tabs_list'] as $tab_key => $tab_item ) {
+									if ( isset( $tab_item['cont_func'] ) && $base_item === $tab_key ) {
+										?>
+										<div class="tab-pane <?php echo esc_attr( $tab_key ); ?>-tab-pane " id="<?php echo esc_attr( $tab_key ); ?>">
+
+											<div id="<?php echo esc_attr( $tab_item['cont_wrap_id'] ); ?>" class="tab-content
+											<?php
+											if ( isset( $_GET['tab'] ) && $tab_key === $_GET['tab'] || ! isset( $_GET['tab'] ) ) {
+												echo ' pane-active';
+											}
+											?>
+										">
+												<?php
+												// call_user_func(array(feed_them_gallery()->gallery, $tab_item['cont_func']), $params)
+												call_user_func( array( $this->current_this, $tab_item['cont_func'] ), $params );
+												?>
+											</div> <!-- #tab-content -->
+
+										</div><!-- /.tab-pane -->
+										<?php
+
+									}
+								}
+							}
+						}
+					}
+				}
+				?>
+			</div>
+
+			<div class="clear"></div>
+
+		</div> <!-- #tabs close -->
+
+		<div id="ftg-saveResult"></div>
+		</div>
+			<?php
+		}
+	}
+
+
+	/**
+	 * Settings HTML Form
+	 *
+	 * Used to return settings form fields output for Settings Options
+	 *
+	 * @param $section_info
+	 * @param $required_plugins
+	 * @param $current_post_id
+	 * @return string
+	 * @since @since 1.0.0
+	 */
+	public function settings_html_form( $section_info, $required_plugins, $current_post_id = null ) {
+
+		$current_info = $this->current_info_array();
+
+		$old_settings_page = get_option( $this->hook_id . '_settings_options' );
+		$old_settings_post = get_post_meta( $current_post_id, $current_info['post_type'] . '_settings_options', true );
+
+		// Get Old Settings Array if set.
+		$old_settings = true === $this->is_page ? $old_settings_page : $old_settings_post;
+
+		$prem_required_plugins = $this->core_functions_class->ft_gallery_required_plugins();
+
+		$section_required_prem_plugin = ! isset( $section_info['required_prem_plugin'] ) || isset( $section_info['required_prem_plugin'] ) && is_plugin_active( $prem_required_plugins[ $section_info['required_prem_plugin'] ]['plugin_url'] ) ? 'active' : '';
+
+		// Start creation of fields for each Feed.
+		$output = '<div class="ftg-section" class="' . $section_info['section_wrap_class'] . '">';
+
+		// Section Title.
+		$output .= isset( $section_info['section_title'] ) ? '<h3>' . $section_info['section_title'] . '</h3>' : '';
+
+		// Happens in JS file.
+		$this->core_functions_class->ft_gallery_tab_notice_html();
+
+		// Create settings fields for Feed OPTIONS.
+		foreach ( (array) $section_info['main_options'] as $option ) {
+			if ( ! isset( $option['no_html'] ) || isset( $option['no_html'] ) && 'yes' !== $option['no_html'] ) {
+
+				// Is a premium extension required?
+				$required_plugin = ! isset( $option['req_plugin'] ) || isset( $option['req_plugin'] ) && is_plugin_active( $required_plugins[ $option['req_plugin'] ]['plugin_url'] ) ? true : false;
+
+				// Sub option output START?
+				$output .= isset( $option['sub_options'] ) ? '<div class="' . $option['sub_options']['sub_options_wrap_class'] . ( ! $required_plugin ? ' not-active-premium-fields' : '' ) . '">' . ( isset( $option['sub_options']['sub_options_title'] ) ? '<h3>' . $option['sub_options']['sub_options_title'] . '</h3>' : '' ) . ( isset( $option['sub_options']['sub_options_instructional_txt'] ) ? '<div class="instructional-text">' . $option['sub_options']['sub_options_instructional_txt'] . '</div>' : '' ) : '';
+
+				$output .= isset( $option['grouped_options_title'] ) ? '<h3 class="sectioned-options-title">' . $option['grouped_options_title'] . '</h3>' : '';
+
+				// Only on a few options generally.
+				$output .= isset( $option['outer_wrap_class'] ) || isset( $option['outer_wrap_display'] ) ? '<div ' . ( isset( $option['outer_wrap_class'] ) ? 'class="' . $option['outer_wrap_class'] . '"' : '' ) . ' ' . ( isset( $option['outer_wrap_display'] ) && ! empty( $option['outer_wrap_display'] ) ? 'style="display:' . $option['outer_wrap_display'] . '"' : '' ) . '>' : '';
+				// Main Input Wrap.
+				$output .= '<div class="feed-them-gallery-admin-input-wrap ' . ( isset( $option['input_wrap_class'] ) ? $option['input_wrap_class'] : '' ) . '" ' . ( isset( $section_info['input_wrap_id'] ) ? 'id="' . $section_info['input_wrap_id'] . '"' : '' ) . '>';
+				// Instructional Text.
+				$output .= ! empty( $option['instructional-text'] ) && ! is_array( $option['instructional-text'] ) ? '<div class="instructional-text ' . ( isset( $option['instructional-class'] ) ? $option['instructional-class'] : '' ) . '">' . $option['instructional-text'] . '</div>' : '';
+
+				if ( ! empty( $option['instructional-text'] ) && is_array( $option['instructional-text'] ) ) {
+					foreach ( $option['instructional-text'] as $instructional_txt ) {
+						// Instructional Text.
+						$output .= '<div class="instructional-text ' . ( isset( $instructional_txt['class'] ) ? $instructional_txt['class'] : '' ) . '">' . $instructional_txt['text'] . '</div>';
+					}
+				}
+
+				// Label Text.
+				$output .= isset( $option['label'] ) && ! is_array( $option['label'] ) ? '<div class="feed-them-gallery-admin-input-label ' . ( isset( $option['label_class'] ) ? $option['label_class'] : '' ) . '">' . $option['label'] . '</div>' : '';
+
+				if ( ! empty( $option['label'] ) && is_array( $option['label'] ) ) {
+					foreach ( $option['label'] as $label_txt ) {
+						// Label Text.
+						$output .= '<div class="feed-them-gallery-admin-input-label ' . ( isset( $label_txt['class'] ) ? $label_txt['class'] : '' ) . '">' . $label_txt['text'] . '</div>';
+					}
+				}
+
+				// Set Option name. Use Prefix?
+				// $option_name = isset( $this->option_prefix ) ? $this->option_prefix . $option['name'] : $option['name'];
+				$option_name = $option['name'];
+
+				// Set Option ID. Use Prefix?
+				// $option_id = isset( $this->option_prefix ) ? $this->option_prefix . $option['id'] : $option['id'];
+				$option_id = $option['id'];
+
+				$final_value = isset( $old_settings[ $option_name ] ) && ! empty( $old_settings[ $option_name ] ) ? $old_settings[ $option_name ] : $option['default_value'];
+
+				// Do we need to output any Metabox Specific Form Inputs?
+				if ( isset( $this->metabox_specific_form_inputs ) && true === $this->metabox_specific_form_inputs ) {
+					// Set Current Params.
+					$params = array(
+						// 'This' Class object.
+						'this'         => $this->current_this,
+						// Option Info.
+						'input_option' => $option,
+
+					);
+
+					$output .= call_user_func( array( $this->current_this, 'metabox_specific_form_inputs' ), $params );
+				}
+
+				if ( isset( $option['option_type'] ) ) {
+					switch ( $option['option_type'] ) {
+						// Input.
+						case 'input':
+							$output .= '<input ' . ( isset( $section_required_prem_plugin ) && 'active' !== $section_required_prem_plugin ? 'disabled ' : '' ) . 'type="' . $option['type'] . '" name="' . $option_name . '" id="' . $option_id . '" class="feed-them-gallery-admin-input ' . ( isset( $option['class'] ) ? $option['class'] : '' ) . '" placeholder="' . ( isset( $option['placeholder'] ) ? $option['placeholder'] : '' ) . '" value="' . $final_value . '"' . ( isset( $option['autocomplete'] ) ? ' autocomplete="' . $option['autocomplete'] . '"' : '' ) . ' />';
+							break;
+
+						// Select.
+						case 'select':
+							$output .= '<select ' . ( isset( $section_required_prem_plugin ) && 'active' !== $section_required_prem_plugin ? 'disabled ' : '' ) . 'name="' . $option_name . '" id="' . $option_id . '"  class="feed-them-gallery-admin-input">';
+							$i       = 0;
+							foreach ( $option['options'] as $select_option ) {
+								$output .= '<option value="' . $select_option['value'] . '" ' . ( ! empty( $final_value ) && $final_value === $select_option['value'] || empty( $final_value ) && 0 === $i ? 'selected="selected"' : '' ) . '>' . $select_option['label'] . '</option>';
+								$i++;
+							}
+							$output .= '</select>';
+							break;
+
+						// Checkbox.
+						case 'checkbox':
+							$output .= '<input ' . ( isset( $section_required_prem_plugin ) && 'active' !== $section_required_prem_plugin ? 'disabled ' : '' ) . 'type="checkbox" name="' . $option_name . '" id="' . $option_id . '" ' . ( ! empty( $final_value ) && 'true' === $final_value ? ' checked="checked"' : '' ) . '/>';
+							break;
+
+						// Repeatable
+						/*
+						case 'repeatable':
+						echo '<a class="repeatable-add button" href="#">';
+						_e('Add Another design', 'feed-them-gallery');
+						echo '</a><ul id="' . $option['id'] . '-repeatable" class="custom_repeatable">';
+						$i = 0;
+						if ($meta) {
+						foreach ($meta as $row) {
+						echo '<li><span class="sort hndle">|||</span>
+								 <textarea name="' . $option['id'] . '[' . $i . ']" id="' . $option['id'] . '">' . $row . '</textarea>
+								 <a class="repeatable-remove button" href="#">-</a>
+								 </li>';
+						$i++;
+						}
+						} else {
+						echo '<li><span class="sort hndle">|||</span>
+							 <textarea name="' . $option['id'] . '[' . $i . ']" id="' . $option['id'] . '">' . $row . '</textarea>
+							 <a class="repeatable-remove button" href="#">';
+						_e('Delete this design', 'design-approval-system');
+						echo '</a></li>';
+						}
+						echo '</ul>
+						<span class="description">' . $option['desc'] . '</span>';
+						break;*/
+
+					}
+				}
+
+				$output .= '<div class="clear"></div>';
+				$output .= '</div><!--/feed-them-gallery-admin-input-wrap-->';
+
+				$output .= isset( $option['outer_wrap_class'] ) || isset( $option['outer_wrap_display'] ) ? '</div>' : '';
+
+				// Sub option output END?
+				if ( isset( $option['sub_options_end'] ) ) {
+					$output .= ! is_numeric( $option['sub_options_end'] ) ? '</div>' : '';
+					// Multiple Div needed?
+					if ( is_numeric( $option['sub_options_end'] ) ) {
+						$x = 1;
+						while ( $x <= $option['sub_options_end'] ) {
+							$output .= '</div>';
+							$x++;
+						}
+					}
+				}
+			}
+		}
+
+		$output .= '</div> <!--/Section Wrap Class END -->';
+
+		return $output;
+	}
+
+	/**
+	 * FT Gallery Save Custom Meta Box
+	 * Save Fields for Galleries
+	 *
+	 * @param $post_id
+	 * @param $post
+	 * @return string
+	 * @since 1.0.0
+	 */
+	public function save_meta_box( $post_id ) {
+
+		// delete_option( $this->hook_id . '_settings_options' );
+		$current_info = $this->current_info_array();
+
+		 // delete_post_meta( $post_id, $current_info['post_type'] . '_settings_options' );
+		// Variable to check if anything was updated.
+		$updated = false;
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'Unauthorized user' );
+		}
+
+		// Check Nonce!
+		if ( ! isset( $_POST['slick-metabox-settings-options-nonce'] ) || ! wp_verify_nonce( $_POST['slick-metabox-settings-options-nonce'], basename( __FILE__ ) ) ) {
+			return $post_id;
+		}
+
+		$old_settings_page = get_option( $this->hook_id . '_settings_options' );
+		$old_settings_post = get_post_meta( $post_id, $current_info['post_type'] . '_settings_options', true );
+
+		// Get Old Settings Array if set.
+		$old_settings = true === $this->is_page ? (array) $old_settings_page : (array) $old_settings_post;
+
+		// Array of Settings to save. Use old settings if available otherwise use new array!
+		$array_to_save = isset( $old_settings ) && ! empty( $old_settings ) ? $old_settings : array();
+
+		foreach ( $this->saved_settings_array as $box_array ) {
+
+			foreach ( $box_array as $box_key => $settings ) {
+
+				if ( 'main_options' === $box_key ) {
+
+					foreach ( $settings as $option ) {
+
+							// Set Option name. Use Prefix? (commented line below is from prefix methodology.
+							// $option_name = isset( $this->option_prefix ) ? $this->option_prefix . $option['name'] : $option['name'];.
+							$option_name = isset( $option['name'] ) ? $option['name'] : '';
+
+						if ( 'checkbox' === $option['option_type'] ) {
+							$new = isset( $_POST[ $option_name ] ) && 'false' !== $_POST[ $option_name ] ? 'true' : 'false';
+						} else {
+							$new = isset( $_POST[ $option_name ] ) && ! empty( $option_name ) ? $_POST[ $option_name ] : '';
+						}
+
+						// If anything has changed update options!
+						$array_to_save[ $option_name ] = is_array( $new ) ? $new : sanitize_text_field( $new );
+					}
+				}
+			}
+		}
+
+		// If Post - Return Settings.
+		if ( true === $this->is_page ) {
+			// Update options for a page.
+			update_option( $this->hook_id . '_settings_options', $array_to_save );
+
+			// // If Page - then Safe Redirect to page we came from. To make the Coding Standards happy, we have to initialize this.
+			if ( ! isset( $_POST['_wp_http_referer'] ) ) {
+				$_POST['_wp_http_referer'] = wp_login_url();
+			}
+
+			// Sanitize the value of the $_POST collection for the Coding Standards.
+			$url = sanitize_text_field( wp_unslash( $_POST['_wp_http_referer'] ) );
+
+			wp_safe_redirect( urldecode( $url ) );
+			exit;
+		}
+		// If not doing Page stuff Update options for a Post.
+		update_post_meta( $post_id, $current_info['post_type'] . '_settings_options', $array_to_save );
+
+		// REFACTOR NEEDED.
+		if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
+			include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'includes/watermark/save.php';
+		}
+
+		return $array_to_save;
+	}
+}

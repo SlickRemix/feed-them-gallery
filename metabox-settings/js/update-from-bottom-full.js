@@ -3,7 +3,7 @@
 
     $( document ).ready(function() {
         // Button markup depending on post/page status
-        if($('#publish').val() == updatefrombottomParams.publish) {
+        if($('#publish, #publishing-action input[type=submit]').val() == updatefrombottomParams.publish) {
             $('<div class="updatefrombottom" ><a class="button button-totop">'+updatefrombottomParams.totop+'</a><a class="button button-primary button-large">'+updatefrombottomParams.publish+'</a></div>').appendTo(".tab-content");
         } else {
             $('<div class="updatefrombottom"><a class="button button-totop">'+updatefrombottomParams.totop+'</a><a class="button button-primary button-large">'+updatefrombottomParams.update+'</a></div>').appendTo(".tab-content");
@@ -14,7 +14,7 @@
             box    : $('.updatefrombottom'),
             heart  : $('#jsc-heart'),
             update  : $('.updatefrombottom .button-primary'),
-            publish: $('#publish'),
+            publish: $('#publish, #publishing-action input[type=submit]'),
             totop : $('.updatefrombottom .button-totop')
         };
 
@@ -53,7 +53,7 @@
         };
 
         $(window).on('resize scroll', function() {
-            if ($('#publish').isInViewport()) {
+            if ($('#publish, #publishing-action input[type=submit]').isInViewport()) {
                 elements.box.hide();
             } else {
                 // do something else

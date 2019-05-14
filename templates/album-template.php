@@ -1,47 +1,46 @@
 <?php
+
 /**
- * The template for displaying Feed Them Gallery Album pages
+ * Template Name: Feed Them Gallery Album Template
  *
- * @link http://feedthemgallery.com/
+ * @link https://feedthemgallery.com/
  *
  * @package Feed Them Gallery
- * @since 1.0.8
- * @version 1.0.8
+ * @since 1.1.6
+ * @version 1.1.6
  */
 
-get_header();
+get_header(); ?>
 
+            <?php   while ( have_posts() ) : the_post(); ?>
 
-?>
+    <div id="top">
+        <div class="title_container">
+                <div class="page-header container">
+                    <h2><?php
+                        the_title( );
+                        ?></h2>
+                </div><!-- .page-header -->
+        </div>
+    </div>
+<?php endwhile;  // End of the loop. ?>
 
-    <div class="wrap">
-
-        <?php if ( have_posts() ) : ?>
-            <header class="page-header">
+    <div id="primary" class="content-area container">
+    <main id="main" class="site-main" role="main">
                 <?php
-                the_title( '<h1 class="page-title">', '</h1>' );
-                ?>
-            </header><!-- .page-header -->
-        <?php endif; ?>
 
-        <div id="primary" class="content-area">
-            <main id="main" class="site-main" role="main">
+                    global $post;
 
-                <?php
-
-                global $post;
-
-                $Album_ID = $post->ID;
-                if(!empty($Album_ID)){
-                    echo do_shortcode('[feed-them-gallery is_album=yes id="'.$Album_ID.'"]');
-                }
+                    $album_id = $post->ID;
+                    if(!empty($album_id)){
+                        print do_shortcode('[ft-gallery-album id="'.$album_id.'"]');
+                    }
 
                 ?>
-
-            </main><!-- #main -->
-        </div><!-- #primary -->
-        <?php get_sidebar(); ?>
-    </div><!-- .wrap -->
+        </main>
+        <!-- #main -->
+    </div>
+    <!-- #primary -->
 
 <?php
 get_footer();

@@ -7,7 +7,7 @@ class Shortcodes extends Gallery {
 
     function __construct() {
         //Add to show ALL Galleries that have these Categories
-        add_shortcode('ft-gallery-album', array($this, 'ft_gallery_album'));
+        //add_shortcode('ft-gallery-album', array($this, 'ft_gallery_album'));
     }
 
     function ft_gallery_album($atts) {
