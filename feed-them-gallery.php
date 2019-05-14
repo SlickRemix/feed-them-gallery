@@ -19,6 +19,7 @@
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * WC requires at least: 3.0.0
  * WC tested up to: 3.6.2
+ *
  * @version  1.1.6
  * @package  FeedThemSocial/Core
  * @copyright   Copyright (c) 2012-2018 SlickRemix
