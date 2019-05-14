@@ -6,6 +6,8 @@ class Feed_Them_Gallery {
 	 *
 	 * @since 1.0.0
 	 */
+
+
 	public static function load_plugin() {
 
 			$plugin_loaded = new self();
@@ -49,21 +51,23 @@ class Feed_Them_Gallery {
 		// Load in Premium Gallery glasses if premium is loaded.
 		if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 
-            // Template Settings Options.
-            $template_settings_options = feed_them_gallery\Template_Settings_Options::get_all_options();
+            if ( FTGP_CURRENT_VERSION > '1.0.5' ) {
+                // Template Settings Options.
+                $template_settings_options = feed_them_gallery\Template_Settings_Options::get_all_options();
 
-			// Template Settings Page.
-			feed_them_gallery\Template_Settings_Page::load( $template_settings_options, $gallery_main_post_type );
+                // Template Settings Page.
+                feed_them_gallery\Template_Settings_Page::load( $template_settings_options, $gallery_main_post_type );
 
-			// Media Taxonomies.
-			feed_them_gallery\Media_Taxonomies::load();
+                // Media Taxonomies.
+                feed_them_gallery\Media_Taxonomies::load();
 
-			// Album Options.
-			$gallery_options = feed_them_gallery\Album_Options::get_all_options();
+                // Album Options.
+                $gallery_options = feed_them_gallery\Album_Options::get_all_options();
 
-			// Albums.
-			feed_them_gallery\Albums::load( $gallery_options, $albums_main_post_type );
+                // Albums.
+                feed_them_gallery\Albums::load( $gallery_options, $albums_main_post_type );
 
+            }
 			// Gallery to Woocommerce.
 			new feed_them_gallery\Gallery_to_Woocommerce();
 
@@ -90,6 +94,18 @@ class Feed_Them_Gallery {
 
 		$plugin_loaded->set_review_status( $option, $transient );
 	}
+
+    /**
+     * FT Gallery Premium Plugin required Check
+     *
+     * Is the Free Plugin installed and active?
+     *
+     * @since 1.1.6
+     */
+    public function ft_gallery_premium_version_required() {
+
+        echo '<div class="error"><p>' . __('Warning: <strong>Feed Them Gallery Premium</strong> has been deactivated because it needs to be running Premium version 1.0.6 to work with the latest version of Feed Them Gallery Free to function properly. Please update the Premium version 1.0.6. If you are not getting an update notice you can always manually download the latest zip from the <a href="https://www.slickremix.com/my-account"><strong>My Account</strong></a> page of our website.', 'feed-them-gallery') . '</p></div>';
+    }
 
 	public function add_actions_filters() {
 		register_activation_hook( __FILE__, array( $this, 'ftg_activate' ) );
@@ -330,8 +346,21 @@ class Feed_Them_Gallery {
 
 		if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 
-            // Tags/Taxonomies for images.
-            include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'includes/taxonomies/media-taxonomies.php';
+            if ( FTGP_CURRENT_VERSION > '1.0.5' ) {
+                // Tags/Taxonomies for images.
+                include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'includes/taxonomies/media-taxonomies.php';
+                // Album Options.
+                include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'includes/albums/album-options.php';
+
+                // Albums.
+                include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'includes/albums/albums-class.php';
+
+                // Template Settings Options.
+                include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'admin/template-settings-options.php';
+
+                // Template Settings Page.
+                include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'admin/template-settings-page-class.php';
+            }
 
 			// Zip Gallery.
 			include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'includes/galleries/download.php';
@@ -343,17 +372,6 @@ class Feed_Them_Gallery {
 			// Watermark.
 			include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'includes/watermark/ajax.php';
 
-            // Album Options.
-            include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'includes/albums/album-options.php';
-
-            // Albums.
-            include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'includes/albums/albums-class.php';
-
-            // Template Settings Options.
-            include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'admin/template-settings-options.php';
-
-            // Template Settings Page.
-            include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'admin/template-settings-page-class.php';
 		}
 
 		// Shortcode Button.
