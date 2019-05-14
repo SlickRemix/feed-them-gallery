@@ -122,7 +122,7 @@ class Gallery_Options {
 					'type'             => 'text',
 					'id'               => 'ft_gallery_photo_caption',
 					'name'             => 'ft_gallery_photo_caption',
-					'default_value'    => 'yes',
+					'default_value'    => '',
 					'options'          => array(
 						array(
 							'label' => __( 'Title and Description', 'feed-them-gallery' ),
