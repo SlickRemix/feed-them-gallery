@@ -203,9 +203,9 @@ class Settings_Page {
 
                                 //Output Filename Example
                                 $final_output = $attch_title_output.'.jpg';
-                                echo $final_output;
+
                                 //Output Filename Example
-                                echo '<div class="clear"></div><div class="ftg-title-renaming-example"><strong><em>Example Filename:</em></strong> ' .  $attch_title_output .'</div>';
+                                echo '<div class="clear"></div><div class="ftg-title-renaming-example"><strong><em>Example Title:</em></strong> ' .  $final_output .'</div>';
                                 ?>
                             </div>
 
