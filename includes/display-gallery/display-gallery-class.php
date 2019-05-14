@@ -1533,9 +1533,9 @@ class Display_Gallery  {
                 $ftg['offset'] = '0';
             }
 
-             if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && FTGP_CURRENT_VERSION > '1.0.5' ) {
-                 $albums_class = new Albums();
-             }
+            if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && FTGP_CURRENT_VERSION > '1.0.5' ) {
+                $albums_class = new Albums();
+            }
 
             foreach ( $image_list as $image ) {
 
