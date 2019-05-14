@@ -94,7 +94,7 @@ class Gallery_Options {
 					'type'             => 'text',
 					'id'               => 'ft_gallery_type',
 					'name'             => 'ft_gallery_type',
-					'default_value'    => 'gallery',
+					'default_value'    => '',
 					'options'          => array(
 						array(
 							'label' => __( 'Responsive Image Gallery ', 'feed-them-gallery' ),
@@ -182,7 +182,7 @@ class Gallery_Options {
 					),
 					'id'                 => 'ft_gallery_columns',
 					'name'               => 'ft_gallery_columns',
-					'default_value'      => '4',
+					'default_value'      => '',
 					'options'            => array(
 						array(
 							'label' => __( '1', 'feed-them-gallery' ),
@@ -230,7 +230,7 @@ class Gallery_Options {
 					),
 					'id'                 => 'ft_gallery_columns_masonry2',
 					'name'               => 'ft_gallery_columns_masonry2',
-					'default_value'      => '3',
+					'default_value'      => '',
 					'options'            => array(
 						array(
 							'label' => __( '2', 'feed-them-gallery' ),
