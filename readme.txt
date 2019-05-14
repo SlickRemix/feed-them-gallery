@@ -134,7 +134,7 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
    * PAGINATION FIX: On some themes the pagination was not working correctly.
    * SETTINGS PAGE NEW: Added options to show the gallery name and or choose to show the attachment ID or not.
    * PREMIUM NEW: Create Albums of Galleries. We made it easy to add the galleries you want and then even drag and drop to sort them.
-   * PREMIUM NEW: Add Tags to Galleries and images in a gallery.
+   * PREMIUM NEW: Add Tags to Galleries and images in a gallery. You will see a new Gallery Tab option called Tags where you can customize the look of the tags on the page or the images.
    * PREMIUM NEW: Tags Template page where you can customize the look of the tags page for images and galleries. In our next update we will be creating a search option on the tags page as well.
 
 = Version 1.1.5.2 Thursday, March 28th, 2019 =
