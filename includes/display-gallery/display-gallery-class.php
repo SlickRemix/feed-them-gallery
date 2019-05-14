@@ -1531,13 +1531,15 @@ class Display_Gallery  {
                 $ftg['offset'] = '0';
             }
 
-            $albums_class  = new Albums();
+            if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
+                 $albums_class = new Albums();
+             }
 
             foreach ( $image_list as $image ) {
 
                 $date = isset( $image->post_date ) ? $image->post_date : '';
 
-                if ( isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] || isset( $_GET['ftg-tags'] ) && 'page' === $_GET['type'] ) {
+                if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] || is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && isset( $_GET['ftg-tags'] ) && 'page' === $_GET['type'] ) {
 
                     $gallery_id = $image->ID;
 
