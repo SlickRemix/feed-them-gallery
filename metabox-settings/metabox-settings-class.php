@@ -265,7 +265,7 @@ class Metabox_Settings {
     }
 
     public function set_option_prefix( $option_prefix ) {
-        // Option Prefix. (needed if is_page = true). Posts don't need this because ID is used to set option name.
+        // Option Prefix. (needed if is_page = true). Posts do not need this because ID is used to set option name.
         $this->option_prefix = $option_prefix;
     }
 
