@@ -127,7 +127,7 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
 
 == Changelog ==
 = Version 1.1.7 Wednesday, May 15th, 2019 =
-   * FIX: When trying to pay for your items the checkout page would return a server error message. It appears that the wordpress function get_current_screen() is not working on this particular page so we added a function check around it. Thanks to [Paul Bedford](https://github.com/SlickRemix/feed-them-gallery/issues/66) for pointing out this issue!
+   * FIX: When trying to pay for your items the page would return a server error message. It appears that the wordpress function get_current_screen() is not working on this particular page so we added a function check around it. Thanks to [Paul Bedford](https://github.com/SlickRemix/feed-them-gallery/issues/66) for pointing out this issue!
 
 = Version 1.1.6 Tuesday, May 14th, 2019 =
    * Thanks to everyone who has been waiting so patiently for this update. It's taken us over 7 months to complete these additions between the 2 of us, we hope you enjoy them.

@@ -27,7 +27,7 @@
  * Need Support? http://www.slickremix.com/my-account
  */
 
-// Doing this ensure's any js or css changes are reloaded properly. Added to enqued css and js files throughout plugin.
+// Doing this ensure's any js or css changes are reloaded properly. Added to enqued css and js files throughout.
 define( 'FTG_CURRENT_VERSION', '1.1.7' );
 
 // Require file for plugin loading.
