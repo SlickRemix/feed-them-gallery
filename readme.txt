@@ -3,7 +3,7 @@ Contributors: slickremix
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
 Tested up to: 5.2
-Stable tag: 1.1.7
+Stable tag: 1.1.6.0
 License: GPLv2 or later
 
 Create customizable Image Galleries and sell your images using WooCommerce.
@@ -126,9 +126,6 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
-= Version 1.1.7 Wednesday, May 15th, 2019 =
-   * FIX: When trying to pay for your items the page would return a server error message. It appears that the wordpress function get_current_screen() is not working on this particular page so we added a function check around it. Thanks to [Paul Bedford](https://github.com/SlickRemix/feed-them-gallery/issues/66) for pointing out this issue!
-
 = Version 1.1.6 Tuesday, May 14th, 2019 =
    * Thanks to everyone who has been waiting so patiently for this update. It's taken us over 7 months to complete these additions between the 2 of us, we hope you enjoy them.
    * FIX: If share option was disabled the responsive html layout would break.
