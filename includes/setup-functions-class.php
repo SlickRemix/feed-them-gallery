@@ -433,6 +433,7 @@ class Setup_Functions {
 			// Woocommerce Options
 			$settings[] = 'ft_gallery_attch_prod_to_gallery_cat';
 			$settings[] = 'ft_gallery_woo_add_to_cart';
+            $settings[] = 'ft_gallery_enable_right_click';
 		}
 
 		// Add Custom Post Types to settings.

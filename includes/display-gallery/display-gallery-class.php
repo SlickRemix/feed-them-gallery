@@ -119,7 +119,10 @@ class Display_Gallery  {
         if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
             wp_enqueue_script( 'add-to-cart-ajax_ajax', plugins_url() . '/feed-them-gallery/includes/feeds/js/add-to-cart-ajax.js', array( 'jquery' ), FTG_CURRENT_VERSION, true );
         }
-
+        $phpInfo = array(
+            'enable_right_click' => null !== get_option( 'ft_gallery_enable_right_click' ) ? get_option( 'ft_gallery_enable_right_click' ) : ''
+        );
+        wp_localize_script( 'ft-front-end-js', 'ftgPremiumOption', $phpInfo );
     }
 
     /**
@@ -1533,7 +1536,9 @@ class Display_Gallery  {
                 $ftg['offset'] = '0';
             }
 
-            if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && FTGP_CURRENT_VERSION > '1.0.5' ) {
+            $ftgp_current_version = defined( 'FTGP_CURRENT_VERSION' ) ? FTGP_CURRENT_VERSION : '';
+
+            if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && $ftgp_current_version > '1.0.5' ) {
                 $albums_class = new Albums();
             }
 
@@ -1541,7 +1546,7 @@ class Display_Gallery  {
 
                 $date = isset( $image->post_date ) ? $image->post_date : '';
 
-                if ( FTGP_CURRENT_VERSION > '1.0.5' && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] || FTGP_CURRENT_VERSION > '1.0.5' && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && isset( $_GET['ftg-tags'] ) && 'page' === $_GET['type'] ) {
+                if ( $ftgp_current_version > '1.0.5' && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] || $ftgp_current_version > '1.0.5' && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && isset( $_GET['ftg-tags'] ) && 'page' === $_GET['type'] ) {
 
                     $gallery_id = $image->ID;
 
