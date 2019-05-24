@@ -51,7 +51,9 @@ class Feed_Them_Gallery {
 		// Load in Premium Gallery glasses if premium is loaded.
 		if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 
-            if ( FTGP_CURRENT_VERSION > '1.0.5' ) {
+            $ftgp_current_version = defined( 'FTGP_CURRENT_VERSION' ) ? FTGP_CURRENT_VERSION : '';
+
+            if ( $ftgp_current_version > '1.0.5' ) {
                 // Template Settings Options.
                 $template_settings_options = feed_them_gallery\Template_Settings_Options::get_all_options();
 
@@ -94,18 +96,6 @@ class Feed_Them_Gallery {
 
 		$plugin_loaded->set_review_status( $option, $transient );
 	}
-
-    /**
-     * FT Gallery Premium Plugin required Check
-     *
-     * Is the Free Plugin installed and active?
-     *
-     * @since 1.1.6
-     */
-    public function ft_gallery_premium_version_required() {
-
-        echo '<div class="error"><p>' . __('Warning: <strong>Feed Them Gallery Premium</strong> has been deactivated because it needs to be running Premium version 1.0.6 to work with the latest version of Feed Them Gallery Free to function properly. Please update the Premium version 1.0.6. If you are not getting an update notice you can always manually download the latest zip from the <a href="https://www.slickremix.com/my-account"><strong>My Account</strong></a> page of our website.', 'feed-them-gallery') . '</p></div>';
-    }
 
 	public function add_actions_filters() {
 		register_activation_hook( __FILE__, array( $this, 'ftg_activate' ) );
@@ -345,6 +335,8 @@ class Feed_Them_Gallery {
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/galleries/create-image.php';
 
 		if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
+
+            $ftgp_current_version = defined( 'FTGP_CURRENT_VERSION' ) ? FTGP_CURRENT_VERSION : '';
 
             if ( FTGP_CURRENT_VERSION > '1.0.5' ) {
                 // Tags/Taxonomies for images.

@@ -1311,6 +1311,13 @@ class Settings_Page {
 
 							<?php if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) ) { ?>
 								<div class="settings-sub-wrap">
+
+                                    <h5><?php _e( 'Disable Right Click', 'ft-gallery' ); ?></h5>
+
+                                    <label><input name="ft_gallery_enable_right_click" type="checkbox" value="true" <?php echo checked( 'true', get_option( 'ft_gallery_enable_right_click' ) ); ?>/> <?php _e( 'This will disable the right click option on all pages of your website.', 'ft-gallery' ); ?>
+                                    </label>
+
+                                    <div class="clear" style="padding-top:15px"></div>
 									<h5><?php _e( 'Product Creation', 'ft-gallery' ); ?></h5>
 
 									<label><input name="ft_gallery_attch_prod_to_gallery_cat" type="checkbox" value="true" <?php echo checked( 'true', get_option( 'ft_gallery_attch_prod_to_gallery_cat' ) ); ?>/> <?php _e( 'Attach Product to a Category named after Gallery', 'ft-gallery' ); ?>
@@ -1338,6 +1345,10 @@ class Settings_Page {
 								</div>
 
 								</div>
+
+
+
+
 
 								<?php
 } else {

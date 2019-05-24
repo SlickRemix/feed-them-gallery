@@ -1,4 +1,16 @@
-jQuery(window).on("load",function(){
+jQuery(window).on("load",function() {
+
+    if (ftgPremiumOption.enable_right_click == 'true'){
+        jQuery(document).bind("contextmenu", function (event) {
+            event.preventDefault();
+        });
+        // window.ondragstart = function() { return false; }
+        jQuery(document).ready(function () {
+            jQuery('img').on('dragstart', function (event) {
+                event.preventDefault();
+            });
+        });
+    }
 
     jQuery('.ft-wp-gallery-masonry .ft-gallery-variations-text select').on('change', function() {
         // Additional JavaScript
@@ -27,7 +39,7 @@ function slickremixFTGalleryImageResizing() {
         jQuery('.ft-gallery-download').removeClass('lightbox-added');
     }, 200);
 
-    
+
     // This is the container for our instagram images
     var ftsBlockCenteredAttr = jQuery('.ft-wp-gallery-centered');
     // This is the container for the instagram image post
@@ -108,4 +120,3 @@ function slickremixFTGalleryImageResizing() {
     }
 
 }
-
