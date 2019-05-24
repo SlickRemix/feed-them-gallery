@@ -103,8 +103,15 @@ class Feed_Them_Gallery {
      * @since 1.1.6
      */
     public function ft_gallery_premium_version_required() {
-
-        echo '<div class="error"><p>' . __('Warning: <strong>Feed Them Gallery Premium</strong> has been deactivated because it needs to be running Premium version 1.0.6 to work with the latest version of Feed Them Gallery Free to function properly. Please update the Premium version 1.0.6. If you are not getting an update notice you can always manually download the latest zip from the <a href="https://www.slickremix.com/my-account"><strong>My Account</strong></a> page of our website.', 'feed-them-gallery') . '</p></div>';
+        echo sprintf(
+            esc_html('%1$sWarning: %2$sFeed Them Gallery Premium%3$s has been deactivated because it needs to be running Premium version 1.0.6 to work with the latest version of Feed Them Gallery Free to function properly. Please update the Premium version 1.0.6. If you are not getting an update notice you can always manually download the latest zip from the %4$sMy Account%5$s page of our website.%6$s', 'feed-them-gallery') ,
+            '<div class="error"><p>',
+            '<strong>',
+            '</strong>',
+            '<a href="' . esc_url( 'https://www.slickremix.com/my-account' ) . '" target="_blank"><strong>',
+            '</strong></a>',
+            '</p></div>'
+        );
     }
 
 	public function add_actions_filters() {
@@ -498,7 +505,7 @@ class Feed_Them_Gallery {
 
 			foreach ( $activation_options as $option_key => $option_value ) {
 				// We don't use update_option because we only want this to run for options that have not already been set by the user.
-				add_option( $option_key, $option_value );
+				add_option( $option_key, sanitize_text_field( $option_value ) );
 			}
 		}
 	}
@@ -520,7 +527,7 @@ class Feed_Them_Gallery {
 		if ( ! $ftg_rating_notice_waiting && ! ( 'dismissed' === $notice_status || 'pending' === $notice_status ) ) {
 			$time = 2 * WEEK_IN_SECONDS;
 			set_transient( $transient, 'ftg-review-waiting', $time );
-			update_option( $option, 'pending' );
+			update_option( $option, sanitize_text_field( 'pending' ) );
 		}
 	}
 
@@ -533,21 +540,18 @@ class Feed_Them_Gallery {
 	 * @param $nag
 	 * @param $option
 	 * @param $transient
-	 * @return mixed
 	 * @since 1.0.8
 	 */
 	public function ftg_check_nag_get( $get, $nag, $option, $transient ) {
-
 		if ( isset( $_GET[ $nag ] ) ) {
 			if ( 1 === $get[ $nag ] ) {
-				update_option( $option, 'dismissed' );
+				update_option( $option, sanitize_text_field( 'dismissed' ) );
 			} elseif ( 'later' === $get[ $nag ] ) {
 				$time = 2 * WEEK_IN_SECONDS;
 				set_transient( $transient, 'ftg-review-waiting', $time );
-				update_option( $option, 'pending' );
+				update_option( $option, sanitize_text_field( 'pending' ) );
 			}
 		}
-
 	}
 
 	public function set_review_status( $option, $transient ) {
@@ -564,7 +568,6 @@ class Feed_Them_Gallery {
 	 *
 	 * Generates the html for the admin notice
 	 *
-	 * @return mixed
 	 * @since 1.0.8
 	 */
 	public function ftg_rating_notice_html() {
@@ -577,20 +580,24 @@ class Feed_Them_Gallery {
 
 			/* Has the user already clicked to ignore the message? */
 			if ( ! get_user_meta( $user_id, 'ftg_slick_ignore_rating_notice' ) ) {
-				$output  = '<div class="ftg_notice ftg_review_notice">';
-				$output .= "<img src='" . plugins_url( 'feed-them-gallery/admin/css/ft-gallery-logo.png' ) . "' alt='Feed Them Gallery'>";
-				$output .= "<div class='ftg-notice-text'>";
-				$output .= '<p>' . __( 'It\'s great to see that you\'ve been using our Feed Them Gallery plugin for a while now. Hopefully you\'re happy with it!  If so, would you consider leaving a positive review? It really helps support the plugin and helps others discover it too!', 'feed-them-social' ) . '</p>';
-				$output .= '<p class="ftg-links">';
-				$output .= '<a class="ftg_notice_dismiss" href="https://wordpress.org/support/plugin/feed-them-gallery/reviews/#new-post" target="_blank">' . __( 'Sure, I\'de love to', 'feed-them-social' ) . '</a>';
-				$output .= '<a class="ftg_notice_dismiss" href="' . esc_url( add_query_arg( 'ftg_slick_ignore_rating_notice_nag', '1' ) ) . '">' . __( 'I\'ve already given a review', 'feed-them-social' ) . '</a>';
-				$output .= '<a class="ftg_notice_dismiss" href="' . esc_url( add_query_arg( 'ftg_slick_ignore_rating_notice_nag', 'later' ) ) . '">' . __( 'Ask me later', 'feed-them-social' ) . '</a>';
-				$output .= '<a class="ftg_notice_dismiss" href="https://wordpress.org/support/plugin/feed-them-gallery/#new-post" target="_blank">' . __( 'Not working, I need support', 'feed-them-social' ) . '</a>';
-				$output .= '<a class="ftg_notice_dismiss" href="' . esc_url( add_query_arg( 'ftg_slick_ignore_rating_notice_nag', '1' ) ) . '">' . __( 'No thanks', 'feed-them-social' ) . '</a>';
-				$output .= '</p>';
-				$output .= '</div>';
-				$output .= '</div>';
-				echo $output;
+			    ?>
+                <div class="ftg_notice ftg_review_notice">
+                    <img src="<?php echo esc_url( plugins_url( 'feed-them-gallery/admin/css/ft-gallery-logo.png' ) ); ?>" alt="Feed Them Gallery">
+                    <div class='ftg-notice-text'>
+                        <p><?php echo esc_html( 'It\'s great to see that you\'ve been using our Feed Them Gallery plugin for a while now. Hopefully you\'re happy with it!  If so, would you consider leaving a positive review? It really helps support the plugin and helps others discover it too!', 'feed-them-social' ) ?></p>
+                        <p class="ftg-links">
+                            <a class="ftg_notice_dismiss" href="<?php echo esc_url( 'https://wordpress.org/support/plugin/feed-them-gallery/reviews/#new-post' ); ?>" target="_blank"><?php echo esc_html( 'Sure, I\'d love to', 'feed-them-social' ); ?></a>
+                            <a class="ftg_notice_dismiss" href="<?php echo esc_url( add_query_arg( 'ftg_slick_ignore_rating_notice_nag', '1' ) ); ?>"><?php echo esc_html( 'I\'ve already given a review', 'feed-them-social' ); ?></a>
+                            <a class="ftg_notice_dismiss" href="<?php echo esc_url( add_query_arg( 'ftg_slick_ignore_rating_notice_nag', 'later' ) ); ?>"><?php echo esc_html( 'Ask me later', 'feed-them-social' ); ?> </a>
+                            <a class="ftg_notice_dismiss" href="<?php echo esc_url( 'https://wordpress.org/support/plugin/feed-them-gallery/#new-post' ); ?>" target="_blank"><?php echo esc_html( 'Not working, I need support', 'feed-them-social' ); ?></a>
+                            <a class="ftg_notice_dismiss" href="<?php echo esc_url( add_query_arg( 'ftg_slick_ignore_rating_notice_nag', '1' ) ); ?>"><?php echo esc_html( 'No thanks', 'feed-them-social' ); ?></a>
+                        </p>
+
+                    </div>
+                </div>
+
+                <?php
+
 			}
 		}
 	}
