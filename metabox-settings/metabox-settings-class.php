@@ -117,20 +117,22 @@ class Metabox_Settings {
     }
 
     public function add_actions_filters() {
-        // Save Page Metaboxes.
-        if ( true === $this->is_page ) {
-            // Add Save Metabox if Settings page is a page.
-            add_action( 'admin_init', array( $this, 'add_submit_meta_box' ) );
+       if( is_admin() ) {
+           // Save Page Metaboxes.
+           if ( true === $this->is_page ) {
+               // Add Save Metabox if Settings page is a page.
+               add_action( 'admin_init', array($this, 'add_submit_meta_box') );
 
-            // Save Admin Page Metabox.
-            add_action( 'admin_post_slickmetabox_form', array( $this, 'save_meta_box' ) );
-        } else {
-            // Save Post Metaboxes.
-            add_action( 'save_post', array( $this, 'save_meta_box' ), 10, 2 );
-        }
+               // Save Admin Page Metabox.
+               add_action( 'admin_post_slickmetabox_form', array($this, 'save_meta_box') );
+           } else {
+               // Save Post Metaboxes.
+               add_action( 'save_post', array($this, 'save_meta_box'), 10, 2 );
+           }
 
-        // Load Metabox Scripts.
-        add_action( 'admin_enqueue_scripts', array( $this, 'metabox_scripts_styles' ) );
+           // Load Metabox Scripts.
+           add_action( 'admin_enqueue_scripts', array($this, 'metabox_scripts_styles') );
+       }
     }
 
     /**
