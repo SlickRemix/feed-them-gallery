@@ -516,6 +516,7 @@ class Feed_Them_Gallery {
 		}
 	}
 
+
 	/**
 	 * FTG Review Check
 	 *
