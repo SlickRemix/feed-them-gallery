@@ -620,10 +620,10 @@ class Display_Gallery  {
 
         $onchange = isset( $_GET['ftg-tags'] ) ? 'onchange="location.href = location.href + \'&orderby=\' + orderby.options[selectedIndex].value"' : 'onchange="this.form.submit()"';
 
-        print '<div class="ftg-orderby-wrap' . $align_class . '"><form class="feed-them-gallery-ordering" method="get" ><select name="orderby" class="ftg-orderby" ' . $onchange . '>
-					<option value="menu_order"' . $orderby_original . '>' . esc_html( 'Sort order of Images', 'feed-them-gallery' ) . '</option>
-					<option value="title"' . $orderby_alphabetical . '>' . esc_html( 'Sort alphabetically (A-Z)', 'feed-them-gallery' ) . '</option>
-					<option value="date"' . $orderby_date . '>' . esc_html( 'Sort by date', 'feed-them-gallery' ) . '</option></select></form></div>';
+        print '<div class="ftg-orderby-wrap' . esc_attr( $align_class ) . '"><form class="feed-them-gallery-ordering" method="get" ><select name="orderby" class="ftg-orderby" ' . esc_attr( $onchange ) . '>
+					<option value="menu_order"' . esc_html( $orderby_original ) . '>' . esc_html( 'Sort order of Images', 'feed-them-gallery' ) . '</option>
+					<option value="title"' . esc_html( $orderby_alphabetical ) . '>' . esc_html( 'Sort alphabetically (A-Z)', 'feed-them-gallery' ) . '</option>
+					<option value="date"' . esc_html( $orderby_date ) . '>' . esc_html( 'Sort by date', 'feed-them-gallery' ) . '</option></select></form></div>';
     }
 
 
@@ -673,9 +673,9 @@ class Display_Gallery  {
         $ftg_align_count      = null !== $option['ftg_align_count'] ? $option['ftg_align_count'] : '';
         $ftg_display_count    = null !== $option['ftg_display_image_count'] ? $option['ftg_display_image_count'] : '';
 
-        $ft_gallery_pagination_text_color          = $option['ft_gallery_pagination_text_color'] ? '.ftg-pagination .page-numbers{color:' . $option['ft_gallery_pagination_text_color'] . '!important;}' : '';
-        $ft_gallery_pagination_button_color        = $option['ft_gallery_pagination_button_color'] ? '.ftg-pagination a.page-numbers{background:' . $option['ft_gallery_pagination_button_color'] . '!important;}' : '';
-        $ft_gallery_pagination_active_button_color = $option['ft_gallery_pagination_active_button_color'] ? '.ftg-pagination .page-numbers.current{background:' . $option['ft_gallery_pagination_active_button_color'] . '!important;}' : '';
+        $ft_gallery_pagination_text_color          = $option['ft_gallery_pagination_text_color'] ? '.ftg-pagination .page-numbers{color:' . esc_html( $option['ft_gallery_pagination_text_color'] ) . '!important;}' : '';
+        $ft_gallery_pagination_button_color        = $option['ft_gallery_pagination_button_color'] ? '.ftg-pagination a.page-numbers{background:' . esc_html( $option['ft_gallery_pagination_button_color'] ) . '!important;}' : '';
+        $ft_gallery_pagination_active_button_color = $option['ft_gallery_pagination_active_button_color'] ? '.ftg-pagination .page-numbers.current{background:' . esc_html( $option['ft_gallery_pagination_active_button_color'] ) . '!important;}' : '';
 
         if ( '' !== $ft_gallery_pagination_text_color || '' !== $ft_gallery_pagination_button_color || '' !== $ft_gallery_pagination_active_button_color ) {
             // FINISH CONVERTING THE PAGINATION STYLES TO SHOW... I NEED TO MOVE THIS TO STYLES IN HEADER I THINK... I DON'T SEE INLINE STYLE OPTIONS FOR https://developer.wordpress.org/reference/functions/paginate_links/
@@ -686,14 +686,14 @@ class Display_Gallery  {
 
         $align_count_class = 'right' === $ftg_align_count ? ' ftg-total-page-count-align-right' : '';
 
-        $ft_gallery_true_pagination_count_text_color = null !== $option['ft_gallery_true_pagination_count_text_color'] ? ' style="color:' . $option['ft_gallery_true_pagination_count_text_color'] . '"' : '';
-        $page_count                                  = 'yes' === $ftg_display_count ? '<div class="ftg-total-pagination-count' . $align_count_class . '"' . $ft_gallery_true_pagination_count_text_color . '>' . esc_html( 'Showing', 'feed-them-gallery' ) . ' ' . $per_page_final . '-' . $count_per_page . ' of ' . $total_pagination_count . ' ' . $pagination_text . '</div>' : '';
+        $ft_gallery_true_pagination_count_text_color = null !== $option['ft_gallery_true_pagination_count_text_color'] ? ' style="color:' . esc_attr( $option['ft_gallery_true_pagination_count_text_color'] ) . '"' : '';
+        $page_count                                  = 'yes' === $ftg_display_count ? '<div class="ftg-total-pagination-count' . esc_attr( $align_count_class ) . '"' . $ft_gallery_true_pagination_count_text_color . '>' . esc_html( 'Showing', 'feed-them-gallery' ) . ' ' . esc_html( $per_page_final ) . '-' . esc_html( $count_per_page ) . ' of ' . esc_html( $total_pagination_count ) . ' ' . esc_html( $pagination_text ) . '</div>' : '';
 
         if ( 'left' === $ftg_align_pagination ) {
             print $page_count;
         }
 
-        print '<div class="ftg-pagination' . $align_class . '">';
+        print '<div class="ftg-pagination' . esc_attr( $align_class ) . '">';
 
         print paginate_links(
             array(
@@ -1585,8 +1585,8 @@ class Display_Gallery  {
                 $ft_gallery_share_linkedin = 'https://www.linkedin.com/shareArticle?mini=true&url=' . $link . '&title=' . strip_tags( $image_description );
                 $ft_gallery_share_email    = 'mailto:?subject=Shared Link&body=' . $link . ' - ' . strip_tags( $image_description );
 
-                $fts_final_date = $this->ft_gallery_custom_date( $date, $feed_type );
-                $instagram_date = $fts_final_date;
+                $ftg_final_date = $this->ft_gallery_custom_date( $date, $feed_type );
+
                 // date_i18n( get_option( 'date_format' ), strtotime( '11/15-1976' ) );
                 // All text for img(s) on the page, this does not apply to image background gallery types
                 $ft_gallery_alt_text = $image['alt'] == true ? $image['alt'] : $img_title;
@@ -1686,7 +1686,7 @@ class Display_Gallery  {
                                         <a href="<?php print $username_link; ?>" target="<?php print $link_target; ?>"><?php print $username; ?></a><?php } ?></span>
                                 <?php } ?>
                                 <?php if ( isset( $hide_date ) && $hide_date == 'yes' ) { ?>
-                                    <span class="ft-gallery-post-time"><?php print $instagram_date; ?></span>
+                                    <span class="ft-gallery-post-time"><?php print esc_html( $ftg_final_date ); ?></span>
                                 <?php } ?>
 
                                 <div class="ft-gallery-description-wrap">
@@ -1886,7 +1886,7 @@ class Display_Gallery  {
                                     <?php } ?>
 
                                     <?php if ( $hide_date == 'yes' ) { ?>
-                                        <span class="ft-gallery-post-time"><?php print $instagram_date; ?></span>
+                                        <span class="ft-gallery-post-time"><?php print esc_html( $ftg_final_date ); ?></span>
                                     <?php } ?>
                                     <div class="ft-gallery-description-wrap">
                                         <?php if ( $title_description == 'title' || $title_description == 'title_description' ) { ?>
