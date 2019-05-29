@@ -617,4 +617,5 @@ class Feed_Them_Gallery {
 		$plugin_data     = get_plugin_data( $plugin_basename );
 		return $plugin_data['Version'];
 	}
+
 }
