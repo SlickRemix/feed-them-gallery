@@ -618,4 +618,5 @@ class Feed_Them_Gallery {
 		return $plugin_data['Version'];
 	}
 
+
 }
