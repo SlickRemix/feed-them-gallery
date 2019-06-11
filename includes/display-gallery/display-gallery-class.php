@@ -2,7 +2,7 @@
 /**
  * Display Gallery
  *
- * Class Feed Them Gallery Settings Page
+ * Class Display Gallery
  *
  * @class    Display_Gallery
  * @version  1.0.1
@@ -1114,10 +1114,10 @@ class Display_Gallery {
 		// format types are: post, post-in-grid, gallery.
 		$format_type = isset( $option['ft_gallery_type'] ) ? esc_html( $option['ft_gallery_type'] ) : '';
 
-        $my_request = stripslashes_deep( $_REQUEST );
+		$my_request = stripslashes_deep( $_REQUEST );
 		// Make sure it's not ajaxing.
 		if ( ! isset( $_GET['load_more_ajaxing'] ) ) {
-            $my_request['ft_gallery_dynamic_name'] = trim( $this->ft_gallery_rand_string( 10 ) );
+			$my_request['ft_gallery_dynamic_name'] = trim( $this->ft_gallery_rand_string( 10 ) );
 			// Create Dynamic Class Name.
 			$fts_dynamic_class_name = '';
 			if ( isset( $my_request['ft_gallery_dynamic_name'] ) ) {
@@ -2185,7 +2185,7 @@ if ( empty( $ftg['is_album'] ) || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET
 			if ( 'yes' === $ft_gallery_load_more_option ) {
 
 				// Load More BUTTON Start.
-                $my_request['ft_gallery_offset'] = $offset;
+				$my_request['ft_gallery_offset'] = $offset;
 
 				// Make sure it's not ajaxing.
 				if ( ! isset( $_GET['load_more_ajaxing'] ) ) {
@@ -2282,7 +2282,8 @@ if ( isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] ) {
 
 ?>
 												if (ft_gallery_posts<?php echo sanitize_text_field( wp_unslash( $my_request['ft_gallery_dynamic_name'] ) ); ?> >=  <?php echo esc_js( $final_post_count ); ?>) {
-													jQuery('#loadMore_<?php echo esc_js( $ft_gallery_dynamic_name ); ?>').replaceWith('<?php
+													jQuery('#loadMore_<?php echo esc_js( $ft_gallery_dynamic_name ); ?>').replaceWith('
+																				 <?php
 																					print '<div style="';
 																					if ( isset( $loadmore_btn_maxwidth ) && '' !== $loadmore_btn_maxwidth ) {
 																						print 'max-width:' . esc_js( $loadmore_btn_maxwidth ) . ';';
@@ -2642,7 +2643,7 @@ if ( isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] ) {
 	 */
 	public function ft_gallery_load_more() {
 
-        $my_request = stripslashes_deep( $_REQUEST );
+		$my_request = stripslashes_deep( $_REQUEST );
 
 		if ( ! wp_verify_nonce( $my_request['fts_security'], $my_request['fts_time'] . 'load-more-nonce' ) ) {
 			exit( 'Sorry, You can\'t do that!' );

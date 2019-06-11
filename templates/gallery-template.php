@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Template Name: Feed Them Gallery Template
  *
@@ -12,34 +11,39 @@
 
 get_header(); ?>
 
-<?php   while ( have_posts() ) : the_post(); ?>
+<?php
+while ( have_posts() ) :
+	the_post();
+	?>
 
-    <div id="top">
-        <div class="title_container">
-            <div class="page-header container">
-                <h2><?php
-                the_title( );
-                ?></h2>
-            </div><!-- .page-header -->
-        </div>
-    </div>
+	<div id="top">
+		<div class="title_container">
+			<div class="page-header container">
+				<h2>
+				<?php
+				the_title();
+				?>
+				</h2>
+			</div><!-- .page-header -->
+		</div>
+	</div>
 
-    <div id="primary" class="content-area container">
-        <main id="main" class="site-main" role="main">
-            <?php
+	<div id="primary" class="content-area container">
+		<main id="main" class="site-main" role="main">
+			<?php
 
-            global $post;
+			global $post;
 
-            $gallery_id = $post->ID;
-            if(!empty($gallery_id)){
-                print do_shortcode('[feed-them-gallery id="'.esc_html( $gallery_id ).'"]');
-            }
+			$gallery_id = $post->ID;
+			if ( ! empty( $gallery_id ) ) {
+				print do_shortcode( '[feed-them-gallery id="' . esc_html( $gallery_id ) . '"]' );
+			}
 
-            ?>
-        </main>
-        <!-- #main -->
-    </div>
-    <!-- #primary -->
+			?>
+		</main>
+		<!-- #main -->
+	</div>
+	<!-- #primary -->
 <?php endwhile;  // End of the loop. ?>
 
 <?php
