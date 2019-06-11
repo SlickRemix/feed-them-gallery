@@ -194,7 +194,7 @@ class Gallery {
 		return array_merge(
 			$sizes,
 			array(
-				'ft_gallery_thumb' => __( 'Feed Them Gallery Thumb' ),
+				'ft_gallery_thumb' => esc_html__( 'Feed Them Gallery Thumb' ),
 			)
 		);
 	}
@@ -229,7 +229,7 @@ class Gallery {
 	public function ft_gallery_check_page() {
 		$current_screen = get_current_screen();
 
-		if ( is_admin() && $current_screen->post_type == 'ft_gallery' && $current_screen->base == 'post' ) {
+		if ( is_admin() && 'ft_gallery' === $current_screen->post_type && 'post' === $current_screen->base ) {
 
 			if ( isset( $_GET['post'] ) ) {
 				$this->parent_post_id = $_GET['post'];
@@ -277,10 +277,10 @@ class Gallery {
 
 		// Check for error
 		if ( is_wp_error( $response ) ) {
-			return __( 'oops something isn\'t right.', 'feed-them-gallery' );
+			return esc_html__( 'oops something isn\'t right.', 'feed-them-gallery' );
 		}
 
-		$final_response = isset( $response->data ) ? $response->data : __( 'No Images attached to this post.', 'feed-them-gallery' );
+		$final_response = isset( $response->data ) ? $response->data : esc_html( 'No Images attached to this post.', 'feed-them-gallery' );
 
 		return $final_response;
 	}
@@ -306,7 +306,7 @@ class Gallery {
 
 		if ( ! $options_array ) {
 
-			// Basic Post Info
+			// Basic Post Info.
 			$options_array['ft_gallery_image_id'] = isset( $post_info->ID ) ? $post_info->ID : __( 'This ID does not exist anymore', 'feed-them-gallery' );
 			$options_array['ft_gallery_author']   = isset( $post_info->post_author ) ? $post_info->post_author : '';
 			// $options_array['ft_gallery_post_date'] = $post_info->post_date_gmt;
@@ -316,14 +316,14 @@ class Gallery {
 			foreach ( $this->saved_settings_array as $box_array ) {
 				foreach ( $box_array as $box_key => $settings ) {
 					if ( 'main_options' === $box_key ) {
-						// Gallery Settings
+						// Gallery Settings.
 						foreach ( $settings as $option ) {
 							$option_name          = ! empty( $option['name'] ) ? $option['name'] : '';
 							$option_default_value = ! empty( $option['default_value'] ) ? $option['default_value'] : '';
 
 							if ( ! empty( $option_name ) && ! empty( $option_default_value ) ) {
 
-								// Set value or use Default_value
+								// Set value or use Default_value.
 								$options_array[ $option_name ] = $option_default_value;
 							}
 						}
@@ -344,19 +344,19 @@ class Gallery {
 	 */
 	public function ft_gallery_cpt() {
 		$responses_cpt_args = array(
-			'label'               => __( 'Feed Them Gallery', 'feed-them-gallery' ),
+			'label'               => esc_html__( 'Feed Them Gallery', 'feed-them-gallery' ),
 			'labels'              => array(
-				'menu_name'          => __( 'Galleries', 'feed-them-gallery' ),
-				'name'               => __( 'Galleries', 'feed-them-gallery' ),
-				'singular_name'      => __( 'Gallery', 'feed-them-gallery' ),
-				'add_new'            => __( 'Add Gallery', 'feed-them-gallery' ),
-				'add_new_item'       => __( 'Add New Gallery', 'feed-them-gallery' ),
-				'edit_item'          => __( 'Edit Gallery', 'feed-them-gallery' ),
-				'new_item'           => __( 'New Gallery', 'feed-them-gallery' ),
-				'view_item'          => __( 'View Gallery', 'feed-them-gallery' ),
-				'search_items'       => __( 'Search Galleries', 'feed-them-gallery' ),
-				'not_found'          => __( 'No Galleries Found', 'feed-them-gallery' ),
-				'not_found_in_trash' => __( 'No Galleries Found In Trash', 'feed-them-gallery' ),
+				'menu_name'          => esc_html__( 'Galleries', 'feed-them-gallery' ),
+				'name'               => esc_html__( 'Galleries', 'feed-them-gallery' ),
+				'singular_name'      => esc_html__( 'Gallery', 'feed-them-gallery' ),
+				'add_new'            => esc_html__( 'Add Gallery', 'feed-them-gallery' ),
+				'add_new_item'       => esc_html__( 'Add New Gallery', 'feed-them-gallery' ),
+				'edit_item'          => esc_html__( 'Edit Gallery', 'feed-them-gallery' ),
+				'new_item'           => esc_html__( 'New Gallery', 'feed-them-gallery' ),
+				'view_item'          => esc_html__( 'View Gallery', 'feed-them-gallery' ),
+				'search_items'       => esc_html__( 'Search Galleries', 'feed-them-gallery' ),
+				'not_found'          => esc_html__( 'No Galleries Found', 'feed-them-gallery' ),
+				'not_found_in_trash' => esc_html__( 'No Galleries Found In Trash', 'feed-them-gallery' ),
 			),
 
 			'public'              => true,
@@ -395,17 +395,17 @@ class Gallery {
 	public function ft_gallery_categories() {
 
 		$labels = array(
-			'name'              => _x( 'Categories', 'feed-them-gallery' ),
-			'singular_name'     => _x( 'Category', 'feed-them-gallery' ),
-			'search_items'      => __( 'Search Categories', 'feed-them-gallery' ),
-			'all_items'         => __( 'All Categories', 'feed-them-gallery' ),
-			'parent_item'       => __( 'Parent Category', 'feed-them-gallery' ),
-			'parent_item_colon' => __( 'Parent Category:', 'feed-them-gallery' ),
-			'edit_item'         => __( 'Edit Category', 'feed-them-gallery' ),
-			'update_item'       => __( 'Update Category', 'feed-them-gallery' ),
-			'add_new_item'      => __( 'Add New Category', 'feed-them-gallery' ),
-			'new_item_name'     => __( 'New Category Name', 'feed-them-gallery' ),
-			'menu_name'         => __( 'Categories', 'feed-them-gallery' ),
+			'name'              => esc_html__( 'Categories', 'feed-them-gallery' ),
+			'singular_name'     => esc_html__( 'Category', 'feed-them-gallery' ),
+			'search_items'      => esc_html__( 'Search Categories', 'feed-them-gallery' ),
+			'all_items'         => esc_html__( 'All Categories', 'feed-them-gallery' ),
+			'parent_item'       => esc_html__( 'Parent Category', 'feed-them-gallery' ),
+			'parent_item_colon' => esc_html__( 'Parent Category:', 'feed-them-gallery' ),
+			'edit_item'         => esc_html__( 'Edit Category', 'feed-them-gallery' ),
+			'update_item'       => esc_html__( 'Update Category', 'feed-them-gallery' ),
+			'add_new_item'      => esc_html__( 'Add New Category', 'feed-them-gallery' ),
+			'new_item_name'     => esc_html__( 'New Category Name', 'feed-them-gallery' ),
+			'menu_name'         => esc_html__( 'Categories', 'feed-them-gallery' ),
 		);
 
 		register_taxonomy(
@@ -451,7 +451,7 @@ class Gallery {
 		// We are on the main menu item now. The filter is not needed anymore.
 		remove_filter( 'attribute_escape', array( $this, 'ft_gallery_rename_submenu_name' ) );
 
-		return 'FT Gallery';
+		return esc_html( 'FT Gallery' );
 	}
 
 	/**
@@ -463,22 +463,22 @@ class Gallery {
 	 * @since 1.0.0
 	 */
 	public function ft_gallery_updated_messages( $messages ) {
-		global $post, $post_ID;
+		// global $post, $post_ID;
 		$messages['ft_gallery'] = array(
 			0  => '', // Unused. Messages start at index 1.
-			1  => __( 'Gallery updated.', 'feed-them-gallery' ),
-			2  => __( 'Custom field updated.', 'feed-them-gallery' ),
-			3  => __( 'Custom field deleted.', 'feed-them-gallery' ),
-			4  => __( 'Gallery updated.', 'feed-them-gallery' ),
+			1  => esc_html__( 'Gallery updated.', 'feed-them-gallery' ),
+			2  => esc_html__( 'Custom field updated.', 'feed-them-gallery' ),
+			3  => esc_html__( 'Custom field deleted.', 'feed-them-gallery' ),
+			4  => esc_html__( 'Gallery updated.', 'feed-them-gallery' ),
 			/* translators: %s: date and time of the revision */
 			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Response restored to revision from %s', 'feed-them-gallery' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-			6  => __( 'Gallery created.', 'feed-them-gallery' ),
-			7  => __( 'Gallery saved.', 'feed-them-gallery' ),
-			8  => __( 'Gallery submitted.', 'feed-them-gallery' ),
-			9  => __( 'Gallery scheduled for: <strong>%1$s</strong>.', 'feed-them-gallery' ),
+			6  => esc_html__( 'Gallery created.', 'feed-them-gallery' ),
+			7  => esc_html__( 'Gallery saved.', 'feed-them-gallery' ),
+			8  => esc_html__( 'Gallery submitted.', 'feed-them-gallery' ),
+			9  => esc_html__( 'Gallery scheduled for:', 'feed-them-gallery' ),
 			// translators: Publish box date format, see http://php.net/date
 			// date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
-			10 => __( 'Gallery draft updated.', 'feed-them-gallery' ),
+			10 => esc_html__( 'Gallery draft updated.', 'feed-them-gallery' ),
 		);
 
 		return $messages;
@@ -498,14 +498,15 @@ class Gallery {
 		$new = array();
 
 		foreach ( $columns as $key => $value ) {
-
-			if ( $key == 'title' ) {  // when we find the date column
-				$new[ $key ]              = $value;
-				$new['gallery_thumb']     = __( '', 'feed-them-gallery' );  // put the tags column before it
-				$new['gallery_shortcode'] = __( 'Gallery Shortcode', 'feed-them-gallery' );
+			// when we find the date column.
+			if ( 'title' === $key ) {
+				$new[ $key ] = $value;
+				// put the tags column before it.
+				$new['gallery_thumb']     = '';
+				$new['gallery_shortcode'] = esc_html__( 'Gallery Shortcode', 'feed-them-gallery' );
 
 				if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
-					$text = __( 'Gallery ZIP', 'feed-them-gallery' );
+					$text = esc_html__( 'Gallery ZIP', 'feed-them-gallery' );
 				} else {
 					$text = '';
 				}
@@ -565,15 +566,20 @@ class Gallery {
 			case 'gallery_thumb':
 				$display_gallery = new Display_Gallery();
 				$image_list      = $display_gallery->ft_gallery_get_media_rest( $post_id, '1' );
+				$thumb_text      = $this->ft_gallery_count_post_images( $post_id ) . ' ' . esc_html__( 'Images', 'feed-them-gallery' );
+				$edit_post_url   = get_edit_post_link( $post_id );
 
 				if ( $image_list ) {
-					echo '<a href="' . get_edit_post_link( $post_id ) . '"><img src="' . $image_list[0]['media_details']['sizes']['thumbnail']['source_url'] . '" alt="" />';
-					echo $this->ft_gallery_count_post_images( $post_id ) . ' ' . __( 'Images', 'feed-them-gallery' ) . '</a>';
+					?>
+					<a href="<?php echo esc_url( $edit_post_url ); ?>"><img src="<?php echo esc_url( $image_list[0]['media_details']['sizes']['thumbnail']['source_url'] ); ?>" alt="" /><?php echo esc_html( $thumb_text ); ?></a>
+					<?php
 				}
 				break;
 			// display a thumbnail photo!
 			case 'gallery_shortcode':
-				echo '<input value="[feed-them-gallery id=' . $post_id . ']" onclick="this.select()"/>';
+				?>
+				<input value="[feed-them-gallery id=<?php echo esc_html( $post_id ); ?>]" onclick="this.select()"/>
+				<?php
 				break;
 
 			case 'gallery_zip':
@@ -584,14 +590,17 @@ class Gallery {
 					if ( $newest_zip ) {
 						$newest_zip_check = $this->ft_gallery_zip_exists_check( $newest_zip );
 
-						if ( $newest_zip_check == 'true' ) {
+						if ( 'true' === $newest_zip_check ) {
 							$ft_gallery_get_attachment_info = $this->ft_gallery_get_attachment_info( $newest_zip );
-							echo '<a class="ft_gallery_download_button_icon" href="' . $ft_gallery_get_attachment_info['download_url'] . '"><span class="dashicons dashicons-download"></span></a>';
+							?>
+							<a class="ft_gallery_download_button_icon" href="<?php echo esc_url( $ft_gallery_get_attachment_info['download_url'] ); ?>"><span class="dashicons dashicons-download"></span></a>
+							<?php
+
 						} else {
-							echo _e( 'No ZIP created.', 'feed-them-gallery' );
+							esc_html_e( 'No ZIP created.', 'feed-them-gallery' );
 						}
 					} else {
-						echo _e( 'No ZIP created.', 'feed-them-gallery' );
+						esc_html_e( 'No ZIP created.', 'feed-them-gallery' );
 					}
 				}
 				break;
@@ -612,19 +621,19 @@ class Gallery {
 	public function ft_gallery_set_button_text( $translated_text, $text, $domain ) {
 		$post_id          = isset( $_GET['post'] ) ? $_GET['post'] : '';
 		$custom_post_type = get_post_type( $post_id );
-		if ( ! empty( $post_id ) && $custom_post_type == 'ft_gallery_responses' ) {
+		if ( ! empty( $post_id ) && 'ft_gallery_responses' === $custom_post_type ) {
 			switch ( $translated_text ) {
 				case 'Publish':
-					$translated_text = __( 'Save Gallery', 'feed-them-gallery' );
+					$translated_text = esc_html__( 'Save Gallery', 'feed-them-gallery' );
 					break;
 				case 'Update':
-					$translated_text = __( 'Update Gallery', 'feed-them-gallery' );
+					$translated_text = esc_html__( 'Update Gallery', 'feed-them-gallery' );
 					break;
 				case 'Save Draft':
-					$translated_text = __( 'Save Gallery Draft', 'feed-them-gallery' );
+					$translated_text = esc_html__( 'Save Gallery Draft', 'feed-them-gallery' );
 					break;
 				case 'Edit Payment':
-					$translated_text = __( 'Edit Gallery', 'feed-them-gallery' );
+					$translated_text = esc_html__( 'Edit Gallery', 'feed-them-gallery' );
 					break;
 			}
 		}
@@ -646,22 +655,21 @@ class Gallery {
 		// Get current screen.
 		$current_screen = get_current_screen();
 
-		if ( is_admin() && 'ft_gallery' === $current_screen->post_type && 'post' === $current_screen->base  || is_admin() && 'ft_gallery' === $current_screen->post_type && isset( $_GET['page'] ) && 'template_settings_page' === $_GET['page'] || is_admin() && 'ft_gallery_albums' === $current_screen->post_type && 'post' === $current_screen->base ) {
+		if ( is_admin() && 'ft_gallery' === $current_screen->post_type && 'post' === $current_screen->base || is_admin() && 'ft_gallery' === $current_screen->post_type && isset( $_GET['page'] ) && 'template_settings_page' === $_GET['page'] || is_admin() && 'ft_gallery_albums' === $current_screen->post_type && 'post' === $current_screen->base ) {
 
 			// Set the post_id for localization.
-			$post_id = isset( $post->ID ) ?  array('post' => $post->ID ) : '';
+			$post_id = isset( $post->ID ) ? array( 'post' => $post->ID ) : '';
 
 			// Image Uploader!
-			wp_enqueue_media($post_id);
+			wp_enqueue_media( $post_id );
 
 			add_filter( 'plupload_init', array( $this, 'plupload_init' ) );
 
+			// Enqueue Magnific Popup CSS.
+			wp_enqueue_style( 'magnific-popup-css', plugins_url( 'feed-them-gallery/includes/feeds/css/magnific-popup.css' ), array(), FTG_CURRENT_VERSION );
 
-            // Enqueue Magnific Popup CSS.
-            wp_enqueue_style( 'magnific-popup-css', plugins_url( 'feed-them-gallery/includes/feeds/css/magnific-popup.css' ), array(), FTG_CURRENT_VERSION );
-
-            // Enqueue Magnific Popup JS.
-            wp_enqueue_script( 'magnific-popup-js', plugins_url( 'feed-them-gallery/includes/feeds/js/magnific-popup.js' ), array(), FTG_CURRENT_VERSION );
+			// Enqueue Magnific Popup JS.
+			wp_enqueue_script( 'magnific-popup-js', plugins_url( 'feed-them-gallery/includes/feeds/js/magnific-popup.js' ), array(), FTG_CURRENT_VERSION );
 
 			// Updates the attachments when saving
 			// add_filter( 'wp_insert_post_data', array( $this, 'ft_gallery_sort_images_meta_save' ), 99, 2 );
@@ -683,9 +691,9 @@ class Gallery {
 	 */
 	public function ft_gallery_sort_images_meta_save( $post_data ) {
 
-		$attach_ID = $this->ft_gallery_get_attachment_info( $post_data['ID'] );
+		$attach_id = $this->ft_gallery_get_attachment_info( $post_data['ID'] );
 
-		foreach ( $attach_ID as $img_index => $img_id ) {
+		foreach ( $attach_id as $img_index => $img_id ) {
 			$a = array(
 				'ID'         => $img_id,
 				'menu_order' => $img_index,
@@ -704,15 +712,15 @@ class Gallery {
 	 */
 	public function ft_gallery_add_metaboxes() {
 		global $post;
-		// Check we are using Feed Them Gallery Custom Post type
+		// Check we are using Feed Them Gallery Custom Post type.
 		if ( 'ft_gallery' !== $post->post_type ) {
 			return;
 		}
 
-		// Image Uploader and Gallery area in admin
+		// Image Uploader and Gallery area in admin.
 		add_meta_box( 'ft-galleries-upload-mb', __( 'Feed Them Gallery Settings', 'feed-them-gallery' ), array( $this, 'ft_gallery_tab_menu_metabox' ), 'ft_gallery', 'normal', 'high', null );
 
-		// Link Settings Meta Box
+		// Link Settings Meta Box.
 		add_meta_box( 'ft-galleries-shortcode-side-mb', __( 'Feed Them Gallery Shortcode', 'feed-them-gallery' ), array( $this, 'ft_gallery_shortcode_meta_box' ), 'ft_gallery', 'side', 'high', null );
 	}
 
@@ -749,29 +757,29 @@ class Gallery {
 		?>
 		<div class="ft-gallery-popup-form" style="display:none">
 
-			<label><?php echo __( 'Title of image', $this->plugin_locale ); ?></label>
+			<label><?php esc_html_e( 'Title of image', 'feed-them-gallery' ); ?></label>
 			<input value="" class="fts-gallery-title"/>
-			<label><?php echo __( 'Alt text for image', $this->plugin_locale ); ?></label>
+			<label><?php esc_html_e( 'Alt text for image', 'feed-them-gallery' ); ?></label>
 			<input value="" class="fts-gallery-alttext"/>
-			<label><?php echo __( 'Description of image', $this->plugin_locale ); ?></label>
+			<label><?php esc_html_e( 'Description of image', 'feed-them-gallery' ); ?></label>
 			<textarea class="fts-gallery-description"></textarea><br/>
-			<div class="tagsdiv popup-ftg-tags" id="ftg-tags" data-id="<?php echo $gallery_id; ?>"
+			<div class="tagsdiv popup-ftg-tags" id="ftg-tags" data-id="<?php echo esc_attr( $gallery_id ); ?>"
 				 data-taxonomy="ftg-tags">
 				<div class="jaxtag">
 
 					<div class="ajaxtag hide-if-no-js">
 						<label class="screen-reader-text"
-							   for="new-tag-ftg-tags"><?php echo __( 'Add New Tags', $this->plugin_locale ); ?></label>
+							   for="new-tag-ftg-tags"><?php esc_html_e( 'Add New Tags', 'feed-them-gallery' ); ?></label>
 						<p><input data-wp-taxonomy="ftg-tags" type="text" id="new-tag-ftg-tags" name="newtag[ftg-tags]"
 								  class="tax-input-ftg-tags newtag form-input-tip" size="16" autocomplete="off"
 								  aria-describedby="new-tag-ftg-tags-desc" value=""/>
-							<button class="button save-media-term" data-taxonomy="ftg-tags" data-id="<?php echo $gallery_id; ?>"><?php echo __( 'Add ', $this->plugin_locale ); ?></button>
+							<button class="button save-media-term" data-taxonomy="ftg-tags" data-id="<?php echo esc_attr( $gallery_id ); ?>"><?php esc_html_e( 'Add ', 'feed-them-gallery' ); ?></button>
 						</p>
 					</div>
-					<p class="howto" id="new-tag-ftg-tags-desc"><?php echo __( 'Separate tags with commas', $this->plugin_locale ); ?></p>
+					<p class="howto" id="new-tag-ftg-tags-desc"><?php esc_html_e( 'Separate tags with commas', 'feed-them-gallery' ); ?></p>
 
 				</div>
-				<p class="ftg-tags-none"><?php echo __( 'No Tags found for this Image.', $this->plugin_locale ); ?></p>
+				<p class="ftg-tags-none"><?php esc_html_e( 'No Tags found for this Image.', 'feed-them-gallery' ); ?></p>
 				<ul class="tagchecklist" role="list"></ul>
 			</div>
 
@@ -781,7 +789,7 @@ class Gallery {
 			<br/>
 			<div class="ft-submit-wrap"><a class="ft-gallery-edit-img-ajax button button-primary button-large"
 										   id="ft-gallery-edit-img-ajax" href="javascript:;"
-										   data-nonce="<?php echo wp_create_nonce( 'ft_gallery_edit_image_nonce' ); ?>"> <?php echo __( 'Save', $this->plugin_locale ); ?> </a>
+										   data-nonce="<?php echo esc_attr( wp_create_nonce( 'ft_gallery_edit_image_nonce' ) ); ?>"> <?php esc_html_e( 'Save', 'feed-them-gallery' ); ?> </a>
 			</div>
 		</div>
 		<div class="clear"></div>
@@ -801,16 +809,16 @@ class Gallery {
 	public function ft_gallery_metabox_tabs_list() {
 
 		$metabox_tabs_list = array(
-			// Base of each tab! The array keys are the base name and the array value is a list of tab keys
+			// Base of each tab! The array keys are the base name and the array value is a list of tab keys.
 			'base_tabs' => array(
 				'post' => array( 'images', 'layout', 'colors', 'zips', 'woocommerce', 'watermark', 'pagination', 'tags' ),
 			),
-			// Tabs List! The cont_func item is relative the the Function name for that tabs content. The array Keys for each tab are also relative to classes and ID on wraps of display_metabox_content function
+			// Tabs List! The cont_func item is relative the the Function name for that tabs content. The array Keys for each tab are also relative to classes and ID on wraps of display_metabox_content function.
 			'tabs_list' => array(
 				// Images Tab!
 				'images'      => array(
 					'menu_li_class'      => 'tab1',
-					'menu_a_text'        => __( 'Images', 'feed-them-gallery' ),
+					'menu_a_text'        => esc_html__( 'Images', 'feed-them-gallery' ),
 					'menu_a_class'       => 'account-tab-highlight',
 					'menu_aria_expanded' => 'true',
 					'cont_wrap_id'       => 'ftg-tab-content1',
@@ -819,49 +827,49 @@ class Gallery {
 				// Layout Tab!
 				'layout'      => array(
 					'menu_li_class' => 'tab2',
-					'menu_a_text'   => __( 'Layout', 'feed-them-gallery' ),
+					'menu_a_text'   => esc_html__( 'Layout', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content2',
 					'cont_func'     => 'tab_layout_content',
 				),
 				// Colors Tab!
 				'colors'      => array(
 					'menu_li_class' => 'tab3',
-					'menu_a_text'   => __( 'Colors', 'feed-them-gallery' ),
+					'menu_a_text'   => esc_html__( 'Colors', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content3',
 					'cont_func'     => 'tab_colors_content',
 				),
 				// Zips Tab!
 				'zips'        => array(
 					'menu_li_class' => 'tab4',
-					'menu_a_text'   => __( 'Zips', 'feed-them-gallery' ),
+					'menu_a_text'   => esc_html__( 'Zips', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content6',
 					'cont_func'     => 'tab_zips_content',
 				),
 				// WooCommerce Tab!
 				'woocommerce' => array(
 					'menu_li_class' => 'tab5',
-					'menu_a_text'   => __( 'WooCommerce', 'feed-them-gallery' ),
+					'menu_a_text'   => esc_html__( 'WooCommerce', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content5',
 					'cont_func'     => 'tab_woocommerce_content',
 				),
 				// Watermark Tab!
 				'watermark'   => array(
 					'menu_li_class' => 'tab6',
-					'menu_a_text'   => __( 'Watermark', 'feed-them-gallery' ),
+					'menu_a_text'   => esc_html__( 'Watermark', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content7',
 					'cont_func'     => 'tab_watermark_content',
 				),
 				// Pagination Tab!
 				'pagination'  => array(
 					'menu_li_class' => 'tab7',
-					'menu_a_text'   => __( 'Pagination', 'feed-them-gallery' ),
+					'menu_a_text'   => esc_html__( 'Pagination', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content8',
 					'cont_func'     => 'tab_pagination_content',
 				),
 				// Tags Tab!
 				'tags'        => array(
 					'menu_li_class' => 'tab8',
-					'menu_a_text'   => __( 'Tags', 'feed-them-gallery' ),
+					'menu_a_text'   => esc_html__( 'Tags', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content9',
 					'cont_func'     => 'tab_tags_content',
 				),
@@ -881,7 +889,7 @@ class Gallery {
 	 */
 	public function ft_gallery_tab_menu_metabox( $object ) {
 
-		// Popup HTML
+		// Popup HTML.
 		$this->ft_gallery_edit_page_popup( $this->parent_post_id );
 
 		$params['object'] = $object;
@@ -915,11 +923,10 @@ class Gallery {
 
 		global $wp_version;
 
-        // Set WordPress version:
-        $wp_version = substr( str_replace( '.', '', $wp_version ), 0, 2 );
+		// Set WordPress version.
+		$wp_version = substr( str_replace( '.', '', $wp_version ), 0, 2 );
 
-
-        $object        = $params['object'];
+		$object        = $params['object'];
 		$gallery_class = $params['this'];
 
 		/*
@@ -947,12 +954,12 @@ class Gallery {
 					<?php $thumbnail_id = get_post_thumbnail_id( $gallery_class->parent_post_id ); ?>
 					<?php $ajax_nonce = wp_create_nonce( "set_post_thumbnail-$gallery_class->parent_post_id" ); ?>
 					<?php
-					// adjust values here
-					$id       = 'img1'; // this will be the name of form field. Image url(s) will be submitted in $_POST using this key. So if $id == “img1" then $_POST[“img1"] will have all the image urls
+					// adjust values here.
+					$id       = 'img1'; // this will be the name of form field. Image url(s) will be submitted in $_POST using this key. So if $id == “img1" then $_POST[“img1"] will have all the image urls.
 					$svalue   = ''; // this will be initial value of the above form field. Image urls.
-					$multiple = true; // allow multiple files upload
-					$width    = null; // If you want to automatically resize all uploaded images then provide width here (in pixels)
-					$height   = null; // If you want to automatically resize all uploaded images then provide height here (in pixels)
+					$multiple = true; // allow multiple files upload.
+					$width    = null; // If you want to automatically resize all uploaded images then provide width here (in pixels).
+					$height   = null; // If you want to automatically resize all uploaded images then provide height here (in pixels).
 
 					if ( ! isset( $_GET['post'] ) ) {
 						global $post;
@@ -979,7 +986,7 @@ class Gallery {
 						$gallery_class->parent_post_id = $edit_link_url;
 					}
 
-					// check to see if the auto create option has been checked on the woocommerce tab and if so we add a class to the uploaderSection wrapper
+					// check to see if the auto create option has been checked on the woocommerce tab and if so we add a class to the uploaderSection wrapper.
 					if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && isset( $_GET['post'] ) ) {
 
 						$display_gallery = new Display_Gallery();
@@ -987,7 +994,7 @@ class Gallery {
 
 						$auto_woo_pro_option = $option['ft_gallery_auto_image_woo_prod'];
 
-						if ( $auto_woo_pro_option == 'true' ) {
+						if ( 'true'  == $auto_woo_pro_option) {
 							$ftg_auto_create_on_upload = ' class="ftg-auto-create-product-on-upload"';
 						}
 					}
@@ -997,10 +1004,10 @@ class Gallery {
 						<div id="plupload-upload-ui" class="hide-if-no-js drag-drop">
 							<div id="drag-drop-area">
 								<div class="drag-drop-inside">
-									<p class="drag-drop-info"><?php _e( 'Drop images here' ); ?></p>
+									<p class="drag-drop-info"><?php esc_attr_e( 'Drop images here' ); ?></p>
 									<p><?php _ex( 'or', 'Uploader: Drop Images here - or - Select Images' ); ?></p>
 									<div class="drag-drop-buttons">
-										<input id="<?php echo $id; ?>plupload-browse-button"
+										<input id="<?php echo esc_attr( $id ); ?>plupload-browse-button"
 											   type="button"
 											   value="<?php esc_attr_e( 'Select Images' ); ?>"
 											   class="button"/>
@@ -1011,14 +1018,16 @@ class Gallery {
 											<!--<a href="#" id="dgd_library_button" class="button insert-media add_media" data-editor="content" title="Add Media">-->
 											<a href="javascript:;" id="dgd_library_button"
 											   class="button" title="Add Media">
-												<span class="wp-media-buttons-icon"></span><?php _e( 'Media Library', $gallery_class->plugin_locale ); ?>
+												<span class="wp-media-buttons-icon"></span><?php esc_attr_e( 'Media Library', 'feed-them-gallery' ); ?>
 											</a>
-										<?php else : ?>
-											<a href="<?php bloginfo( 'wpurl' ); ?>/wp-admin/media-upload.php?post_id=<?php echo $gallery_class->parent_post_id; ?>&amp;tab=library&amp;=&amp;post_mime_type=image&amp;TB_iframe=1&amp;width=640&amp;height=353"
+										<?php else :
+                                            $browse_library_btn = bloginfo( 'wpurl' ) . '/wp-admin/media-upload.php?post_id=' . $gallery_class->parent_post_id . '&amp;tab=library&amp;=&amp;post_mime_type=image&amp;TB_iframe=1&amp;width=640&amp;height=353';
+                                            ?>
+											<a href="<?php echo esc_url( $browse_library_btn); ?>"
 											   class="thickbox add_media button-secondary"
 											   id="content-browse_library" title="Browse Media Library"
 											   onclick="return false;">
-												<?php _e( 'Media Library', 'feed-them-gallery' ); ?>
+												<?php esc_attr_e( 'Media Library', 'feed-them-gallery' ); ?>
 											</a>
 										<?php endif; ?>
 									</div>
@@ -1031,7 +1040,7 @@ class Gallery {
 					<div class="upload-max-size">
 						<?php
 						$bytes = wp_max_upload_size();
-						echo __( 'Maximum upload file size', $gallery_class->plugin_locale ) . ': ' . $gallery_class->ft_gallery_format_bytes( $bytes, $precision = 2 ) . ' MB.';
+						echo esc_html( 'Maximum upload file size', 'feed-them-gallery' ) . ': ' . $gallery_class->ft_gallery_format_bytes( $bytes, $precision = 2 ) . ' MB.';
 						?>
 					</div>
 
@@ -1073,7 +1082,7 @@ class Gallery {
 
 					if ( is_array( $image_list ) && $object->ID == true && isset( $image_list[0] ) ) {
 						?>
-						<div class="ftg-number-of-images-wrap"><?php echo $gallery_class->ft_gallery_count_post_images( $object->ID ); ?><?php _e( ' Images', 'feed-them-gallery' ); ?></div>
+						<div class="ftg-number-of-images-wrap"><?php echo esc_html( $gallery_class->ft_gallery_count_post_images( $object->ID ) ); ?><?php esc_html_e( ' Images', 'feed-them-gallery' ); ?></div>
 					<?php } ?>
 
 					<input type="hidden" name="<?php echo $id; ?>" id="<?php echo $id; ?>"
@@ -1086,7 +1095,7 @@ class Gallery {
 									plupload-upload-uic-multiple<?php endif; ?>"
 						 id="<?php echo $id; ?>plupload-upload-ui">
 									<span class="ajaxnonceplu"
-										  id="ajaxnonceplu<?php echo wp_create_nonce( $id . 'pluploadan' ); ?>"></span>
+										  id="ajaxnonceplu<?php echo esc_html( wp_create_nonce( $id . 'pluploadan' ) ); ?>"></span>
 						<?php if ( $width && $height ) : ?>
 							<span class="plupload-resize"></span>
 							<span class="plupload-width"
@@ -1194,19 +1203,19 @@ class Gallery {
 						<?php if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
 							<div class="gallery-edit-button-wrap">
 								<button type="button" class="button"
-										id="fts-gallery-checkAll"><?php _e( 'Select All', $gallery_class->plugin_locale ); ?></button>
+										id="fts-gallery-checkAll"><?php esc_html_e( 'Select All', 'feed-them-gallery' ); ?></button>
 							</div>
 						<?php } ?>
 						<div class="gallery-edit-button-wrap">
 							<button
 								<?php
 								if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
-									echo 'disabled ';
+                                    esc_html_e( 'disabled', 'feed-them-gallery' );
 								}
 								?>
 									type="button"
 									class="ft-gallery-download-gallery ft_gallery_download_button_icon button button-primary button-larg"
-									onclick="ft_gallery_create_zip('<?php echo $gallery_class->parent_post_id; ?>', 'yes','false')"><?php _e( 'Zip Gallery & Download', 'feed-them-gallery' ); ?></button>
+									onclick="ft_gallery_create_zip('<?php echo $gallery_class->parent_post_id; ?>', 'yes','false')"><?php esc_html_e( 'Zip Gallery & Download', 'feed-them-gallery' ); ?></button>
 							<a class="gallery-edit-button-question-one" href="javascript:;"
 							   rel="gallery-edit-question-download-gallery">?</a>
 						</div>
@@ -1218,14 +1227,14 @@ class Gallery {
 						<div class="gallery-edit-button-wrap">
 							<button disabled type="button"
 									class="ft-gallery-zip-gallery ft_gallery_download_button_icon button button-primary button-larg"
-									onclick="ft_gallery_create_zip('<?php echo $object->ID; ?>', 'no', 'yes', 'no')"><?php _e( 'Create Digital Gallery Product', 'feed-them-gallery' ); ?></button>
+									onclick="ft_gallery_create_zip('<?php esc_html_e($object->ID); ?>', 'no', 'yes', 'no')"><?php esc_html_e( 'Create Digital Gallery Product', 'feed-them-gallery' ); ?></button>
 							<a class="gallery-edit-button-question-two" href="javascript:;"
 							   rel="gallery-edit-question-digital-gallery-product">?</a>
 						</div>
 						<div class="gallery-edit-button-wrap">
 							<button type="button" disabled="disabled"
 									class="ft-gallery-create-woo ft_gallery_download_button_icon button button-primary button-larg"
-									onclick="ft_gallery_image_to_woo('<?php echo $gallery_class->parent_post_id; ?>')"><?php _e( 'Create individual Image Product(s)', 'feed-them-gallery' ); ?></button>
+									onclick="ft_gallery_image_to_woo('<?php esc_html_e( $gallery_class->parent_post_id ); ?>')"><?php esc_html_e( 'Create individual Image Product(s)', 'feed-them-gallery' ); ?></button>
 							<a class="gallery-edit-button-question-three" href="javascript:;"
 							   rel="gallery-edit-question-individual-image-product">?</a>
 						</div>
@@ -1235,7 +1244,7 @@ class Gallery {
 				<?php } ?>
 				<div class="gallery-edit-question-message gallery-edit-question-download-gallery"
 					 style="display: none;">
-					<h3><?php _e( 'Zip Gallery and Download' ); ?></h3>
+					<h3><?php esc_html_e( 'Zip Gallery and Download' ); ?></h3>
 					<?php
 					echo sprintf(
 						__( 'This button will create a zip of all the full size images in this gallery on the %1$sZIPs tab%2$s and then download a zip onto your computer. If you would like to just download a ZIP you have already made and NOT create a new ZIP of the gallery you may do so from the %1$sZIPs tab%2$s.', 'feed-them-gallery' ),
@@ -1269,7 +1278,7 @@ class Gallery {
 				</div>
 				<div class="gallery-edit-question-message gallery-edit-question-individual-image-product"
 					 style="display: none;">
-					<h3><?php _e( 'Create Products from Individual Images' ); ?></h3>
+					<h3><?php esc_html_e( 'Create Products from Individual Images' ); ?></h3>
 					<?php
 					echo sprintf(
 						__( 'This button will create a WooCommerce Product for each of the images selected below. 1 image creates 1 WooCommerce product. You must have either the "Global Model Product" or "Smart Image Orientation Model Product" selected on the %1$sWoocommerce tab%2$s for this to work. You must click the Select All button or click any of the images in your gallery below before you click the Create Individual Image Products(s) button.', 'feed-them-gallery' ),
@@ -1290,8 +1299,8 @@ class Gallery {
 							<?php
 							if ( $multiple ) :
 								?>
-								plupload-thumbs-multiple<?php endif; ?>" id="<?php echo $id; ?>plupload-thumbs"
-					data-post-id="<?php echo $object->ID; ?>">
+								plupload-thumbs-multiple<?php endif; ?>" id="<?php echo esc_attr( $id ); ?>plupload-thumbs"
+					data-post-id="<?php echo esc_attr( $object->ID ); ?>">
 					<?php
 					$show_title = get_post_meta( $object->ID, 'ft_gallery_show_title', true );
 					?>
@@ -1326,7 +1335,7 @@ class Gallery {
 							$image_source_medium       = wp_get_attachment_image_src( $attachment_id = $image['id'], 'medium', false );
 							$image_source_thumb        = wp_get_attachment_image_src( $attachment_id = $image['id'], 'thumbnail', false );
 
-							if ( isset( $image_size_name ) && $image_size_name !== 'Choose an option' ) {
+							if ( isset( $image_size_name ) && 'Choose an option' !== $image_size_name ) {
 								$image_source_popup = $item_final_popup[0];
 							} elseif ( isset( $image_source_large ) ) {
 								$image_source_popup = $image_source_large[0];
@@ -1890,10 +1899,9 @@ class Gallery {
 				<div class="ft-gallery-note ft-gallery-note-footer">
 				<?php
 
-			//	echo '<pre>';
-			//	print_r( $gallery_class->metabox_settings_class->get_saved_settings_array( $gallery_class->parent_post_id ) );
-			//	echo '</pre>';
-
+				// echo '<pre>';
+				// print_r( $gallery_class->metabox_settings_class->get_saved_settings_array( $gallery_class->parent_post_id ) );
+				// echo '</pre>';
 				echo sprintf(
 					__( 'Please %1$screate a ticket%2$s if you are experiencing trouble and one of our team members will be happy to assist you.', 'feed-them-gallery' ),
 					'<a href="' . esc_url( 'https://www.slickremix.com/my-account/#tab-support' ) . '" target="_blank">',
@@ -2019,7 +2027,7 @@ class Gallery {
 
 		// Use File & Title renaming
 		if ( get_option( 'ft-gallery-use-attachment-naming' ) == '1' ) {
-		    $file_name = preg_replace( '/\.[^.]+$/', '', basename( $status['url'] ) );
+			$file_name = preg_replace( '/\.[^.]+$/', '', basename( $status['url'] ) );
 			$this->ft_gallery_rename_attachment( $post_id, $attach_id, $file_name );
 			$this->ft_gallery_generate_new_attachment_name( $post_id, $attach_id, $file_name );
 		} else {
@@ -2087,14 +2095,14 @@ class Gallery {
 		if ( isset( $_POST['postID'] ) && get_option( 'ft_gallery_attch_title_date' ) == '1' ) {
 			$final_title .= date_i18n( 'F jS, Y' ) . ' ';
 		}
-        // Include File Name
-        if ( get_option( 'ft_gallery_attch_title_file_name' ) == '1' ) {
-            $final_title .= $file_name . ' ';
-        }
-        // Include Attch ID
-        if ( get_option( 'ft_gallery_attch_title_attch_id' ) == '1' ) {
-            $final_title .= $attachment_ID . ' ';
-        }
+		// Include File Name
+		if ( get_option( 'ft_gallery_attch_title_file_name' ) == '1' ) {
+			$final_title .= $file_name . ' ';
+		}
+		// Include Attch ID
+		if ( get_option( 'ft_gallery_attch_title_attch_id' ) == '1' ) {
+			$final_title .= $attachment_ID . ' ';
+		}
 
 		$this->ft_gallery_format_attachment_title( $final_title, $attachment_ID, 'true' );
 	}
@@ -2127,14 +2135,14 @@ class Gallery {
 		if ( isset( $_POST['postID'] ) && get_option( 'ft_gallery_attch_name_date' ) == '1' ) {
 			$final_filename .= date_i18n( 'F jS, Y' ) . '-';
 		}
-        // Include File Name
-        if ( get_option( 'ft_gallery_attch_name_file_name' ) == '1' ) {
-            $final_filename .= $file_name . ' ';
-        }
-        // Include Attch ID
-        if ( get_option( 'ft_gallery_attch_name_attch_id' ) == '1' ) {
-            $final_filename .= $attachment_ID . ' ';
-        }
+		// Include File Name
+		if ( get_option( 'ft_gallery_attch_name_file_name' ) == '1' ) {
+			$final_filename .= $file_name . ' ';
+		}
+		// Include Attch ID
+		if ( get_option( 'ft_gallery_attch_name_attch_id' ) == '1' ) {
+			$final_filename .= $attachment_ID . ' ';
+		}
 
 		$final_filename = sanitize_file_name( $final_filename );
 
