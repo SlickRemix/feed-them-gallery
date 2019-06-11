@@ -127,7 +127,7 @@ class FTGallery_Create_Image {
 			return $url;
 		}
 
-		// Get image info
+		// Get image info.
 		$common = $this->get_image_info( $args );
 
 		// Unpack variables if an array, otherwise return WP_Error.
@@ -160,7 +160,7 @@ class FTGallery_Create_Image {
 
 			// If cropping, process cropping.
 			if ( $crop ) {
-				$src_x = $src_y = 0;
+				$src_x = 0;
 				$src_w = $orig_width;
 				$src_h = $orig_height;
 
@@ -177,20 +177,20 @@ class FTGallery_Create_Image {
 				}
 
 				// Positional cropping.
-				if ( $align && $align != 'c' ) {
-					if ( strpos( $align, 't' ) !== false || strpos( $align, 'tr' ) !== false || strpos( $align, 'tl' ) !== false ) {
+				if ( $align && 'c' !== $align ) {
+					if ( false !== strpos( $align, 't' ) || false !== strpos( $align, 'tr' ) || false !== strpos( $align, 'tl' ) ) {
 						$src_y = 0;
 					}
 
-					if ( strpos( $align, 'b' ) !== false || strpos( $align, 'br' ) !== false || strpos( $align, 'bl' ) !== false ) {
+					if ( false !== strpos( $align, 'b' ) || false !== strpos( $align, 'br' ) || false !== strpos( $align, 'bl' ) ) {
 						$src_y = $orig_height - $src_h;
 					}
 
-					if ( strpos( $align, 'l' ) !== false ) {
+					if ( false !== strpos( $align, 'l' ) ) {
 						$src_x = 0;
 					}
 
-					if ( strpos( $align, 'r' ) !== false ) {
+					if ( false !== strpos( $align, 'r' ) ) {
 						$src_x = $orig_width - $src_w;
 					}
 				}
@@ -261,16 +261,17 @@ class FTGallery_Create_Image {
 		}
 
 		// Get the image file path.
-		$urlinfo       = parse_url( $url );
+		$urlinfo       = wp_parse_url( $url );
 		$wp_upload_dir = wp_upload_dir();
 
 		// Interpret the file path of the image.
 		if ( preg_match( '/\/[0-9]{4}\/[0-9]{2}\/.+$/', $urlinfo['path'], $matches ) ) {
 			$file_path = $wp_upload_dir['basedir'] . $matches[0];
 		} else {
-			$pathinfo    = parse_url( $url );
+			$pathinfo    = wp_parse_url( $url );
 			$uploads_dir = is_multisite() ? '/files/' : '/wp-content/';
-			$file_path   = ABSPATH . str_replace( dirname( $_SERVER['SCRIPT_NAME'] ) . '/', '', strstr( $pathinfo['path'], $uploads_dir ) );
+			$my_request  = stripslashes_deep( $_SERVER );
+			$file_path   = ABSPATH . str_replace( dirname( $my_request['SCRIPT_NAME'] ) . '/', '', strstr( $pathinfo['path'], $uploads_dir ) );
 			$file_path   = preg_replace( '/(\/\/)/', '/', $file_path );
 		}
 
@@ -300,7 +301,7 @@ class FTGallery_Create_Image {
 		}
 
 		// Allow for different retina image sizes.
-		$retina = $retina ? ( $retina === true ? 2 : $retina ) : 1;
+		$retina = $retina ? ( true === $retina ? 2 : $retina ) : 1;
 
 		// Destination width and height variables.
 		$dest_width  = $width * $retina;

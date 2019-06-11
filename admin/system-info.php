@@ -29,6 +29,13 @@ class System_Info {
 		$instance->add_actions_filters();
 	}
 
+    /**
+     * Add Action Filters
+     *
+     * Add System Info to our menu.
+     *
+     * @since 1.0.0
+     */
 	public function add_actions_filters() {
 		if ( is_admin() ) {
 			// Adds setting page to Feed Them Gallery menu.
@@ -121,7 +128,7 @@ cURL: <?php echo function_exists( 'curl_init' ) ? 'Your server supports cURL.' :
 
 -- Active Plugins:
 
-<?php
+		<?php
 		$plugins        = get_plugins();
 		$active_plugins = get_option( 'active_plugins', array() );
 		foreach ( $plugins as $plugin_path => $plugin ) {
@@ -129,29 +136,29 @@ cURL: <?php echo function_exists( 'curl_init' ) ? 'Your server supports cURL.' :
 			if ( ! in_array( $plugin_path, $active_plugins ) ) {
 					continue;
 			}
-echo $plugin['Name'] . ': ' . $plugin['Version'] . "\n";
+			echo $plugin['Name'] . ': ' . $plugin['Version'] . "\n";
 		}
 		if ( is_multisite() ) :
 			?>
 -- Network Active Plugins:
 
-<?php
+			<?php
 				$plugins        = wp_get_active_network_plugins();
 				$active_plugins = get_site_option( 'active_sitewide_plugins', array() );
 
-				foreach ( $plugins as $plugin_path ) {
-					$plugin_base = plugin_basename( $plugin_path );
+			foreach ( $plugins as $plugin_path ) {
+				$plugin_base = plugin_basename( $plugin_path );
 
-					// If the plugin isn't active, don't show it.
-					if ( ! array_key_exists( $plugin_base, $active_plugins ) ) {
-						continue;
-					}
-
-					$plugin = get_plugin_data( $plugin_path );
-
-echo $plugin['Name'] . ' :' . $plugin['Version'] . "\n";
-
+				// If the plugin isn't active, don't show it.
+				if ( ! array_key_exists( $plugin_base, $active_plugins ) ) {
+					continue;
 				}
+
+				$plugin = get_plugin_data( $plugin_path );
+
+				echo $plugin['Name'] . ' :' . $plugin['Version'] . "\n";
+
+			}
 			endif;
 
 		if ( is_plugin_active( 'feed-them-gallery/feed-them-gallery.php' ) ) {
@@ -161,7 +168,8 @@ echo $plugin['Name'] . ' :' . $plugin['Version'] . "\n";
 -- License
 
 License Active:
-<?php echo isset( $feed_them_gallery_license_key ) && $feed_them_gallery_license_key !== '' ? 'Yes' . "\n" : 'No' . "\n";
+			<?php
+			echo isset( $feed_them_gallery_license_key ) && $feed_them_gallery_license_key !== '' ? 'Yes' . "\n" : 'No' . "\n";
 		}
 		?>
 
