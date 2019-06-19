@@ -10,9 +10,10 @@
  * @category Class
  * @author   SlickRemix
  */
+
 namespace feed_them_gallery;
 
-// Exit if accessed directly
+// Exit if accessed directly!
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -22,10 +23,17 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Gallery_Options {
 
+	/**
+	 * All Gallery Options
+	 *
+	 * @var array
+	 */
 	public $all_options;
 
-	public function __construct() {
-	}
+	/**
+	 * Gallery_Options constructor.
+	 */
+	public function __construct() { }
 
 	/**
 	 * All Gallery Options
@@ -60,7 +68,7 @@ class Gallery_Options {
 	public function layout_options() {
 		$this->all_options['layout'] = array(
 			'section_attr_key'   => 'facebook_',
-			'section_title'      => __( 'Layout Options', 'feed-them-gallery' ),
+			'section_title'      => esc_html( 'Layout Options', 'feed-them-gallery' ),
 			'section_wrap_class' => 'ftg-section-options',
 			// Form Info.
 			'form_wrap_classes'  => 'fb-page-shortcode-form',
@@ -883,19 +891,19 @@ class Gallery_Options {
 					'id'                    => 'ftg_free_download_size',
 					'name'                  => 'ftg_free_download_size',
 					'default_value'         => '',
-					'placeholder'           =>  '',
+					'placeholder'           => '',
 					'autocomplete'          => 'off',
 				),
 
 				array(
-					'option_type'     => 'input',
-					'label'           => __( 'Free Download Text', 'feed-them-gallery' ),
-					'type'            => 'text',
-					'id'              => 'ft_gallery_free_download_text',
-					'name'            => 'ft_gallery_free_download_text',
-					'placeholder'     => 'Free Download',
-					'default_value'   => '',
-					'value'           => '',
+					'option_type'   => 'input',
+					'label'         => __( 'Free Download Text', 'feed-them-gallery' ),
+					'type'          => 'text',
+					'id'            => 'ft_gallery_free_download_text',
+					'name'          => 'ft_gallery_free_download_text',
+					'placeholder'   => 'Free Download',
+					'default_value' => '',
+					'value'         => '',
 				),
 
 			),
@@ -990,8 +998,8 @@ class Gallery_Options {
 					'label'         => __( 'Image Count Text Color', 'feed-them-gallery' ),
 					'class'         => 'fb-border-bottom-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:\'#eee\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'white\'}',
 					'type'          => 'text',
-					'id'            => 'ft-gallery-pagination-text-color-input',
-					'name'          => 'ft_gallery_pagination_text_color',
+					'id'            => 'ft-gallery-loadmore-count-text-color-input',
+					'name'          => 'ft_gallery_loadmore_count_text_color',
 					'default_value' => '',
 					'placeholder'   => __( '#ddd', 'feed-them-gallery' ),
 					'autocomplete'  => 'off',

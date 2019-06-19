@@ -10,80 +10,80 @@ class Feed_Them_Gallery {
 
 	public static function load_plugin() {
 
-			$plugin_loaded = new self();
+		$plugin_loaded = new self();
 
-			$plugin_loaded->pre_plugin_checks();
+		$plugin_loaded->pre_plugin_checks();
 
-			$gallery_main_post_type = 'ft_gallery';
+		$gallery_main_post_type = 'ft_gallery';
 
-			$albums_main_post_type = 'ft_gallery_albums';
+		$albums_main_post_type = 'ft_gallery_albums';
 
-			// Add Actions and Filters.
-			$plugin_loaded->add_actions_filters();
+		// Setup Constants for FT Gallery.
+		self::setup_constants();
 
-			// Setup Constants for FT Gallery.
-			self::setup_constants();
+		// Include the files.
+		self::includes();
 
-			// Include the files.
-			self::includes();
+		// Add Actions and Filters.
+		$plugin_loaded->add_actions_filters();
 
-			// Gallery Options.
-			$gallery_options = feed_them_gallery\Gallery_Options::get_all_options();
+		// Gallery Options.
+		$gallery_options = feed_them_gallery\Gallery_Options::get_all_options();
 
-			// Settings Page.
-			feed_them_gallery\Settings_Page::load();
+		// Settings Page.
+		feed_them_gallery\Settings_Page::load();
 
-			// System Info.
-			feed_them_gallery\System_Info::load();
+		// System Info.
+		feed_them_gallery\System_Info::load();
 
-			// Setup Plugin functions.
-			feed_them_gallery\Setup_Functions::load();
+		// Setup Plugin functions.
+		feed_them_gallery\Setup_Functions::load();
 
-			// Core.
-			feed_them_gallery\Core_Functions::load();
+		// Core.
+		feed_them_gallery\Core_Functions::load();
 
-			// Display Gallery.
-			feed_them_gallery\Display_Gallery::load();
+		// Display Gallery.
+		feed_them_gallery\Display_Gallery::load();
 
-			// Galleries.
-			feed_them_gallery\Gallery::load( $gallery_options, $gallery_main_post_type );
+		// Galleries.
+		feed_them_gallery\Gallery::load( $gallery_options, $gallery_main_post_type );
 
 		// Load in Premium Gallery glasses if premium is loaded.
 		if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 
-            $ftgp_current_version = defined( 'FTGP_CURRENT_VERSION' ) ? FTGP_CURRENT_VERSION : '';
+			$ftgp_current_version = defined( 'FTGP_CURRENT_VERSION' ) ? FTGP_CURRENT_VERSION : '';
 
-            if ( $ftgp_current_version > '1.0.5' ) {
-                // Template Settings Options.
-                $template_settings_options = feed_them_gallery\Template_Settings_Options::get_all_options();
+			if ( $ftgp_current_version > '1.0.5' ) {
+				// Template Settings Options.
+				$template_settings_options = feed_them_gallery\Template_Settings_Options::get_all_options();
 
-                // Template Settings Page.
-                feed_them_gallery\Template_Settings_Page::load( $template_settings_options, $gallery_main_post_type );
+				// Template Settings Page.
+				feed_them_gallery\Template_Settings_Page::load( $template_settings_options, $gallery_main_post_type );
 
-                // Media Taxonomies.
-                feed_them_gallery\Media_Taxonomies::load();
+				// Media Taxonomies.
+				feed_them_gallery\Media_Taxonomies::load();
 
-                // Album Options.
-                $gallery_options = feed_them_gallery\Album_Options::get_all_options();
+				// Album Options.
+				$gallery_options = feed_them_gallery\Album_Options::get_all_options();
 
-                // Albums.
-                feed_them_gallery\Albums::load( $gallery_options, $albums_main_post_type );
+				// Albums.
+				feed_them_gallery\Albums::load( $gallery_options, $albums_main_post_type );
 
-            }
+			}
 			// Gallery to Woocommerce.
 			new feed_them_gallery\Gallery_to_Woocommerce();
 
 			// Zip Gallery.
 			new feed_them_gallery\Zip_Gallery();
 		}
-			// Shortcode Button for Admin page, posts and cpt's.
-			feed_them_gallery\Shortcode_Button::load();
+		// Shortcode Button for Admin page, posts and cpt's.
+		feed_them_gallery\Shortcode_Button::load();
 
-			// Shortcodes.
-			new feed_them_gallery\Shortcodes();
+		// Shortcodes.
+		new feed_them_gallery\Shortcodes();
 
-			// Updater Init.
-			new feed_them_gallery\updater_init();
+		// Updater Init.
+		new feed_them_gallery\updater_init();
 
 		// Variables to define specific terms!
 		$transient = 'ftg_slick_rating_notice_waiting';
@@ -95,19 +95,20 @@ class Feed_Them_Gallery {
 		$plugin_loaded->ftg_maybe_set_transient( $transient, $option );
 
 		$plugin_loaded->set_review_status( $option, $transient );
+
 	}
 
 	public function add_actions_filters() {
 		register_activation_hook( __FILE__, array( $this, 'ftg_activate' ) );
-			add_action( 'admin_notices', array( $this, 'ft_gallery_display_install_notice' ) );
-			add_action( 'admin_notices', array( $this, 'ft_gallery_display_update_notice' ) );
-			add_action( 'upgrader_process_complete', array( $this, 'ft_gallery_upgrade_completed', 10, 2 ) );
+		add_action( 'admin_notices', array( $this, 'ft_gallery_display_install_notice' ) );
+		add_action( 'admin_notices', array( $this, 'ft_gallery_display_update_notice' ) );
+		add_action( 'upgrader_process_complete', array( $this, 'ft_gallery_upgrade_completed', 10, 2 ) );
 
-			// Include our own Settings link to plugin activation and update page.
-			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'ft_gallery_free_plugin_actions' ), 10, 4 );
+		// Include our own Settings link to plugin activation and update page.
+		add_filter( 'plugin_action_links_' . FEED_THEM_GALLERY_PLUGIN_BASENAME, array( $this, 'ft_gallery_free_plugin_actions' ), 10, 4 );
 
-			// Include Leave feedback, Get support and Plugin info links to plugin activation and update page.
-			add_filter( 'plugin_row_meta', array( $this, 'ft_gallery_leave_feedback_link' ), 10, 2 );
+		// Include Leave feedback, Get support and Plugin info links to plugin activation and update page.
+		add_filter( 'plugin_row_meta', array( $this, 'ft_gallery_leave_feedback_link' ), 10, 2 );
 
 		if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 			/* AJAX add to cart variable  */
@@ -147,10 +148,11 @@ class Feed_Them_Gallery {
 			deactivate_plugins( 'feed-them-gallery/feed-them-gallery.php' );
 			if ( $phpversion < $phpcheck ) {
 				add_action( 'admin_notices', array( $this, 'ft_gallery_required_php_check1' ) );
-
 			}
 		}
 
+		// Uncomment this to test. PHP check.
+		// add_action( 'admin_notices', array( $this, 'ft_gallery_required_php_check1' ) );
 	}
 
 	public function woocommerce_add_to_cart_variable_rc_callback_ftg() {
@@ -199,7 +201,7 @@ class Feed_Them_Gallery {
 	 */
 	public function ft_gallery_upgrade_completed( $upgrader_object, $options ) {
 		// The path to our plugin's main file.
-		$our_plugin = plugin_basename( __FILE__ );
+		$our_plugin = FEED_THEM_GALLERY_PLUGIN_BASENAME;
 		// If an update has taken place and the updated type is plugins and the plugins element exists.
 		if ( 'update' === $options['action'] && 'plugin' === $options['type'] && isset( $options['plugins'] ) ) {
 			// Iterate through the plugins being updated and check if ours is there.
@@ -279,25 +281,39 @@ class Feed_Them_Gallery {
 			require_once ABSPATH . '/wp-admin/includes/plugin.php';
 		}
 
-		$plugin_data    = get_plugin_data( __FILE__ );
-		$plugin_version = $plugin_data['Version'];
-		// Plugin version.
+		// Plugin Basename.
+		if ( ! defined( 'FEED_THEM_GALLERY_PLUGIN_BASENAME' ) ) {
+			define( 'FEED_THEM_GALLERY_PLUGIN_BASENAME', 'feed-them-gallery/feed-them-gallery.php' );
+		}
+
+		// Plugins Absolute Path. (Needs to be after BASENAME constant to work).
+		if ( ! defined( 'FEED_THEM_GALLERY_PLUGIN_ABS_PATH' ) ) {
+			define( 'FEED_THEM_GALLERY_PLUGIN_ABS_PATH', plugin_dir_path( __DIR__ ) . FEED_THEM_GALLERY_PLUGIN_BASENAME );
+		}
+
+		// Plugin version. (Needs to be after BASENAME and ABS_PATH constants to work).
 		if ( ! defined( 'FEED_THEM_GALLERY_VERSION' ) ) {
+
+			$plugin_data    = get_plugin_data( FEED_THEM_GALLERY_PLUGIN_ABS_PATH );
+			$plugin_version = $plugin_data['Version'];
+
 			define( 'FEED_THEM_GALLERY_VERSION', $plugin_version );
 		}
+
 		// Plugin Folder Path.
 		if ( ! defined( 'FEED_THEM_GALLERY_PLUGIN_PATH' ) ) {
 			define( 'FEED_THEM_GALLERY_PLUGIN_PATH', plugins_url() );
 		}
-		// Plugin Directoy Path.
+		// Plugin Directory Path.
 		if ( ! defined( 'FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR' ) ) {
 			define( 'FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR', plugin_dir_path( __FILE__ ) );
 		}
 
-		// Plugin Directoy Path.
+		// Premium Plugin Directoy Path.
 		if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && ! defined( 'FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR' ) ) {
 			define( 'FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR', WP_PLUGIN_DIR . '/feed-them-gallery-premium/feed-them-gallery-premium.php' );
 		}
+
 	}
 
 	/**
@@ -314,7 +330,6 @@ class Feed_Them_Gallery {
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'metabox-settings/metabox-settings-class.php';
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'admin/settings-page.php';
 
-
 		// Setup Functions Class.
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/setup-functions-class.php';
 
@@ -330,29 +345,28 @@ class Feed_Them_Gallery {
 		// Display Gallery.
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/display-gallery/display-gallery-class.php';
 
-
 		// Create Image.
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/galleries/create-image.php';
 
 		if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 
-            $ftgp_current_version = defined( 'FTGP_CURRENT_VERSION' ) ? FTGP_CURRENT_VERSION : '';
+			$ftgp_current_version = defined( 'FTGP_CURRENT_VERSION' ) ? FTGP_CURRENT_VERSION : '';
 
-            if ( FTGP_CURRENT_VERSION > '1.0.5' ) {
-                // Tags/Taxonomies for images.
-                include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'includes/taxonomies/media-taxonomies.php';
-                // Album Options.
-                include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'includes/albums/album-options.php';
+			if ( FTGP_CURRENT_VERSION > '1.0.5' ) {
+				// Tags/Taxonomies for images.
+				include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'includes/taxonomies/media-taxonomies.php';
+				// Album Options.
+				include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'includes/albums/album-options.php';
 
-                // Albums.
-                include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'includes/albums/albums-class.php';
+				// Albums.
+				include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'includes/albums/albums-class.php';
 
-                // Template Settings Options.
-                include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'admin/template-settings-options.php';
+				// Template Settings Options.
+				include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'admin/template-settings-options.php';
 
-                // Template Settings Page.
-                include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'admin/template-settings-page-class.php';
-            }
+				// Template Settings Page.
+				include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'admin/template-settings-page-class.php';
+			}
 
 			// Zip Gallery.
 			include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'includes/galleries/download.php';
@@ -387,7 +401,7 @@ class Feed_Them_Gallery {
 	 */
 	public function ft_gallery_action_init() {
 		// Localization.
-		load_plugin_textdomain( 'feed-them-gallery', false, basename( dirname( __FILE__ ) ) . '/languages' );
+		load_plugin_textdomain( 'feed-them-gallery', false, FEED_THEM_GALLERY_PLUGIN_BASENAME . '/languages' );
 	}
 
 	/**
@@ -444,9 +458,9 @@ class Feed_Them_Gallery {
 	 * @since 1.0.0
 	 */
 	public function ft_gallery_leave_feedback_link( $links, $file ) {
-		if ( $file === plugin_basename( __FILE__ ) ) {
+		if ( FEED_THEM_GALLERY_PLUGIN_BASENAME === $file ) {
 			$links['feedback'] = sprintf(
-				__( '%1$sRate Plugin%2$s', 'feed-them-social' ),
+				__( '%1$sRate Plugin%2$s', 'feed-them-gallery' ),
 				'<a href="' . esc_url( 'https://wordpress.org/support/plugin/feed-them-gallery/reviews/' ) . '" target="_blank">',
 				'</a>'
 			);
@@ -525,7 +539,6 @@ class Feed_Them_Gallery {
 	 * @param $nag
 	 * @param $option
 	 * @param $transient
-	 * @return mixed
 	 * @since 1.0.8
 	 */
 	public function ftg_check_nag_get( $get, $nag, $option, $transient ) {
@@ -539,7 +552,6 @@ class Feed_Them_Gallery {
 				update_option( $option, 'pending' );
 			}
 		}
-
 	}
 
 	public function set_review_status( $option, $transient ) {
@@ -549,6 +561,9 @@ class Feed_Them_Gallery {
 		if ( 'ftg-review-waiting' !== get_transient( $transient ) && 'dismissed' !== $notice_status ) {
 			add_action( 'admin_notices', 'ftg_rating_notice_html' );
 		}
+
+		// Uncomment this for testing the notice.
+		// add_action( 'admin_notices', array( $this, 'ftg_rating_notice_html' ) );
 	}
 
 	/**
@@ -556,33 +571,32 @@ class Feed_Them_Gallery {
 	 *
 	 * Generates the html for the admin notice
 	 *
-	 * @return mixed
 	 * @since 1.0.8
 	 */
 	public function ftg_rating_notice_html() {
-
 		// Only show to admins.
 		if ( current_user_can( 'manage_options' ) ) {
-
 			global $current_user;
 			$user_id = $current_user->ID;
-
 			/* Has the user already clicked to ignore the message? */
 			if ( ! get_user_meta( $user_id, 'ftg_slick_ignore_rating_notice' ) ) {
-				$output  = '<div class="ftg_notice ftg_review_notice">';
-				$output .= "<img src='" . plugins_url( 'feed-them-gallery/admin/css/ft-gallery-logo.png' ) . "' alt='Feed Them Gallery'>";
-				$output .= "<div class='ftg-notice-text'>";
-				$output .= '<p>' . __( 'It\'s great to see that you\'ve been using our Feed Them Gallery plugin for a while now. Hopefully you\'re happy with it!  If so, would you consider leaving a positive review? It really helps support the plugin and helps others discover it too!', 'feed-them-social' ) . '</p>';
-				$output .= '<p class="ftg-links">';
-				$output .= '<a class="ftg_notice_dismiss" href="https://wordpress.org/support/plugin/feed-them-gallery/reviews/#new-post" target="_blank">' . __( 'Sure, I\'de love to', 'feed-them-social' ) . '</a>';
-				$output .= '<a class="ftg_notice_dismiss" href="' . esc_url( add_query_arg( 'ftg_slick_ignore_rating_notice_nag', '1' ) ) . '">' . __( 'I\'ve already given a review', 'feed-them-social' ) . '</a>';
-				$output .= '<a class="ftg_notice_dismiss" href="' . esc_url( add_query_arg( 'ftg_slick_ignore_rating_notice_nag', 'later' ) ) . '">' . __( 'Ask me later', 'feed-them-social' ) . '</a>';
-				$output .= '<a class="ftg_notice_dismiss" href="https://wordpress.org/support/plugin/feed-them-gallery/#new-post" target="_blank">' . __( 'Not working, I need support', 'feed-them-social' ) . '</a>';
-				$output .= '<a class="ftg_notice_dismiss" href="' . esc_url( add_query_arg( 'ftg_slick_ignore_rating_notice_nag', '1' ) ) . '">' . __( 'No thanks', 'feed-them-social' ) . '</a>';
-				$output .= '</p>';
-				$output .= '</div>';
-				$output .= '</div>';
-				echo $output;
+				?>
+				<div class="ftg_notice ftg_review_notice">
+					<img src="<?php echo esc_url( plugins_url( 'feed-them-gallery/admin/css/ft-gallery-logo.png' ) ); ?>" alt="Feed Them Gallery">
+					<div class='ftg-notice-text'>
+						<p><?php echo esc_html( 'It\'s great to see that you\'ve been using our Feed Them Gallery plugin for a while now. Hopefully you\'re happy with it!  If so, would you consider leaving a positive review? It really helps support the plugin and helps others discover it too!', 'feed-them-gallery' ); ?></p>
+						<p class="ftg-links">
+							<a class="ftg_notice_dismiss" href="<?php echo esc_url( 'https://wordpress.org/support/plugin/feed-them-gallery/reviews/#new-post' ); ?>" target="_blank"><?php echo esc_html( 'Sure, I\'d love to', 'feed-them-gallery' ); ?></a>
+							<a class="ftg_notice_dismiss" href="<?php echo esc_url( add_query_arg( 'ftg_slick_ignore_rating_notice_nag', '1' ) ); ?>"><?php echo esc_html( 'I\'ve already given a review', 'feed-them-gallery' ); ?></a>
+							<a class="ftg_notice_dismiss" href="<?php echo esc_url( add_query_arg( 'ftg_slick_ignore_rating_notice_nag', 'later' ) ); ?>"><?php echo esc_html( 'Ask me later', 'feed-them-gallery' ); ?> </a>
+							<a class="ftg_notice_dismiss" href="<?php echo esc_url( 'https://wordpress.org/support/plugin/feed-them-gallery/#new-post' ); ?>" target="_blank"><?php echo esc_html( 'Not working, I need support', 'feed-them-gallery' ); ?></a>
+							<a class="ftg_notice_dismiss" href="<?php echo esc_url( add_query_arg( 'ftg_slick_ignore_rating_notice_nag', '1' ) ); ?>"><?php echo esc_html( 'No thanks', 'feed-them-gallery' ); ?></a>
+						</p>
+
+					</div>
+				</div>
+
+				<?php
 			}
 		}
 	}
@@ -597,8 +611,9 @@ class Feed_Them_Gallery {
 	 */
 	public static function ft_gallery_check_version() {
 
-		$plugin_basename = plugin_dir_path( __DIR__ ) . plugin_basename( __DIR__ ) . '/feed-them-gallery.php';
-		$plugin_data     = get_plugin_data( $plugin_basename );
+		$plugin_data = get_plugin_data( FEED_THEM_GALLERY_PLUGIN_ABS_PATH );
+
 		return $plugin_data['Version'];
 	}
+
 }
