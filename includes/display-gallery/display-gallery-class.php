@@ -2282,8 +2282,7 @@ if ( isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] ) {
 
 ?>
 												if (ft_gallery_posts<?php echo sanitize_text_field( wp_unslash( $my_request['ft_gallery_dynamic_name'] ) ); ?> >=  <?php echo esc_js( $final_post_count ); ?>) {
-													jQuery('#loadMore_<?php echo esc_js( $ft_gallery_dynamic_name ); ?>').replaceWith('
-																				 <?php
+													jQuery('#loadMore_<?php echo esc_js( $ft_gallery_dynamic_name ); ?>').replaceWith('<?php
 																					print '<div style="';
 																					if ( isset( $loadmore_btn_maxwidth ) && '' !== $loadmore_btn_maxwidth ) {
 																						print 'max-width:' . esc_js( $loadmore_btn_maxwidth ) . ';';

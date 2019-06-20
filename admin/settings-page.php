@@ -62,8 +62,8 @@ class Settings_Page {
 		// Settings Page.
 		add_submenu_page(
 			'edit.php?post_type=ft_gallery',
-			__( 'Settings', 'feed-them-gallery' ),
-			__( 'Settings', 'feed-them-gallery' ),
+			esc_html__( 'Settings', 'feed-them-gallery' ),
+            esc_html__( 'Settings', 'feed-them-gallery' ),
 			'manage_options',
 			'ft-gallery-settings-page',
 			array( $this, 'Settings_Page' )
