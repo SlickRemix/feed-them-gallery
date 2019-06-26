@@ -130,7 +130,7 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
    * NEW: Security Refactor of the whole plugin to stop XSS injections and other possibly malicious attempts to hack through the plugin.
    * NEW: Layout Tab: Show the image caption info above or below the photos.
    * FIX: When editing an image description single or double quotes would return a backslash. Also you can now simple use the return keyboard key to make line/paragraph breaks. No more html like <br/> required to make line breaks.
-   * FIX: Settings: Cart optoins not all working proper.
+   * FIX: Settings: Cart options not all working proper.
    * FIX: Settings: Some file renaming options not working proper.
    * FIX: Loadmore option was duplicating the output of images if you had not sorted the images in your gallery. Now the default option is sorted by date.
    * PREMIUM NEW: WooCommerce Tab: Cart Icon over image if using the Gallery layout option. You can choose the position, and colors for the icon.
