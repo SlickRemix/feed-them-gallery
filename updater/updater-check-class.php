@@ -67,7 +67,7 @@ class updater_check_class {
         ?>
 
         <div class="error notice">
-            <p><?php _e($this->plugin_name . ' needs a valid License Key! <a href="admin.php?page=fts-license-page">Click here to add one</a> or you won\'t recieve updates. - <a href="https://www.slickremix.com/my-account/" target="_blank">You can get License Key Here.</a>', 'feed-them-social'); ?></p>
+            <p><?php _e($this->plugin_name . ' needs a valid License Key! <a href="edit.php?post_type=ft_gallery&page=ft-gallery-license-page">Click here to add one</a> or you won\'t recieve updates. - <a href="https://www.slickremix.com/my-account/" target="_blank">You can get License Key Here.</a>', 'feed-them-social'); ?></p>
         </div>
 
         <?php
@@ -82,7 +82,7 @@ class updater_check_class {
         ?>
 
         <div class="error notice">
-            <p><?php _e($this->plugin_name . ' - Your License Key is not active, expired, or is invalid. <a href="admin.php?page=fts-license-page">Click here to add one</a> or you won\'t recieve updates. - <a href="https://www.slickremix.com/my-account/" target="_blank">You can get License Key Here.</a>', 'feed-them-social'); ?></p>
+            <p><?php _e($this->plugin_name . ' - Your License Key is not active, expired, or is invalid. <a href="edit.php?post_type=ft_gallery&page=ft-gallery-license-page">Click here to add one</a> or you won\'t recieve updates. - <a href="https://www.slickremix.com/my-account/" target="_blank">You can get License Key Here.</a>', 'feed-them-social'); ?></p>
         </div>
 
         <?php
@@ -156,7 +156,7 @@ class updater_check_class {
             return $_transient_data;
         }
 
-        if (!empty($_transient_data->response) && !empty($_transient_data->response[$this->name]) && false === $this->wp_override) {
+        if (!empty($_transient_data->response) && !empty($_transient_data->response[$this->name]) && false == $this->wp_override) {
             return $_transient_data;
         }
 
@@ -212,7 +212,7 @@ class updater_check_class {
             $cache_key = md5('edd_plugin_' . sanitize_key($this->name) . '_version_info');
             $version_info = get_transient($cache_key);
 
-            if (false === $version_info) {
+            if (false == $version_info) {
 
                 $version_info = $this->api_request('plugin_latest_version', array('slug' => $this->slug));
 
@@ -429,7 +429,7 @@ class updater_check_class {
         $cache_key = md5('edd_plugin_' . sanitize_key($_REQUEST['plugin']) . '_version_info');
         $version_info = get_transient($cache_key);
 
-        if (false === $version_info) {
+        if (false == $version_info) {
 
             $api_params = array(
                 'edd_action' => 'get_version',

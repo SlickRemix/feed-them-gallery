@@ -378,7 +378,7 @@ class updater_license_page {
         } else {
             $license_data = json_decode(wp_remote_retrieve_body($response));
 
-            if (false === $license_data->success) {
+            if (false == $license_data->success) {
 
                 switch ($license_data->error) {
 

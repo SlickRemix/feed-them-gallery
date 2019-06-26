@@ -10,13 +10,26 @@
  * @category Class
  * @author   SlickRemix
  */
+
 namespace feed_them_gallery;
 
 /**
  * Class Core_Functions
  */
 class Core_Functions {
-	public $output     = '';
+
+	/**
+	 * $output.
+	 *
+	 * @var string
+	 */
+	public $output = '';
+
+	/**
+	 * $feeds_core.
+	 *
+	 * @var string
+	 */
 	public $feeds_core = '';
 
 	/**
@@ -32,14 +45,28 @@ class Core_Functions {
 	 */
 	public function __construct() {}
 
+	/**
+	 * Load Function
+	 *
+	 * Load up all our actions and filters.
+	 *
+	 * @since 1.0.0
+	 */
 	public static function load() {
 		$instance = new self();
 
 		$instance->add_actions_filters();
 	}
 
+	/**
+	 * Add Action Filters
+	 *
+	 * Load up all our styles and js.
+	 *
+	 * @since 1.0.0
+	 */
 	public function add_actions_filters() {
-		// Set Template Filters
+		// Set Template Filters.
 		add_filter( 'single_template', array( $this, 'ft_gallery_locate_template' ), 999 );
 		add_filter( 'archive_template', array( $this, 'ft_gallery_locate_template' ), 999 );
 		add_filter( 'taxonomy_template', array( $this, 'ft_gallery_locate_template' ), 999 );
@@ -50,7 +77,7 @@ class Core_Functions {
 	/**
 	 * FT Gallery Tab Notice HTML
 	 *
-	 * creates notice html for return.
+	 * Creates notice html for return.
 	 *
 	 * @since 1.0.0
 	 */
@@ -65,6 +92,8 @@ class Core_Functions {
 	 * Paging does not work on single custom post type pages - always a redirect to page 1 by
 	 * WP core hack see https://core.trac.wordpress.org/ticket/15551
 	 *
+	 * @param string $request The redirect.
+	 * @return string
 	 * @since 1.1.6
 	 */
 	public function ft_gallery_cpt_request_redirect_fix( $request ) {
@@ -75,12 +104,7 @@ class Core_Functions {
 
 		$cpts = get_post_types( $args, 'names', 'and' );
 
-		if ( isset( $request->query_vars['post_type'] ) &&
-		   in_array( $request->query_vars['post_type'], $cpts ) &&
-		   true === $request->is_singular &&
-		   - 1 == $request->current_post &&
-		   true === $request->is_paged
-		) {
+		if ( isset( $request->query_vars['post_type'] ) && in_array( $request->query_vars['post_type'], $cpts, true ) && true == $request->is_singular && - 1 === $request->current_post && true == $request->is_paged ) {
 			add_filter( 'redirect_canonical', '__return_false' );
 		}
 
@@ -108,12 +132,21 @@ class Core_Functions {
 		return $required_premium_plugins;
 	}
 
+	/**
+	 * FT Gallery Required Plugins
+	 *
+	 * Return an array of required plugins.
+	 *
+	 * @param string $located Location of the template files.
+	 * @return string
+	 * @since 1.0.0
+	 */
 	public function ft_gallery_locate_template( $located ) {
 		global $post;
 
 		$post_type = isset( $post ) ? $post->post_type : '';
 
-		$is_tags = isset( $_GET['ftg-tags'] ) ? $_GET['ftg-tags'] : null;
+		$is_tags = isset( $_GET['ftg-tags'] ) ? sanitize_text_field( wp_unslash( $_GET['ftg-tags'] ) ) : null;
 
 		if ( isset( $is_tags ) ) {
 			// Set The Template name.
@@ -141,7 +174,7 @@ class Core_Functions {
 			}
 		}
 
-		if ( true === $use_template ) {
+		if ( true == $use_template ) {
 			// No file found yet.
 			$located = false;
 			// Continue if template is empty.

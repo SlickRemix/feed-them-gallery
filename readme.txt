@@ -2,8 +2,8 @@
 Contributors: slickremix
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
-Tested up to: 5.2.1
-Stable tag: 1.1.8
+Tested up to: 5.2.2
+Stable tag: 1.1.9
 License: GPLv2 or later
 
 Create customizable Image Galleries and sell your images using WooCommerce.
@@ -126,6 +126,16 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.1.9 Wednesday, June 26th, 2019 =
+   * NEW: Security Refactor of the whole plugin to stop XSS injections and other possibly malicious attempts to hack through the plugin.
+   * NEW: Layout Tab: Show the image caption info above or below the photos.
+   * FIX: When editing an image description single or double quotes would return a backslash. Also you can now simple use the return keyboard key to make line/paragraph breaks. No more html like <br/> required to make line breaks.
+   * FIX: Settings: Cart options not all working proper.
+   * FIX: Settings: Some file renaming options not working proper.
+   * FIX: Loadmore option was duplicating the output of images if you had not sorted the images in your gallery. Now the default option is sorted by date.
+   * PREMIUM NEW: WooCommerce Tab: Cart Icon over image if using the Gallery layout option. You can choose the position, and colors for the icon.
+   * PREMIUM NEW: WooCommerce Tab: Hide the Add to Cart options/variations on page and popup.
+
 = Version 1.1.8 Friday, May 24th, 2019 =
    * FIX: JS error on checkout page if not logged in: SyntaxError: JSON Parse error.
    * FIX: Warning about undefined constant so now we used an if is defined( 'FTGP_CURRENT_VERSION' );

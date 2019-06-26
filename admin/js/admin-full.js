@@ -579,7 +579,7 @@ jQuery(document).ready(
 
                     },
                     error: () => {
-                        alert('Error, please contact us at http://slickremix.com/support-forum for helpppppppp.')
+                        alert('Error, please contact us at http://slickremix.com/support-forum for help.')
                     }
                 });
                 return false;

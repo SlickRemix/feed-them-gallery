@@ -25,6 +25,13 @@ class Setup_Functions {
 	 */
 	public $global_prefix = 'global_';
 
+	/**
+	 * Load Function
+	 *
+	 * Load up all our actions and filters.
+	 *
+	 * @since 1.0.0
+	 */
 	public static function load() {
 		$instance = new self();
 
@@ -37,6 +44,13 @@ class Setup_Functions {
 	 */
 	public function __construct() { }
 
+	/**
+	 * Add Action Filters
+	 *
+	 * Load up all our styles and js.
+	 *
+	 * @since 1.0.0
+	 */
 	public function add_actions_filters() {
 
 		// Add Theme Support for post thumbs.
@@ -60,7 +74,7 @@ class Setup_Functions {
 
 		// Settings option. Add Custom CSS to the header of Feed Them Gallery pages only.
 		$ft_gallery_custom_css_checked_css = get_option( 'ft-gallery-options-settings-custom-css-second' );
-		if ( '1' == $ft_gallery_custom_css_checked_css ) {
+		if ( '1' === $ft_gallery_custom_css_checked_css ) {
 			add_action( 'wp_head', array( $this, 'ft_gallery_head_css' ) );
 		}
 
@@ -223,7 +237,7 @@ class Setup_Functions {
 		// Unset Menu Items We don't want them to have.
 		// unset($submenu['edit.php?post_type=ft_gallery'][5]);
 		// unset($submenu['edit.php?post_type=ft_gallery'][10]);
-		// unset($submenu['edit.php?post_type=ft_gallery'][15]);
+		// unset($submenu['edit.php?post_type=ft_gallery'][15]);.
 		return $submenu;
 	}
 
@@ -232,8 +246,8 @@ class Setup_Functions {
 	 *
 	 * Generic function for registering settings
 	 *
-	 * @param $settings_name
-	 * @param $settings
+	 * @param string $settings_name The setting name.
+	 * @param array  $settings All the Settings to be returned.
 	 * @since 1.0.0
 	 */
 	public function ft_gallery_register_settings( $settings_name, $settings ) {
@@ -251,7 +265,7 @@ class Setup_Functions {
 	 */
 	public function ft_gallery_color_options_head_css() {
 		?>
-		<style type="text/css"><?php echo get_option( 'ft-gallery-color-options-main-wrapper-css-input' ); ?></style>
+		<style type="text/css"><?php echo esc_html( get_option( 'ft-gallery-color-options-main-wrapper-css-input' ) ); ?></style>
 		<?php
 	}
 
@@ -265,6 +279,9 @@ class Setup_Functions {
 	public function ft_gallery_color_options_head_css_front() {
 
 		$ft_gallery_text_color       = get_option( 'ft_gallery_text_color' );
+        $ft_gallery_text_size        = get_option( 'ft_gallery_text_size' );
+		$ft_gallery_decription_color = get_option( 'ft_gallery_description_color' );
+        $ft_gallery_description_size = get_option( 'ft_gallery_description_size' );
 		$ft_gallery_link_color       = get_option( 'ft_gallery_link_color' );
 		$ft_gallery_link_color_hover = get_option( 'ft_gallery_link_color_hover' );
 		$ft_gallery_post_time        = get_option( 'ft_gallery_post_time' );
@@ -272,28 +289,33 @@ class Setup_Functions {
 
 		<style type="text/css">
 			<?php
-			if ( ! empty( $ft_gallery_text_color ) ) {
+			if ( ! empty( $ft_gallery_text_color ) || ! empty( $ft_gallery_text_size ) ) {
 
 				?>
-		 .ft-gallery-simple-fb-wrapper, .ft-gallery-popup{color: <?php echo $ft_gallery_text_color; ?> !important;}
+            strong.ftg-title-wrap {<?php if ( ! empty( $ft_gallery_text_color ) ) { ?>color: <?php echo esc_html( $ft_gallery_text_color );?> !important; <?php }?><?php if ( ! empty( $ft_gallery_text_size ) ) { ?>font-size: <?php echo esc_html( $ft_gallery_text_size );?> !important; <?php }?>}
 				<?php
 			}
-			if ( ! empty( $ft_gallery_link_color ) ) {
+			if ( ! empty( $ft_gallery_decription_color ) || ! empty( $ft_gallery_description_size ) ) {
 
 				?>
-		 .ft-wp-gallery a, .ft-gallery-popup a, .ft-wp-gallery .fts-mashup-count-wrap .fts-share-wrap a, .ft-wp-gallery .fts-share-wrap a, body .ft-wp-gallery .ft-gallery-cta-button-wrap a{color: <?php echo $ft_gallery_link_color; ?> !important;}
+            .ft-gallery-description-wrap, .ft-gallery-description-wrap p{<?php if ( ! empty( $ft_gallery_decription_color ) ) { ?>color: <?php echo esc_html( $ft_gallery_decription_color );?> !important; <?php }?><?php if ( ! empty( $ft_gallery_description_size ) ) { ?>font-size: <?php echo esc_html( $ft_gallery_description_size );?> !important; <?php }?>  }
+            <?php
+        }
+        if ( ! empty( $ft_gallery_link_color ) ) {
+
+            ?>
+				.ft-gallery-link-popup a, .mfp-close, .ft-wp-gallery a, .ft-gallery-popup a, .ft-wp-gallery .fts-mashup-count-wrap .fts-share-wrap a, .ft-wp-gallery .fts-share-wrap a, body .ft-wp-gallery .ft-gallery-cta-button-wrap a{color: <?php echo esc_html( $ft_gallery_link_color ); ?> !important;}
 				<?php
 			}
 			if ( ! empty( $ft_gallery_link_color_hover ) ) {
 
 				?>
-		 .ft-wp-gallery a:hover, .ft-gallery-popup a:hover, .ft-wp-gallery .fts-share-wrap a:hover, body .ft-wp-gallery .ft-gallery-cta-button-wrap a:hover{color: <?php echo $ft_gallery_link_color_hover; ?> !important;}
+				.ft-gallery-link-popup a:hover, .mfp-close:hover, .ft-wp-gallery a:hover, .ft-gallery-popup a:hover, .ft-wp-gallery .fts-share-wrap a:hover, body .ft-wp-gallery .ft-gallery-cta-button-wrap a:hover{color: <?php echo esc_html( $ft_gallery_link_color_hover ); ?> !important;}
 				<?php
 			}
 			if ( ! empty( $ft_gallery_post_time ) ) {
-
 				?>
-		 .ft-gallery-post-time{color: <?php echo $ft_gallery_post_time; ?> !important;}
+				.ft-gallery-post-time{color: <?php echo esc_html( $ft_gallery_post_time ); ?> !important;}
 				<?php } ?>
 		</style>
 		<?php
@@ -306,7 +328,7 @@ class Setup_Functions {
 	 *
 	 * @since 1.0.0
 	 */
-	function ft_gallery_admin_bar_menu() {
+	public function ft_gallery_admin_bar_menu() {
 		global $wp_admin_bar;
 
 		$ftg_admin_menu_bar = get_option( 'ft-gallery-admin-bar-menu' );
@@ -316,7 +338,7 @@ class Setup_Functions {
 		$wp_admin_bar->add_menu(
 			array(
 				'id'    => 'ft_gallery_admin_bar',
-				'title' => __( 'Feed Them Gallery', 'ft-gallery' ),
+				'title' => esc_html__( 'Feed Them Gallery', 'ft-gallery' ),
 				'href'  => false,
 			)
 		);
@@ -325,7 +347,7 @@ class Setup_Functions {
 			array(
 				'id'     => 'ft_gallery_admin_bar_view_galleries',
 				'parent' => 'ft_gallery_admin_bar',
-				'title'  => __( 'Galleries ', 'ft-gallery' ),
+				'title'  => esc_html__( 'Galleries ', 'ft-gallery' ),
 				'href'   => admin_url( 'edit.php?post_type=ft_gallery' ),
 			)
 		);
@@ -334,7 +356,7 @@ class Setup_Functions {
 			array(
 				'id'     => 'ft_gallery_admin_bar_new_gallery',
 				'parent' => 'ft_gallery_admin_bar',
-				'title'  => __( 'Add Gallery ', 'ft-gallery' ),
+				'title'  => esc_html__( 'Add Gallery ', 'ft-gallery' ),
 				'href'   => admin_url( 'post-new.php?post_type=ft_gallery' ),
 			)
 		);
@@ -343,7 +365,7 @@ class Setup_Functions {
 			array(
 				'id'     => 'ft_gallery_admin_bar_settings',
 				'parent' => 'ft_gallery_admin_bar',
-				'title'  => __( 'Settings', 'ft-gallery' ),
+				'title'  => esc_html__( 'Settings', 'ft-gallery' ),
 				'href'   => admin_url( 'edit.php?post_type=ft_gallery&page=ft-gallery-settings-page' ),
 			)
 		);
@@ -353,7 +375,7 @@ class Setup_Functions {
 			array(
 				'id'     => 'ft_gallery_admin_bar_system_info',
 				'parent' => 'ft_gallery_admin_bar',
-				'title'  => __( 'System Info', 'ft-gallery' ),
+				'title'  => esc_html__( 'System Info', 'ft-gallery' ),
 				'href'   => admin_url( 'edit.php?post_type=ft_gallery&page=ft-gallery-system-info-submenu-page' ),
 			)
 		);
@@ -363,7 +385,7 @@ class Setup_Functions {
 				array(
 					'id'     => 'ft_gallery_admin_bar_plugin_license',
 					'parent' => 'ft_gallery_admin_bar',
-					'title'  => __( 'Plugin License', 'ft-gallery' ),
+					'title'  => esc_html__( 'Plugin License', 'ft-gallery' ),
 					'href'   => admin_url( 'edit.php?post_type=ft_gallery&page=ft-gallery-license-page' ),
 				)
 			);
@@ -384,6 +406,9 @@ class Setup_Functions {
 			'ft-gallery-admin-bar-menu',
 			'ft-gallery-options-settings-custom-css-second',
 			'ft_gallery_text_color',
+			'ft_gallery_text_size',
+			'ft_gallery_description_color',
+            'ft_gallery_description_size',
 			'ft_gallery_link_color',
 			'ft_gallery_link_color_hover',
 			'ft_gallery_post_time',
@@ -394,14 +419,14 @@ class Setup_Functions {
 			'ft_gallery_attch_name_gallery_name',
 			'ft_gallery_attch_name_post_id',
 			'ft_gallery_attch_name_date',
-            'ft_gallery_attch_name_file_name',
-            'ft_gallery_attch_name_attch_id',
+			'ft_gallery_attch_name_file_name',
+			'ft_gallery_attch_name_attch_id',
 			// Attachment Title Renaming.
 			'ft_gallery_attch_title_gallery_name',
 			'ft_gallery_attch_title_post_id',
 			'ft_gallery_attch_title_date',
-            'ft_gallery_attch_title_file_name',
-            'ft_gallery_attch_title_attch_id',
+			'ft_gallery_attch_title_file_name',
+			'ft_gallery_attch_title_attch_id',
 			// Format Attachment Title Options.
 			'ft_gallery_format_attachment_titles_options',
 			// date options.
@@ -430,10 +455,10 @@ class Setup_Functions {
 
 		// If Woocommerce is active add options to save.
 		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
-			// Woocommerce Options
+			// Woocommerce Options.
 			$settings[] = 'ft_gallery_attch_prod_to_gallery_cat';
 			$settings[] = 'ft_gallery_woo_add_to_cart';
-            $settings[] = 'ft_gallery_enable_right_click';
+			$settings[] = 'ft_gallery_enable_right_click';
 		}
 
 		// Add Custom Post Types to settings.
@@ -465,9 +490,9 @@ class Setup_Functions {
 	 *
 	 * @since 1.0.0
 	 */
-	function ft_gallery_head_css() {
+	public function ft_gallery_head_css() {
 		?>
-		<style type="text/css"><?php echo get_option( 'ft-gallery-settings-admin-textarea-css' ); ?></style>
+		<style type="text/css"><?php echo esc_html( get_option( 'ft-gallery-settings-admin-textarea-css' ) ); ?></style>
 										  <?php
 	}
 }//end class
