@@ -104,7 +104,7 @@ class Core_Functions {
 
 		$cpts = get_post_types( $args, 'names', 'and' );
 
-		if ( isset( $request->query_vars['post_type'] ) && in_array( $request->query_vars['post_type'], $cpts, true ) && true === $request->is_singular && - 1 === $request->current_post && true === $request->is_paged ) {
+		if ( isset( $request->query_vars['post_type'] ) && in_array( $request->query_vars['post_type'], $cpts, true ) && true == $request->is_singular && - 1 === $request->current_post && true == $request->is_paged ) {
 			add_filter( 'redirect_canonical', '__return_false' );
 		}
 
@@ -174,7 +174,7 @@ class Core_Functions {
 			}
 		}
 
-		if ( true === $use_template ) {
+		if ( true == $use_template ) {
 			// No file found yet.
 			$located = false;
 			// Continue if template is empty.

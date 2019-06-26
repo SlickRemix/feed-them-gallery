@@ -200,7 +200,7 @@ class Gallery {
 	 */
 	public function ft_gallery_tab_premium_msg() {
 		echo sprintf(
-			esc_html( '%1$sPlease purchase, install and activate %2$sFeed Them Gallery Premium%3$s for these additional awesome features!%4$s', 'feed-them-gallery' ),
+			esc_html__( '%1$sPlease purchase, install and activate %2$sFeed Them Gallery Premium%3$s for these additional awesome features!%4$s', 'feed-them-gallery' ),
 			'<div class="ft-gallery-premium-mesg">',
 			'<a href="' . esc_url( 'https://www.slickremix.com/downloads/feed-them-gallery/' ) . '" target="_blank">',
 			'</a>',
@@ -221,7 +221,7 @@ class Gallery {
 		return array_merge(
 			$sizes,
 			array(
-				'ft_gallery_thumb' => esc_html( 'Feed Them Gallery Thumb', 'feed-them-gallery' ),
+				'ft_gallery_thumb' => esc_html__( 'Feed Them Gallery Thumb', 'feed-them-gallery' ),
 			)
 		);
 	}
@@ -306,10 +306,10 @@ class Gallery {
 
 		// Check for error.
 		if ( is_wp_error( $response ) ) {
-			return esc_html( 'oops something isn\'t right.', 'feed-them-gallery' );
+			return esc_html__( 'oops something isn\'t right.', 'feed-them-gallery' );
 		}
 
-		$final_response = isset( $response->data ) ? $response->data : esc_html( 'No Images attached to this post.', 'feed-them-gallery' );
+		$final_response = isset( $response->data ) ? $response->data : esc_html__( 'No Images attached to this post.', 'feed-them-gallery' );
 
 		return $final_response;
 	}
@@ -336,7 +336,7 @@ class Gallery {
 		if ( ! $options_array ) {
 
 			// Basic Post Info.
-			$options_array['ft_gallery_image_id'] = isset( $post_info->ID ) ? $post_info->ID : esc_html( 'This ID does not exist anymore', 'feed-them-gallery' );
+			$options_array['ft_gallery_image_id'] = isset( $post_info->ID ) ? $post_info->ID : esc_html__( 'This ID does not exist anymore', 'feed-them-gallery' );
 			$options_array['ft_gallery_author']   = isset( $post_info->post_author ) ? $post_info->post_author : '';
 			// $options_array['ft_gallery_post_date'] = $post_info->post_date_gmt;
 			$options_array['ft_gallery_post_title'] = isset( $post_info->post_title ) ? $post_info->post_title : '';
@@ -373,19 +373,19 @@ class Gallery {
 	 */
 	public function ft_gallery_cpt() {
 		$responses_cpt_args = array(
-			'label'               => esc_html( 'Feed Them Gallery', 'feed-them-gallery' ),
+			'label'               => esc_html__( 'Feed Them Gallery', 'feed-them-gallery' ),
 			'labels'              => array(
-				'menu_name'          => esc_html( 'Galleries', 'feed-them-gallery' ),
-				'name'               => esc_html( 'Galleries', 'feed-them-gallery' ),
-				'singular_name'      => esc_html( 'Gallery', 'feed-them-gallery' ),
-				'add_new'            => esc_html( 'Add Gallery', 'feed-them-gallery' ),
-				'add_new_item'       => esc_html( 'Add New Gallery', 'feed-them-gallery' ),
-				'edit_item'          => esc_html( 'Edit Gallery', 'feed-them-gallery' ),
-				'new_item'           => esc_html( 'New Gallery', 'feed-them-gallery' ),
-				'view_item'          => esc_html( 'View Gallery', 'feed-them-gallery' ),
-				'search_items'       => esc_html( 'Search Galleries', 'feed-them-gallery' ),
-				'not_found'          => esc_html( 'No Galleries Found', 'feed-them-gallery' ),
-				'not_found_in_trash' => esc_html( 'No Galleries Found In Trash', 'feed-them-gallery' ),
+				'menu_name'          => esc_html__( 'Galleries', 'feed-them-gallery' ),
+				'name'               => esc_html__( 'Galleries', 'feed-them-gallery' ),
+				'singular_name'      => esc_html__( 'Gallery', 'feed-them-gallery' ),
+				'add_new'            => esc_html__( 'Add Gallery', 'feed-them-gallery' ),
+				'add_new_item'       => esc_html__( 'Add New Gallery', 'feed-them-gallery' ),
+				'edit_item'          => esc_html__( 'Edit Gallery', 'feed-them-gallery' ),
+				'new_item'           => esc_html__( 'New Gallery', 'feed-them-gallery' ),
+				'view_item'          => esc_html__( 'View Gallery', 'feed-them-gallery' ),
+				'search_items'       => esc_html__( 'Search Galleries', 'feed-them-gallery' ),
+				'not_found'          => esc_html__( 'No Galleries Found', 'feed-them-gallery' ),
+				'not_found_in_trash' => esc_html__( 'No Galleries Found In Trash', 'feed-them-gallery' ),
 			),
 
 			'public'              => true,
@@ -424,17 +424,17 @@ class Gallery {
 	public function ft_gallery_categories() {
 
 		$labels = array(
-			'name'              => esc_html( 'Categories', 'feed-them-gallery' ),
-			'singular_name'     => esc_html( 'Category', 'feed-them-gallery' ),
-			'search_items'      => esc_html( 'Search Categories', 'feed-them-gallery' ),
-			'all_items'         => esc_html( 'All Categories', 'feed-them-gallery' ),
-			'parent_item'       => esc_html( 'Parent Category', 'feed-them-gallery' ),
-			'parent_item_colon' => esc_html( 'Parent Category:', 'feed-them-gallery' ),
-			'edit_item'         => esc_html( 'Edit Category', 'feed-them-gallery' ),
-			'update_item'       => esc_html( 'Update Category', 'feed-them-gallery' ),
-			'add_new_item'      => esc_html( 'Add New Category', 'feed-them-gallery' ),
-			'new_item_name'     => esc_html( 'New Category Name', 'feed-them-gallery' ),
-			'menu_name'         => esc_html( 'Categories', 'feed-them-gallery' ),
+			'name'              => esc_html__( 'Categories', 'feed-them-gallery' ),
+			'singular_name'     => esc_html__( 'Category', 'feed-them-gallery' ),
+			'search_items'      => esc_html__( 'Search Categories', 'feed-them-gallery' ),
+			'all_items'         => esc_html__( 'All Categories', 'feed-them-gallery' ),
+			'parent_item'       => esc_html__( 'Parent Category', 'feed-them-gallery' ),
+			'parent_item_colon' => esc_html__( 'Parent Category:', 'feed-them-gallery' ),
+			'edit_item'         => esc_html__( 'Edit Category', 'feed-them-gallery' ),
+			'update_item'       => esc_html__( 'Update Category', 'feed-them-gallery' ),
+			'add_new_item'      => esc_html__( 'Add New Category', 'feed-them-gallery' ),
+			'new_item_name'     => esc_html__( 'New Category Name', 'feed-them-gallery' ),
+			'menu_name'         => esc_html__( 'Categories', 'feed-them-gallery' ),
 		);
 
 		register_taxonomy(
@@ -495,19 +495,19 @@ class Gallery {
 		// global $post, $post_ID;
 		$messages['ft_gallery'] = array(
 			0  => '', // Unused. Messages start at index 1.
-			1  => esc_html( 'Gallery updated.', 'feed-them-gallery' ),
-			2  => esc_html( 'Custom field updated.', 'feed-them-gallery' ),
-			3  => esc_html( 'Custom field deleted.', 'feed-them-gallery' ),
-			4  => esc_html( 'Gallery updated.', 'feed-them-gallery' ),
+			1  => esc_html__( 'Gallery updated.', 'feed-them-gallery' ),
+			2  => esc_html__( 'Custom field updated.', 'feed-them-gallery' ),
+			3  => esc_html__( 'Custom field deleted.', 'feed-them-gallery' ),
+			4  => esc_html__( 'Gallery updated.', 'feed-them-gallery' ),
 			/* translators: %s: date and time of the revision */
-			5  => isset( $_GET['revision'] ) ? sprintf( esc_html( 'Response restored to revision from %s', 'feed-them-gallery' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-			6  => esc_html( 'Gallery created.', 'feed-them-gallery' ),
-			7  => esc_html( 'Gallery saved.', 'feed-them-gallery' ),
-			8  => esc_html( 'Gallery submitted.', 'feed-them-gallery' ),
-			9  => esc_html( 'Gallery scheduled for:', 'feed-them-gallery' ),
+			5  => isset( $_GET['revision'] ) ? sprintf( esc_html__( 'Response restored to revision from %s', 'feed-them-gallery' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+			6  => esc_html__( 'Gallery created.', 'feed-them-gallery' ),
+			7  => esc_html__( 'Gallery saved.', 'feed-them-gallery' ),
+			8  => esc_html__( 'Gallery submitted.', 'feed-them-gallery' ),
+			9  => esc_html__( 'Gallery scheduled for:', 'feed-them-gallery' ),
 			// translators: Publish box date format, see http://php.net/date
 			// date_i18n( ( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
-			10 => esc_html( 'Gallery draft updated.', 'feed-them-gallery' ),
+			10 => esc_html__( 'Gallery draft updated.', 'feed-them-gallery' ),
 		);
 
 		return $messages;
@@ -532,10 +532,10 @@ class Gallery {
 				$new[ $key ] = $value;
 				// put the tags column before it.
 				$new['gallery_thumb']     = '';
-				$new['gallery_shortcode'] = esc_html( 'Gallery Shortcode', 'feed-them-gallery' );
+				$new['gallery_shortcode'] = esc_html__( 'Gallery Shortcode', 'feed-them-gallery' );
 
 				if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
-					$text = esc_html( 'Gallery ZIP', 'feed-them-gallery' );
+					$text = esc_html__( 'Gallery ZIP', 'feed-them-gallery' );
 				} else {
 					$text = '';
 				}
@@ -595,7 +595,7 @@ class Gallery {
 			case 'gallery_thumb':
 				$display_gallery = new Display_Gallery();
 				$image_list      = $display_gallery->ft_gallery_get_media_rest( $post_id, '1' );
-				$thumb_text      = $this->ft_gallery_count_post_images( $post_id ) . ' ' . esc_html( 'Images', 'feed-them-gallery' );
+				$thumb_text      = $this->ft_gallery_count_post_images( $post_id ) . ' ' . esc_html__( 'Images', 'feed-them-gallery' );
 				$edit_post_url   = get_edit_post_link( $post_id );
 
 				if ( $image_list ) {
@@ -653,16 +653,16 @@ class Gallery {
 		if ( ! empty( $post_id ) && 'ft_gallery_responses' === $custom_post_type ) {
 			switch ( $translated_text ) {
 				case 'Publish':
-					$translated_text = esc_html( 'Save Gallery', 'feed-them-gallery' );
+					$translated_text = esc_html__( 'Save Gallery', 'feed-them-gallery' );
 					break;
 				case 'Update':
-					$translated_text = esc_html( 'Update Gallery', 'feed-them-gallery' );
+					$translated_text = esc_html__( 'Update Gallery', 'feed-them-gallery' );
 					break;
 				case 'Save Draft':
-					$translated_text = esc_html( 'Save Gallery Draft', 'feed-them-gallery' );
+					$translated_text = esc_html__( 'Save Gallery Draft', 'feed-them-gallery' );
 					break;
 				case 'Edit Payment':
-					$translated_text = esc_html( 'Edit Gallery', 'feed-them-gallery' );
+					$translated_text = esc_html__( 'Edit Gallery', 'feed-them-gallery' );
 					break;
 			}
 		}
@@ -747,10 +747,10 @@ class Gallery {
 		}
 
 		// Image Uploader and Gallery area in admin.
-		add_meta_box( 'ft-galleries-upload-mb', esc_html( 'Feed Them Gallery Settings', 'feed-them-gallery' ), array( $this, 'ft_gallery_tab_menu_metabox' ), 'ft_gallery', 'normal', 'high', null );
+		add_meta_box( 'ft-galleries-upload-mb', esc_html__( 'Feed Them Gallery Settings', 'feed-them-gallery' ), array( $this, 'ft_gallery_tab_menu_metabox' ), 'ft_gallery', 'normal', 'high', null );
 
 		// Link Settings Meta Box.
-		add_meta_box( 'ft-galleries-shortcode-side-mb', esc_html( 'Feed Them Gallery Shortcode', 'feed-them-gallery' ), array( $this, 'ft_gallery_shortcode_meta_box' ), 'ft_gallery', 'side', 'high', null );
+		add_meta_box( 'ft-galleries-shortcode-side-mb', esc_html__( 'Feed Them Gallery Shortcode', 'feed-them-gallery' ), array( $this, 'ft_gallery_shortcode_meta_box' ), 'ft_gallery', 'side', 'high', null );
 	}
 
 	/**
@@ -847,7 +847,7 @@ class Gallery {
 				// Images Tab!
 				'images'      => array(
 					'menu_li_class'      => 'tab1',
-					'menu_a_text'        => esc_html( 'Images', 'feed-them-gallery' ),
+					'menu_a_text'        => esc_html__( 'Images', 'feed-them-gallery' ),
 					'menu_a_class'       => 'account-tab-highlight',
 					'menu_aria_expanded' => 'true',
 					'cont_wrap_id'       => 'ftg-tab-content1',
@@ -856,49 +856,49 @@ class Gallery {
 				// Layout Tab!
 				'layout'      => array(
 					'menu_li_class' => 'tab2',
-					'menu_a_text'   => esc_html( 'Layout', 'feed-them-gallery' ),
+					'menu_a_text'   => esc_html__( 'Layout', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content2',
 					'cont_func'     => 'tab_layout_content',
 				),
 				// Colors Tab!
 				'colors'      => array(
 					'menu_li_class' => 'tab3',
-					'menu_a_text'   => esc_html( 'Colors', 'feed-them-gallery' ),
+					'menu_a_text'   => esc_html__( 'Colors', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content3',
 					'cont_func'     => 'tab_colors_content',
 				),
 				// Zips Tab!
 				'zips'        => array(
 					'menu_li_class' => 'tab4',
-					'menu_a_text'   => esc_html( 'Zips', 'feed-them-gallery' ),
+					'menu_a_text'   => esc_html__( 'Zips', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content6',
 					'cont_func'     => 'tab_zips_content',
 				),
 				// WooCommerce Tab!
 				'woocommerce' => array(
 					'menu_li_class' => 'tab5',
-					'menu_a_text'   => esc_html( 'WooCommerce', 'feed-them-gallery' ),
+					'menu_a_text'   => esc_html__( 'WooCommerce', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content5',
 					'cont_func'     => 'tab_woocommerce_content',
 				),
 				// Watermark Tab!
 				'watermark'   => array(
 					'menu_li_class' => 'tab6',
-					'menu_a_text'   => esc_html( 'Watermark', 'feed-them-gallery' ),
+					'menu_a_text'   => esc_html__( 'Watermark', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content7',
 					'cont_func'     => 'tab_watermark_content',
 				),
 				// Pagination Tab!
 				'pagination'  => array(
 					'menu_li_class' => 'tab7',
-					'menu_a_text'   => esc_html( 'Pagination', 'feed-them-gallery' ),
+					'menu_a_text'   => esc_html__( 'Pagination', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content8',
 					'cont_func'     => 'tab_pagination_content',
 				),
 				// Tags Tab!
 				'tags'        => array(
 					'menu_li_class' => 'tab8',
-					'menu_a_text'   => esc_html( 'Tags', 'feed-them-gallery' ),
+					'menu_a_text'   => esc_html__( 'Tags', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content9',
 					'cont_func'     => 'tab_tags_content',
 				),
@@ -1022,15 +1022,17 @@ class Gallery {
 							$option          = $display_gallery->ft_gallery_get_option_or_get_postmeta( $_GET['post'] );
 
 							$ftg_auto_create_on_upload = isset( $option['ft_gallery_auto_image_woo_prod'] ) && 'true' === $option['ft_gallery_auto_image_woo_prod'] ? ' class="ftg-auto-create-product-on-upload"' : '';
+
 						}
+							$final_check_ftg_auto_create_on_upload = isset( $ftg_auto_create_on_upload ) ? $ftg_auto_create_on_upload : '';
 						?>
 					<!-- Uploader section -->
-					<div id="uploaderSection"<?php echo esc_html( $ftg_auto_create_on_upload ); ?>>
+					<div id="uploaderSection"<?php echo $final_check_ftg_auto_create_on_upload; ?>>
 						<div id="plupload-upload-ui" class="hide-if-no-js drag-drop">
 							<div id="drag-drop-area">
 								<div class="drag-drop-inside">
 									<p class="drag-drop-info"><?php esc_attr_e( 'Drop images here' ); ?></p>
-									<p><?php echo esc_html( 'or', 'feed-them-gallery' ); ?></p>
+									<p><?php echo esc_html__( 'or', 'feed-them-gallery' ); ?></p>
 									<div class="drag-drop-buttons">
 										<input id="<?php echo esc_attr( $id ); ?>plupload-browse-button"
 											   type="button"
@@ -1066,7 +1068,7 @@ class Gallery {
 					<div class="upload-max-size">
 							<?php
 							$bytes = wp_max_upload_size();
-							echo esc_html( 'Maximum upload file size', 'feed-them-gallery' ) . ': ' . $gallery_class->ft_gallery_format_bytes( $bytes, $precision = 2 ) . ' MB.';
+							echo esc_html__( 'Maximum upload file size', 'feed-them-gallery' ) . ': ' . $gallery_class->ft_gallery_format_bytes( $bytes, $precision = 2 ) . ' MB.';
 							?>
 					</div>
 
@@ -1106,7 +1108,7 @@ class Gallery {
 					);
 					$image_list = get_posts( $args );
 
-					if ( is_array( $image_list ) && true === $object->ID && isset( $image_list[0] ) ) {
+					if ( is_array( $image_list ) && true == $object->ID && isset( $image_list[0] ) ) {
 						?>
 						<div class="ftg-number-of-images-wrap"><?php echo esc_html( $gallery_class->ft_gallery_count_post_images( $object->ID ) ); ?><?php esc_html_e( ' Images', 'feed-them-gallery' ); ?></div>
 					<?php } ?>
@@ -1146,10 +1148,10 @@ class Gallery {
 						?>
 						<div class="ftg-images-amount-wrap">
 							<select name="images" class="ftg-images-amount" onchange="javascript:reloadPage(this)">
-								<option value="50" <?php echo esc_html( $orderby_ten ); ?>><?php echo esc_html( '50 Images', 'feed-them-gallery' ); ?></option>
-								<option value="100"<?php echo esc_html( $orderby_hundred ); ?>><?php echo esc_html( '100 Images', 'feed-them-gallery' ); ?></option>
-								<option value="500"<?php echo esc_html( $orderby_five_hundred ); ?>><?php echo esc_html( '500 Images', 'feed-them-gallery' ); ?></option>
-								<option value="-1"<?php echo esc_html( $orderby_all ); ?>><?php echo esc_html( 'All Images (This may load slow if you have more than 500 images)', 'feed-them-gallery' ); ?></option>
+								<option value="50" <?php echo esc_html( $orderby_ten ); ?>><?php echo esc_html__( '50 Images', 'feed-them-gallery' ); ?></option>
+								<option value="100"<?php echo esc_html( $orderby_hundred ); ?>><?php echo esc_html__( '100 Images', 'feed-them-gallery' ); ?></option>
+								<option value="500"<?php echo esc_html( $orderby_five_hundred ); ?>><?php echo esc_html__( '500 Images', 'feed-them-gallery' ); ?></option>
+								<option value="-1"<?php echo esc_html( $orderby_all ); ?>><?php echo esc_html__( 'All Images (This may load slow if you have more than 500 images)', 'feed-them-gallery' ); ?></option>
 							</select>
 						</div>
 
@@ -1166,7 +1168,7 @@ class Gallery {
 						if ( isset( $_GET['images'] ) && '-1' !== $_GET['images'] ) {
 							// Here we get_option the amount of users we want to see per page based on the saved settings field.
 							?>
-						<div class="ftg-total-pagination-count"><?php echo esc_html( 'Showing', 'feed-them-gallery' ); ?> <?php echo esc_html( $per_page_final ); ?>-<?php echo esc_html( $count_per_page ); ?> of <?php echo esc_html( $total_pagination_count ); ?> <?php echo esc_html( 'Images', 'feed-them-gallery' ); ?></div>
+						<div class="ftg-total-pagination-count"><?php echo esc_html__( 'Showing', 'feed-them-gallery' ); ?> <?php echo esc_html( $per_page_final ); ?>-<?php echo esc_html( $count_per_page ); ?> of <?php echo esc_html( $total_pagination_count ); ?> <?php echo esc_html( 'Images', 'feed-them-gallery' ); ?></div>
 							<?php
 						}
 						?>
@@ -1187,7 +1189,7 @@ class Gallery {
 							);
 							?>
 						</div>
-						<div class="clear"></div>
+						<div class="ftg-clear"></div>
 
 						  </div><div class="ftg-clear"></div>
 
@@ -1281,10 +1283,10 @@ class Gallery {
 					<?php } ?>
 				<div class="gallery-edit-question-message gallery-edit-question-download-gallery"
 					 style="display: none;">
-					<h3><?php esc_html_e( 'Zip Gallery and Download' ); ?></h3>
+					<h3><?php esc_html_e( 'Zip Gallery and Download', 'feed-them-gallery' ); ?></h3>
 						<?php
 						echo sprintf(
-							esc_html( 'This button will create a zip of all the full size images in this gallery on the %1$sZIPs tab%2$s and then download a zip onto your computer. If you would like to just download a ZIP you have already made and NOT create a new ZIP of the gallery you may do so from the %1$sZIPs tab%2$s.', 'feed-them-gallery' ),
+							esc_html__( 'This button will create a zip of all the full size images in this gallery on the %1$sZIPs tab%2$s and then download a zip onto your computer. If you would like to just download a ZIP you have already made and NOT create a new ZIP of the gallery you may do so from the %1$sZIPs tab%2$s.', 'feed-them-gallery' ),
 							'<a href="#zips" class="ftg-zips-tab" >',
 							'</a>'
 						);
@@ -1302,7 +1304,7 @@ class Gallery {
 					<h3><?php _e( 'Create Digital Gallery Zip and Turn into a Product' ); ?></h3>
 					<?php
 					echo sprintf(
-						esc_html( 'This button will create a zip on the %1$sZIPs tab%2$s of all the full size images in this gallery and then create a WooCommerce Product out of that ZIP. You must have a "ZIP Model Product" selected on the %3$sWoocommerce tab%4$s for this to work.', 'feed-them-gallery' ),
+						esc_html__( 'This button will create a zip on the %1$sZIPs tab%2$s of all the full size images in this gallery and then create a WooCommerce Product out of that ZIP. You must have a "ZIP Model Product" selected on the %3$sWoocommerce tab%4$s for this to work.', 'feed-them-gallery' ),
 						'<a href="#zips" class="ftg-zips-tab" >',
 						'</a>',
 						'<a href="#woocommerce" class="ftg-woo-tab" >',
@@ -1318,7 +1320,7 @@ class Gallery {
 					<h3><?php esc_html_e( 'Create Products from Individual Images' ); ?></h3>
 					<?php
 					echo sprintf(
-						esc_html( 'This button will create a WooCommerce Product for each of the images selected below. 1 image creates 1 WooCommerce product. You must have either the "Global Model Product" or "Smart Image Orientation Model Product" selected on the %1$sWoocommerce tab%2$s for this to work. You must click the Select All button or click any of the images in your gallery below before you click the Create Individual Image Products(s) button.', 'feed-them-gallery' ),
+						esc_html__( 'This button will create a WooCommerce Product for each of the images selected below. 1 image creates 1 WooCommerce product. You must have either the "Global Model Product" or "Smart Image Orientation Model Product" selected on the %1$sWoocommerce tab%2$s for this to work. You must click the Select All button or click any of the images in your gallery below before you click the Create Individual Image Products(s) button.', 'feed-them-gallery' ),
 						'<a href="#woocommerce" class="ftg-woo-tab" >',
 						'</a>'
 					);
@@ -1395,7 +1397,7 @@ class Gallery {
 									$gallery_to_woo = new Gallery_to_Woocommerce();
 
 									// If Image already has product meta check the product still exists
-									if ( true === $image_post_meta ) {
+									if ( true == $image_post_meta ) {
 										$product_exist = $gallery_to_woo->ft_gallery_create_woo_prod_exists_check( $image_post_meta );
 										if ( $product_exist ) {
 											$product_created_already = ' ftg-product-exists';
@@ -1426,9 +1428,9 @@ class Gallery {
 							 <div class="ft-gallery-woo-btns-wrap-for-popup">
 									<?php
 									// If Image already has product meta check the product still exists
-									if ( true === $image_post_meta && $product_exist ) {
+									if ( true == $image_post_meta && $product_exist ) {
 										?>
-										<div class="ft-gallery-file-delete ft-gallery-file-zip-to-woo"><a class="ft_gallery_create_woo_prod_button" target="_blank" href="<?php echo esc_url( get_edit_post_link( $image_post_meta ) ); ?>"><?php echo esc_html( 'Edit product', 'feed-them-gallery' ); ?></a></div>
+										<div class="ft-gallery-file-delete ft-gallery-file-zip-to-woo"><a class="ft_gallery_create_woo_prod_button" target="_blank" href="<?php echo esc_url( get_edit_post_link( $image_post_meta ) ); ?>"><?php echo esc_html__( 'Edit product', 'feed-them-gallery' ); ?></a></div>
 											<?php
 									}
 
@@ -1482,7 +1484,7 @@ class Gallery {
 										}
 
 										?>
-								 <div class="ft-image-id-for-popup"><p><strong><?php echo esc_html( 'Uploaded:', 'feed-them-gallery' ); ?></strong> <?php echo esc_html( $instagram_date ); ?></p><br/><input value="<?php echo esc_attr( $image['id'] ); ?>" class="fts-gallery-id" type="text" data-nonce="<?php echo esc_html( wp_create_nonce( 'ft_gallery_edit_image_nonce' ) ); ?>"  /><input value="<?php echo esc_html( $next_img->ID ); ?>" class="fts-gallery-id fts-next-image" type="text" data-nonce="<?php echo esc_html( wp_create_nonce( 'ft_gallery_edit_image_nonce' ) ); ?>"  /><input value="<?php echo esc_html( $prev_img->ID ); ?>" class="fts-gallery-id fts-prev-image" type="text" data-nonce="<?php echo esc_html( wp_create_nonce( 'ft_gallery_edit_image_nonce' ) ); ?>"  /></div>
+								 <div class="ft-image-id-for-popup"><p><strong><?php echo esc_html__( 'Uploaded:', 'feed-them-gallery' ); ?></strong> <?php echo esc_html( $instagram_date ); ?></p><br/><input value="<?php echo esc_attr( $image['id'] ); ?>" class="fts-gallery-id" type="text" data-nonce="<?php echo esc_html( wp_create_nonce( 'ft_gallery_edit_image_nonce' ) ); ?>"  /><input value="<?php echo esc_html( $next_img->ID ); ?>" class="fts-gallery-id fts-next-image" type="text" data-nonce="<?php echo esc_html( wp_create_nonce( 'ft_gallery_edit_image_nonce' ) ); ?>"  /><input value="<?php echo esc_html( $prev_img->ID ); ?>" class="fts-gallery-id fts-prev-image" type="text" data-nonce="<?php echo esc_html( wp_create_nonce( 'ft_gallery_edit_image_nonce' ) ); ?>"  /></div>
 							 </li>
 									 <?php
 							}
@@ -1579,7 +1581,7 @@ class Gallery {
 						<p>
 							<?php
 							echo sprintf(
-								esc_html( 'Please look over the options on the %1$sSettings%2$s page before creating your first gallery.%3$s1. Enter a title for your gallery at the top of the page in the "Enter title here" input. %4$s2. Add images to the gallery and sort them in the order you want. %4$s3. Publish the gallery by clicking the blue "Publish" button. %4$s4. Now you can edit your images title, description and more. %5$sView our %6$sImage Gallery Demos%7$s or %8$sFull documentation%9$s for more details.', 'feed-them-gallery' ),
+								esc_html__( 'Please look over the options on the %1$sSettings%2$s page before creating your first gallery.%3$s1. Enter a title for your gallery at the top of the page in the "Enter title here" input. %4$s2. Add images to the gallery and sort them in the order you want. %4$s3. Publish the gallery by clicking the blue "Publish" button. %4$s4. Now you can edit your images title, description and more. %5$sView our %6$sImage Gallery Demos%7$s or %8$sFull documentation%9$s for more details.', 'feed-them-gallery' ),
 								'<a href="' . esc_url( 'edit.php?post_type=ft_gallery&page=ft-gallery-settings-page' ) . '"  target="_blank">',
 								'</a>',
 								'<p/><p>',
@@ -1608,7 +1610,7 @@ class Gallery {
 						'silverlight_xap_url' => includes_url( 'js/plupload/plupload.silverlight.xap' ),
 						'filters'             => array(
 							array(
-								'title'      => esc_html( 'Allowed Files', 'feed-them-gallery' ),
+								'title'      => esc_html__( 'Allowed Files', 'feed-them-gallery' ),
 								'extensions' => '*',
 							),
 						),
@@ -1649,7 +1651,7 @@ class Gallery {
 			<div class="ft-gallery-note ft-gallery-note-footer">
 				<?php
 				echo sprintf(
-					esc_html( 'Additional Global options available on the %1$sSettings Page%2$s', 'feed-them-gallery' ),
+					esc_html__( 'Additional Global options available on the %1$sSettings Page%2$s', 'feed-them-gallery' ),
 					'<a href="' . esc_url( 'edit.php?post_type=ft_gallery&page=ft-gallery-settings-page' ) . '" >',
 					'</a>'
 				);
@@ -1658,13 +1660,13 @@ class Gallery {
 					<?php
 	}
 
-    /**
-     * Tab Colors Content
-     *
-     * Outputs Colors tab's content for metabox.
-     *
-     * @since 1.0.0
-     */
+	/**
+	 * Tab Colors Content
+	 *
+	 * Outputs Colors tab's content for metabox.
+	 *
+	 * @since 1.0.0
+	 */
 	public function tab_colors_content( $params ) {
 
 		$gallery_class = $params['this'];
@@ -1676,7 +1678,7 @@ class Gallery {
 		<div class="ft-gallery-note ft-gallery-note-footer">
 			<?php
 			echo sprintf(
-				esc_html( 'Additional Global options available on the %1$sSettings Page%2$s', 'feed-them-gallery' ),
+				esc_html__( 'Additional Global options available on the %1$sSettings Page%2$s', 'feed-them-gallery' ),
 				'<a href="' . esc_url( 'edit.php?post_type=ft_gallery&page=ft-gallery-settings-page' ) . '" >',
 				'</a>'
 			);
@@ -1685,13 +1687,13 @@ class Gallery {
 					<?php
 	}
 
-    /**
-     * Tab ZIPS Content
-     *
-     * Outputs ZIPS tab's content for metabox.
-     *
-     * @since 1.0.0
-     */
+	/**
+	 * Tab ZIPS Content
+	 *
+	 * Outputs ZIPS tab's content for metabox.
+	 *
+	 * @since 1.0.0
+	 */
 	public function tab_zips_content( $params ) {
 		$gallery_class = $params['this'];
 				// If Premium add Functionality
@@ -1747,17 +1749,18 @@ class Gallery {
 					<?php
 	}
 
-    /**
-     * Tab Woocommerce Content
-     *
-     * Outputs WooCommerce tab's content for metabox.
-     *
-     * @since 1.0.0
-     */
+	/**
+	 * Tab Woocommerce Content
+	 *
+	 * Outputs WooCommerce tab's content for metabox.
+	 *
+	 * @since 1.0.0
+	 */
 	public function tab_woocommerce_content( $params ) {
 		$gallery_class = $params['this'];
 		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 			?>
+
 					<div class="ftg-section">
 				<?php $gallery_class->ft_gallery_tab_premium_msg(); ?>
 					</div>
@@ -1789,7 +1792,7 @@ class Gallery {
 						<span class="tab-section-description"><a href="https://docs.woocommerce.com/document/variable-product/" target="_blank"><small>
 							<?php
 							echo sprintf(
-								esc_html( 'Learn how to create a %1$sVariable product%2$s in WooCommerce.', 'feed-them-gallery' ),
+								esc_html__( 'Learn how to create a %1$sVariable product%2$s in WooCommerce.', 'feed-them-gallery' ),
 								'<strong>',
 								'</strong>'
 							);
@@ -1827,7 +1830,7 @@ class Gallery {
 									target="_blank"><small>
 							<?php
 							echo sprintf(
-								esc_html( 'Learn how to create a %1$sVariable product%2$s in WooCommerce.', 'feed-them-gallery' ),
+								esc_html__( 'Learn how to create a %1$sVariable product%2$s in WooCommerce.', 'feed-them-gallery' ),
 								'<strong>',
 								'</strong>'
 							);
@@ -1892,7 +1895,7 @@ class Gallery {
 									target="_blank"><small>
 							 <?php
 								echo sprintf(
-									esc_html( 'Learn how to create a %1$sSimple product%2$s in WooCommerce.', 'feed-them-gallery' ),
+									esc_html__( 'Learn how to create a %1$sSimple product%2$s in WooCommerce.', 'feed-them-gallery' ),
 									'<strong>',
 									'</strong>'
 								);
@@ -1901,7 +1904,7 @@ class Gallery {
 						<span class="tab-section-description"><small>
 												<?php
 												echo sprintf(
-													esc_html( '**NOTE** A Zip Model Product must have the options %1$sVirtual%2$s AND %3$sDownloadable%4$s checked to appear in ZIP Model Product select option above. No Download link is needed in product though as it will be auto-filled in when Feed Them Gallery creates a new ZIP product based on the ZIP\'s location.', 'feed-them-gallery' ),
+													esc_html__( 'NOTE: A Zip Model Product must have the options %1$sVirtual%2$s AND %3$sDownloadable%4$s checked to appear in ZIP Model Product select option above. No Download link is needed in product though as it will be auto-filled in when Feed Them Gallery creates a new ZIP product based on the ZIP\'s location.', 'feed-them-gallery' ),
 													'<a href="' . esc_url( 'https://docs.woocommerce.com/document/managing-products/#section-14' ) . '">',
 													'</a>',
 													'<a href="' . esc_url( 'https://docs.woocommerce.com/document/managing-products/#section-15' ) . '">',
@@ -1916,23 +1919,30 @@ class Gallery {
 					<div class="ft-gallery-note ft-gallery-note-footer">
 								<?php
 								echo sprintf(
-									esc_html( 'Additional Global WooCommerce options available on the %1$sSettings Page%2$s', 'feed-them-gallery' ),
+									esc_html__( 'Additional Global WooCommerce options available on the %1$sSettings Page%2$s', 'feed-them-gallery' ),
 									'<a href="' . esc_url( 'edit.php?post_type=ft_gallery&page=ft-gallery-settings-page' ) . '" >',
 									'</a>'
 								);
 								?>
 				</div>
 			</div>
-					<?php
+		<?php if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
+			<script>
+				jQuery('#ftg-tab-content5 input, #ftg-tab-content5 select').attr('disabled', 'disabled');
+				jQuery('#ftg-tab-content5 input').val('Premium Required');
+				jQuery('#ftg-tab-content5 select option').text('Premium Required');
+			</script>
+			<?php
+}
 	}
 
-    /**
-     * Tab Watermark Content
-     *
-     * Outputs Watermark tab's content for metabox.
-     *
-     * @since 1.0.0
-     */
+	/**
+	 * Tab Watermark Content
+	 *
+	 * Outputs Watermark tab's content for metabox.
+	 *
+	 * @since 1.0.0
+	 */
 	public function tab_watermark_content( $params ) {
 		$gallery_class = $params['this'];
 		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
@@ -1953,22 +1963,29 @@ class Gallery {
 				// print_r( $gallery_class->metabox_settings_class->get_saved_settings_array( $gallery_class->parent_post_id ) );
 				// echo '</pre>';
 				echo sprintf(
-					esc_html( 'Please %1$screate a ticket%2$s if you are experiencing trouble and one of our team members will be happy to assist you.', 'feed-them-gallery' ),
+					esc_html__( 'Please %1$screate a ticket%2$s if you are experiencing trouble and one of our team members will be happy to assist you.', 'feed-them-gallery' ),
 					'<a href="' . esc_url( 'https://www.slickremix.com/my-account/#tab-support' ) . '" target="_blank">',
 					'</a>'
 				);
 				?>
 			</div>
-					<?php
+		<?php if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
+			<script>
+				jQuery('#ftg-tab-content7 input, #ftg-tab-content7 select').attr('disabled', 'disabled');
+				jQuery('#ftg-tab-content7 input').val('Premium Required');
+				jQuery('#ftg-tab-content7 select option').text('Premium Required');
+			</script>
+			<?php
+}
 	}
 
-    /**
-     * Tab Pagination Content
-     *
-     * Outputs Watermark tab's content for metabox.
-     *
-     * @since 1.0.0
-     */
+	/**
+	 * Tab Pagination Content
+	 *
+	 * Outputs Watermark tab's content for metabox.
+	 *
+	 * @since 1.0.0
+	 */
 	public function tab_pagination_content( $params ) {
 		$gallery_class = $params['this'];
 		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
@@ -1986,22 +2003,29 @@ class Gallery {
 			<div class="ft-gallery-note ft-gallery-note-footer">
 				<?php
 				echo sprintf(
-					esc_html( 'Please %1$screate a ticket%2$s if you are experiencing trouble and one of our team members will be happy to assist you.', 'feed-them-gallery' ),
+					esc_html__( 'Please %1$screate a ticket%2$s if you are experiencing trouble and one of our team members will be happy to assist you.', 'feed-them-gallery' ),
 					'<a href="' . esc_url( 'https://www.slickremix.com/my-account/#tab-support' ) . '" target="_blank">',
 					'</a>'
 				);
 				?>
 			</div>
-					<?php
+		<?php if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
+			<script>
+				jQuery('#ftg-tab-content8 input, #ftg-tab-content8 select').attr('disabled', 'disabled');
+				jQuery('#ftg-tab-content8 input').val('Premium Required');
+				jQuery('#ftg-tab-content8 select option').text('Premium Required');
+			</script>
+			<?php
+}
 	}
 
-    /**
-     * Tab Tags Content
-     *
-     * Outputs Tags tab's content for metabox.
-     *
-     * @since 1.0.0
-     */
+	/**
+	 * Tab Tags Content
+	 *
+	 * Outputs Tags tab's content for metabox.
+	 *
+	 * @since 1.0.0
+	 */
 	public function tab_tags_content( $params ) {
 		$gallery_class = $params['this'];
 		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
@@ -2019,13 +2043,20 @@ class Gallery {
 				<div class="ft-gallery-note ft-gallery-note-footer">
 				<?php
 				echo sprintf(
-					esc_html( 'Please %1$screate a ticket%2$s if you are experiencing trouble and one of our team members will be happy to assist you.', 'feed-them-gallery' ),
+					esc_html__( 'Please %1$screate a ticket%2$s if you are experiencing trouble and one of our team members will be happy to assist you.', 'feed-them-gallery' ),
 					'<a href="' . esc_url( 'https://www.slickremix.com/my-account/#tab-support' ) . '" target="_blank">',
 					'</a>'
 				);
 				?>
 			</div>
-					<?php
+		<?php if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
+			<script>
+				jQuery('#ftg-tab-content9 input, #ftg-tab-content9 select').attr('disabled', 'disabled');
+				jQuery('#ftg-tab-content9 input').val('Premium Required');
+				jQuery('#ftg-tab-content9 select option').text('Premium Required');
+			</script>
+			<?php
+}
 	}
 
 				/**
@@ -2220,14 +2251,14 @@ class Gallery {
 		if ( 'edit.php?post_type=ft_gallery' === $screen->parent_file && 'add' === $screen->action ) {
 			?>
 			<p>
-				<label><label><?php echo esc_html( 'Save or Publish this Gallery to be able to copy this Gallery\'s Shortcode.', 'feed-them-gallery' ); ?></label>
+				<label><label><?php echo esc_html__( 'Save or Publish this Gallery to be able to copy this Gallery\'s Shortcode.', 'feed-them-gallery' ); ?></label>
 			</p>
 						<?php
 		} else {
 			// Copy Shortcode
 			?>
 			<p>
-				<label><label><?php echo esc_html( 'Copy and Paste this shortcode to any page, post or widget.', 'feed-them-gallery' ); ?></label>
+				<label><label><?php echo esc_html__( 'Copy and Paste this shortcode to any page, post or widget.', 'feed-them-gallery' ); ?></label>
 					<input readonly="readonly" value="[feed-them-gallery id=<?php echo esc_html( $gallery_id ); ?>]" onclick="this.select();"/>
 			</p>
 						<?php
@@ -2397,19 +2428,19 @@ class Gallery {
 		$ft_gallery_zip_status = get_post_status( $id_to_check );
 
 		// Check the Status if False or in Trash return false
-		return false === $ft_gallery_zip_status || 'trash' === $ft_gallery_zip_status ? 'false' : 'true';
+		return false == $ft_gallery_zip_status || 'trash' === $ft_gallery_zip_status ? 'false' : 'true';
 	}
 
-    /**
-     * FT Gallery Duplicate Post As Draft
-     * Function creates post duplicate as a draft and redirects then to the edit post screen
-     *
-     * @since 1.0.0
-     */
+	/**
+	 * FT Gallery Duplicate Post As Draft
+	 * Function creates post duplicate as a draft and redirects then to the edit post screen
+	 *
+	 * @since 1.0.0
+	 */
 	public function ft_gallery_duplicate_post_as_draft() {
 		global $wpdb;
 		if ( ! ( isset( $_GET['post'] ) || isset( $_POST['post'] ) || ( isset( $_REQUEST['action'] ) && 'ft_gallery_duplicate_post_as_draft' === $_REQUEST['action'] ) ) ) {
-			wp_die( esc_html( 'No Gallery to duplicate has been supplied!', 'feed-them-gallery' ) );
+			wp_die( esc_html__( 'No Gallery to duplicate has been supplied!', 'feed-them-gallery' ) );
 		}
 
 		/*
@@ -2476,28 +2507,22 @@ class Gallery {
 			/*
 			 * duplicate all post meta just in two SQL queries
 			 */
-			$post_meta_results = $wpdb->get_results( "SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id=$post_id" );
+			$post_meta_results = $wpdb->get_results( $wpdb->prepare( "SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id = %d", $post_id ) );
+
 			if ( 0 !== count( $post_meta_results ) ) {
-				// $sql_query = "INSERT INTO $wpdb->postmeta (post_id, meta_key, meta_value) ";
-				$value_parameter = '';
 				foreach ( $post_meta_results as $meta_info ) {
-					$meta_key = $meta_info->meta_key;
-					if ( '_wp_old_slug' === $meta_key ) {
+					if ( '_wp_old_slug' === $meta_info->meta_value ) {
 						continue;
 					}
-					$meta_value      = addslashes( $meta_info->meta_value );
-					$sql_query_sel[] = "SELECT $new_post_id, '$meta_key', '$meta_value'";
-				}
-
-				// Query call to duplicate post with Prepare!
-				$wpdb->query(
-					$wpdb->prepare(
-						"INSERT INTO $wpdb->postmeta ( post_id, meta_key, meta_value ) UNION ALL( %s )",
-						array(
-							$value_parameter,
+					$wpdb->query(
+						$wpdb->prepare(
+							"INSERT INTO $wpdb->postmeta ( post_id, meta_key, meta_value ) VALUES ( %d, %s, %s )",
+                            $new_post_id,
+                            $meta_info->meta_key,
+                            $meta_info->meta_value
 						)
-					)
-				);
+					);
+				}
 			}
 
 			/*
@@ -2507,19 +2532,19 @@ class Gallery {
 			exit;
 		}
 
-		wp_die( esc_html('Gallery duplication failed, could not find original Gallery: ' . $post_id, 'feed-them-gallery' ) );
+		wp_die( esc_html__( 'Gallery duplication failed, could not find original Gallery: ' . $post_id, 'feed-them-gallery' ) );
 	}
 
-    /**
-     * Metabox Specific Form Inputs
-     *
-     * This adds to the ouput of the metabox output forms for settings_html_form function in the Metabox Settings class.
-     *
-     * @param $params
-     * @param $input_option
-     * @return
-     * @since 1.1.6
-     */
+	/**
+	 * Metabox Specific Form Inputs
+	 *
+	 * This adds to the ouput of the metabox output forms for settings_html_form function in the Metabox Settings class.
+	 *
+	 * @param $params
+	 * @param $input_option
+	 * @return
+	 * @since 1.1.6
+	 */
 	public function metabox_specific_form_inputs( $params ) {
 		// 'This' Class object.
 		$gallery_class = $params['this'];
@@ -2585,7 +2610,7 @@ class Gallery {
 					global $_wp_additional_image_sizes;
 
 					$sizes   = array();
-					$output .= '<option val="Choose an option" ' . ( 'not_set' === $final_value_images ? 'selected="selected"' : '' ) . '>' . esc_html( 'Choose an option', 'feed-them-gallery' ) . '</option>';
+					$output .= '<option val="Choose an option" ' . ( 'not_set' === $final_value_images ? 'selected="selected"' : '' ) . '>' . esc_html__( 'Choose an option', 'feed-them-gallery' ) . '</option>';
 					foreach ( get_intermediate_image_sizes() as $_size ) {
 						if ( in_array( $_size, array( 'thumbnail', 'medium', 'medium_large', 'large' ) ) ) {
 							$sizes[ $_size ]['width']  = get_option( "{$_size}_size_w" );
@@ -2600,7 +2625,7 @@ class Gallery {
 						}
 						$output .= '<option val="' . esc_attr( $_size ) . '" ' . ( esc_attr( $_size ) . ' ' . esc_attr( $sizes[ $_size ]['width'] ) . ' x ' . $sizes[ $_size ]['height'] === $final_value_images ? 'selected="selected"' : '' ) . '>' . esc_html( $_size ) . ' ' . esc_html( $sizes[ $_size ]['width'] ) . ' x ' . esc_html( $sizes[ $_size ]['height'] ) . '</option>';
 					}
-					$output .= '<option val="full" ' . ( 'full' === $final_value_images ? 'selected="selected"' : '' ) . '>' . esc_html( 'full', 'feed-them-gallery' ) . '</option>';
+					$output .= '<option val="full" ' . ( 'full' === $final_value_images ? 'selected="selected"' : '' ) . '>' . esc_html__( 'full', 'feed-them-gallery' ) . '</option>';
 					// TESTING AREA
 					// echo $final_value_images;
 					// echo '<pre>';
@@ -2618,7 +2643,7 @@ class Gallery {
 
 					$sizes = array();
 
-					$output .= '<option val="Choose an option" ' . ( 'not_set' === $final_value_images ? 'selected="selected"' : '' ) . '>' . esc_html( 'Choose an option', 'feed-them-gallery' ) . '</option>';
+					$output .= '<option val="Choose an option" ' . ( 'not_set' === $final_value_images ? 'selected="selected"' : '' ) . '>' . esc_html__( 'Choose an option', 'feed-them-gallery' ) . '</option>';
 					foreach ( get_intermediate_image_sizes() as $_size ) {
 						if ( in_array( $_size, array( 'thumbnail', 'medium', 'medium_large', 'large' ) ) ) {
 							$sizes[ $_size ]['width']  = get_option( "{$_size}_size_w" );
@@ -2633,7 +2658,7 @@ class Gallery {
 						}
 						$output .= '<option val="' . esc_attr( $_size ) . '" ' . ( esc_attr( $_size ) . ' ' . esc_attr( $sizes[ $_size ]['width'] ) . ' x ' . $sizes[ $_size ]['height'] == $final_value_images ? 'selected="selected"' : '' ) . '>' . esc_attr( $_size ) . ' ' . esc_attr( $sizes[ $_size ]['width'] ) . ' x ' . esc_attr( $sizes[ $_size ]['height'] ) . '</option>';
 					}
-					$output .= '<option val="full" ' . ( 'full' === $final_value_images ? 'selected="selected"' : '' ) . '>' . esc_html( 'full', 'feed-them-gallery' ) . '</option>';
+					$output .= '<option val="full" ' . ( 'full' === $final_value_images ? 'selected="selected"' : '' ) . '>' . esc_html__( 'full', 'feed-them-gallery' ) . '</option>';
 					// TESTING AREA
 					// echo $final_value_images;
 					// echo '<pre>';
@@ -2650,7 +2675,7 @@ class Gallery {
 					global $_wp_additional_image_sizes;
 
 					$sizes   = array();
-					$output .= '<option val="Choose an option" ' . ( 'not_set' === $final_value_images ? 'selected="selected"' : '' ) . '>' . esc_html( 'Choose an option', 'feed-them-gallery' ) . '</option>';
+					$output .= '<option val="Choose an option" ' . ( 'not_set' === $final_value_images ? 'selected="selected"' : '' ) . '>' . esc_html__( 'Choose an option', 'feed-them-gallery' ) . '</option>';
 					foreach ( get_intermediate_image_sizes() as $_size ) {
 						if ( in_array( $_size, array( 'thumbnail', 'medium', 'medium_large', 'large' ) ) ) {
 							$sizes[ $_size ]['width']  = get_option( "{$_size}_size_w" );
@@ -2665,7 +2690,7 @@ class Gallery {
 						}
 						$output .= '<option val="' . esc_attr( $_size ) . '" ' . ( esc_attr( $_size ) . ' ' . esc_attr( $sizes[ $_size ]['width'] ) . ' x ' . $sizes[ $_size ]['height'] == $final_value_images ? 'selected="selected"' : '' ) . '>' . esc_attr( $_size ) . ' ' . esc_attr( $sizes[ $_size ]['width'] ) . ' x ' . esc_attr( $sizes[ $_size ]['height'] ) . '</option>';
 					}
-					$output .= '<option val="full" ' . ( 'full' === $final_value_images ? 'selected="selected"' : '' ) . '>' . esc_html( 'full', 'feed-them-gallery' ) . '</option>';
+					$output .= '<option val="full" ' . ( 'full' === $final_value_images ? 'selected="selected"' : '' ) . '>' . esc_html__( 'full', 'feed-them-gallery' ) . '</option>';
 					// TESTING AREA
 					// echo $final_value_images;
 					// echo '<pre>';
@@ -2757,7 +2782,7 @@ class Gallery {
 	public function ft_gallery_duplicate_post_link( $actions, $post ) {
 		// make sure we only show the duplicate gallery link on our pages
 		if ( current_user_can( 'edit_posts' ) && 'ft_gallery' === $_GET['post_type'] ) {
-			$actions['duplicate'] = '<a id="ft-gallery-duplicate-action" href="' . esc_url( wp_nonce_url( 'admin.php?action=ft_gallery_duplicate_post_as_draft&post=' . $post->ID, basename( __FILE__ ), 'duplicate_nonce' ) ) . '" title="Duplicate this item" rel="permalink">' . esc_html( 'Duplicate', 'feed-them-gallery' ) . '</a>';
+			$actions['duplicate'] = '<a id="ft-gallery-duplicate-action" href="' . esc_url( wp_nonce_url( 'admin.php?action=ft_gallery_duplicate_post_as_draft&post=' . $post->ID, basename( __FILE__ ), 'duplicate_nonce' ) ) . '" title="Duplicate this item" rel="permalink">' . esc_html__( 'Duplicate', 'feed-them-gallery' ) . '</a>';
 		}
 
 		return $actions;
@@ -2779,7 +2804,7 @@ class Gallery {
 			<div id="ft-gallery-duplicate-action">
 				<a href="<?php echo esc_url( wp_nonce_url( 'admin.php?action=ft_gallery_duplicate_post_as_draft&post=' . $id, basename( __FILE__ ), 'duplicate_nonce' ) ); ?>"
 				   title="Duplicate this item"
-				   rel="permalink"><?php esc_html( 'Duplicate Gallery', 'feed-them-gallery' ); ?></a>
+				   rel="permalink"><?php esc_html_e( 'Duplicate Gallery', 'feed-them-gallery' ); ?></a>
 			</div>
 						<?php
 		}

@@ -37,7 +37,7 @@ get_header(); ?>
 
 					$album_id = $post->ID;
 				if ( ! empty( $album_id ) ) {
-					print do_shortcode( '[ft-gallery-album id="' . $album_id . '"]' );
+					echo do_shortcode( '[ft-gallery-album id="' . esc_html( $album_id ) . '"]' );
 				}
 
 				?>

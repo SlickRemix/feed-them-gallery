@@ -486,7 +486,7 @@ class Display_Gallery {
 	 */
 	public function ft_gallery_delete_image_ajax() {
 		$permission = check_ajax_referer( 'ft_gallery_delete_image_nonce', 'nonce', false );
-		if ( false === $permission ) {
+		if ( false == $permission ) {
 			esc_html_e( 'error', 'feed-them-gallery' );
 		} else {
 			$display_gallery = new Display_Gallery();
@@ -531,7 +531,7 @@ class Display_Gallery {
 	 */
 	public function ft_gallery_update_image_information_ajax() {
 		$permission = check_ajax_referer( 'ft_gallery_edit_image_nonce', 'nonce', false );
-		if ( false === $permission ) {
+		if ( false == $permission ) {
 			echo 'error';
 		} else {
 
@@ -565,7 +565,21 @@ class Display_Gallery {
 
 				$img_title       = isset( $my_request['title'] ) && ! empty( $my_request['title'] ) ? sanitize_text_field( wp_unslash( $my_request['title'] ) ) : '';
 				$img_alttext     = isset( $my_request['alttext'] ) && ! empty( $my_request['alttext'] ) ? sanitize_text_field( wp_unslash( $my_request['alttext'] ) ) : '';
-				$img_description = isset( $my_request['description'] ) && ! empty( $my_request['description'] ) ? sanitize_text_field( wp_unslash( $my_request['description'] ) ) : '';
+				$img_description = isset( $my_request['description'] ) && ! empty( $my_request['description'] ) ? wp_kses(
+					$my_request['description'],
+					array(
+						'a'      => array(
+							'href'   => array(),
+							'title'  => array(),
+							'target' => array(),
+						),
+						'br'     => array(),
+						'em'     => array(),
+						'strong' => array(),
+						'small'  => array(),
+						'p'      => array(),
+					)
+				) : '';
 
 				// Set Parameters for image from Gallery.
 				$args = array(
@@ -974,11 +988,40 @@ class Display_Gallery {
 				}
 				print '</style>';
 			}
+
+			$ftg_woo_icon_background_color = isset( $option['ftg_woo_icon_background_color'] ) ? $option['ftg_woo_icon_background_color'] : '';
+			$ftg_woo_icon_color            = isset( $option['ftg_woo_icon_color'] ) ? $option['ftg_woo_icon_color'] : '';
+			$ftg_woo_icon_hover_color      = isset( $option['ftg_woo_icon_hover_color'] ) ? $option['ftg_woo_icon_hover_color'] : '';
+
 			// END GALLERY TAGS.
-			if ( isset( $option['ft_popup_display_options'] ) && 'full-width-second-half-bottom' === $option['ft_popup_display_options'] || isset( $option['ft_popup_display_options'] ) && 'full-width-photo-only' === $option['ft_popup_display_options'] ) {
+			if ( isset( $option['ft_popup_display_options'] ) && 'full-width-second-half-bottom' === $option['ft_popup_display_options'] ||
+				  isset( $option['ft_popup_display_options'] ) && 'full-width-photo-only' === $option['ft_popup_display_options'] ||
+				'' !== $ftg_woo_icon_background_color || '' !== $ftg_woo_icon_color || '' !== $ftg_woo_icon_hover_color ) {
 				?>
 				<style>
 					<?php
+					if ( '' !== $ftg_woo_icon_background_color ) {
+						?>
+					.ft-gallery-responsive-cart-icon {
+						background: <?php echo esc_attr( $ftg_woo_icon_background_color ); ?>!important
+					}
+						<?php
+					}
+					if ( '' !== $ftg_woo_icon_color ) {
+						?>
+					.ft-gallery-responsive-cart-icon a {
+						color: <?php echo esc_attr( $ftg_woo_icon_color ); ?>!important
+					}
+
+						<?php
+					}
+					if ( '' !== $ftg_woo_icon_hover_color ) {
+						?>
+					.fts-feed-type-wp_gallery:hover a {
+						color: <?php echo esc_attr( $ftg_woo_icon_hover_color ); ?>!important
+					}
+						<?php
+					}
 					if ( isset( $option['ft_popup_display_options'] ) && 'full-width-second-half-bottom' === $option['ft_popup_display_options'] ) {
 						?>
 					@media (min-width: 0px) {
@@ -1149,10 +1192,11 @@ class Display_Gallery {
 		$pagination = isset( $pagination_check ) ? esc_html( $pagination_check ) : 'yes';
 
 		// this is the image size in written format,ie* thumbnail, medium, large etc.
-		$title_description     = isset( $option['ft_gallery_photo_caption'] ) ? $option['ft_gallery_photo_caption'] : '';
-		$stack_animation       = 'no';
-		$feed_name_rand_string = 'ft_gallery_' . $this->ft_gallery_rand_string( 10 );
-		$padding               = isset( $option['ft_gallery_padding'] ) ? $option['ft_gallery_padding'] : '';
+		$title_description           = isset( $option['ft_gallery_photo_caption'] ) ? $option['ft_gallery_photo_caption'] : '';
+		$title_description_placement = isset( $option['ft_gallery_photo_caption_placement'] ) ? $option['ft_gallery_photo_caption_placement'] : 'show_top';
+		$stack_animation             = 'no';
+		$feed_name_rand_string       = 'ft_gallery_' . $this->ft_gallery_rand_string( 10 );
+		$padding                     = isset( $option['ft_gallery_padding'] ) ? $option['ft_gallery_padding'] : '';
 		if ( 'post' === $option['ft_gallery_type'] || 'gallery' === $option['ft_gallery_type'] ) {
 			$height = $option['ft_gallery_height'];
 		} else {
@@ -1261,10 +1305,13 @@ class Display_Gallery {
 			wp_enqueue_script( 'ft-gallery-popup-click-js', plugins_url( 'feed-them-gallery/includes/feeds/js/magnific-popup-click.js' ), array(), FTG_CURRENT_VERSION, true );
 		}
 
-		$hide_icon          = isset( $option['ft_gallery_wp_icon'] ) ? $option['ft_gallery_wp_icon'] : '';
-		$hide_date          = isset( $option['ft_gallery_wp_date'] ) ? $option['ft_gallery_wp_date'] : '';
-		$show_share         = isset( $option['ft_gallery_wp_share'] ) ? $option['ft_gallery_wp_share'] : '';
-		$show_purchase_link = isset( $option['ft_gallery_purchase_link'] ) ? $option['ft_gallery_purchase_link'] : '';
+		$hide_icon                              = isset( $option['ft_gallery_wp_icon'] ) ? $option['ft_gallery_wp_icon'] : '';
+		$hide_date                              = isset( $option['ft_gallery_wp_date'] ) ? $option['ft_gallery_wp_date'] : '';
+		$show_share                             = isset( $option['ft_gallery_wp_share'] ) ? $option['ft_gallery_wp_share'] : '';
+		$show_purchase_link                     = isset( $option['ft_gallery_purchase_link'] ) ? $option['ft_gallery_purchase_link'] : '';
+		$hide_add_to_cart                       = isset( $option['ft_gallery_hide_add_to_cart'] ) ? $option['ft_gallery_hide_add_to_cart'] : 'no';
+		$ft_gallery_show_add_to_cart_over_image = isset( $option['ft_gallery_show_add_to_cart_over_image'] ) ? $option['ft_gallery_show_add_to_cart_over_image'] : '';
+		$respnsive_gallery_cart_position        = isset( $option['ft_gallery_position_add_to_cart_over_image'] ) ? $option['ft_gallery_position_add_to_cart_over_image'] : 'bottom-right';
 
 		if ( isset( $option['ft_gallery_purchase_word'] ) && null !== $option['ft_gallery_purchase_word'] ) {
 			$purchase_text = isset( $option['ft_gallery_purchase_word'] ) ? $option['ft_gallery_purchase_word'] : '';
@@ -1312,7 +1359,7 @@ class Display_Gallery {
 
 		if ( isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] || isset( $_GET['ftg-tags'] ) && 'page' === $_GET['type'] ) {
 
-			$orderby_set = null !== $option['ftg_sort_type'] ? $option['ftg_sort_type'] : 'menu_order';
+			$orderby_set = '' !== $option['ftg_sort_type'] ? $option['ftg_sort_type'] : 'date';
 			$orderby     = isset( $_GET['orderby'] ) ? sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) : $orderby_set;
 			if ( isset( $_GET['orderby'] ) && 'menu_order' === $_GET['orderby'] || 'menu_order' === $orderby_set && empty( $_GET['orderby'] ) || 'title' === $orderby_set && empty( $_GET['orderby'] ) || isset( $_GET['orderby'] ) && 'title' === $_GET['orderby'] ) {
 				$order = 'asc';
@@ -1559,11 +1606,11 @@ class Display_Gallery {
 				$columns                  = isset( $ft_gallery_columns ) ? 'data-ftg-columns="' . $ft_gallery_columns . '" ' : '';
 				$force_columns            = isset( $ft_gallery_force_columns ) ? 'data-ftg-force-columns="' . $ft_gallery_force_columns . '" ' : '';
 
-				print '<div ' . esc_html( $columns . $force_columns ) . 'data-ftg-margin=' . esc_attr( $space_between_photos ) . ' class="fts-mashup ft-wp-gallery-centered ft-wp-gallery popup-gallery-fb-posts ' . esc_attr( $feed_name_rand_string ) . ' ' . esc_attr( $scrollable ) . '" ' . esc_html( $style_start . $feed_width . $mashup_margin . $height . $padding . $background_color . $style_end ) . '>';
+				print '<div ' . esc_html( $columns . $force_columns ) . 'data-ftg-margin=' . esc_attr( $space_between_photos ) . ' class="fts-mashup ft-wp-gallery-centered ft-wp-gallery popup-gallery-fb-posts ' . esc_attr( $feed_name_rand_string ) . ' ' . esc_attr( $scrollable ) . '" ' . $style_start . esc_attr( $feed_width . $mashup_margin . $height . $padding . $background_color ) . $style_end . '>';
 				print '<div class="' . esc_attr( $fts_dynamic_class_name ) . '">';
 
 			} elseif ( 'post' === $format_type ) {
-				print '<div class="fts-mashup ft-wp-gallery popup-gallery-fb-posts ' . esc_attr( $feed_name_rand_string ) . ' ' . esc_attr( $fts_dynamic_class_name ) . '" ' . esc_html( $style_start . $feed_width . $mashup_margin . $height . $padding . $background_color . $style_end ) . '>';
+				print '<div class="fts-mashup ft-wp-gallery popup-gallery-fb-posts ' . esc_attr( $feed_name_rand_string ) . ' ' . esc_attr( $fts_dynamic_class_name ) . '" ' . $style_start . esc_attr( $feed_width . $mashup_margin . $height . $padding . $background_color ) . $style_end . '>';
 			}
 		}
 
@@ -1657,7 +1704,7 @@ class Display_Gallery {
 				$image_source_medium_large = wp_get_attachment_image_src( $image['id'], 'medium_large', false );
 				$image_source_medium       = wp_get_attachment_image_src( $image['id'], 'medium', false );
 
-				if ( isset( $image_size_page ) && 'Choose an option' !== $image_size_page ) {
+				if ( isset( $image_size_page, $image_size_page ) && 'Choose an option' !== $image_size_page ) {
 					$image_source_page = $item_final_page[0];
 				} elseif ( isset( $image_size_page, $image_source_large ) ) {
 					$image_source_page = $image_source_large[0];
@@ -1670,7 +1717,7 @@ class Display_Gallery {
 				}
 
 				if ( isset( $popup ) && 'yes' === $popup ) {
-					if ( isset( $image_size_name ) && 'Choose an option' !== $image_size_page ) {
+					if ( isset( $image_size_name, $image_source_popup ) && 'Choose an option' !== $image_source_popup ) {
 						$image_source_popup = $item_final_popup[0];
 					} elseif ( isset( $image_source_large ) ) {
 						$image_source_popup = $image_source_large[0];
@@ -1715,52 +1762,57 @@ class Display_Gallery {
 					?>
 							">
 
-						<div class="ft-text-for-popup" style="
-						<?php
-						if ( isset( $hide_icon, $username, $hide_date, $title_description ) && 'no' === $hide_icon && 'none' === $username && 'no' === $hide_date && 'none' === $title_description || 'gallery-collage' === $format_type ) {
-							?>
-								display:none !important;<?php } ?>">
-							<div class="ft-text-for-popup-content">
-								<?php if ( isset( $hide_icon ) && 'yes' === $hide_icon && empty( $_GET['ftg-tags'] ) ) { ?>
-									<div class="ft-gallery-icon-wrap-right fts-mashup-wp_gallery-icon ft-wp-gallery-icon">
-										<a href="<?php print esc_url( $username_link ); ?>"
-										   target="<?php print esc_attr( $link_target ); ?>"></a>
-									</div>
-								<?php } ?>
-								<?php if ( isset( $username ) && 'none' !== $username ) { ?>
-									<span class="ft-gallery-fb-user-name">
-									<?php
-									if ( empty( $_GET['ftg-tags'] ) ) {
-										?>
-										<a href="<?php print esc_url( $username_link ); ?>"
-										   target="<?php print esc_attr( $link_target ); ?>"><?php print esc_html( $username ); ?></a><?php } ?></span>
-								<?php } ?>
-								<?php if ( isset( $hide_date ) && 'yes' === $hide_date ) { ?>
-									<span class="ft-gallery-post-time"><?php print esc_html( $ftg_final_date ); ?></span>
-								<?php } ?>
 
-								<div class="ft-gallery-description-wrap">
-									<?php if ( 'title' === $title_description || 'title_description' === $title_description ) { ?>
-										<p><strong><?php print esc_html( $img_title ); ?></strong>
-										</p><?php } ?><?php if ( 'description' === $title_description || 'title_description' === $title_description ) { ?>
-										<p>
-											<?php
-											print wp_kses(
-												$image_description,
-												array(
-													'a'  => array(
-														'href' => array(),
-														'title' => array(),
-													),
-													'br' => array(),
-													'em' => array(),
-													'strong' => array(),
-													'small' => array(),
-												)
-											);
+
+
+
+					<?php if ( 'show_top' === $title_description_placement ) { ?>
+						<div class="ft-text-for-popup" style="
+							<?php
+							if ( isset( $hide_icon, $username, $hide_date, $title_description ) && 'no' === $hide_icon && 'none' === $username && 'no' === $hide_date && 'none' === $title_description || 'gallery-collage' === $format_type ) {
+								?>
+									display:none !important;<?php } ?>">
+								<div class="ft-text-for-popup-content">
+									<?php if ( isset( $hide_icon ) && 'yes' === $hide_icon && empty( $_GET['ftg-tags'] ) ) { ?>
+										<div class="ft-gallery-icon-wrap-right fts-mashup-wp_gallery-icon ft-wp-gallery-icon">
+											<a href="<?php print esc_url( $username_link ); ?>"
+											   target="<?php print esc_attr( $link_target ); ?>"></a>
+										</div>
+									<?php } ?>
+									<?php if ( isset( $username ) && 'none' !== $username ) { ?>
+										<span class="ft-gallery-fb-user-name">
+										<?php
+										if ( empty( $_GET['ftg-tags'] ) ) {
 											?>
-											</p>
-											<?php
+											<a href="<?php print esc_url( $username_link ); ?>"
+											   target="<?php print esc_attr( $link_target ); ?>"><?php print esc_html( $username ); ?></a><?php } ?></span>
+									<?php } ?>
+									<?php if ( isset( $hide_date ) && 'yes' === $hide_date ) { ?>
+										<span class="ft-gallery-post-time"><?php print esc_html( $ftg_final_date ); ?></span>
+									<?php } ?>
+
+									<div class="ft-gallery-description-wrap">
+										<?php if ( 'title' === $title_description || 'title_description' === $title_description ) { ?>
+											<p><strong class="ftg-title-wrap"><?php print esc_html( $img_title ); ?></strong>
+											</p><?php } ?><?php if ( 'description' === $title_description || 'title_description' === $title_description ) { ?>
+											<p>
+												<?php
+												print wp_kses(
+													nl2br( $image_description ),
+													array(
+														'a'  => array(
+															'href' => array(),
+															'title' => array(),
+														),
+														'br' => array(),
+														'em' => array(),
+														'strong' => array(),
+														'small' => array(),
+													)
+												);
+												?>
+												</p>
+												<?php
 }
 
 if ( empty( $ftg['is_album'] ) || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET['type'] ) {
@@ -1788,11 +1840,16 @@ if ( empty( $ftg['is_album'] ) || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET
 }
 
 ?>
+										</div>
+
+
 								</div>
-
-
-							</div>
 						</div>
+					<?php } ?>
+
+
+
+
 						<div class="fts-mashup-image-and-video-wrap"
 							<?php
 							if ( isset( $image_size ) && '' !== $image_size ) {
@@ -1847,24 +1904,114 @@ if ( empty( $ftg['is_album'] ) || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET
 								</div>
 							<?php } ?>
 						</div>
-						<?php
 
-						if ( isset( $ftg['is_album'] ) && 'yes' !== $ftg['is_album'] || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET['type'] ) {
-							print ' <div class="ftg-varation-for-popup">';
-							if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && empty( $ftg['is_album'] ) ) {
 
-								// Get $product object from product ID.
-								$this->ftg_variable_add_to_cart( $product_id );
-							}
-							print '</div>';
 
-							$free_image_size = isset( $option['ftg_free_download_size'] ) ? $option['ftg_free_download_size'] : '';
-							if ( 'yes' === $show_share || is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && 'yes' === $show_purchase_link && empty( $ftg['is_album'] ) ) {
+						<?php if ( 'show_bottom' === $title_description_placement ) { ?>
+						<div class="ft-text-bottom">
+							<div class="ft-text-for-popup" style="
+							<?php
+							if ( isset( $hide_icon, $username, $hide_date, $title_description ) && 'no' === $hide_icon && 'none' === $username && 'no' === $hide_date && 'none' === $title_description || 'gallery-collage' === $format_type ) {
 								?>
+									display:none !important;<?php } ?>">
+								<div class="ft-text-for-popup-content">
+									<?php if ( isset( $hide_icon ) && 'yes' === $hide_icon && empty( $_GET['ftg-tags'] ) ) { ?>
+										<div class="ft-gallery-icon-wrap-right fts-mashup-wp_gallery-icon ft-wp-gallery-icon">
+											<a href="<?php print esc_url( $username_link ); ?>"
+											   target="<?php print esc_attr( $link_target ); ?>"></a>
+										</div>
+									<?php } ?>
+									<?php if ( isset( $username ) && 'none' !== $username ) { ?>
+										<span class="ft-gallery-fb-user-name">
+										<?php
+										if ( empty( $_GET['ftg-tags'] ) ) {
+											?>
+											<a href="<?php print esc_url( $username_link ); ?>"
+											   target="<?php print esc_attr( $link_target ); ?>"><?php print esc_html( $username ); ?></a><?php } ?></span>
+									<?php } ?>
+									<?php if ( isset( $hide_date ) && 'yes' === $hide_date ) { ?>
+										<span class="ft-gallery-post-time"><?php print esc_html( $ftg_final_date ); ?></span>
+									<?php } ?>
+
+									<div class="ft-gallery-description-wrap">
+										<?php if ( 'title' === $title_description || 'title_description' === $title_description ) { ?>
+											<p><strong class="ftg-title-wrap"><?php print esc_html( $img_title ); ?></strong>
+											</p><?php } ?><?php if ( 'description' === $title_description || 'title_description' === $title_description ) { ?>
+											<p>
+												<?php
+												print wp_kses(
+													nl2br( $image_description ),
+													array(
+														'a'  => array(
+															'href' => array(),
+															'title' => array(),
+														),
+														'br' => array(),
+														'em' => array(),
+														'strong' => array(),
+														'small' => array(),
+													)
+												);
+												?>
+											</p>
+												<?php
+}
+
+if ( empty( $ftg['is_album'] ) || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET['type'] ) {
+	// Image Tags.
+	if ( 'yes' === $option['ft_gallery_show_tags'] && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
+		$ftg_tags = new image_and_gallery_tags_class();
+		echo wp_kses(
+			$ftg_tags->ft_gallery_tags( $image['id'], $ftg['id'], 'image' ),
+			array(
+				'a'    => array(
+					'href'  => array(),
+					'title' => array(),
+				),
+				'span' => array(
+					'class' => array(),
+					'title' => array(),
+				),
+				'div'  => array(
+					'class' => array(),
+					'title' => array(),
+				),
+			)
+		);
+	}
+}
+
+?>
+									</div>
+
+
+								</div>
+							</div>
+						</div>
+							<?php
+}
+
+if ( isset( $ftg['is_album'] ) && 'yes' !== $ftg['is_album'] || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET['type'] ) {
+
+	if ( 'yes' !== $hide_add_to_cart ) {
+
+		print ' <div class="ftg-varation-for-popup">';
+		if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && empty( $ftg['is_album'] ) ) {
+
+			// Get $product object from product ID.
+			$this->ftg_variable_add_to_cart( $product_id );
+		}
+		print '</div>';
+
+	}
+
+	$free_image_size = isset( $option['ftg_free_download_size'] ) ? $option['ftg_free_download_size'] : '';
+	if ( 'yes' === $show_share || is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && 'yes' === $show_purchase_link && empty( $ftg['is_album'] ) ) {
+		?>
 
 								<div class="fts-mashup-count-wrap">
 
-									<?php if ( 'yes' === $show_share ) { ?>
+			<?php if ( 'yes' === $show_share ) { ?>
 										<div class="fts-share-wrap">
 											<a href="javascript:;" class="ft-gallery-link-popup"></a>
 											<div class='ft-gallery-share-wrap'>
@@ -1888,59 +2035,59 @@ if ( empty( $ftg['is_album'] ) || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET
 									<?php } ?>
 
 									<div class="ft-gallery-cta-button-wrap">
-										<?php
-										if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && 'yes' === $show_purchase_link ) {
+				<?php
+				if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && 'yes' === $show_purchase_link ) {
 
-											// Check to see if we are working with a variable product and if so make the purchase link go to cart.
-											$product = wc_get_product( $product_id );
+					// Check to see if we are working with a variable product and if so make the purchase link go to cart.
+					$product = wc_get_product( $product_id );
 
-											$ft_gallery_cart_page_name = get_option( 'ft_gallery_cart_page_name' ) ? get_option( 'ft_gallery_cart_page_name' ) : 'cart';
+					$ft_gallery_cart_page_name = get_option( 'ft_gallery_cart_page_name' ) ? get_option( 'ft_gallery_cart_page_name' ) : 'cart';
 
-											if ( 'variable' === $product->get_type( 'variable' ) ) {
-												$purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name;
-											} else {
-												if ( 'prod_page' === $purchase_link_option ) {
-													$purchase_link = '' . $siteurl . '/product/?p=' . $product_id . '';
-												} elseif ( 'add_cart' === $purchase_link_option ) {
-													$purchase_link = '' . $siteurl . '/?add-to-cart=' . $product_id . '';
-												} elseif ( 'add_cart_checkout' === $purchase_link_option ) {
-													$purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name . '/?add-to-cart=' . $product_id . '';
-												} elseif ( 'cart_checkout' === $purchase_link_option ) {
-													$purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name;
-												} else {
-													$purchase_link = '' . $siteurl . '/product/?p=' . $product_id . '';
-												}
-											}
+					if ( 'variable' === $product->get_type( 'variable' ) ) {
+						$purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name;
+					} else {
+						if ( 'prod_page' === $purchase_link_option ) {
+							$purchase_link = '' . $siteurl . '/product/?p=' . $product_id . '';
+						} elseif ( 'add_cart' === $purchase_link_option ) {
+							$purchase_link = '' . $siteurl . '/?add-to-cart=' . $product_id . '';
+						} elseif ( 'add_cart_checkout' === $purchase_link_option ) {
+							$purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name . '/?add-to-cart=' . $product_id . '';
+						} elseif ( 'cart_checkout' === $purchase_link_option ) {
+							$purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name;
+						} else {
+							$purchase_link = '' . $siteurl . '/product/?p=' . $product_id . '';
+						}
+					}
 
-											// If Image already has product meta check the product still exists.
-											if ( ! empty( $product_id ) && empty( $ftg['is_album'] ) ) {
-												$product_exist = $gallery_to_woo->ft_gallery_create_woo_prod_exists_check( $product_id );
-												if ( $product_exist ) {
-													echo '<a class="ft-gallery-buy-now ft-gallery-link-popup-master" href="' . esc_url( $purchase_link ) . '" ">' . esc_html( $purchase_text ) . '</a>';
-												}
-											}
-										} // end if woo active and product ID set.
+					// If Image already has product meta check the product still exists.
+					if ( ! empty( $product_id ) && empty( $ftg['is_album'] ) ) {
+						$product_exist = $gallery_to_woo->ft_gallery_create_woo_prod_exists_check( $product_id );
+						if ( $product_exist ) {
+							echo '<a class="ft-gallery-buy-now ft-gallery-link-popup-master" href="' . esc_url( $purchase_link ) . '" ">' . esc_html( $purchase_text ) . '</a>';
+						}
+					}
+				} // end if woo active and product ID set.
 
-										if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && ! empty( $free_image_size ) && 'Choose an option' !== $free_image_size ) {
+				if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && ! empty( $free_image_size ) && 'Choose an option' !== $free_image_size ) {
 
-											// this is the image size in written format,ie* thumbnail, medium, large etc.
-											$item_page_free           = explode( ' ', $free_image_size );
-											$free_image_url           = wp_get_attachment_image_src( $image['id'], $item_page_free[0], false );
-											$free_image_download_text = ! empty( $option['ft_gallery_free_download_text'] ) ? $option['ft_gallery_free_download_text'] : '';
+					// this is the image size in written format,ie* thumbnail, medium, large etc.
+					$item_page_free           = explode( ' ', $free_image_size );
+					$free_image_url           = wp_get_attachment_image_src( $image['id'], $item_page_free[0], false );
+					$free_image_download_text = ! empty( $option['ft_gallery_free_download_text'] ) ? $option['ft_gallery_free_download_text'] : '';
 
-											print '<a href="' . esc_url( $free_image_url[0] ) . '" download title="" class="ft-gallery-download noLightbox">' . esc_html( $free_image_download_text ) . '</a>';
-										}
-										?>
+					print '<a href="' . esc_url( $free_image_url[0] ) . '" download title="" class="ft-gallery-download noLightbox">' . esc_html( $free_image_download_text ) . '</a>';
+				}
+				?>
 									</div>
 
 								</div>
 
 								<div class="clear"></div>
-								<?php
-							}
-						}
+		<?php
+	}
+}
 
-						?>
+?>
 					</div>
 					<?php
 				} elseif ( 'gallery' === $format_type ) {
@@ -1968,6 +2115,42 @@ if ( empty( $ftg['is_album'] ) || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET
 
 							<?php
 						}
+
+						if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && 'yes' === $ft_gallery_show_add_to_cart_over_image ) {
+
+							// Check to see if we are working with a variable product and if so make the purchase link go to cart.
+							$product = wc_get_product( $product_id );
+
+							$ft_gallery_cart_page_name = get_option( 'ft_gallery_cart_page_name' ) ? get_option( 'ft_gallery_cart_page_name' ) : 'cart';
+
+							if ( 'variable' === $product->get_type( 'variable' ) ) {
+								$purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name;
+							} else {
+								if ( 'prod_page' === $purchase_link_option ) {
+									$purchase_link = '' . $siteurl . '/product/?p=' . $product_id . '';
+								} elseif ( 'add_cart' === $purchase_link_option ) {
+									$purchase_link = '' . $siteurl . '/?add-to-cart=' . $product_id . '';
+								} elseif ( 'add_cart_checkout' === $purchase_link_option ) {
+									$purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name . '/?add-to-cart=' . $product_id . '';
+								} elseif ( 'cart_checkout' === $purchase_link_option ) {
+									$purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name;
+								} else {
+									$purchase_link = '' . $siteurl . '/product/?p=' . $product_id . '';
+								}
+							}
+
+							// If Image already has product meta check the product still exists.
+							if ( ! empty( $product_id ) && empty( $ftg['is_album'] ) ) {
+								$product_exist = $gallery_to_woo->ft_gallery_create_woo_prod_exists_check( $product_id );
+								if ( $product_exist ) {
+									$ft_gallery_purchase_link_or_popup = isset( $option['ft_gallery_popup_or_add_to_cart_link'] ) && 'popup' === $option['ft_gallery_popup_or_add_to_cart_link'] ? 'javascript:;' : $purchase_link;
+									$ft_gallery_popup_cart_icon        = isset( $option['ft_gallery_popup_or_add_to_cart_link'] ) && 'popup' === $option['ft_gallery_popup_or_add_to_cart_link'] ? 'pointer-events:none' : '';
+									echo '<div class="ft-gallery-responsive-cart-icon ft-gallery-cart-icon-position-' . $respnsive_gallery_cart_position . '" style="'.esc_attr( $ft_gallery_popup_cart_icon ).'">
+									<a class="ft-gallery-buy-now ft-gallery-responsive-link" href="' . esc_url( $ft_gallery_purchase_link_or_popup ) . '"></a>
+									</div>';
+								}
+							}
+						} // end if woo active and product ID set.
 
 						$ftg_page_tags_check = isset( $_GET['type'] ) ? sanitize_text_field( wp_unslash( $_GET['type'] ) ) : '';
 
@@ -1997,12 +2180,12 @@ if ( empty( $ftg['is_album'] ) || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET
 									<?php } ?>
 									<div class="ft-gallery-description-wrap">
 										<?php if ( 'title' === $title_description || 'title_description' === $title_description ) { ?>
-											<p><strong><?php print esc_html( $img_title ); ?></strong>
+											<p><strong class="ftg-title-wrap"><?php print esc_html( $img_title ); ?></strong>
 											</p><?php } ?><?php if ( 'description' === $title_description || 'title_description' === $title_description ) { ?>
 											<p>
 												<?php
 												print wp_kses(
-													$image_description,
+													nl2br( $image_description ),
 													array(
 														'a' => array(
 															'href' => array(),
@@ -2089,13 +2272,15 @@ if ( empty( $ftg['is_album'] ) || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET
 								?>
 						</a>
 								<?php
-								print ' <div class="ftg-varation-for-popup" style="display: none!important;">';
-								if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && empty( $ftg['is_album'] ) ) {
+								if ( 'yes' !== $hide_add_to_cart ) {
+									print ' <div class="ftg-varation-for-popup" style="display: none!important;">';
+									if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && empty( $ftg['is_album'] ) ) {
 
-									// Get $product object from product ID.
-									$this->ftg_variable_add_to_cart( $product_id );
+										// Get $product object from product ID.
+										$this->ftg_variable_add_to_cart( $product_id );
+									}
+									print '</div>';
 								}
-								print '</div>';
 
 								$free_image_size = $option['ftg_free_download_size'] ? $option['ftg_free_download_size'] : '';
 								if ( 'yes' === $show_share || is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && 'yes' === $show_purchase_link && empty( $ftg['is_album'] ) || is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && ! empty( $free_image_size ) && 'Choose an option' !== $free_image_size ) {

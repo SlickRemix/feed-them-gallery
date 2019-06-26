@@ -301,7 +301,7 @@ class FTGallery_Create_Image {
 		}
 
 		// Allow for different retina image sizes.
-		$retina = $retina ? ( true === $retina ? 2 : $retina ) : 1;
+		$retina = $retina ? ( true == $retina ? 2 : $retina ) : 1;
 
 		// Destination width and height variables.
 		$dest_width  = $width * $retina;

@@ -143,7 +143,7 @@ class Metabox_Settings {
 	public function add_actions_filters() {
 		if ( is_admin() ) {
 			// Save Page Metaboxes.
-			if ( true === $this->is_page ) {
+			if ( true == $this->is_page ) {
 				// Add Save Metabox if Settings page is a page.
 				add_action( 'admin_init', array( $this, 'add_submit_meta_box' ) );
 
@@ -264,13 +264,13 @@ class Metabox_Settings {
 				'updatefrombottom-admin-js',
 				'updatefrombottomParams',
 				array(
-					'update'                         => __( 'Update', 'feed-them-gallery' ),
-					'publish'                        => __( 'Publish', 'feed-them-gallery' ),
-					'publishing'                     => __( 'Publishing...', 'feed-them-gallery' ),
-					'updating'                       => __( 'Updating...', 'feed-them-gallery' ),
-					'totop'                          => __( 'To top', 'feed-them-gallery' ),
+					'update'                         => esc_html__( 'Update', 'feed-them-gallery' ),
+					'publish'                        => esc_html__( 'Publish', 'feed-them-gallery' ),
+					'publishing'                     => esc_html__( 'Publishing...', 'feed-them-gallery' ),
+					'updating'                       => esc_html__( 'Updating...', 'feed-them-gallery' ),
+					'totop'                          => esc_html__( 'To top', 'feed-them-gallery' ),
 					// used in the success message for when images have been completely uploaded in the drag and drop are or file add button.
-					'images_complete_on_auto_upload' => sprintf( __( 'The Image(s) are done uploading. Please click the Publish or Update button now to edit your image(s).', 'feed-them-gallery' ) ),
+					'images_complete_on_auto_upload' => esc_html__( 'The Image(s) are done uploading. Please click the Publish or Update button now to edit your image(s).', 'feed-them-gallery' ),
 				)
 			);
 
@@ -354,7 +354,7 @@ class Metabox_Settings {
 	 *
 	 * Set the settings array
 	 *
-	 * @param string $settings_array Get the settings array.
+	 * @param array $settings_array Get the settings array.
 	 * @since 1.0
 	 */
 	public function set_settings_array( $settings_array ) {
@@ -379,7 +379,7 @@ class Metabox_Settings {
 		$old_settings_post = get_post_meta( $post_id, $current_info['post_type'] . '_settings_options', true );
 
 		// Get Old Settings Array if set.
-		$old_settings = true === $this->is_page ? $old_settings_page : $old_settings_post;
+		$old_settings = true == $this->is_page ? $old_settings_page : $old_settings_post;
 
 		return isset( $old_settings ) && ! empty( $old_settings ) ? $old_settings : esc_html__( 'No Settings Saved.', 'feed-them-gallery' );
 	}
@@ -523,7 +523,19 @@ class Metabox_Settings {
 				<div class="tabs" id="tabs">
 					<?php
 					// Tabs Menu!
-					$this->metabox_tabs_menu( $current_info, $tabs_list );
+					wp_kses(
+						$this->metabox_tabs_menu( $current_info, $tabs_list ),
+						array(
+							'a'      => array(
+								'href'  => array(),
+								'title' => array(),
+							),
+							'br'     => array(),
+							'em'     => array(),
+							'strong' => array(),
+							'small'  => array(),
+						)
+					)
 					?>
 					<div class="tab-content-wrap">
 						<?php
@@ -592,7 +604,7 @@ class Metabox_Settings {
 		$old_settings_post = get_post_meta( $current_post_id, $current_info['post_type'] . '_settings_options', true );
 
 		// Get Old Settings Array if set.
-		$old_settings = true === $this->is_page ? $old_settings_page : $old_settings_post;
+		$old_settings = true == $this->is_page ? $old_settings_page : $old_settings_post;
 
 		$prem_required_plugins = $this->core_functions_class->ft_gallery_required_plugins();
 
@@ -654,7 +666,7 @@ class Metabox_Settings {
 				$final_value = isset( $old_settings[ $option_name ] ) && ! empty( $old_settings[ $option_name ] ) ? $old_settings[ $option_name ] : $option['default_value'];
 
 				// Do we need to output any Metabox Specific Form Inputs?
-				if ( isset( $this->metabox_specific_form_inputs ) && true === $this->metabox_specific_form_inputs ) {
+				if ( isset( $this->metabox_specific_form_inputs ) && true == $this->metabox_specific_form_inputs ) {
 					// Set Current Params.
 					$params = array(
 						// 'This' Class object.
@@ -741,7 +753,46 @@ class Metabox_Settings {
 
 		$output .= '</div> <!--/Section Wrap Class END -->';
 
-		return $output;
+		return wp_kses(
+			$output,
+			array(
+				'a'      => array(
+					'href'  => array(),
+					'title' => array(),
+					'class' => array(),
+				),
+				'div'    => array(
+					'class' => array(),
+					'id'    => array(),
+					'style' => array(),
+				),
+				'select' => array(
+					'name'  => array(),
+					'class' => array(),
+					'id'    => array(),
+				),
+				'option' => array(
+					'value'    => array(),
+					'selected' => array(),
+				),
+				'input'  => array(
+					'value'       => array(),
+					'type'        => array(),
+					'class'       => array(),
+					'id'          => array(),
+					'placeholder' => array(),
+					'name'        => array(),
+					'checked'     => array(),
+				),
+				'h3'     => array(
+					'class' => array(),
+				),
+				'br'     => array(),
+				'em'     => array(),
+				'strong' => array(),
+				'small'  => array(),
+			)
+		);
 	}
 
 	/**
@@ -774,7 +825,7 @@ class Metabox_Settings {
 		$old_settings_post = get_post_meta( $post_id, $current_info['post_type'] . '_settings_options', true );
 
 		// Get Old Settings Array if set.
-		$old_settings = true === $this->is_page ? (array) $old_settings_page : (array) $old_settings_post;
+		$old_settings = true == $this->is_page ? (array) $old_settings_page : (array) $old_settings_post;
 
 		// Array of Settings to save. Use old settings if available otherwise use new array!
 		$array_to_save = isset( $old_settings ) && ! empty( $old_settings ) ? $old_settings : array();
@@ -794,7 +845,7 @@ class Metabox_Settings {
 						if ( 'checkbox' === $option['option_type'] ) {
 							$new = isset( $_POST[ $option_name ] ) && 'false' !== $_POST[ $option_name ] ? 'true' : 'false';
 						} else {
-							$new = isset( $_POST[ $option_name ] ) && ! empty( $option_name ) ? sanitize_text_field( wp_unslash( $_POST[ $option_name ] ) ) : '';
+							$new = isset( $_POST[ $option_name ] ) && ! empty( $option_name ) ? wp_unslash( $_POST[ $option_name ] ) : '';
 						}
 
 						// If anything has changed update options!
@@ -805,7 +856,7 @@ class Metabox_Settings {
 		}
 
 		// If Post - Return Settings.
-		if ( true === $this->is_page ) {
+		if ( true == $this->is_page ) {
 			// Update options for a page.
 			update_option( $this->hook_id . '_settings_options', $array_to_save );
 

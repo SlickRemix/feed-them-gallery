@@ -63,7 +63,7 @@ class Settings_Page {
 		add_submenu_page(
 			'edit.php?post_type=ft_gallery',
 			esc_html__( 'Settings', 'feed-them-gallery' ),
-            esc_html__( 'Settings', 'feed-them-gallery' ),
+			esc_html__( 'Settings', 'feed-them-gallery' ),
 			'manage_options',
 			'ft-gallery-settings-page',
 			array( $this, 'Settings_Page' )
@@ -79,6 +79,9 @@ class Settings_Page {
 	 */
 	public function Settings_Page() {
 		// Feed Them Gallery Functions Class.
+		// Enqueue JS Color JS.
+		wp_enqueue_script( 'js_color', plugins_url( '/feed-them-gallery/metabox-settings/js/jscolor/jscolor.js' ), array( 'jquery' ), FTG_CURRENT_VERSION, true );
+
 		?>
 		<div class="ft-gallery-main-template-wrapper-all">
 
@@ -425,22 +428,34 @@ class Settings_Page {
 					<textarea name="ft-gallery-settings-admin-textarea-css" class="ft-gallery-settings-admin-textarea-css" id="ft-gallery-main-wrapper-css-input"><?php echo esc_html( get_option( 'ft-gallery-settings-admin-textarea-css' ) ); ?></textarea>
 
 
-					<h4><?php esc_html_e( 'Gallery Color Options', 'feed-them-gallery' ); ?></h4>
+					<h4><?php esc_html_e( 'Gallery Image Color & Size Options', 'feed-them-gallery' ); ?></h4>
 
-					<p><label><?php esc_html_e( 'Text Color', 'feed-them-gallery' ); ?></label>
-						<input type="text" name="ft_gallery_text_color" class="feed-them-social-admin-input fb-text-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:'#eee',pickerFace:3,pickerBorder:0,pickerInsetColor:'white'}" id="fb-text-color-input" placeholder="#222" value="<?php echo esc_attr( get_option( 'ft_gallery_text_color' ) ); ?>" />
+                    <p><label><?php esc_html_e( 'Title', 'feed-them-gallery' ); ?></label>
+                        <input type="text" name="ft_gallery_text_color" class="feed-them-social-admin-input fb-text-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:'#eee',pickerFace:3,pickerBorder:0,pickerInsetColor:'white'}" id="fb-text-color-input" placeholder="#222" value="<?php echo esc_attr( get_option( 'ft_gallery_text_color' ) ); ?>" />
+                    </p>
+
+                    <p><label><?php esc_html_e( 'Title Size', 'feed-them-gallery' ); ?></label>
+                        <input type="text" name="ft_gallery_text_size" class="feed-them-social-admin-input" id="fb-text-size-input" placeholder="14px" value="<?php echo esc_attr( get_option( 'ft_gallery_text_size' ) ); ?>" />
+                    </p>
+
+					<p><label><?php esc_html_e( 'Description', 'feed-them-gallery' ); ?></label>
+						<input type="text" name="ft_gallery_description_color" class="feed-them-social-admin-input fb-text-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:'#eee',pickerFace:3,pickerBorder:0,pickerInsetColor:'white'}" id="fb-text-color-input" placeholder="#222" value="<?php echo esc_attr( get_option( 'ft_gallery_description_color' ) ); ?>" />
 					</p>
 
-					<p><label><?php esc_html_e( 'Link Color', 'feed-them-gallery' ); ?></label>
+                    <p><label><?php esc_html_e( 'Description Size', 'feed-them-gallery' ); ?></label>
+                        <input type="text" name="ft_gallery_description_size" class="feed-them-social-admin-input" id="fb-description-size-input" placeholder="14px" value="<?php echo esc_attr( get_option( 'ft_gallery_description_size' ) ); ?>" />
+                    </p>
+
+					<p><label><?php esc_html_e( 'Link', 'feed-them-gallery' ); ?></label>
 						<input type="text" name="ft_gallery_link_color" class="feed-them-social-admin-input fb-link-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:'#eee',pickerFace:3,pickerBorder:0,pickerInsetColor:'white'}" id="fb-link-color-input" placeholder="#222" value="<?php echo esc_attr( get_option( 'ft_gallery_link_color' ) ); ?>" />
 					</p>
 
 					<p>
-						<label><?php esc_html_e( 'Link Color Hover', 'feed-them-gallery' ); ?></label>
+						<label><?php esc_html_e( 'Link Hover', 'feed-them-gallery' ); ?></label>
 						<input type="text" name="ft_gallery_link_color_hover" class="feed-them-social-admin-input fb-link-color-hover-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:'#eee',pickerFace:3,pickerBorder:0,pickerInsetColor:'white'}" id="fb-link-color-hover-input" placeholder="#ddd" value="<?php echo esc_attr( get_option( 'ft_gallery_link_color_hover' ) ); ?>" />
 					</p>
 					<p>
-						<label><?php esc_html_e( 'Date Color', 'feed-them-gallery' ); ?></label>
+						<label><?php esc_html_e( 'Date', 'feed-them-gallery' ); ?></label>
 						<input type="text" name="ft_gallery_post_time" class="feed-them-social-admin-input fb-date-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:'#eee',pickerFace:3,pickerBorder:0,pickerInsetColor:'white'}" id="ft-gallery-post-time" placeholder="#ddd" value="<?php echo esc_attr( get_option( 'ft_gallery_post_time' ) ); ?>" />
 					</p>
 

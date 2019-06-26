@@ -279,6 +279,9 @@ class Setup_Functions {
 	public function ft_gallery_color_options_head_css_front() {
 
 		$ft_gallery_text_color       = get_option( 'ft_gallery_text_color' );
+        $ft_gallery_text_size        = get_option( 'ft_gallery_text_size' );
+		$ft_gallery_decription_color = get_option( 'ft_gallery_description_color' );
+        $ft_gallery_description_size = get_option( 'ft_gallery_description_size' );
 		$ft_gallery_link_color       = get_option( 'ft_gallery_link_color' );
 		$ft_gallery_link_color_hover = get_option( 'ft_gallery_link_color_hover' );
 		$ft_gallery_post_time        = get_option( 'ft_gallery_post_time' );
@@ -286,22 +289,28 @@ class Setup_Functions {
 
 		<style type="text/css">
 			<?php
-			if ( ! empty( $ft_gallery_text_color ) ) {
+			if ( ! empty( $ft_gallery_text_color ) || ! empty( $ft_gallery_text_size ) ) {
 
 				?>
-				.ft-gallery-simple-fb-wrapper, .ft-gallery-popup{color: <?php echo esc_html( $ft_gallery_text_color ); ?> !important;}
+            strong.ftg-title-wrap {<?php if ( ! empty( $ft_gallery_text_color ) ) { ?>color: <?php echo esc_html( $ft_gallery_text_color );?> !important; <?php }?><?php if ( ! empty( $ft_gallery_text_size ) ) { ?>font-size: <?php echo esc_html( $ft_gallery_text_size );?> !important; <?php }?>}
 				<?php
 			}
-			if ( ! empty( $ft_gallery_link_color ) ) {
+			if ( ! empty( $ft_gallery_decription_color ) || ! empty( $ft_gallery_description_size ) ) {
 
 				?>
-				.ft-wp-gallery a, .ft-gallery-popup a, .ft-wp-gallery .fts-mashup-count-wrap .fts-share-wrap a, .ft-wp-gallery .fts-share-wrap a, body .ft-wp-gallery .ft-gallery-cta-button-wrap a{color: <?php echo esc_html( $ft_gallery_link_color ); ?> !important;}
+            .ft-gallery-description-wrap, .ft-gallery-description-wrap p{<?php if ( ! empty( $ft_gallery_decription_color ) ) { ?>color: <?php echo esc_html( $ft_gallery_decription_color );?> !important; <?php }?><?php if ( ! empty( $ft_gallery_description_size ) ) { ?>font-size: <?php echo esc_html( $ft_gallery_description_size );?> !important; <?php }?>  }
+            <?php
+        }
+        if ( ! empty( $ft_gallery_link_color ) ) {
+
+            ?>
+				.ft-gallery-link-popup a, .mfp-close, .ft-wp-gallery a, .ft-gallery-popup a, .ft-wp-gallery .fts-mashup-count-wrap .fts-share-wrap a, .ft-wp-gallery .fts-share-wrap a, body .ft-wp-gallery .ft-gallery-cta-button-wrap a{color: <?php echo esc_html( $ft_gallery_link_color ); ?> !important;}
 				<?php
 			}
 			if ( ! empty( $ft_gallery_link_color_hover ) ) {
 
 				?>
-				.ft-wp-gallery a:hover, .ft-gallery-popup a:hover, .ft-wp-gallery .fts-share-wrap a:hover, body .ft-wp-gallery .ft-gallery-cta-button-wrap a:hover{color: <?php echo esc_html( $ft_gallery_link_color_hover ); ?> !important;}
+				.ft-gallery-link-popup a:hover, .mfp-close:hover, .ft-wp-gallery a:hover, .ft-gallery-popup a:hover, .ft-wp-gallery .fts-share-wrap a:hover, body .ft-wp-gallery .ft-gallery-cta-button-wrap a:hover{color: <?php echo esc_html( $ft_gallery_link_color_hover ); ?> !important;}
 				<?php
 			}
 			if ( ! empty( $ft_gallery_post_time ) ) {
@@ -329,7 +338,7 @@ class Setup_Functions {
 		$wp_admin_bar->add_menu(
 			array(
 				'id'    => 'ft_gallery_admin_bar',
-				'title' => __( 'Feed Them Gallery', 'ft-gallery' ),
+				'title' => esc_html__( 'Feed Them Gallery', 'ft-gallery' ),
 				'href'  => false,
 			)
 		);
@@ -338,7 +347,7 @@ class Setup_Functions {
 			array(
 				'id'     => 'ft_gallery_admin_bar_view_galleries',
 				'parent' => 'ft_gallery_admin_bar',
-				'title'  => __( 'Galleries ', 'ft-gallery' ),
+				'title'  => esc_html__( 'Galleries ', 'ft-gallery' ),
 				'href'   => admin_url( 'edit.php?post_type=ft_gallery' ),
 			)
 		);
@@ -347,7 +356,7 @@ class Setup_Functions {
 			array(
 				'id'     => 'ft_gallery_admin_bar_new_gallery',
 				'parent' => 'ft_gallery_admin_bar',
-				'title'  => __( 'Add Gallery ', 'ft-gallery' ),
+				'title'  => esc_html__( 'Add Gallery ', 'ft-gallery' ),
 				'href'   => admin_url( 'post-new.php?post_type=ft_gallery' ),
 			)
 		);
@@ -356,7 +365,7 @@ class Setup_Functions {
 			array(
 				'id'     => 'ft_gallery_admin_bar_settings',
 				'parent' => 'ft_gallery_admin_bar',
-				'title'  => __( 'Settings', 'ft-gallery' ),
+				'title'  => esc_html__( 'Settings', 'ft-gallery' ),
 				'href'   => admin_url( 'edit.php?post_type=ft_gallery&page=ft-gallery-settings-page' ),
 			)
 		);
@@ -366,7 +375,7 @@ class Setup_Functions {
 			array(
 				'id'     => 'ft_gallery_admin_bar_system_info',
 				'parent' => 'ft_gallery_admin_bar',
-				'title'  => __( 'System Info', 'ft-gallery' ),
+				'title'  => esc_html__( 'System Info', 'ft-gallery' ),
 				'href'   => admin_url( 'edit.php?post_type=ft_gallery&page=ft-gallery-system-info-submenu-page' ),
 			)
 		);
@@ -376,7 +385,7 @@ class Setup_Functions {
 				array(
 					'id'     => 'ft_gallery_admin_bar_plugin_license',
 					'parent' => 'ft_gallery_admin_bar',
-					'title'  => __( 'Plugin License', 'ft-gallery' ),
+					'title'  => esc_html__( 'Plugin License', 'ft-gallery' ),
 					'href'   => admin_url( 'edit.php?post_type=ft_gallery&page=ft-gallery-license-page' ),
 				)
 			);
@@ -397,6 +406,9 @@ class Setup_Functions {
 			'ft-gallery-admin-bar-menu',
 			'ft-gallery-options-settings-custom-css-second',
 			'ft_gallery_text_color',
+			'ft_gallery_text_size',
+			'ft_gallery_description_color',
+            'ft_gallery_description_size',
 			'ft_gallery_link_color',
 			'ft_gallery_link_color_hover',
 			'ft_gallery_post_time',
