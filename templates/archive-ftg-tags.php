@@ -35,7 +35,7 @@ $image_or_gallery = isset( $_GET['ftg-tags'], $_GET['type'] ) && 'page' === $_GE
 								// echo '<pre>';
 								// print_r( $taxonomies );
 								// echo '</pre>';.
-								echo '<select onChange="window.document.location.href=this.options[this.selectedIndex].value;">';
+									echo '<select onChange="window.document.location.href=this.options[this.selectedIndex].value;">';
 
 								foreach ( $taxonomies as $category ) {
 
@@ -43,9 +43,9 @@ $image_or_gallery = isset( $_GET['ftg-tags'], $_GET['type'] ) && 'page' === $_GE
 										$ftg_category_count_final = $category->count;
 										$ftg_option_selected      = $gallery_tag == $category->slug ? 'selected' : '';
 										$ftg_category_count       = 1 !== $category->count ? ' (' . $ftg_category_count_final . ')' : '';
-										$ftg_url_count            = $category->count > 1 ? '&count=' . $ftg_category_count_final . '' : '';
+                                        $ftg_url_count            = $category->count > 1 ? '&count=' . $ftg_category_count_final .'' : '';
 
-												echo '<option ' . esc_attr( $ftg_option_selected ) . ' value="' . esc_url( get_site_url() . '?type=image&ftg-tags=' . esc_attr( $category->slug . $ftg_url_count ) ) . '">' . esc_html( $category->name ) . esc_html( $ftg_category_count ) . '</option>';
+												echo '<option ' . esc_attr( $ftg_option_selected ) . ' value="'.esc_url( get_site_url() .'?type=image&ftg-tags=' . esc_attr( $category->slug . $ftg_url_count ) ) . '">' . esc_html( $category->name ) . esc_html( $ftg_category_count ) . '</option>';
 
 									}
 								}
