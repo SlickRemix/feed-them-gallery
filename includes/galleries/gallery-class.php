@@ -2604,7 +2604,7 @@ class Gallery {
 
 				// Image sizes for page.
 				case 'ft-images-sizes-page':
-					$final_value_images = $gallery_options_returned['ft_gallery_images_sizes_page'];
+					$final_value_images = isset( $gallery_options_returned['ft_gallery_images_sizes_page'] ) ? $gallery_options_returned['ft_gallery_images_sizes_page'] : '';
 					$output            .= '<select name="' . esc_attr( $option['name'] ) . '" id="' . esc_attr( $option['id'] ) . '"  class="feed-them-gallery-admin-input">';
 
 					global $_wp_additional_image_sizes;

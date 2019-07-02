@@ -1111,13 +1111,13 @@ class Gallery_Options {
 					'name'             => 'ft_gallery_hide_add_to_cart',
 					'default_value'    => 'yes',
 					'options'          => array(
+                        array(
+                            'label' => esc_html__( 'No', 'feed-them-gallery' ),
+                            'value' => 'no',
+                        ),
 						array(
 							'label' => esc_html__( 'Yes', 'feed-them-gallery' ),
 							'value' => 'yes',
-						),
-						array(
-							'label' => esc_html__( 'No', 'feed-them-gallery' ),
-							'value' => 'no',
 						),
 					),
 				),
@@ -1137,13 +1137,13 @@ class Gallery_Options {
 					'name'             => 'ft_gallery_show_add_to_cart_over_image',
 					'default_value'    => 'yes',
 					'options'          => array(
+                        array(
+                            'label' => esc_html__( 'No', 'feed-them-gallery' ),
+                            'value' => 'no',
+                        ),
 						array(
 							'label' => esc_html__( 'Yes', 'feed-them-gallery' ),
 							'value' => 'yes',
-						),
-						array(
-							'label' => esc_html__( 'No', 'feed-them-gallery' ),
-							'value' => 'no',
 						),
 					),
 				),

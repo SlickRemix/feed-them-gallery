@@ -126,7 +126,7 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
-= Version 1.1.9 Wednesday, June 26th, 2019 =
+= Version 1.1.9 Tuesday, July 2nd, 2019 =
    * NEW: Security Refactor of the whole plugin to stop XSS injections and other possibly malicious attempts to hack through the plugin.
    * NEW: Layout Tab: Show the image caption info above or below the photos.
    * FIX: When editing an image description single or double quotes would return a backslash. Also you can now simple use the return keyboard key to make line/paragraph breaks. No more html like <br/> required to make line breaks.
@@ -135,6 +135,7 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
    * FIX: Loadmore option was duplicating the output of images if you had not sorted the images in your gallery. Now the default option is sorted by date.
    * PREMIUM NEW: WooCommerce Tab: Cart Icon over image if using the Gallery layout option. You can choose the position, and colors for the icon.
    * PREMIUM NEW: WooCommerce Tab: Hide the Add to Cart options/variations on page and popup.
+   * PREMIUM NEW: Tags Page: Select option added that will show a list of existing tags you can choose to search.
 
 = Version 1.1.8 Friday, May 24th, 2019 =
    * FIX: JS error on checkout page if not logged in: SyntaxError: JSON Parse error.
