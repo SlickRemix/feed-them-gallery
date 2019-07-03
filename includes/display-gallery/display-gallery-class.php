@@ -15,7 +15,7 @@ namespace feed_them_gallery;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 
@@ -25,1549 +25,1549 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Display_Gallery {
 
 
-	/**
-	 * Holds the base class object.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @var object
-	 */
-	public $base;
-
-	/**
-	 * Load Function
-	 *
-	 * Load up all our actions and filters.
-	 *
-	 * @since 1.0.0
-	 */
-	public static function load() {
-		$instance = new self();
-
-		$instance->add_actions_filters();
-	}
-
-	/**
-	 * Display_Gallery constructor.
-	 */
-	public function __construct() {
-	}
-
-	/**
-	 * Add Action Filters
-	 *
-	 * Load up all our styles and js.
-	 *
-	 * @since 1.0.0
-	 */
-	public function add_actions_filters() {
-		// Add API Endpoint.
-		add_action( 'rest_api_init', array( $this, 'ft_gallery_register_gallery_route' ) );
-
-		// Add Shortcodes.
-		add_shortcode( 'feed-them-gallery', array( $this, 'ft_gallery_display_gallery_shortcode' ) );
-		add_shortcode( 'ft-gallery-album', array( $this, 'ft_gallery_display_gallery_shortcode' ) );
-
-		add_action( 'wp_ajax_ft_gallery_update_title_ajax', array( $this, 'ft_gallery_update_title_ajax' ) );
-		add_action( 'wp_ajax_ft_gallery_edit_image_ajax', array( $this, 'ft_gallery_edit_image_ajax' ) );
-		add_action( 'wp_ajax_ft_gallery_update_image_ajax', array( $this, 'ft_gallery_update_image_ajax' ) );
-		add_action( 'wp_ajax_ft_gallery_delete_image_ajax', array( $this, 'ft_gallery_delete_image_ajax' ) );
-		add_action( 'wp_ajax_ft_gallery_update_image_information_ajax', array( $this, 'ft_gallery_update_image_information_ajax' ) );
-
-		// Add Display Gallery Scripts.
-		add_action( 'current_screen', array( $this, 'ft_gallery_display_gallery_scripts' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'ft_gallery_head' ) );
-
-		add_action( 'wp_ajax_ft_gallery_load_more', array( $this, 'ft_gallery_load_more' ) );
-		add_action( 'wp_ajax_nopriv_ft_gallery_load_more', array( $this, 'ft_gallery_load_more' ) );
-	}
-
-	/**
-	 * FT Gallery Register Gallery Route (REST API)
-	 *
-	 * Register gallery route to use WordPress's REST API.
-	 *
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_register_gallery_route() {
-		register_rest_route(
-			'ftgallery/v2',
-			'/post-gallery',
-			array(
-				'methods'  => \WP_REST_Server::READABLE,
-				'callback' => array( $this, 'ft_gallery_display_post_images' ),
-			)
-		);
-	}
-
-	/**
-	 * FT Gallery Display Gallery Scripts
-	 *
-	 * Add scripts to WordPress Admin header.
-	 *
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_display_gallery_scripts() {
-		$current_screen = get_current_screen();
-       // if(isset( $_GET['page'], $_GET['tab'] ) && 'wc-settings' === $_GET['page'] && 'slickremix_hide_woo_products' === $_GET['tab'] ) {
-       //     wp_enqueue_script( 'ft_gallery_display_gallery_scripts', plugins_url( '/feed-them-gallery/admin/js/admin.js' ), array('jquery'), FTG_CURRENT_VERSION, true );
-       // }.
-
-		if ( 'ft_gallery' === $current_screen->post_type && 'post' === $current_screen->base || 'ft_gallery' === $current_screen->post_type && isset( $_GET['page'] ) && 'template_settings_page' === $_GET['page'] || is_admin() && 'ft_gallery_albums' === $current_screen->post_type && 'post' === $current_screen->base ) {
-			wp_enqueue_script( 'js_color', plugins_url( '/feed-them-gallery/metabox-settings/js/jscolor/jscolor.js' ), array( 'jquery' ), FTG_CURRENT_VERSION, true );
-			wp_enqueue_script( 'ft_gallery_display_gallery_scripts', plugins_url( '/feed-them-gallery/admin/js/admin.js' ), array( 'jquery' ), FTG_CURRENT_VERSION, true );
-			wp_enqueue_script( 'jquery' );
-			wp_localize_script( 'ft_gallery_display_gallery_scripts', 'ssAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-			wp_enqueue_script( 'ft_gallery_display_gallery_scripts' );
-		}
-	}
-
-	/**
-	 * FT Gallery Header Scripts
-	 *
-	 * Add gallery scripts to frontend header.
-	 *
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_head() {
-
-		wp_enqueue_style( 'ft-gallery-feeds', plugins_url( 'feed-them-gallery/includes/feeds/css/styles.css' ), array(), FTG_CURRENT_VERSION, false );
-		wp_enqueue_script( 'ft-masonry-pkgd', plugins_url( 'feed-them-gallery/includes/feeds/js/masonry.pkgd.min.js' ), array( 'jquery' ), FTG_CURRENT_VERSION, true );
-		wp_enqueue_script( 'ft-images-loaded', plugins_url( 'feed-them-gallery/includes/feeds/js/imagesloaded.pkgd.min.js' ), array(), FTG_CURRENT_VERSION, true );
-		wp_enqueue_script( 'ft-front-end-js', plugins_url( 'feed-them-gallery/includes/js/front-end.js' ), array(), FTG_CURRENT_VERSION, true );
-		if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
-			wp_enqueue_script( 'add-to-cart-ajax_ajax', plugins_url() . '/feed-them-gallery/includes/feeds/js/add-to-cart-ajax.js', array( 'jquery' ), FTG_CURRENT_VERSION, true );
-		}
-		$php_info = array(
-			'enable_right_click' => null !== get_option( 'ft_gallery_enable_right_click' ) ? get_option( 'ft_gallery_enable_right_click' ) : '',
-		);
-		wp_localize_script( 'ft-front-end-js', 'ftgPremiumOption', $php_info );
-	}
-
-	/**
-	 * FTS Ago
-	 *
-	 * Create date format like fb and twitter. Thanks: http://php.quicoto.com/how-to-calculate-relative-time-like-facebook/ .
-	 *
-	 * @param string $timestamp The time stamp so we can convert it.
-	 * @return string
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_ago( $timestamp ) {
-		// not setting isset'ing anything because you have to save the settings page to even enable this feature.
-		$fts_language_second = get_option( 'ft_gallery_language_second' );
-		if ( empty( $fts_language_second ) ) {
-			$fts_language_second = 'second';
-		}
-		$fts_language_seconds = get_option( 'ft_gallery_language_seconds' );
-		if ( empty( $fts_language_seconds ) ) {
-			$fts_language_seconds = 'seconds';
-		}
-		$fts_language_minute = get_option( 'ft_gallery_language_minute' );
-		if ( empty( $fts_language_minute ) ) {
-			$fts_language_minute = 'minute';
-		}
-		$fts_language_minutes = get_option( 'ft_gallery_language_minutes' );
-		if ( empty( $fts_language_minutes ) ) {
-			$fts_language_minutes = 'minutes';
-		}
-		$fts_language_hour = get_option( 'ft_gallery_language_hour' );
-		if ( empty( $fts_language_hour ) ) {
-			$fts_language_hour = 'hour';
-		}
-		$fts_language_hours = get_option( 'ft_gallery_language_hours' );
-		if ( empty( $fts_language_hours ) ) {
-			$fts_language_hours = 'hours';
-		}
-		$fts_language_day = get_option( 'ft_gallery_language_day' );
-		if ( empty( $fts_language_day ) ) {
-			$fts_language_day = 'day';
-		}
-		$fts_language_days = get_option( 'ft_gallery_language_days' );
-		if ( empty( $fts_language_days ) ) {
-			$fts_language_days = 'days';
-		}
-		$fts_language_week = get_option( 'ft_gallery_language_week' );
-		if ( empty( $fts_language_week ) ) {
-			$fts_language_week = 'week';
-		}
-		$fts_language_weeks = get_option( 'ft_gallery_language_weeks' );
-		if ( empty( $fts_language_weeks ) ) {
-			$fts_language_weeks = 'weeks';
-		}
-		$fts_language_month = get_option( 'ft_gallery_language_month' );
-		if ( empty( $fts_language_month ) ) {
-			$fts_language_month = 'month';
-		}
-		$fts_language_months = get_option( 'ft_gallery_language_months' );
-		if ( empty( $fts_language_months ) ) {
-			$fts_language_months = 'months';
-		}
-		$fts_language_year = get_option( 'ft_gallery_language_year' );
-		if ( empty( $fts_language_year ) ) {
-			$fts_language_year = 'year';
-		}
-		$fts_language_years = get_option( 'ft_gallery_language_years' );
-		if ( empty( $fts_language_years ) ) {
-			$fts_language_years = 'years';
-		}
-		$fts_language_ago = get_option( 'ft_gallery_language_ago' );
-		if ( empty( $fts_language_ago ) ) {
-			$fts_language_ago = 'ago';
-		}
-
-		$periods        = array( $fts_language_second, $fts_language_minute, $fts_language_hour, $fts_language_day, $fts_language_week, $fts_language_month, $fts_language_year, 'decade' );
-		$periods_plural = array( $fts_language_seconds, $fts_language_minutes, $fts_language_hours, $fts_language_days, $fts_language_weeks, $fts_language_months, $fts_language_years, 'decades' );
-
-		if ( ! is_numeric( $timestamp ) ) {
-			$timestamp = strtotime( $timestamp );
-			if ( ! is_numeric( $timestamp ) ) {
-				return '';
-			}
-		}
-		$difference = date_i18n( time() ) - $timestamp;
-		// Customize in your own language. Why thank-you I will.
-		$lengths = array( '60', '60', '24', '7', '4.35', '12', '10' );
-
-		if ( $difference > 0 ) {
-			// this was in the past.
-			$ending = $fts_language_ago;
-		} else {
-			// this was in the future.
-			$difference = -$difference;
-			// not doing dates in the future for posts.
-			$ending = 'to go';
-		}
-		$the_count = count( $lengths );
-		for ( $j = 0; $difference >= $lengths[ $j ] && $j < $the_count - 1; $j++ ) {
-			$difference /= $lengths[ $j ];
-		}
-
-		$difference = round( $difference );
-
-		if ( 1 !== $difference ) {
-			$periods[ $j ] = $periods_plural[ $j ];
-		}
-		return "$difference $periods[$j] $ending";
-
-	}
-
-	/**
-	 * FT Gallery Rand String
-	 *
-	 * Random String Generator
-	 *
-	 * @param int $length The length of the random string to be returned.
-	 * @return string
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_rand_string( $length = 10 ) {
-		$characters        = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		$characters_length = strlen( $characters );
-		$random_string     = '';
-		for ( $i = 0; $i < $length; $i++ ) {
-			$random_string .= $characters[ wp_rand( 0, $characters_length - 1 ) ];
-		}
-
-		return $random_string;
-	}
-
-	/**
-	 * FT Gallery Custom Date
-	 *
-	 * Generate Custom Date using settings from Settings Page
-	 *
-	 * @param string $created_time The time it was created.
-	 * @return string
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_custom_date( $created_time ) {
-		$fts_custom_date   = get_option( 'ft-gallery-custom-date' );
-		$fts_custom_time   = get_option( 'ft-gallery-custom-time' );
-		$custom_date_check = get_option( 'ft-gallery-date-and-time-format' );
-		$fts_timezone      = get_option( 'ft-gallery-timezone' );
-
-		if ( '' === $fts_custom_date && '' === $fts_custom_time ) {
-			$custom_date_format = $custom_date_check;
-		} elseif ( '' !== $fts_custom_date || '' !== $fts_custom_time ) {
-			$custom_date_format = $fts_custom_date . ' ' . $fts_custom_time;
-		} else {
-			$custom_date_format = 'F jS, Y \a\t g:ia';
-		}
-		if ( ! empty( $fts_timezone ) ) {
-			date_default_timezone_set( $fts_timezone );
-		}
-
-		if ( 'one-day-ago' === $custom_date_check ) {
-			$u_time = $this->ft_gallery_ago( $created_time );
-		} else {
-			$u_time = ! empty( $custom_date_check ) ? date_i18n( $custom_date_format, strtotime( $created_time ) ) : $this->ft_gallery_ago( $created_time );
-		}
-
-		// Return the time.
-		return $u_time;
-	}
-
-	/**
-	 * FT Gallery Custom Trim Words
-	 *
-	 * This function is a duplicate of fb trim words and is used for all feeds except fb, which uses it's original function that also filters tags which we don't need.
-	 *
-	 * @param string $text The text to be trimmed.
-	 * @param int    $num_words The number of works to return.
-	 * @param string $more What to use after the words are trimmed.
-	 * @return mixed
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_trim_words( $text, $num_words = 45, $more ) {
-		! empty( $num_words ) && 0 !== $num_words ? $more : __( '...' );
-		$text = nl2br( $text );
-		$text = strip_shortcodes( $text );
-		// Add tags that you don't want stripped.
-		$text        = strip_tags( $text, '<strong><br><em><i><a>' );
-		$words_array = preg_split( "/[\n\r\t ]+/", $text, $num_words + 1, PREG_SPLIT_NO_EMPTY );
-		$sep         = ' ';
-		if ( count( $words_array ) > $num_words ) {
-			array_pop( $words_array );
-			$text  = implode( $sep, $words_array );
-			$text .= $more;
-		} else {
-			$text = implode( $sep, $words_array );
-		}
-
-		return wpautop( $text );
-	}
-
-
-	/**
-	 * FT Gallery Get Image Sizes
-	 *
-	 * @param int $attachment_id The attachment ID.
-	 * @return mixed
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_get_image_sizes( $attachment_id ) {
-
-		return wp_get_attachment_metadata( $attachment_id );
-	}
-
-	/**
-	 * FT Gallery Get Attachment
-	 *
-	 * Get attachement info from core function
-	 *
-	 * @param int $attachment_id The attachment ID.
-	 * @return array
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_get_attachment( $attachment_id ) {
-
-		return $this->ft_gallery_get_attachment_info( $attachment_id );
-	}
-
-	/**
-	 * FT Gallery Display Post Images
-	 * Return a List of Images attached to a post.
-	 *
-	 * @return mixed
-	 * @since
-	 */
-	public function ft_gallery_display_post_images() {
-		global $post;
-		$final_id = $post->ID;
-
-		$args = array(
-			'post_type'      => 'attachment',
-			'numberposts'    => -1,
-			'post_status'    => null,
-			'post_mime_type' => 'image',
-			'post_parent'    => $final_id,
-		);
-
-		return get_posts( $args );
-	}
-
-
-	/**
-	 * FT Gallery Get Media Rest (REST API)
-	 *
-	 * Get Media using WordPress's REST API
-	 *
-	 * @param string $parent_post_id The parent post ID to be returned.
-	 * @param int    $per_page How many items to return per page.
-	 * @return string
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_get_media_rest( $parent_post_id, $per_page = '100' ) {
-
-		$request = new \WP_REST_Request( 'GET', '/wp/v2/media' );
-		// Set one or more request query parameters.
-		$request->set_param( 'per_page', $per_page );
-		$request->set_param( 'parent', $parent_post_id );
-		$request->set_param( 'media_type', 'image' );
-
-		$response = rest_do_request( $request );
-		// print_r($response); .
-		// Check for error.
-		if ( is_wp_error( $response ) ) {
-			return 'oops something isn\'t right.';
-		}
-
-		$final_response = isset( $response->data ) ? $response->data : 'No Images attached to this post.';
-
-		return $final_response;
-	}
-
-	/**
-	 * FT Gallery Delete Gallery Image REST API
-	 *
-	 * Delete Image using WordPress's REST API
-	 *
-	 * @param int $parent_post_id The parent post ID.
-	 * @return string
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_delete_media_rest( $parent_post_id ) {
-		$request = new \WP_REST_Request( 'DELETE', '/wp/v2/media/' . $parent_post_id );
-		// Set one or more request query parameters.
-		$request->set_param( 'force', true );
-
-		$response = rest_do_request( $request );
-
-		// Check for error.
-		if ( is_wp_error( $response ) ) {
-			return 'oops something isn\'t right.';
-		}
-
-		$final_response = isset( $response->data ) ? $response->data : 'No Images attached to this post.';
-
-		return $final_response;
-	}
-
-	/**
-	 * FT Gallery Update Media Rest
-	 *
-	 * Update or Remove Gallery Image REST API
-	 *
-	 * @link https://developer.wordpress.org/rest-api/reference/media/#update-media
-	 *
-	 * @param int   $parent_post_id The parent post ID.
-	 * @param array $args An Array of post arguments.
-	 * @return string
-	 * @see ft_gallery_delete_quick_item_ajax() Where ajax is fired to trigger this function
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_update_media_rest( $parent_post_id, array $args ) {
-		$request = new \WP_REST_Request( 'POST', '/wp/v2/media/' . $parent_post_id );
-
-		// Set each Parameter passed.
-		if ( isset( $args ) && ! empty( $args ) ) {
-			foreach ( $args as $param => $value ) {
-				// Set Parameter and Value of Parameter.
-				$request->set_param( $param, $value );
-			}
-		}
-
-		$response = rest_do_request( $request );
-
-		// Check for error.
-		if ( is_wp_error( $response ) ) {
-			return 'oops something isn\'t right:' . $response;
-		}
-
-		$final_response = isset( $response->data ) ? $response->data : 'No Images attached to this post.';
-
-		return $final_response;
-	}
-
-	/**
-	 * FT Gallery Delete Image AJAX
-	 *
-	 * Delete an image using AJAX.
-	 *
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_delete_image_ajax() {
-		$permission = check_ajax_referer( 'ft_gallery_delete_image_nonce', 'nonce', false );
-		if ( false == $permission ) {
-			esc_html_e( 'error', 'feed-them-gallery' );
-		} else {
-			$display_gallery = new Display_Gallery();
-			$my_request      = stripslashes_deep( $_REQUEST );
-			$request         = isset( $my_request['id'] ) ? sanitize_text_field( wp_unslash( $my_request['id'] ) ) : '';
-			$display_gallery->ft_gallery_delete_media_rest( $request );
-			esc_html_e( 'success', 'feed-them-gallery' );
-		}
-		exit();
-	}
-
-	/**
-	 * FT Gallery Update Image AJAX
-	 *
-	 * Update image using AJAX
-	 *
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_update_image_ajax() {
-
-		$display_gallery = new Display_Gallery();
-
-		$my_request = stripslashes_deep( $_REQUEST );
-		// Remove image from Gallery if data-remove on a tag.
-		if ( isset( $my_request['ft_gallery_img_remove'] ) && 'true' === $my_request['ft_gallery_img_remove'] ) {
-			$args = array( 'post' => null );
-		}
-
-		$request = isset( $my_request['id'] ) ? sanitize_text_field( wp_unslash( $my_request['id'] ) ) : '';
-		$display_gallery->ft_gallery_update_media_rest( sanitize_text_field( $request ), $args );
-		esc_html_e( 'Update success', 'feed-them-gallery' );
-
-		exit();
-	}
-
-	/**
-	 * FT Gallery Update Image Information AJAX
-	 *
-	 * Preload Image information to input fields in popup AJAX
-	 *
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_update_image_information_ajax() {
-		$permission = check_ajax_referer( 'ft_gallery_edit_image_nonce', 'nonce', false );
-		if ( false == $permission ) {
-			echo 'error';
-		} else {
-
-			$my_request       = stripslashes_deep( $_REQUEST );
-			$gallery_class    = new Gallery();
-			$request          = isset( $my_request['id'] ) ? sanitize_text_field( wp_unslash( $my_request['id'] ) ) : '';
-			$attachment_array = $gallery_class->ft_gallery_get_attachment_info( $request );
-
-			echo wp_json_encode( $attachment_array );
-		}
-		exit();
-	}
-
-
-	/**
-	 * FT Gallery Edit Image AJAX
-	 *
-	 * Edit image using AJAX
-	 *
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_edit_image_ajax() {
-
-		$my_request = stripslashes_deep( $_REQUEST );
-
-		if ( isset( $my_request['nonce'] ) && 'attach_image' !== $my_request['nonce'] ) {
-			$permission = check_ajax_referer( 'ft_gallery_edit_image_nonce', 'nonce', false );
-			if ( '' === $permission ) {
-				echo 'error';
-			} else {
-
-				$img_title       = isset( $my_request['title'] ) && ! empty( $my_request['title'] ) ? sanitize_text_field( wp_unslash( $my_request['title'] ) ) : '';
-				$img_alttext     = isset( $my_request['alttext'] ) && ! empty( $my_request['alttext'] ) ? sanitize_text_field( wp_unslash( $my_request['alttext'] ) ) : '';
-				$img_description = isset( $my_request['description'] ) && ! empty( $my_request['description'] ) ? wp_kses(
-					$my_request['description'],
-					array(
-						'a'      => array(
-							'href'   => array(),
-							'title'  => array(),
-							'target' => array(),
-						),
-						'br'     => array(),
-						'em'     => array(),
-						'strong' => array(),
-						'small'  => array(),
-						'p'      => array(),
-					)
-				) : '';
-
-				// Set Parameters for image from Gallery.
-				$args = array(
-					'title'       => $img_title,
-					'alt_text'    => $img_alttext,
-					'description' => $img_description,
-				);
-
-				$request_id = isset( $my_request['id'] ) ? sanitize_text_field( wp_unslash( $my_request['id'] ) ) : '';
-
-				$this->ft_gallery_update_media_rest( $request_id, $args );
-
-				$gallery_class = new Gallery();
-
-				// Get Attachment Info.
-				$attachment_array = $gallery_class->ft_gallery_get_attachment_info( $request_id );
-
-				echo wp_json_encode( $attachment_array );
-			}
-		} else {
-			$request_post_id = isset( $my_request['postID'] ) ? sanitize_text_field( wp_unslash( $my_request['postID'] ) ) : '';
-			$args            = array( 'post' => $request_post_id );
-
-			$request_id = isset( $my_request['id'] ) ? sanitize_text_field( wp_unslash( $my_request['id'] ) ) : '';
-			$this->ft_gallery_update_media_rest( $request_id, $args );
-			echo esc_html( $request_id ) . ' Image attached to this post';
-		}
-		exit();
-	}
-
-	/**
-	 * FT Gallery Update Title AJAX
-	 *
-	 * Add file name as title on image plupload
-	 * Í
-	 *
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_update_title_ajax() {
-
-		$my_request   = stripslashes_deep( $_REQUEST );
-		$request_url  = isset( $my_request['url'] ) ? sanitize_text_field( wp_unslash( $my_request['url'] ) ) : '';
-		$url          = isset( $request_url ) && ! empty( $request_url ) ? $request_url : '';
-		$get_image_id = $this->ft_gallery_get_attachment_id( $url );
-
-		$display_gallery = new Display_Gallery();
-
-		// Set Parameters for image from Gallery.
-		$args = array(
-			'title' => '',
-		);
-
-		$display_gallery->ft_gallery_update_media_rest( $get_image_id, $args );
-		echo esc_html( $get_image_id );
-
-		exit();
-	}
-
-	/**
-	 * FT Gallery Sort Order Select
-	 *
-	 * Sort order select option to sort the images on front end.
-	 *
-	 * @param string $ftg_id The ID of the post we are sorting image for.
-	 *
-	 * @since 1.0.0
-	 */
-	public function ftg_sort_order_select( $ftg_id ) {
-
-		$option = $this->ft_gallery_get_option_or_get_postmeta( $ftg_id );
-
-		$orderby_date         = isset( $_GET['orderby'] ) && 'date' === $_GET['orderby'] ? 'selected="selected"' : '';
-		$orderby_alphabetical = isset( $_GET['orderby'] ) && 'title' === $_GET['orderby'] ? 'selected="selected"' : '';
-		$orderby_original     = isset( $_GET['orderby'] ) && 'menu_order' === $_GET['orderby'] ? 'selected="selected"' : '';
-
-		$ftg_align_pagination = null !== $option['ftg_align_sort_select'] ? $option['ftg_align_sort_select'] : '';
-
-		$align_class = 'right' === $ftg_align_pagination ? 'ftg-sort-order-right' : '';
-
-		$onchange = isset( $_GET['ftg-tags'] ) ? 'location.href = location.href + \'&orderby=\' + orderby.options[selectedIndex].value' : 'this.form.submit()';
-
-		print '<div class="ftg-orderby-wrap ' . esc_attr( $align_class ) . '"><form class="feed-them-gallery-ordering" method="get" ><select name="orderby" class="ftg-orderby" onchange="' . esc_attr( $onchange ) . '">
+    /**
+     * Holds the base class object.
+     *
+     * @since 1.0.0
+     *
+     * @var object
+     */
+    public $base;
+
+    /**
+     * Load Function
+     *
+     * Load up all our actions and filters.
+     *
+     * @since 1.0.0
+     */
+    public static function load() {
+        $instance = new self();
+
+        $instance->add_actions_filters();
+    }
+
+    /**
+     * Display_Gallery constructor.
+     */
+    public function __construct() {
+    }
+
+    /**
+     * Add Action Filters
+     *
+     * Load up all our styles and js.
+     *
+     * @since 1.0.0
+     */
+    public function add_actions_filters() {
+        // Add API Endpoint.
+        add_action( 'rest_api_init', array( $this, 'ft_gallery_register_gallery_route' ) );
+
+        // Add Shortcodes.
+        add_shortcode( 'feed-them-gallery', array( $this, 'ft_gallery_display_gallery_shortcode' ) );
+        add_shortcode( 'ft-gallery-album', array( $this, 'ft_gallery_display_gallery_shortcode' ) );
+
+        add_action( 'wp_ajax_ft_gallery_update_title_ajax', array( $this, 'ft_gallery_update_title_ajax' ) );
+        add_action( 'wp_ajax_ft_gallery_edit_image_ajax', array( $this, 'ft_gallery_edit_image_ajax' ) );
+        add_action( 'wp_ajax_ft_gallery_update_image_ajax', array( $this, 'ft_gallery_update_image_ajax' ) );
+        add_action( 'wp_ajax_ft_gallery_delete_image_ajax', array( $this, 'ft_gallery_delete_image_ajax' ) );
+        add_action( 'wp_ajax_ft_gallery_update_image_information_ajax', array( $this, 'ft_gallery_update_image_information_ajax' ) );
+
+        // Add Display Gallery Scripts.
+        add_action( 'current_screen', array( $this, 'ft_gallery_display_gallery_scripts' ) );
+        add_action( 'wp_enqueue_scripts', array( $this, 'ft_gallery_head' ) );
+
+        add_action( 'wp_ajax_ft_gallery_load_more', array( $this, 'ft_gallery_load_more' ) );
+        add_action( 'wp_ajax_nopriv_ft_gallery_load_more', array( $this, 'ft_gallery_load_more' ) );
+    }
+
+    /**
+     * FT Gallery Register Gallery Route (REST API)
+     *
+     * Register gallery route to use WordPress's REST API.
+     *
+     * @since 1.0.0
+     */
+    public function ft_gallery_register_gallery_route() {
+        register_rest_route(
+            'ftgallery/v2',
+            '/post-gallery',
+            array(
+                'methods'  => \WP_REST_Server::READABLE,
+                'callback' => array( $this, 'ft_gallery_display_post_images' ),
+            )
+        );
+    }
+
+    /**
+     * FT Gallery Display Gallery Scripts
+     *
+     * Add scripts to WordPress Admin header.
+     *
+     * @since 1.0.0
+     */
+    public function ft_gallery_display_gallery_scripts() {
+        $current_screen = get_current_screen();
+        // if(isset( $_GET['page'], $_GET['tab'] ) && 'wc-settings' === $_GET['page'] && 'slickremix_hide_woo_products' === $_GET['tab'] ) {
+        //     wp_enqueue_script( 'ft_gallery_display_gallery_scripts', plugins_url( '/feed-them-gallery/admin/js/admin.js' ), array('jquery'), FTG_CURRENT_VERSION, true );
+        // }.
+
+        if ( 'ft_gallery' === $current_screen->post_type && 'post' === $current_screen->base || 'ft_gallery' === $current_screen->post_type && isset( $_GET['page'] ) && 'template_settings_page' === $_GET['page'] || is_admin() && 'ft_gallery_albums' === $current_screen->post_type && 'post' === $current_screen->base ) {
+            wp_enqueue_script( 'js_color', plugins_url( '/feed-them-gallery/metabox-settings/js/jscolor/jscolor.js' ), array( 'jquery' ), FTG_CURRENT_VERSION, true );
+            wp_enqueue_script( 'ft_gallery_display_gallery_scripts', plugins_url( '/feed-them-gallery/admin/js/admin.js' ), array( 'jquery' ), FTG_CURRENT_VERSION, true );
+            wp_enqueue_script( 'jquery' );
+            wp_localize_script( 'ft_gallery_display_gallery_scripts', 'ssAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+            wp_enqueue_script( 'ft_gallery_display_gallery_scripts' );
+        }
+    }
+
+    /**
+     * FT Gallery Header Scripts
+     *
+     * Add gallery scripts to frontend header.
+     *
+     * @since 1.0.0
+     */
+    public function ft_gallery_head() {
+
+        wp_enqueue_style( 'ft-gallery-feeds', plugins_url( 'feed-them-gallery/includes/feeds/css/styles.css' ), array(), FTG_CURRENT_VERSION, false );
+        wp_enqueue_script( 'ft-masonry-pkgd', plugins_url( 'feed-them-gallery/includes/feeds/js/masonry.pkgd.min.js' ), array( 'jquery' ), FTG_CURRENT_VERSION, true );
+        wp_enqueue_script( 'ft-images-loaded', plugins_url( 'feed-them-gallery/includes/feeds/js/imagesloaded.pkgd.min.js' ), array(), FTG_CURRENT_VERSION, true );
+        wp_enqueue_script( 'ft-front-end-js', plugins_url( 'feed-them-gallery/includes/js/front-end.js' ), array(), FTG_CURRENT_VERSION, true );
+        if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+            wp_enqueue_script( 'add-to-cart-ajax_ajax', plugins_url() . '/feed-them-gallery/includes/feeds/js/add-to-cart-ajax.js', array( 'jquery' ), FTG_CURRENT_VERSION, true );
+        }
+        $php_info = array(
+            'enable_right_click' => null !== get_option( 'ft_gallery_enable_right_click' ) ? get_option( 'ft_gallery_enable_right_click' ) : '',
+        );
+        wp_localize_script( 'ft-front-end-js', 'ftgPremiumOption', $php_info );
+    }
+
+    /**
+     * FTS Ago
+     *
+     * Create date format like fb and twitter. Thanks: http://php.quicoto.com/how-to-calculate-relative-time-like-facebook/ .
+     *
+     * @param string $timestamp The time stamp so we can convert it.
+     * @return string
+     * @since 1.0.0
+     */
+    public function ft_gallery_ago( $timestamp ) {
+        // not setting isset'ing anything because you have to save the settings page to even enable this feature.
+        $fts_language_second = get_option( 'ft_gallery_language_second' );
+        if ( empty( $fts_language_second ) ) {
+            $fts_language_second = 'second';
+        }
+        $fts_language_seconds = get_option( 'ft_gallery_language_seconds' );
+        if ( empty( $fts_language_seconds ) ) {
+            $fts_language_seconds = 'seconds';
+        }
+        $fts_language_minute = get_option( 'ft_gallery_language_minute' );
+        if ( empty( $fts_language_minute ) ) {
+            $fts_language_minute = 'minute';
+        }
+        $fts_language_minutes = get_option( 'ft_gallery_language_minutes' );
+        if ( empty( $fts_language_minutes ) ) {
+            $fts_language_minutes = 'minutes';
+        }
+        $fts_language_hour = get_option( 'ft_gallery_language_hour' );
+        if ( empty( $fts_language_hour ) ) {
+            $fts_language_hour = 'hour';
+        }
+        $fts_language_hours = get_option( 'ft_gallery_language_hours' );
+        if ( empty( $fts_language_hours ) ) {
+            $fts_language_hours = 'hours';
+        }
+        $fts_language_day = get_option( 'ft_gallery_language_day' );
+        if ( empty( $fts_language_day ) ) {
+            $fts_language_day = 'day';
+        }
+        $fts_language_days = get_option( 'ft_gallery_language_days' );
+        if ( empty( $fts_language_days ) ) {
+            $fts_language_days = 'days';
+        }
+        $fts_language_week = get_option( 'ft_gallery_language_week' );
+        if ( empty( $fts_language_week ) ) {
+            $fts_language_week = 'week';
+        }
+        $fts_language_weeks = get_option( 'ft_gallery_language_weeks' );
+        if ( empty( $fts_language_weeks ) ) {
+            $fts_language_weeks = 'weeks';
+        }
+        $fts_language_month = get_option( 'ft_gallery_language_month' );
+        if ( empty( $fts_language_month ) ) {
+            $fts_language_month = 'month';
+        }
+        $fts_language_months = get_option( 'ft_gallery_language_months' );
+        if ( empty( $fts_language_months ) ) {
+            $fts_language_months = 'months';
+        }
+        $fts_language_year = get_option( 'ft_gallery_language_year' );
+        if ( empty( $fts_language_year ) ) {
+            $fts_language_year = 'year';
+        }
+        $fts_language_years = get_option( 'ft_gallery_language_years' );
+        if ( empty( $fts_language_years ) ) {
+            $fts_language_years = 'years';
+        }
+        $fts_language_ago = get_option( 'ft_gallery_language_ago' );
+        if ( empty( $fts_language_ago ) ) {
+            $fts_language_ago = 'ago';
+        }
+
+        $periods        = array( $fts_language_second, $fts_language_minute, $fts_language_hour, $fts_language_day, $fts_language_week, $fts_language_month, $fts_language_year, 'decade' );
+        $periods_plural = array( $fts_language_seconds, $fts_language_minutes, $fts_language_hours, $fts_language_days, $fts_language_weeks, $fts_language_months, $fts_language_years, 'decades' );
+
+        if ( ! is_numeric( $timestamp ) ) {
+            $timestamp = strtotime( $timestamp );
+            if ( ! is_numeric( $timestamp ) ) {
+                return '';
+            }
+        }
+        $difference = date_i18n( time() ) - $timestamp;
+        // Customize in your own language. Why thank-you I will.
+        $lengths = array( '60', '60', '24', '7', '4.35', '12', '10' );
+
+        if ( $difference > 0 ) {
+            // this was in the past.
+            $ending = $fts_language_ago;
+        } else {
+            // this was in the future.
+            $difference = -$difference;
+            // not doing dates in the future for posts.
+            $ending = 'to go';
+        }
+        $the_count = count( $lengths );
+        for ( $j = 0; $difference >= $lengths[ $j ] && $j < $the_count - 1; $j++ ) {
+            $difference /= $lengths[ $j ];
+        }
+
+        $difference = round( $difference );
+
+        if ( 1 !== $difference ) {
+            $periods[ $j ] = $periods_plural[ $j ];
+        }
+        return "$difference $periods[$j] $ending";
+
+    }
+
+    /**
+     * FT Gallery Rand String
+     *
+     * Random String Generator
+     *
+     * @param int $length The length of the random string to be returned.
+     * @return string
+     * @since 1.0.0
+     */
+    public function ft_gallery_rand_string( $length = 10 ) {
+        $characters        = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $characters_length = strlen( $characters );
+        $random_string     = '';
+        for ( $i = 0; $i < $length; $i++ ) {
+            $random_string .= $characters[ wp_rand( 0, $characters_length - 1 ) ];
+        }
+
+        return $random_string;
+    }
+
+    /**
+     * FT Gallery Custom Date
+     *
+     * Generate Custom Date using settings from Settings Page
+     *
+     * @param string $created_time The time it was created.
+     * @return string
+     * @since 1.0.0
+     */
+    public function ft_gallery_custom_date( $created_time ) {
+        $fts_custom_date   = get_option( 'ft-gallery-custom-date' );
+        $fts_custom_time   = get_option( 'ft-gallery-custom-time' );
+        $custom_date_check = get_option( 'ft-gallery-date-and-time-format' );
+        $fts_timezone      = get_option( 'ft-gallery-timezone' );
+
+        if ( '' === $fts_custom_date && '' === $fts_custom_time ) {
+            $custom_date_format = $custom_date_check;
+        } elseif ( '' !== $fts_custom_date || '' !== $fts_custom_time ) {
+            $custom_date_format = $fts_custom_date . ' ' . $fts_custom_time;
+        } else {
+            $custom_date_format = 'F jS, Y \a\t g:ia';
+        }
+        if ( ! empty( $fts_timezone ) ) {
+            date_default_timezone_set( $fts_timezone );
+        }
+
+        if ( 'one-day-ago' === $custom_date_check ) {
+            $u_time = $this->ft_gallery_ago( $created_time );
+        } else {
+            $u_time = ! empty( $custom_date_check ) ? date_i18n( $custom_date_format, strtotime( $created_time ) ) : $this->ft_gallery_ago( $created_time );
+        }
+
+        // Return the time.
+        return $u_time;
+    }
+
+    /**
+     * FT Gallery Custom Trim Words
+     *
+     * This function is a duplicate of fb trim words and is used for all feeds except fb, which uses it's original function that also filters tags which we don't need.
+     *
+     * @param string $text The text to be trimmed.
+     * @param int    $num_words The number of works to return.
+     * @param string $more What to use after the words are trimmed.
+     * @return mixed
+     * @since 1.0.0
+     */
+    public function ft_gallery_trim_words( $text, $num_words = 45, $more ) {
+        ! empty( $num_words ) && 0 !== $num_words ? $more : __( '...' );
+        $text = nl2br( $text );
+        $text = strip_shortcodes( $text );
+        // Add tags that you don't want stripped.
+        $text        = strip_tags( $text, '<strong><br><em><i><a>' );
+        $words_array = preg_split( "/[\n\r\t ]+/", $text, $num_words + 1, PREG_SPLIT_NO_EMPTY );
+        $sep         = ' ';
+        if ( count( $words_array ) > $num_words ) {
+            array_pop( $words_array );
+            $text  = implode( $sep, $words_array );
+            $text .= $more;
+        } else {
+            $text = implode( $sep, $words_array );
+        }
+
+        return wpautop( $text );
+    }
+
+
+    /**
+     * FT Gallery Get Image Sizes
+     *
+     * @param int $attachment_id The attachment ID.
+     * @return mixed
+     * @since 1.0.0
+     */
+    public function ft_gallery_get_image_sizes( $attachment_id ) {
+
+        return wp_get_attachment_metadata( $attachment_id );
+    }
+
+    /**
+     * FT Gallery Get Attachment
+     *
+     * Get attachement info from core function
+     *
+     * @param int $attachment_id The attachment ID.
+     * @return array
+     * @since 1.0.0
+     */
+    public function ft_gallery_get_attachment( $attachment_id ) {
+
+        return $this->ft_gallery_get_attachment_info( $attachment_id );
+    }
+
+    /**
+     * FT Gallery Display Post Images
+     * Return a List of Images attached to a post.
+     *
+     * @return mixed
+     * @since
+     */
+    public function ft_gallery_display_post_images() {
+        global $post;
+        $final_id = $post->ID;
+
+        $args = array(
+            'post_type'      => 'attachment',
+            'numberposts'    => -1,
+            'post_status'    => null,
+            'post_mime_type' => 'image',
+            'post_parent'    => $final_id,
+        );
+
+        return get_posts( $args );
+    }
+
+
+    /**
+     * FT Gallery Get Media Rest (REST API)
+     *
+     * Get Media using WordPress's REST API
+     *
+     * @param string $parent_post_id The parent post ID to be returned.
+     * @param int    $per_page How many items to return per page.
+     * @return string
+     * @since 1.0.0
+     */
+    public function ft_gallery_get_media_rest( $parent_post_id, $per_page = '100' ) {
+
+        $request = new \WP_REST_Request( 'GET', '/wp/v2/media' );
+        // Set one or more request query parameters.
+        $request->set_param( 'per_page', $per_page );
+        $request->set_param( 'parent', $parent_post_id );
+        $request->set_param( 'media_type', 'image' );
+
+        $response = rest_do_request( $request );
+        // print_r($response); .
+        // Check for error.
+        if ( is_wp_error( $response ) ) {
+            return 'oops something isn\'t right.';
+        }
+
+        $final_response = isset( $response->data ) ? $response->data : 'No Images attached to this post.';
+
+        return $final_response;
+    }
+
+    /**
+     * FT Gallery Delete Gallery Image REST API
+     *
+     * Delete Image using WordPress's REST API
+     *
+     * @param int $parent_post_id The parent post ID.
+     * @return string
+     * @since 1.0.0
+     */
+    public function ft_gallery_delete_media_rest( $parent_post_id ) {
+        $request = new \WP_REST_Request( 'DELETE', '/wp/v2/media/' . $parent_post_id );
+        // Set one or more request query parameters.
+        $request->set_param( 'force', true );
+
+        $response = rest_do_request( $request );
+
+        // Check for error.
+        if ( is_wp_error( $response ) ) {
+            return 'oops something isn\'t right.';
+        }
+
+        $final_response = isset( $response->data ) ? $response->data : 'No Images attached to this post.';
+
+        return $final_response;
+    }
+
+    /**
+     * FT Gallery Update Media Rest
+     *
+     * Update or Remove Gallery Image REST API
+     *
+     * @link https://developer.wordpress.org/rest-api/reference/media/#update-media
+     *
+     * @param int   $parent_post_id The parent post ID.
+     * @param array $args An Array of post arguments.
+     * @return string
+     * @see ft_gallery_delete_quick_item_ajax() Where ajax is fired to trigger this function
+     * @since 1.0.0
+     */
+    public function ft_gallery_update_media_rest( $parent_post_id, array $args ) {
+        $request = new \WP_REST_Request( 'POST', '/wp/v2/media/' . $parent_post_id );
+
+        // Set each Parameter passed.
+        if ( isset( $args ) && ! empty( $args ) ) {
+            foreach ( $args as $param => $value ) {
+                // Set Parameter and Value of Parameter.
+                $request->set_param( $param, $value );
+            }
+        }
+
+        $response = rest_do_request( $request );
+
+        // Check for error.
+        if ( is_wp_error( $response ) ) {
+            return 'oops something isn\'t right:' . $response;
+        }
+
+        $final_response = isset( $response->data ) ? $response->data : 'No Images attached to this post.';
+
+        return $final_response;
+    }
+
+    /**
+     * FT Gallery Delete Image AJAX
+     *
+     * Delete an image using AJAX.
+     *
+     * @since 1.0.0
+     */
+    public function ft_gallery_delete_image_ajax() {
+        $permission = check_ajax_referer( 'ft_gallery_delete_image_nonce', 'nonce', false );
+        if ( false == $permission ) {
+            esc_html_e( 'error', 'feed-them-gallery' );
+        } else {
+            $display_gallery = new Display_Gallery();
+            $my_request      = stripslashes_deep( $_REQUEST );
+            $request         = isset( $my_request['id'] ) ? sanitize_text_field( wp_unslash( $my_request['id'] ) ) : '';
+            $display_gallery->ft_gallery_delete_media_rest( $request );
+            esc_html_e( 'success', 'feed-them-gallery' );
+        }
+        exit();
+    }
+
+    /**
+     * FT Gallery Update Image AJAX
+     *
+     * Update image using AJAX
+     *
+     * @since 1.0.0
+     */
+    public function ft_gallery_update_image_ajax() {
+
+        $display_gallery = new Display_Gallery();
+
+        $my_request = stripslashes_deep( $_REQUEST );
+        // Remove image from Gallery if data-remove on a tag.
+        if ( isset( $my_request['ft_gallery_img_remove'] ) && 'true' === $my_request['ft_gallery_img_remove'] ) {
+            $args = array( 'post' => null );
+        }
+
+        $request = isset( $my_request['id'] ) ? sanitize_text_field( wp_unslash( $my_request['id'] ) ) : '';
+        $display_gallery->ft_gallery_update_media_rest( sanitize_text_field( $request ), $args );
+        esc_html_e( 'Update success', 'feed-them-gallery' );
+
+        exit();
+    }
+
+    /**
+     * FT Gallery Update Image Information AJAX
+     *
+     * Preload Image information to input fields in popup AJAX
+     *
+     * @since 1.0.0
+     */
+    public function ft_gallery_update_image_information_ajax() {
+        $permission = check_ajax_referer( 'ft_gallery_edit_image_nonce', 'nonce', false );
+        if ( false == $permission ) {
+            echo 'error';
+        } else {
+
+            $my_request       = stripslashes_deep( $_REQUEST );
+            $gallery_class    = new Gallery();
+            $request          = isset( $my_request['id'] ) ? sanitize_text_field( wp_unslash( $my_request['id'] ) ) : '';
+            $attachment_array = $gallery_class->ft_gallery_get_attachment_info( $request );
+
+            echo wp_json_encode( $attachment_array );
+        }
+        exit();
+    }
+
+
+    /**
+     * FT Gallery Edit Image AJAX
+     *
+     * Edit image using AJAX
+     *
+     * @since 1.0.0
+     */
+    public function ft_gallery_edit_image_ajax() {
+
+        $my_request = stripslashes_deep( $_REQUEST );
+
+        if ( isset( $my_request['nonce'] ) && 'attach_image' !== $my_request['nonce'] ) {
+            $permission = check_ajax_referer( 'ft_gallery_edit_image_nonce', 'nonce', false );
+            if ( '' === $permission ) {
+                echo 'error';
+            } else {
+
+                $img_title       = isset( $my_request['title'] ) && ! empty( $my_request['title'] ) ? sanitize_text_field( wp_unslash( $my_request['title'] ) ) : '';
+                $img_alttext     = isset( $my_request['alttext'] ) && ! empty( $my_request['alttext'] ) ? sanitize_text_field( wp_unslash( $my_request['alttext'] ) ) : '';
+                $img_description = isset( $my_request['description'] ) && ! empty( $my_request['description'] ) ? wp_kses(
+                    $my_request['description'],
+                    array(
+                        'a'      => array(
+                            'href'   => array(),
+                            'title'  => array(),
+                            'target' => array(),
+                        ),
+                        'br'     => array(),
+                        'em'     => array(),
+                        'strong' => array(),
+                        'small'  => array(),
+                        'p'      => array(),
+                    )
+                ) : '';
+
+                // Set Parameters for image from Gallery.
+                $args = array(
+                    'title'       => $img_title,
+                    'alt_text'    => $img_alttext,
+                    'description' => $img_description,
+                );
+
+                $request_id = isset( $my_request['id'] ) ? sanitize_text_field( wp_unslash( $my_request['id'] ) ) : '';
+
+                $this->ft_gallery_update_media_rest( $request_id, $args );
+
+                $gallery_class = new Gallery();
+
+                // Get Attachment Info.
+                $attachment_array = $gallery_class->ft_gallery_get_attachment_info( $request_id );
+
+                echo wp_json_encode( $attachment_array );
+            }
+        } else {
+            $request_post_id = isset( $my_request['postID'] ) ? sanitize_text_field( wp_unslash( $my_request['postID'] ) ) : '';
+            $args            = array( 'post' => $request_post_id );
+
+            $request_id = isset( $my_request['id'] ) ? sanitize_text_field( wp_unslash( $my_request['id'] ) ) : '';
+            $this->ft_gallery_update_media_rest( $request_id, $args );
+            echo esc_html( $request_id ) . ' Image attached to this post';
+        }
+        exit();
+    }
+
+    /**
+     * FT Gallery Update Title AJAX
+     *
+     * Add file name as title on image plupload
+     * Í
+     *
+     * @since 1.0.0
+     */
+    public function ft_gallery_update_title_ajax() {
+
+        $my_request   = stripslashes_deep( $_REQUEST );
+        $request_url  = isset( $my_request['url'] ) ? sanitize_text_field( wp_unslash( $my_request['url'] ) ) : '';
+        $url          = isset( $request_url ) && ! empty( $request_url ) ? $request_url : '';
+        $get_image_id = $this->ft_gallery_get_attachment_id( $url );
+
+        $display_gallery = new Display_Gallery();
+
+        // Set Parameters for image from Gallery.
+        $args = array(
+            'title' => '',
+        );
+
+        $display_gallery->ft_gallery_update_media_rest( $get_image_id, $args );
+        echo esc_html( $get_image_id );
+
+        exit();
+    }
+
+    /**
+     * FT Gallery Sort Order Select
+     *
+     * Sort order select option to sort the images on front end.
+     *
+     * @param string $ftg_id The ID of the post we are sorting image for.
+     *
+     * @since 1.0.0
+     */
+    public function ftg_sort_order_select( $ftg_id ) {
+
+        $option = $this->ft_gallery_get_option_or_get_postmeta( $ftg_id );
+
+        $orderby_date         = isset( $_GET['orderby'] ) && 'date' === $_GET['orderby'] ? 'selected="selected"' : '';
+        $orderby_alphabetical = isset( $_GET['orderby'] ) && 'title' === $_GET['orderby'] ? 'selected="selected"' : '';
+        $orderby_original     = isset( $_GET['orderby'] ) && 'menu_order' === $_GET['orderby'] ? 'selected="selected"' : '';
+
+        $ftg_align_pagination = null !== $option['ftg_align_sort_select'] ? $option['ftg_align_sort_select'] : '';
+
+        $align_class = 'right' === $ftg_align_pagination ? 'ftg-sort-order-right' : '';
+
+        $onchange = isset( $_GET['ftg-tags'] ) ? 'location.href = location.href + \'&orderby=\' + orderby.options[selectedIndex].value' : 'this.form.submit()';
+
+        print '<div class="ftg-orderby-wrap ' . esc_attr( $align_class ) . '"><form class="feed-them-gallery-ordering" method="get" ><select name="orderby" class="ftg-orderby" onchange="' . esc_attr( $onchange ) . '">
 					<option value="menu_order" ' . esc_html( $orderby_original ) . '>' . esc_html( 'Sort order of Images', 'feed-them-gallery' ) . '</option>
 					<option value="title" ' . esc_html( $orderby_alphabetical ) . '>' . esc_html( 'Sort alphabetically (A-Z)', 'feed-them-gallery' ) . '</option>
 					<option value="date" ' . esc_html( $orderby_date ) . '>' . esc_html( 'Sort by date', 'feed-them-gallery' ) . '</option></select></form></div>';
-	}
-
-	/**
-	 * FT Pagination
-	 *
-	 * Paginate the photos on the front end.
-	 *
-	 * @param string $ftg_id The ID of the post we are sorting image for.
-	 * @param string $is_album Check to see if this an album or not.
-	 * @param string $tags The tags.
-	 * @param string $tags_list Tags List.
-	 * @param string $image_count_for_tags The image count for tags.
-	 *
-	 * @since 1.0.0
-	 */
-	public function ftg_pagination( $ftg_id, $is_album = null, $tags, $tags_list, $image_count_for_tags = null ) {
-
-		$option = $this->ft_gallery_get_option_or_get_postmeta( $ftg_id );
-
-		$per_page = $option['ft_gallery_pagination_photo_count'];
-
-		$gallery_class = new Gallery();
-
-		if ( isset( $is_album ) && 'yes' === $is_album ) {
-
-			$total_pagination_count = $gallery_class->ft_album_count_post_galleries( $ftg_id );
-			$pagination_text        = esc_html( 'Galleries', 'feed-them-gallery' );
-
-		} elseif ( isset( $tags ) && 'yes' === $tags ) {
-
-			// can be category, post_tag, or custom taxonomy name.
-			$taxonomy               = 'ftg-tags';
-			$my_get                 = stripslashes_deep( $_GET );
-			$total_pagination_count = $image_count_for_tags;
-			$ftg_tags               = sanitize_text_field( wp_unslash( $my_get[ $taxonomy ] ) );
-			$pagination_text        = isset( $ftg_tags ) && 'page' === $ftg_tags ? esc_html( 'Galleries', 'feed-them-gallery' ) : esc_html( 'Images', 'feed-them-gallery' );
-
-		} else {
-			$total_pagination_count = $gallery_class->ft_gallery_count_post_images( $ftg_id );
-			$pagination_text        = esc_html( 'Images', 'feed-them-gallery' );
-		}
-
-		$check_total_pagination_count = ceil( esc_html( $total_pagination_count ) / esc_html( $per_page ) );
-
-		if ( $check_total_pagination_count <= get_query_var( 'page' ) ) {
-			// This is the final count number, meaning the last page of pagination.
-			$count_fix      = get_query_var( 'page' ) - '1';
-			$per_page_final = $per_page * $count_fix + 1;
-			$count_per_page = $total_pagination_count;
-		} elseif ( '1' < get_query_var( 'page' ) ) {
-			// This is any other number that 1 or the last page.
-			$count_per_page = min( $total_pagination_count, $per_page * get_query_var( 'page' ) );
-			$per_page_final = $count_per_page - $per_page + 1;
-		} else {
-			// This is only for the 1st page.
-			$per_page_final = '1';
-			$count_per_page = $per_page < $total_pagination_count ? $per_page : $total_pagination_count;
-		}
-
-		$ftg_align_pagination = null !== $option['ftg_align_pagination'] ? $option['ftg_align_pagination'] : '';
-		$ftg_align_count      = null !== $option['ftg_align_count'] ? $option['ftg_align_count'] : '';
-		$ftg_display_count    = null !== $option['ftg_display_image_count'] ? $option['ftg_display_image_count'] : '';
-
-		$ft_gallery_pagination_text_color          = $option['ft_gallery_pagination_text_color'] ? '.ftg-pagination .page-numbers{color:' . esc_html( $option['ft_gallery_pagination_text_color'] ) . '!important;}' : '';
-		$ft_gallery_pagination_button_color        = $option['ft_gallery_pagination_button_color'] ? '.ftg-pagination a.page-numbers{background:' . esc_html( $option['ft_gallery_pagination_button_color'] ) . '!important;}' : '';
-		$ft_gallery_pagination_active_button_color = $option['ft_gallery_pagination_active_button_color'] ? '.ftg-pagination .page-numbers.current{background:' . esc_html( $option['ft_gallery_pagination_active_button_color'] ) . '!important;}' : '';
-
-		if ( '' !== $ft_gallery_pagination_text_color || '' !== $ft_gallery_pagination_button_color || '' !== $ft_gallery_pagination_active_button_color ) {
-			// FINISH CONVERTING THE PAGINATION STYLES TO SHOW... I NEED TO MOVE THIS TO STYLES IN HEADER I THINK... I DON'T SEE INLINE STYLE OPTIONS FOR https://developer.wordpress.org/reference/functions/paginate_links/ .
-			print '<style>' . esc_html( $ft_gallery_pagination_text_color ) . esc_html( $ft_gallery_pagination_button_color ) . esc_html( $ft_gallery_pagination_active_button_color ) . '</style>';
-		}
-
-		$align_class = 'left' === $ftg_align_pagination ? ' ftg-page-left' : '';
-
-		$align_count_class = 'right' === $ftg_align_count ? ' ftg-total-page-count-align-right' : '';
-
-		$ft_gallery_true_pagination_count_text_color = null !== $option['ft_gallery_true_pagination_count_text_color'] ? ' style="color:' . esc_attr( $option['ft_gallery_true_pagination_count_text_color'] ) . '"' : '';
-		$page_count                                  = 'yes' === $ftg_display_count ? '<div class="ftg-total-pagination-count' . esc_attr( $align_count_class ) . '"' . $ft_gallery_true_pagination_count_text_color . '>' . esc_html( 'Showing', 'feed-them-gallery' ) . ' ' . esc_html( $per_page_final ) . '-' . esc_html( $count_per_page ) . ' of ' . esc_html( $total_pagination_count ) . ' ' . esc_html( $pagination_text ) . '</div>' : '';
-
-		if ( 'left' === $ftg_align_pagination ) {
-			print wp_kses(
-				$page_count,
-				array(
-					'div' => array(
-						'class' => array(),
-						'style' => array(),
-					),
-				)
-			);
-		}
-
-		print '<div class="ftg-pagination' . esc_attr( $align_class ) . '">';
-
-		$pagination_counts = paginate_links(
-			array(
-				'base'      => add_query_arg( 'page', '%#%' ),
-				'format'    => '?page=%#%',
-				'current'   => max( 1, get_query_var( 'page' ) ),
-				'mid_size'  => 3,
-				'end_size'  => 3,
-				'prev_text' => __( '&#10094;' ),
-				'next_text' => __( '&#10095;' ),
-				'total'     => ceil( esc_html( $total_pagination_count ) / esc_html( $per_page ) ), // 3 items per page
-			)
-		);
-		print wp_kses(
-			$pagination_counts,
-			array(
-				'a'    => array(
-					'href'  => array(),
-					'class' => array(),
-				),
-				'span' => array(
-					'class' => array(),
-				),
-			)
-		);
-		print '</div>';
-		if ( 'right' === $ftg_align_pagination ) {
-			print wp_kses(
-				$page_count,
-				array(
-					'div' => array(
-						'class' => array(),
-						'style' => array(),
-					),
-				)
-			);
-		}
-		print '<div class="clear"></div>';
-	}
-
-	/**
-	 *
-	 * Album Gallery List of ids
-	 *
-	 * Outputs a comma delimited list of galleries attached to an album.
-	 *
-	 * @param array $image_list_check Return a list of album gallery ids.
-	 * @return array
-	 * @since 1.1.5
-	 */
-	public function albums_gallery_list_of_ids( $image_list_check ) {
-		$result = array(); // Create empty string.
-
-		foreach ( $image_list_check as $id ) {
-			$result[] = $id->ID;
-		}
-
-		return $result;
-	}
-
-	/**
-	 *
-	 * FT Gallery Get Option or Get Post Meta
-	 *
-	 * Passes values from galleries or template page
-	 *
-	 * @param string $ftg_id Gallery ID.
-	 * @return string
-	 * @since 1.1.6
-	 */
-	public function ft_gallery_get_option_or_get_postmeta( $ftg_id ) {
-
-		if ( 'tags' === $ftg_id ) {
-			$option = get_option( 'template_settings_page_settings_options' );
-		} else {
-
-			$post_type = get_post_type( $ftg_id );
-
-			if ( 'ft_gallery' === $post_type ) {
-				$new_options_array = get_post_meta( $ftg_id, 'ft_gallery_settings_options', true );
-			} elseif ( 'ft_gallery_albums' === $post_type ) {
-				$new_options_array = get_post_meta( $ftg_id, 'ft_gallery_albums_settings_options', true );
-			}
-
-			if ( isset( $new_options_array ) && is_array( $new_options_array ) ) {
-				$option = $new_options_array;
-			} else {
-				// this is our fall back to make galleries work before the 1.1.6 update
-				// grab all possible meta values of the post in array.
-				$get_post_meta_array = get_post_meta( $ftg_id );
-
-				foreach ( $get_post_meta_array as $key => $value ) {
-					$option[ $key ] = $value[0];
-				}
-			}
-		}
-
-		return isset( $option ) ? $option : '';
-	}
-
-
-	/**
-	 *
-	 * FT Gallery Display Gallery Shortcode
-	 *
-	 * Create shortcode to display shortcode
-	 *
-	 * @param array  $atts The shortcode attributes used.
-	 * @param string $tag If it's a tag or not.
-	 * @return string
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_display_gallery_shortcode( $atts, $content = null, $tag ) {
-
-		$ftg = shortcode_atts(
-			array(
-				// All We need is ID of Gallery Post.
-				'id'          => '',
-				'offset'      => '',
-				'media_count' => '',
-			),
-			$atts
-		);
-
-		$gallery_class = new Gallery();
-
-		$option = $this->ft_gallery_get_option_or_get_postmeta( $ftg['id'] );
-
-		$ftg['is_album'] = 'ft-gallery-album' === $tag ? 'yes' : '';
-
-		$album_gallery_ids = get_post_meta( $ftg['id'], 'ft_gallery_album_gallery_ids', true ) ? get_post_meta( $ftg['id'], 'ft_gallery_album_gallery_ids', true ) : '';
-
-		if ( ! isset( $_GET['load_more_ajaxing'] ) ) {
-
-			// START IMAGE TAGS.
-			$ft_tags_link_color               = isset( $option['ft_tags_link_color'] ) ? $option['ft_tags_link_color'] : '';
-			$ft_tags_text_size                = isset( $option['ft_tags_text_size'] ) ? $option['ft_tags_text_size'] : '';
-			$ft_tags_text_margin_right        = isset( $option['ft_tags_text_margin_right'] ) ? $option['ft_tags_text_margin_right'] : '';
-			$ft_gallery_tags_background_color = isset( $option['ft_gallery_tags_background_color'] ) ? $option['ft_gallery_tags_background_color'] : '';
-			$ft_gallery_tags_padding          = isset( $option['ft_gallery_tags_padding'] ) ? $option['ft_gallery_tags_padding'] : '';
-			$ft_tags_text_color               = isset( $option['ft_tags_text_color'] ) ? $option['ft_tags_text_color'] : '';
-			$ft_gallery_tags_text_size        = isset( $option['ft_gallery_tags_text_size'] ) ? $option['ft_gallery_tags_text_size'] : '';
-			$ftg_align_tags                   = isset( $option['ftg_align_tags'] ) && 'left' !== $option['ftg_align_tags'] ? $option['ftg_align_tags'] : '';
-
-			if ( isset( $ft_tags_link_color ) && ! empty( $ft_tags_link_color ) ) {
-				$ft_tags_link_color = 'color:' . $ft_tags_link_color . ';';
-			}
-			if ( isset( $ft_tags_text_size ) && ! empty( $ft_tags_text_size ) ) {
-				$ft_tags_text_size = 'font-size:' . $ft_tags_text_size . ';';
-			}
-			if ( isset( $ft_tags_text_color ) && ! empty( $ft_tags_text_color ) ) {
-				$ft_tags_text_color = 'color:' . $ft_tags_text_color . ';';
-			}
-			if ( isset( $ft_gallery_tags_background_color ) && ! empty( $ft_gallery_tags_background_color ) ) {
-				$ft_gallery_tags_background_color = 'background:' . $ft_gallery_tags_background_color . ';';
-			}
-			if ( isset( $ft_gallery_tags_padding ) && ! empty( $ft_gallery_tags_padding ) ) {
-				$ft_gallery_tags_padding = 'padding:' . $ft_gallery_tags_padding . ';';
-			}
-			if ( isset( $ftg_align_tags ) && ! empty( $ftg_align_tags ) ) {
-				$ftg_align_tags = 'text-align:' . $ftg_align_tags . ';';
-			}
-			if ( isset( $ft_gallery_tags_text_size ) && ! empty( $ft_gallery_tags_text_size ) ) {
-				$ft_gallery_tags_text_size = 'font-size:' . $ft_gallery_tags_text_size . ';';
-			}
-			if ( isset( $ft_tags_text_margin_right ) && ! empty( $ft_tags_text_margin_right ) ) {
-				$ft_tags_text_margin_right = 'margin-right:' . $ft_tags_text_margin_right . ';';
-			}
-
-			if ( ! empty( $ft_tags_link_color ) || ! empty( $ft_tags_text_size ) || ! empty( $ft_tags_text_margin_right ) || ! empty( $ft_tags_text_color ) || ! empty( $ft_gallery_tags_background_color ) || ! empty( $ft_gallery_tags_padding ) || ! empty( $ftg_align_tags ) || ! empty( $ft_gallery_tags_text_size ) ) {
-				print '<style>';
-				if ( ! empty( $ft_gallery_tags_background_color ) || ! empty( $ft_gallery_tags_padding ) || ! empty( $ftg_align_tags ) ) {
-					print '.ftg-image-terms-list{' . esc_html( $ft_gallery_tags_background_color . $ft_gallery_tags_padding . $ftg_align_tags ) . '}';
-				}
-				if ( ! empty( $ft_gallery_tags_text_size ) || ! empty( $ft_tags_text_color ) || ! empty( $ft_tags_text_margin_right ) ) {
-					print '.ftg-image-tags-text{' . esc_html( $ft_gallery_tags_text_size . $ft_tags_text_color . $ft_tags_text_margin_right ) . '}';
-				}
-				if ( ! empty( $ft_tags_link_color ) || ! empty( $ft_tags_text_size ) ) {
-					print '.ftg-image-terms-list a{' . esc_html( $ft_tags_link_color . $ft_tags_text_size ) . '}';
-				}
-				print '</style>';
-			}
-			// END IMAGE TAGS.
-			// START GALLERY TAGS.
-			$ft_page_tags_link_color               = isset( $option['ft_page_tags_link_color'] ) ? $option['ft_page_tags_link_color'] : '';
-			$ft_page_tags_text_size                = isset( $option['ft_page_tags_text_size'] ) ? $option['ft_page_tags_text_size'] : '';
-			$ft_page_tags_text_margin_right        = isset( $option['ft_page_tags_text_margin_right'] ) ? $option['ft_page_tags_text_margin_right'] : '';
-			$ft_page_gallery_tags_background_color = isset( $option['ft_page_gallery_tags_background_color'] ) ? $option['ft_page_gallery_tags_background_color'] : '';
-			$ft_gallery_page_tags_padding          = isset( $option['ft_gallery_page_tags_padding'] ) ? $option['ft_gallery_page_tags_padding'] : '';
-			$ft_page_tags_text_color               = isset( $option['ft_page_tags_text_color'] ) ? $option['ft_page_tags_text_color'] : '';
-			$ft_gallery_page_tags_text_size        = isset( $option['ft_gallery_page_tags_text_size'] ) ? $option['ft_gallery_page_tags_text_size'] : '';
-			$ftg_align_page_tags                   = isset( $option['ftg_align_page_tags'] ) && 'left' !== $option['ftg_align_page_tags'] ? $option['ftg_align_page_tags'] : '';
-
-			if ( isset( $ft_page_tags_link_color ) && ! empty( $ft_page_tags_link_color ) ) {
-				$ft_page_tags_link_color = 'color:' . $ft_page_tags_link_color . ';';
-			}
-			if ( isset( $ft_page_tags_text_size ) && ! empty( $ft_page_tags_text_size ) ) {
-				$ft_page_tags_text_size = 'font-size:' . $ft_page_tags_text_size . ';';
-			}
-			if ( isset( $ft_page_tags_text_color ) && ! empty( $ft_page_tags_text_color ) ) {
-				$ft_page_tags_text_color = 'color:' . $ft_page_tags_text_color . ';';
-			}
-			if ( isset( $ft_page_gallery_tags_background_color ) && ! empty( $ft_page_gallery_tags_background_color ) ) {
-				$ft_page_gallery_tags_background_color = 'background:' . $ft_page_gallery_tags_background_color . ';';
-			}
-			if ( isset( $ft_gallery_page_tags_padding ) && ! empty( $ft_gallery_page_tags_padding ) ) {
-				$ft_gallery_page_tags_padding = 'padding:' . $ft_gallery_page_tags_padding . ';';
-			}
-			if ( isset( $ftg_align_page_tags ) && ! empty( $ftg_align_page_tags ) ) {
-				$ftg_align_page_tags = 'text-align:' . $ftg_align_page_tags . ';';
-			}
-			if ( isset( $ft_gallery_page_tags_text_size ) && ! empty( $ft_gallery_page_tags_text_size ) ) {
-				$ft_gallery_page_tags_text_size = 'font-size:' . $ft_gallery_page_tags_text_size . ';';
-			}
-			if ( isset( $ft_page_tags_text_margin_right ) && ! empty( $ft_page_tags_text_margin_right ) ) {
-				$ft_page_tags_text_margin_right = 'margin-right:' . $ft_page_tags_text_margin_right . ';';
-			}
-
-			if ( ! empty( $ft_page_tags_link_color ) || ! empty( $ft_page_tags_text_size ) || ! empty( $ft_page_tags_text_margin_right ) || ! empty( $ft_page_tags_text_color ) || ! empty( $ft_page_gallery_tags_background_color ) || ! empty( $ft_gallery_page_tags_padding ) || ! empty( $ftg_align_page_tags ) || ! empty( $ft_gallery_page_tags_text_size ) ) {
-				print '<style>';
-				if ( ! empty( $ft_page_gallery_tags_background_color ) || ! empty( $ft_gallery_page_tags_padding ) || ! empty( $ftg_align_page_tags ) ) {
-					print '.ftg-page-terms-list{' . esc_html( $ft_page_gallery_tags_background_color . $ft_gallery_page_tags_padding . $ftg_align_page_tags ) . '}';
-				}
-				if ( ! empty( $ft_gallery_page_tags_text_size ) || ! empty( $ft_page_tags_text_color ) || ! empty( $ft_page_tags_text_margin_right ) ) {
-					print '.ftg-page-tags-text{' . esc_html( $ft_gallery_page_tags_text_size . $ft_page_tags_text_color . $ft_page_tags_text_margin_right ) . '}';
-				}
-				if ( ! empty( $ft_page_tags_link_color ) || ! empty( $ft_page_tags_text_size ) ) {
-					print '.ftg-page-tags-link, .ftg-page-tags-link a{' . esc_html( $ft_page_tags_link_color . $ft_page_tags_text_size ) . '}';
-				}
-				print '</style>';
-			}
-
-			$ftg_woo_icon_background_color = isset( $option['ftg_woo_icon_background_color'] ) ? $option['ftg_woo_icon_background_color'] : '';
-			$ftg_woo_icon_color            = isset( $option['ftg_woo_icon_color'] ) ? $option['ftg_woo_icon_color'] : '';
-			$ftg_woo_icon_hover_color      = isset( $option['ftg_woo_icon_hover_color'] ) ? $option['ftg_woo_icon_hover_color'] : '';
-
-			// END GALLERY TAGS.
-			if ( isset( $option['ft_popup_display_options'] ) && 'full-width-second-half-bottom' === $option['ft_popup_display_options'] ||
-				  isset( $option['ft_popup_display_options'] ) && 'full-width-photo-only' === $option['ft_popup_display_options'] ||
-				'' !== $ftg_woo_icon_background_color || '' !== $ftg_woo_icon_color || '' !== $ftg_woo_icon_hover_color ) {
-				?>
-				<style>
-					<?php
-					if ( '' !== $ftg_woo_icon_background_color ) {
-						?>
-					.ft-gallery-responsive-cart-icon {
-						background: <?php echo esc_attr( $ftg_woo_icon_background_color ); ?>!important
-					}
-						<?php
-					}
-					if ( '' !== $ftg_woo_icon_color ) {
-						?>
-					.ft-gallery-responsive-cart-icon a {
-						color: <?php echo esc_attr( $ftg_woo_icon_color ); ?>!important
-					}
-
-						<?php
-					}
-					if ( '' !== $ftg_woo_icon_hover_color ) {
-						?>
-					.fts-feed-type-wp_gallery:hover a {
-						color: <?php echo esc_attr( $ftg_woo_icon_hover_color ); ?>!important
-					}
-						<?php
-					}
-					if ( isset( $option['ft_popup_display_options'] ) && 'full-width-second-half-bottom' === $option['ft_popup_display_options'] ) {
-						?>
-					@media (min-width: 0px) {
-						.ft-gallery-popup .fts-popup-second-half.fts-instagram-popup-second-half {
-							float: left !important
-						}
-
-						.ft-gallery-popup .fts-popup-second-half {
-							height: 100% !important;
-							width: 100% !important;
-							position: relative !important;
-							float: left !important;
-						}
-
-						.ft-gallery-popup .fts-popup-half {
-							background: #000 !important;
-							text-align: center !important;
-							vertical-align: middle !important;
-							z-index: 500 !important;
-							width: 100% !important;
-						}
-
-						.ft-gallery-popup .mfp-bottom-bar {
-							background: #FFF;
-							padding-bottom: 10px
-						}
-
-						.ft-gallery-popup .mfp-iframe-holder .mfp-content {
-							top: 0
-						}
-
-						.ft-gallery-popup .mfp-iframe-holder .fts-popup-image-position {
-							height: auto !important
-						}
-
-						.ft-gallery-popup .mfp-container {
-							padding-top: 40px;
-							padding-bottom: 0
-						}
-
-						.ft-gallery-popup .mfp-container:before {
-							display: none
-						}
-
-						.fts-popup-image-position {
-							min-height: 50px !important
-						}
-
-						.ft-gallery-popup .fts-popup-second-half .mfp-bottom-bar {
-							height: auto !important;
-							overflow: visible !important;
-							min-height: auto !important
-						}
-					}
-
-						<?php
-					} elseif ( 'full-width-photo-only' === $option['ft_popup_display_options'] ) {
-						?>
-					@media (min-width: 0px) {
-						.ft-gallery-popup .fts-popup-half {
-							background: #000 !important;
-							text-align: center !important;
-							vertical-align: middle !important;
-							z-index: 500 !important;
-							width: 100% !important;
-						}
-
-						.ft-gallery-popup .mfp-container:before {
-							display: inline-block;
-						}
-
-						.ft-gallery-popup .fts-popup-second-half {
-							height: 100%;
-							width: 100%;
-							position: relative;
-							float: left;
-						}
-
-						.ft-gallery-popup .mfp-container {
-							padding-top: 40px;
-							padding-bottom: 0;
-						}
-
-						.ft-gallery-popup .fts-popup-second-half .mfp-bottom-bar {
-							height: auto !important;
-							overflow: visible !important;
-							min-height: auto !important;
-						}
-
-						.ft-gallery-popup .mfp-bottom-bar {
-							background: #FFF;
-							padding-bottom: 10px;
-						}
-
-						.ft-gallery-popup .fts-popup-second-half {
-							display: none !important;
-						}
-					}
-
-						<?php } ?>
-				</style>
-				<?php
-			}
-		}  // is ajaxing, for loadmore button.
-		$feed_type = 'wp_gallery';
-
-		// Color Options for Album to Gallery Text Link.
-		if ( isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] && ! isset( $_GET['load_more_ajaxing'] ) || isset( $_GET['ftg-tags'], $_GET['type'] ) && 'page' === $_GET['type'] ) {
-			$ft_album_position_text_check = $option['ft_album_position_text'] ? esc_html( $option['ft_album_position_text'] ) : '';
-			if ( 'top' === $ft_album_position_text_check ) {
-				$ft_album_position_text = $option['ft_album_position_text'] ? '.ft-album-contents{top:0}' : '';
-
-			} elseif ( 'bottom' === $ft_album_position_text_check ) {
-				$ft_album_position_text = $option['ft_album_position_text'] ? '.ft-album-contents{bottom:0}' : '';
-
-			} elseif ( 'middle' === $ft_album_position_text_check ) {
-				$ft_album_position_text = $option['ft_album_position_text'] ? '.ft-album-contents{height:100%}' : '';
-			}
-
-			$ft_album_link_padding          = $option['ft_album_link_padding'] ? '.ft-album-contents{padding:' . $option['ft_album_link_padding'] . '!Important}' : '';
-			$ft_album_link_size             = $option['ft_album_link_size'] ? '.ft-album-contents a{font-size:' . $option['ft_album_link_size'] . '!Important}' : '';
-			$ft_album_link_color            = $option['ft_album_link_color'] ? '.ft-album-contents a{color:' . $option['ft_album_link_color'] . '!Important}' : '';
-			$ft_album_link_hover_color      = $option['ft_album_link_hover_color'] ? '.ft-album-contents a:hover, .ft-album-contents:hover .ft-view-photo, .fts-mashup-image-and-video-wrap:hover a.ft-view-photo, .fts-feed-type-wp_gallery:hover a.ft-view-photo {color:' . $option['ft_album_link_hover_color'] . '!Important}' : '';
-			$ft_album_text_weight           = $option['ft_album_text_weight'] ? '.ft-album-contents a{font-weight:' . $option['ft_album_text_weight'] . '!Important}' : '';
-			$ft_album_align_text            = $option['ft_album_align_text'] ? '.ft-album-contents{text-align:' . $option['ft_album_align_text'] . '!Important}' : '';
-			$ft_album_link_background_color = $option['ft_album_link_background_color'] ? '.ft-album-contents-backround{background:' . $option['ft_album_link_background_color'] . '!Important}' : '';
-			$ft_album_background_opacity    = $option['ft_album_background_opacity'] ? '.ft-album-contents-backround{opacity:' . $option['ft_album_background_opacity'] . '!Important}' : '';
-			if ( ! empty( $ft_album_link_padding ) || ! empty( $ft_album_link_size ) || ! empty( $ft_album_link_color ) || ! empty( $ft_album_link_hover_color ) || ! empty( $ft_album_align_text ) || ! empty( $ft_album_link_background_color ) || ! empty( $ft_album_background_opacity ) ) {
-				print '<style>' . esc_html( $ft_album_position_text . $ft_album_link_padding . $ft_album_link_size . $ft_album_link_color . $ft_album_link_hover_color . $ft_album_text_weight . $ft_album_align_text . $ft_album_link_background_color . $ft_album_background_opacity ) . '</style>';
-			}
-		}
-
-		// format types are: post, post-in-grid, gallery.
-		$format_type = isset( $option['ft_gallery_type'] ) ? esc_html( $option['ft_gallery_type'] ) : '';
-
-		$my_request = stripslashes_deep( $_REQUEST );
-		// Make sure it's not ajaxing.
-		if ( ! isset( $_GET['load_more_ajaxing'] ) ) {
-			$my_request['ft_gallery_dynamic_name'] = trim( $this->ft_gallery_rand_string( 10 ) );
-			// Create Dynamic Class Name.
-			$fts_dynamic_class_name = '';
-			if ( isset( $my_request['ft_gallery_dynamic_name'] ) ) {
-				$fts_dynamic_class_name = 'feed_dynamic_class_' . sanitize_text_field( wp_unslash( $my_request['ft_gallery_dynamic_name'] ) );
-			}
-		}
-		$ft_gallery_dynamic_string = trim( $this->ft_gallery_rand_string( 10 ) );
-
-		if ( ! empty( $option['ft_gallery_load_more_option'] ) && 'yes' === $option['ft_gallery_load_more_option'] ) {
-
-			$post_count = null !== $option['ft_gallery_photo_count'] ? $option['ft_gallery_photo_count'] : '999';
-
-		} elseif ( ! empty( $option['ft_gallery_show_true_pagination'] ) && 'yes' === $option['ft_gallery_show_true_pagination'] ) {
-			$post_count = null !== $option['ft_gallery_pagination_photo_count'] ? $option['ft_gallery_pagination_photo_count'] : '999';
-		} else {
-			$post_count = '9999';
-		}
-
-		$scroll_more = isset( $option['ft_gallery_load_more_style'] ) ? $option['ft_gallery_load_more_style'] : '';
-
-		$loadmore_btn_maxwidth = isset( $option['ft_gallery_loadmore_button_width'] ) ? $option['ft_gallery_loadmore_button_width'] : '';
-		$loadmore_btn_margin   = isset( $option['ft_gallery_loadmore_button_margin'] ) ? $option['ft_gallery_loadmore_button_margin'] : '';
-
-		$loadmore_btn_maxwidth = isset( $loadmore_btn_maxwidth ) ? $loadmore_btn_maxwidth : '350px';
-		$loadmore_btn_margin   = isset( $loadmore_btn_margin ) ? $loadmore_btn_margin : '10px';
-
-		$pagination_check = isset( $option['ft_gallery_show_pagination'] ) ? $option['ft_gallery_show_pagination'] : '';
-
-		$pagination = isset( $pagination_check ) ? esc_html( $pagination_check ) : 'yes';
-
-		// this is the image size in written format,ie* thumbnail, medium, large etc.
-		$title_description           = isset( $option['ft_gallery_photo_caption'] ) ? $option['ft_gallery_photo_caption'] : '';
-		$title_description_placement = isset( $option['ft_gallery_photo_caption_placement'] ) ? $option['ft_gallery_photo_caption_placement'] : 'show_top';
-		$stack_animation             = 'no';
-		$feed_name_rand_string       = 'ft_gallery_' . $this->ft_gallery_rand_string( 10 );
-		$padding                     = isset( $option['ft_gallery_padding'] ) ? $option['ft_gallery_padding'] : '';
-		if ( 'post' === $option['ft_gallery_type'] || 'gallery' === $option['ft_gallery_type'] ) {
-			$height = $option['ft_gallery_height'];
-		} else {
-			$height = '';
-		}
-		$mashup_margin               = 'auto';
-		$center_container            = 'yes';
-		$wrapper_margin              = isset( $option['ft_gallery_margin'] ) ? $option['ft_gallery_margin'] : '';
-		$space_between_photos        = isset( $option['ft_gallery_grid_space_between_posts'] ) ? $option['ft_gallery_grid_space_between_posts'] : '';
-		$background_color            = isset( $option['ft_gallery_feed_background_color'] ) ? $option['ft_gallery_feed_background_color'] : '';
-		$border_bottom_color         = isset( $option['ft_gallery_border_bottom_color'] ) ? $option['ft_gallery_border_bottom_color'] : '';
-		$background_color_grid_posts = isset( $option['ft_gallery_grid_posts_background_color'] ) ? $option['ft_gallery_grid_posts_background_color'] : '';
-
-		$image_size = isset( $option['ft_gallery_max_image_vid_width'] ) ? 'max-width:' . esc_html( $option['ft_gallery_max_image_vid_width'] ) . '' : '';
-
-		$ft_gallery_columns_masonry2 = null !== $option['ft_gallery_columns_masonry2'] ? esc_html( $option['ft_gallery_columns_masonry2'] ) : '';
-
-		if ( empty( $ft_gallery_columns_masonry2 ) ) {
-			$masonry_class = 'ftg-masonry-3-column';
-		} elseif ( '2' === $ft_gallery_columns_masonry2 ) {
-			$masonry_class = 'ftg-masonry-2-column';
-		} elseif ( '3' === $ft_gallery_columns_masonry2 ) {
-			$masonry_class = 'ftg-masonry-3-column';
-		} elseif ( '4' === $ft_gallery_columns_masonry2 ) {
-			$masonry_class = 'ftg-masonry-4-column';
-		} elseif ( '5' === $ft_gallery_columns_masonry2 ) {
-			$masonry_class = 'ftg-masonry-5-column';
-		} else {
-			// leaving this else for people who may already have had a size set, however when they resave on the page it will convert to the new method.
-			// I'm forcing this because in this time of mobile devices allowing people to set a size just ruins that experience. and creates more support.
-			$grid_width = isset( $option['ft_gallery_grid_column_width'] ) ? $option['ft_gallery_grid_column_width'] : '';
-		}
-
-		$ft_gallery_columns_masonry_margin = null !== $option['ft_gallery_columns_masonry_margin'] ? $option['ft_gallery_columns_masonry_margin'] : '';
-		// we leave a space before each class to separate it from the class ftg-masonry above.
-		if ( empty( $ft_gallery_columns_masonry_margin ) ) {
-			$masonry_margin = ' ftg-masonry-5px-margin';
-		} elseif ( '1' === $ft_gallery_columns_masonry_margin ) {
-			$masonry_margin = ' ftg-masonry-1px-margin';
-		} elseif ( '2' === $ft_gallery_columns_masonry_margin ) {
-			$masonry_margin = ' ftg-masonry-2px-margin';
-		} elseif ( '3' === $ft_gallery_columns_masonry_margin ) {
-			$masonry_margin = ' ftg-masonry-3px-margin';
-		} elseif ( '4' === $ft_gallery_columns_masonry_margin ) {
-			$masonry_margin = ' ftg-masonry-4px-margin';
-		} elseif ( '5' === $ft_gallery_columns_masonry_margin ) {
-			$masonry_margin = ' ftg-masonry-5px-margin';
-		} elseif ( '10' === $ft_gallery_columns_masonry_margin ) {
-			$masonry_margin = ' ftg-masonry-10px-margin';
-		} elseif ( '15' === $ft_gallery_columns_masonry_margin ) {
-			$masonry_margin = ' ftg-masonry-15px-margin';
-		} elseif ( '20' === $ft_gallery_columns_masonry_margin ) {
-			$masonry_margin = ' ftg-masonry-20px-margin';
-		}
-
-		$feed_width = isset( $option['ft_gallery_width'] ) ? $option['ft_gallery_width'] : '';
-
-		// We use this to activate the watermark options, so they are turned off by default.
-		$ft_gallery_watermark_enable_options = isset( $option['ft_gallery_watermark_enable_options'] ) ? $option['ft_gallery_watermark_enable_options'] : '';
-
-		// Watermark Type.
-		// 2 options: Watermark Overlay Image (Does not Imprint logo on Image) = overlay / Watermark Image (Imprint logo on the selected image sizes) = imprint.
-		$watermark = isset( $option['ft_gallery_watermark'] ) ? $option['ft_gallery_watermark'] : '';
-
-		// 3 options: watermark in popup = popup-only / Watermark for image on page and popup = page-and-popup / Watermark for image on page = page-only.
-		$watermark_overlay_enable = isset( $option['ft_gallery_watermark_overlay_enable'] ) ? $option['ft_gallery_watermark_overlay_enable'] : '';
-
-		$watermark_image_position      = isset( $option['ft_gallery_position'] ) ? $option['ft_gallery_position'] : '';
-		$watermark_image_margin        = isset( $option['ft_watermark_image_margin'] ) ? $option['ft_watermark_image_margin'] : '';
-		$watermark_image_url           = isset( $option['ft_watermark_image_input'] ) ? $option['ft_watermark_image_input'] : '';
-		$watermark_image_opacity       = isset( $option['ft_watermark_image_opacity'] ) ? $option['ft_watermark_image_opacity'] : '';
-		$watermark_right_click_disable = isset( $option['ft_gallery_watermark_disable_right_click'] ) ? $option['ft_gallery_watermark_disable_right_click'] : '';
-
-		// Option to disable the right click to inspect element on page so people can't just steal image easily.
-		if ( isset( $watermark_right_click_disable ) && 'yes' === $watermark_right_click_disable ) {
-			?>
-			<script>
-				jQuery(document).bind("contextmenu", function (event) {
-					event.preventDefault();
-				});
-				// window.ondragstart = function() { return false; }
-				jQuery(document).ready(function () {
-					jQuery('img').on('dragstart', function (event) {
-						event.preventDefault();
-					});
-				});
-			</script>
-			<?php
-		}
-
-		$edit_url = get_admin_url() . 'post.php?post=' . $ftg['id'] . '&action=edit';
-		$popup    = isset( $option['ft_gallery_popup'] ) ? $option['ft_gallery_popup'] : '';
-
-		if ( isset( $popup ) && 'yes' === $popup ) {
-
-			// it's ok if these styles & scripts load at the bottom of the page.
-			$fts_fix_magnific = get_option( 'ft_gallery_fix_magnific' ) ? get_option( 'ft_gallery_fix_magnific' ) : '';
-			if ( isset( $fts_fix_magnific ) && '1' !== $fts_fix_magnific ) {
-				wp_enqueue_style( 'ft-gallery-popup', plugins_url( 'feed-them-gallery/includes/feeds/css/magnific-popup.css' ), array(), FTG_CURRENT_VERSION );
-			}
-			if ( ! is_plugin_active( 'feed-them-premium/feed-them-premium.php' ) ) {
-				// run our magnific popup.js in fts instead of double loading.
-				wp_enqueue_script( 'ft-gallery-popup-js', plugins_url( 'feed-them-gallery/includes/feeds/js/magnific-popup.js' ), array(), FTG_CURRENT_VERSION, true );
-			}
-			// here is the click function for our custom popup.
-			wp_enqueue_script( 'ft-gallery-popup-click-js', plugins_url( 'feed-them-gallery/includes/feeds/js/magnific-popup-click.js' ), array(), FTG_CURRENT_VERSION, true );
-		}
-
-		$hide_icon                              = isset( $option['ft_gallery_wp_icon'] ) ? $option['ft_gallery_wp_icon'] : '';
-		$hide_date                              = isset( $option['ft_gallery_wp_date'] ) ? $option['ft_gallery_wp_date'] : '';
-		$show_share                             = isset( $option['ft_gallery_wp_share'] ) ? $option['ft_gallery_wp_share'] : '';
-		$show_purchase_link                     = isset( $option['ft_gallery_purchase_link'] ) ? $option['ft_gallery_purchase_link'] : '';
-		$hide_add_to_cart                       = isset( $option['ft_gallery_hide_add_to_cart'] ) ? $option['ft_gallery_hide_add_to_cart'] : 'no';
-		$ft_gallery_show_add_to_cart_over_image = isset( $option['ft_gallery_show_add_to_cart_over_image'] ) ? $option['ft_gallery_show_add_to_cart_over_image'] : '';
-		$respnsive_gallery_cart_position        = isset( $option['ft_gallery_position_add_to_cart_over_image'] ) ? $option['ft_gallery_position_add_to_cart_over_image'] : 'bottom-right';
-
-		if ( isset( $option['ft_gallery_purchase_word'] ) && null !== $option['ft_gallery_purchase_word'] ) {
-			$purchase_text = isset( $option['ft_gallery_purchase_word'] ) ? $option['ft_gallery_purchase_word'] : '';
-		} else {
-			$purchase_text = 'Purchase';
-		}
-
-		$username      = isset( $option['ft_gallery_username'] ) && null !== $option['ft_gallery_username'] ? $option['ft_gallery_username'] : '';
-		$username_link = isset( $option['ft_gallery_user_link'] ) && null !== $option['ft_gallery_user_link'] ? $option['ft_gallery_user_link'] : 'javacript:;';
-		// link target options are: _blank, _self.
-		$link_target = '_blank';
-		ob_start();
-		if ( ! isset( $_GET['load_more_ajaxing'] ) && isset( $title ) ) {
-			?>
-			<div class="ft-gallery-main-title"><?php print esc_html( $title ); ?></div>
-			<?php
-		}
-
-		if ( ! isset( $_GET['load_more_ajaxing'] ) && isset( $option['ft_gallery_show_page_tags'] ) && 'above_images' === $option['ft_gallery_show_page_tags'] && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
-			$ftg_tags = new image_and_gallery_tags_class();
-			echo wp_kses(
-				$ftg_tags->ft_gallery_tags( $ftg['id'], null, 'page' ),
-				array(
-					'a'    => array(
-						'href'  => array(),
-						'title' => array(),
-					),
-					'span' => array(
-						'class' => array(),
-						'title' => array(),
-					),
-					'div'  => array(
-						'class' => array(),
-						'title' => array(),
-					),
-				)
-			);
-		}
-
-		$ftg_sorting_options               = null !== $option['ftg_sorting_options'] && 'yes' === $option['ftg_sorting_options'] ? $option['ftg_sorting_options'] : '';
-		$ft_gallery_pagination_photo_count = null !== $option['ft_gallery_pagination_photo_count'] ? $option['ft_gallery_pagination_photo_count'] : '50';
-		$ftg_loadmore_option               = null !== $option['ft_gallery_load_more_option'] && 'yes' === $option['ft_gallery_load_more_option'] ? $option['ft_gallery_load_more_option'] : '';
-		$ftg_photo_count                   = null !== $option['ft_gallery_photo_count'] ? $option['ft_gallery_photo_count'] : '50';
-		$ft_gallery_show_true_pagination   = null !== $option['ft_gallery_show_true_pagination'] && 'yes' === $option['ft_gallery_show_true_pagination'] ? $option['ft_gallery_show_true_pagination'] : '';
-
-		if ( isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] || isset( $_GET['ftg-tags'] ) && 'page' === $_GET['type'] ) {
-
-			$orderby_set = '' !== $option['ftg_sort_type'] ? $option['ftg_sort_type'] : 'date';
-			$orderby     = isset( $_GET['orderby'] ) ? sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) : $orderby_set;
-			if ( isset( $_GET['orderby'] ) && 'menu_order' === $_GET['orderby'] || 'menu_order' === $orderby_set && empty( $_GET['orderby'] ) || 'title' === $orderby_set && empty( $_GET['orderby'] ) || isset( $_GET['orderby'] ) && 'title' === $_GET['orderby'] ) {
-				$order = 'asc';
-			} else {
-				$order = 'desc';
-			}
-
-			$count_per_page = $post_count;
-			if ( 'yes' === $ft_gallery_show_true_pagination || ! empty( $_GET['ftg-tags'] ) ) {
-				$paged = get_query_var( 'page' ) ? get_query_var( 'page' ) : 1;
-				// After that, calculate the offset.
-				$offset = ( $paged - 1 ) * $count_per_page;
-			} else {
-				// This is for the loadmore button, so we use the paged option instead of the offset option which we can't use in this method.
-				$paged  = $ftg['offset'];
-				$offset = '';
-			}
-			// A list of ids that are in this album so we can display them.
-			$image_list_check = $album_gallery_ids;
-
-			if ( ! empty( $_GET['ftg-tags'] ) ) {
-
-				$image_list = get_posts(
-					array(
-						'posts_per_page' => esc_html( $count_per_page ),
-						'post_type'      => 'ft_gallery',
-						'tax_query'      => array(
-							array(
-								'taxonomy' => 'ftg-tags',
-								'field'    => 'slug',
-								'terms'    => array( sanitize_text_field( wp_unslash( $_GET['ftg-tags'] ) ) ),
-								'operator' => 'IN',
-							),
-						),
-						'orderby'        => esc_html( $orderby ),
-						'order'          => esc_html( $order ),
-						'paged'          => esc_html( $paged ),
-						'offset'         => $offset,
-					)
-				);
-
-				// For Albums: we run this a second time so we can count all the posts and pass the value to the pagination for tags only.
-				// the reason being is we are unsure of a way to tell the difference between page tags and image tags.
-				$ftg_gallery_count_for_tags = get_posts(
-					array(
-						'posts_per_page' => '-1',
-						'post_type'      => 'ft_gallery',
-						'tax_query'      => array(
-							array(
-								'taxonomy' => 'ftg-tags',
-								'field'    => 'slug',
-								'terms'    => array( sanitize_text_field( wp_unslash( $_GET['ftg-tags'] ) ) ),
-								'operator' => 'IN',
-							),
-						),
-					)
-				);
-				$toal_count_for_tags        = isset( $ftg_gallery_count_for_tags ) ? count( $ftg_gallery_count_for_tags ) : '';
-
-			} else {
-				$image_list = get_posts(
-					array(
-						'posts_per_page' => esc_html( $count_per_page ),
-						'post__in'       => $this->albums_gallery_list_of_ids( $image_list_check ),
-						'post_type'      => 'ft_gallery',
-						'orderby'        => esc_html( $orderby ),
-						'order'          => esc_html( $order ),
-						'paged'          => esc_html( $paged ),
-						'offset'         => $offset,
-					)
-				);
-			}
-
-			// $image_list = get_posts('numberposts=2&include=559,117,129&post_type=ft_gallery');
-			// Return test
-			// $getpost_attr['post_type'] = 'ft_gallery'; $getpost_attr['include'] = $this->albums_gallery_list_of_ids($image_list_check);
-			// $getpost_attr['posts_per_page'] = esc_html( $post_count ); $getpost_attr['orderby'] = esc_html( $orderby );
-			// $getpost_attr['order'] = esc_html( $order );
-			// $getpost_attr['paged'] = esc_html( $paged );
-			// echo '<pre>';
-			// print_r($getpost_attr);
-			// echo '</pre>';
-			// echo '<pre>';
-			// print_r($image_list);
-			// echo '</pre>'; .
-		} else {
-
-
-
-
-			$orderby_set = null !== $option['ftg_sort_type'] ? $option['ftg_sort_type'] : 'menu_order';
-			$orderby     = isset( $_GET['orderby'] ) ? sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) : $orderby_set;
-			if ( isset( $_GET['orderby'] ) && 'menu_order' === $_GET['orderby'] || 'menu_order' === $orderby_set && empty( $_GET['orderby'] ) || 'title' === $orderby_set && empty( $_GET['orderby'] ) || isset( $_GET['orderby'] ) && 'title' === $_GET['orderby'] ) {
-				$order = 'asc';
-			} else {
-				$order = 'desc';
-			}
-
-			if ( 'yes' === $ft_gallery_show_true_pagination ) {
-				$paged  = get_query_var( 'page' ) ? get_query_var( 'page' ) : 1;
-				$offset = ( $paged - 1 ) * $post_count;
-			} else {
-				$paged  = $ftg['offset'];
-				$offset = '';
-			}
-
-			if ( ! empty( $_GET['ftg-tags'] ) ) {
-
-				// echo '<pre>';
-				// print_r($image_list);
-				// echo '</pre>'; .
-				$image_list = get_posts(
-					array(
-						'post_type'      => 'attachment',
-						'post_mime_type' => 'image',
-						'tax_query'      => array(
-							array(
-								'taxonomy' => 'ftg-tags',
-								'field'    => 'slug',
-								'terms'    => array( sanitize_text_field( wp_unslash( $_GET['ftg-tags'] ) ) ),
-								'operator' => 'IN',
-							),
-						),
-						'posts_per_page' => esc_html( $post_count ),
-						'orderby'        => esc_html( $orderby ),
-						'order'          => esc_html( $order ),
-						'offset'         => $offset,
-					)
-				);
-
-				// we run this a second time so we can count all the posts and pass the value to the pagination for tags only.
-				// the reason being is we are unsure of a way to tell the difference between page tags and image tags.
-				$ftg_image_count_for_tags = get_posts(
-					array(
-						'post_type'      => 'attachment',
-						'post_mime_type' => 'image',
-						'tax_query'      => array(
-							array(
-								'taxonomy' => 'ftg-tags',
-								'field'    => 'slug',
-								'terms'    => array( sanitize_text_field( wp_unslash( $_GET['ftg-tags'] ) ) ),
-								'operator' => 'IN',
-							),
-						),
-						'posts_per_page' => '-1',
-					)
-				);
-				$toal_count_for_tags      = isset( $ftg_image_count_for_tags ) ? count( $ftg_image_count_for_tags ) : '';
-
-			} else {
-				$image_list = get_posts(
-					array(
-						'post_parent'    => $ftg['id'],
-						'post_type'      => 'attachment',
-						'post_mime_type' => 'image',
-						'posts_per_page' => esc_html( $post_count ),
-						'orderby'        => esc_html( $orderby ),
-						'order'          => esc_html( $order ),
-						'paged'          => esc_html( $paged ),
-						'offset'         => $offset,
-					)
-				);
-			}
-		}
-       //  echo '<pre>';
-       // print_r($image_list));
-       //  echo '</pre>';
-
-            // This is related to the tags search select option.
-            // Since we do not seperate the tags between pages and images we use count to see if the numbers are off
-            // if the numbers are off then we show a message suggesting they view the gallery tag instead. Same with the second statement below.
-            if( isset( $_GET['ftg-tags'], $_GET['count'] ) && $_GET['count'] > $toal_count_for_tags ) {
-
-                if('image' === $_GET['type']){
-                    $page_type = 'Galleries';
-                    $url_page_type = 'page';
-                }
-                else {
-                    $page_type = 'Images';
-                    $url_page_type = 'image';
-                }
-                echo '<div class="ftg-no-image-tag-wrap">';
-
-                $the_count = isset( $_GET['count'] ) ? '&count=' . $_GET['count'] : '';
-
-                echo sprintf(esc_html__('To also view %4$s tagged with %3$s %1$sclick here%2$s.', 'feed-them-gallery'),
-                    '<a href="'.esc_url( get_site_url() .'?type='. esc_attr( $url_page_type ) .'&ftg-tags='.sanitize_text_field( wp_unslash( $_GET['ftg-tags'] . $the_count ) ) ).'">',
-                    '</a>',
-                    sanitize_text_field( wp_unslash( $_GET['ftg-tags'] ) ),
-                    $page_type
-                );
-                echo '</div>';
+    }
+
+    /**
+     * FT Pagination
+     *
+     * Paginate the photos on the front end.
+     *
+     * @param string $ftg_id The ID of the post we are sorting image for.
+     * @param string $is_album Check to see if this an album or not.
+     * @param string $tags The tags.
+     * @param string $tags_list Tags List.
+     * @param string $image_count_for_tags The image count for tags.
+     *
+     * @since 1.0.0
+     */
+    public function ftg_pagination( $ftg_id, $is_album = null, $tags, $tags_list, $image_count_for_tags = null ) {
+
+        $option = $this->ft_gallery_get_option_or_get_postmeta( $ftg_id );
+
+        $per_page = $option['ft_gallery_pagination_photo_count'];
+
+        $gallery_class = new Gallery();
+
+        if ( isset( $is_album ) && 'yes' === $is_album ) {
+
+            $total_pagination_count = $gallery_class->ft_album_count_post_galleries( $ftg_id );
+            $pagination_text        = esc_html( 'Galleries', 'feed-them-gallery' );
+
+        } elseif ( isset( $tags ) && 'yes' === $tags ) {
+
+            // can be category, post_tag, or custom taxonomy name.
+            $taxonomy               = 'ftg-tags';
+            $my_get                 = stripslashes_deep( $_GET );
+            $total_pagination_count = $image_count_for_tags;
+            $ftg_tags               = sanitize_text_field( wp_unslash( $my_get[ $taxonomy ] ) );
+            $pagination_text        = isset( $ftg_tags ) && 'page' === $ftg_tags ? esc_html( 'Galleries', 'feed-them-gallery' ) : esc_html( 'Images', 'feed-them-gallery' );
+
+        } else {
+            $total_pagination_count = $gallery_class->ft_gallery_count_post_images( $ftg_id );
+            $pagination_text        = esc_html( 'Images', 'feed-them-gallery' );
+        }
+
+        $check_total_pagination_count = ceil( esc_html( $total_pagination_count ) / esc_html( $per_page ) );
+
+        if ( $check_total_pagination_count <= get_query_var( 'page' ) ) {
+            // This is the final count number, meaning the last page of pagination.
+            $count_fix      = get_query_var( 'page' ) - '1';
+            $per_page_final = $per_page * $count_fix + 1;
+            $count_per_page = $total_pagination_count;
+        } elseif ( '1' < get_query_var( 'page' ) ) {
+            // This is any other number that 1 or the last page.
+            $count_per_page = min( $total_pagination_count, $per_page * get_query_var( 'page' ) );
+            $per_page_final = $count_per_page - $per_page + 1;
+        } else {
+            // This is only for the 1st page.
+            $per_page_final = '1';
+            $count_per_page = $per_page < $total_pagination_count ? $per_page : $total_pagination_count;
+        }
+
+        $ftg_align_pagination = null !== $option['ftg_align_pagination'] ? $option['ftg_align_pagination'] : '';
+        $ftg_align_count      = null !== $option['ftg_align_count'] ? $option['ftg_align_count'] : '';
+        $ftg_display_count    = null !== $option['ftg_display_image_count'] ? $option['ftg_display_image_count'] : '';
+
+        $ft_gallery_pagination_text_color          = $option['ft_gallery_pagination_text_color'] ? '.ftg-pagination .page-numbers{color:' . esc_html( $option['ft_gallery_pagination_text_color'] ) . '!important;}' : '';
+        $ft_gallery_pagination_button_color        = $option['ft_gallery_pagination_button_color'] ? '.ftg-pagination a.page-numbers{background:' . esc_html( $option['ft_gallery_pagination_button_color'] ) . '!important;}' : '';
+        $ft_gallery_pagination_active_button_color = $option['ft_gallery_pagination_active_button_color'] ? '.ftg-pagination .page-numbers.current{background:' . esc_html( $option['ft_gallery_pagination_active_button_color'] ) . '!important;}' : '';
+
+        if ( '' !== $ft_gallery_pagination_text_color || '' !== $ft_gallery_pagination_button_color || '' !== $ft_gallery_pagination_active_button_color ) {
+            // FINISH CONVERTING THE PAGINATION STYLES TO SHOW... I NEED TO MOVE THIS TO STYLES IN HEADER I THINK... I DON'T SEE INLINE STYLE OPTIONS FOR https://developer.wordpress.org/reference/functions/paginate_links/ .
+            print '<style>' . esc_html( $ft_gallery_pagination_text_color ) . esc_html( $ft_gallery_pagination_button_color ) . esc_html( $ft_gallery_pagination_active_button_color ) . '</style>';
+        }
+
+        $align_class = 'left' === $ftg_align_pagination ? ' ftg-page-left' : '';
+
+        $align_count_class = 'right' === $ftg_align_count ? ' ftg-total-page-count-align-right' : '';
+
+        $ft_gallery_true_pagination_count_text_color = null !== $option['ft_gallery_true_pagination_count_text_color'] ? ' style="color:' . esc_attr( $option['ft_gallery_true_pagination_count_text_color'] ) . '"' : '';
+        $page_count                                  = 'yes' === $ftg_display_count ? '<div class="ftg-total-pagination-count' . esc_attr( $align_count_class ) . '"' . $ft_gallery_true_pagination_count_text_color . '>' . esc_html( 'Showing', 'feed-them-gallery' ) . ' ' . esc_html( $per_page_final ) . '-' . esc_html( $count_per_page ) . ' of ' . esc_html( $total_pagination_count ) . ' ' . esc_html( $pagination_text ) . '</div>' : '';
+
+        if ( 'left' === $ftg_align_pagination ) {
+            print wp_kses(
+                $page_count,
+                array(
+                    'div' => array(
+                        'class' => array(),
+                        'style' => array(),
+                    ),
+                )
+            );
+        }
+
+        print '<div class="ftg-pagination' . esc_attr( $align_class ) . '">';
+
+        $pagination_counts = paginate_links(
+            array(
+                'base'      => add_query_arg( 'page', '%#%' ),
+                'format'    => '?page=%#%',
+                'current'   => max( 1, get_query_var( 'page' ) ),
+                'mid_size'  => 3,
+                'end_size'  => 3,
+                'prev_text' => __( '&#10094;' ),
+                'next_text' => __( '&#10095;' ),
+                'total'     => ceil( esc_html( $total_pagination_count ) / esc_html( $per_page ) ), // 3 items per page
+            )
+        );
+        print wp_kses(
+            $pagination_counts,
+            array(
+                'a'    => array(
+                    'href'  => array(),
+                    'class' => array(),
+                ),
+                'span' => array(
+                    'class' => array(),
+                ),
+            )
+        );
+        print '</div>';
+        if ( 'right' === $ftg_align_pagination ) {
+            print wp_kses(
+                $page_count,
+                array(
+                    'div' => array(
+                        'class' => array(),
+                        'style' => array(),
+                    ),
+                )
+            );
+        }
+        print '<div class="clear"></div>';
+    }
+
+    /**
+     *
+     * Album Gallery List of ids
+     *
+     * Outputs a comma delimited list of galleries attached to an album.
+     *
+     * @param array $image_list_check Return a list of album gallery ids.
+     * @return array
+     * @since 1.1.5
+     */
+    public function albums_gallery_list_of_ids( $image_list_check ) {
+        $result = array(); // Create empty string.
+
+        foreach ( $image_list_check as $id ) {
+            $result[] = $id->ID;
+        }
+
+        return $result;
+    }
+
+    /**
+     *
+     * FT Gallery Get Option or Get Post Meta
+     *
+     * Passes values from galleries or template page
+     *
+     * @param string $ftg_id Gallery ID.
+     * @return string
+     * @since 1.1.6
+     */
+    public function ft_gallery_get_option_or_get_postmeta( $ftg_id ) {
+
+        if ( 'tags' === $ftg_id ) {
+            $option = get_option( 'template_settings_page_settings_options' );
+        } else {
+
+            $post_type = get_post_type( $ftg_id );
+
+            if ( 'ft_gallery' === $post_type ) {
+                $new_options_array = get_post_meta( $ftg_id, 'ft_gallery_settings_options', true );
+            } elseif ( 'ft_gallery_albums' === $post_type ) {
+                $new_options_array = get_post_meta( $ftg_id, 'ft_gallery_albums_settings_options', true );
             }
-            // This is also related to the tags search select option.
-            // So if no image tags are found in our search, since we are assuming more people might be tagging image than galleries, we show a message
-            // to let the user know they can click the link to search for that tag in the gallery search of our page instead of the image search
-            if( is_array( $image_list ) && !isset( $image_list[0] ) && isset( $_GET['type'] ) && 'image' === $_GET['type'] ) {
-                echo '<div class="ftg-no-image-tag-wrap">';
-                echo sprintf(esc_html__('No Image tags found. To view the Gallery tag of %3$s instead %1$sclick here%2$s.', 'feed-them-gallery'),
-                    '<a href="'.esc_url( get_site_url() .'?type=page&ftg-tags='.sanitize_text_field( wp_unslash( $_GET['ftg-tags'] ) ) ).'">',
-                    '</a>',
-                    sanitize_text_field( wp_unslash( $_GET['ftg-tags'] ) )
-                );
-                echo '</div>';
+
+            if ( isset( $new_options_array ) && is_array( $new_options_array ) ) {
+                $option = $new_options_array;
+            } else {
+                // this is our fall back to make galleries work before the 1.1.6 update
+                // grab all possible meta values of the post in array.
+                $get_post_meta_array = get_post_meta( $ftg_id );
+
+                foreach ( $get_post_meta_array as $key => $value ) {
+                    $option[ $key ] = $value[0];
+                }
             }
+        }
+
+        return isset( $option ) ? $option : '';
+    }
+
+
+    /**
+     *
+     * FT Gallery Display Gallery Shortcode
+     *
+     * Create shortcode to display shortcode
+     *
+     * @param array  $atts The shortcode attributes used.
+     * @param string $tag If it's a tag or not.
+     * @return string
+     * @since 1.0.0
+     */
+    public function ft_gallery_display_gallery_shortcode( $atts, $content = null, $tag ) {
+
+        $ftg = shortcode_atts(
+            array(
+                // All We need is ID of Gallery Post.
+                'id'          => '',
+                'offset'      => '',
+                'media_count' => '',
+            ),
+            $atts
+        );
+
+        $gallery_class = new Gallery();
+
+        $option = $this->ft_gallery_get_option_or_get_postmeta( $ftg['id'] );
+
+        $ftg['is_album'] = 'ft-gallery-album' === $tag ? 'yes' : '';
+
+        $album_gallery_ids = get_post_meta( $ftg['id'], 'ft_gallery_album_gallery_ids', true ) ? get_post_meta( $ftg['id'], 'ft_gallery_album_gallery_ids', true ) : '';
+
+        if ( ! isset( $_GET['load_more_ajaxing'] ) ) {
+
+            // START IMAGE TAGS.
+            $ft_tags_link_color               = isset( $option['ft_tags_link_color'] ) ? $option['ft_tags_link_color'] : '';
+            $ft_tags_text_size                = isset( $option['ft_tags_text_size'] ) ? $option['ft_tags_text_size'] : '';
+            $ft_tags_text_margin_right        = isset( $option['ft_tags_text_margin_right'] ) ? $option['ft_tags_text_margin_right'] : '';
+            $ft_gallery_tags_background_color = isset( $option['ft_gallery_tags_background_color'] ) ? $option['ft_gallery_tags_background_color'] : '';
+            $ft_gallery_tags_padding          = isset( $option['ft_gallery_tags_padding'] ) ? $option['ft_gallery_tags_padding'] : '';
+            $ft_tags_text_color               = isset( $option['ft_tags_text_color'] ) ? $option['ft_tags_text_color'] : '';
+            $ft_gallery_tags_text_size        = isset( $option['ft_gallery_tags_text_size'] ) ? $option['ft_gallery_tags_text_size'] : '';
+            $ftg_align_tags                   = isset( $option['ftg_align_tags'] ) && 'left' !== $option['ftg_align_tags'] ? $option['ftg_align_tags'] : '';
+
+            if ( isset( $ft_tags_link_color ) && ! empty( $ft_tags_link_color ) ) {
+                $ft_tags_link_color = 'color:' . $ft_tags_link_color . ';';
+            }
+            if ( isset( $ft_tags_text_size ) && ! empty( $ft_tags_text_size ) ) {
+                $ft_tags_text_size = 'font-size:' . $ft_tags_text_size . ';';
+            }
+            if ( isset( $ft_tags_text_color ) && ! empty( $ft_tags_text_color ) ) {
+                $ft_tags_text_color = 'color:' . $ft_tags_text_color . ';';
+            }
+            if ( isset( $ft_gallery_tags_background_color ) && ! empty( $ft_gallery_tags_background_color ) ) {
+                $ft_gallery_tags_background_color = 'background:' . $ft_gallery_tags_background_color . ';';
+            }
+            if ( isset( $ft_gallery_tags_padding ) && ! empty( $ft_gallery_tags_padding ) ) {
+                $ft_gallery_tags_padding = 'padding:' . $ft_gallery_tags_padding . ';';
+            }
+            if ( isset( $ftg_align_tags ) && ! empty( $ftg_align_tags ) ) {
+                $ftg_align_tags = 'text-align:' . $ftg_align_tags . ';';
+            }
+            if ( isset( $ft_gallery_tags_text_size ) && ! empty( $ft_gallery_tags_text_size ) ) {
+                $ft_gallery_tags_text_size = 'font-size:' . $ft_gallery_tags_text_size . ';';
+            }
+            if ( isset( $ft_tags_text_margin_right ) && ! empty( $ft_tags_text_margin_right ) ) {
+                $ft_tags_text_margin_right = 'margin-right:' . $ft_tags_text_margin_right . ';';
+            }
+
+            if ( ! empty( $ft_tags_link_color ) || ! empty( $ft_tags_text_size ) || ! empty( $ft_tags_text_margin_right ) || ! empty( $ft_tags_text_color ) || ! empty( $ft_gallery_tags_background_color ) || ! empty( $ft_gallery_tags_padding ) || ! empty( $ftg_align_tags ) || ! empty( $ft_gallery_tags_text_size ) ) {
+                print '<style>';
+                if ( ! empty( $ft_gallery_tags_background_color ) || ! empty( $ft_gallery_tags_padding ) || ! empty( $ftg_align_tags ) ) {
+                    print '.ftg-image-terms-list{' . esc_html( $ft_gallery_tags_background_color . $ft_gallery_tags_padding . $ftg_align_tags ) . '}';
+                }
+                if ( ! empty( $ft_gallery_tags_text_size ) || ! empty( $ft_tags_text_color ) || ! empty( $ft_tags_text_margin_right ) ) {
+                    print '.ftg-image-tags-text{' . esc_html( $ft_gallery_tags_text_size . $ft_tags_text_color . $ft_tags_text_margin_right ) . '}';
+                }
+                if ( ! empty( $ft_tags_link_color ) || ! empty( $ft_tags_text_size ) ) {
+                    print '.ftg-image-terms-list a{' . esc_html( $ft_tags_link_color . $ft_tags_text_size ) . '}';
+                }
+                print '</style>';
+            }
+            // END IMAGE TAGS.
+            // START GALLERY TAGS.
+            $ft_page_tags_link_color               = isset( $option['ft_page_tags_link_color'] ) ? $option['ft_page_tags_link_color'] : '';
+            $ft_page_tags_text_size                = isset( $option['ft_page_tags_text_size'] ) ? $option['ft_page_tags_text_size'] : '';
+            $ft_page_tags_text_margin_right        = isset( $option['ft_page_tags_text_margin_right'] ) ? $option['ft_page_tags_text_margin_right'] : '';
+            $ft_page_gallery_tags_background_color = isset( $option['ft_page_gallery_tags_background_color'] ) ? $option['ft_page_gallery_tags_background_color'] : '';
+            $ft_gallery_page_tags_padding          = isset( $option['ft_gallery_page_tags_padding'] ) ? $option['ft_gallery_page_tags_padding'] : '';
+            $ft_page_tags_text_color               = isset( $option['ft_page_tags_text_color'] ) ? $option['ft_page_tags_text_color'] : '';
+            $ft_gallery_page_tags_text_size        = isset( $option['ft_gallery_page_tags_text_size'] ) ? $option['ft_gallery_page_tags_text_size'] : '';
+            $ftg_align_page_tags                   = isset( $option['ftg_align_page_tags'] ) && 'left' !== $option['ftg_align_page_tags'] ? $option['ftg_align_page_tags'] : '';
+
+            if ( isset( $ft_page_tags_link_color ) && ! empty( $ft_page_tags_link_color ) ) {
+                $ft_page_tags_link_color = 'color:' . $ft_page_tags_link_color . ';';
+            }
+            if ( isset( $ft_page_tags_text_size ) && ! empty( $ft_page_tags_text_size ) ) {
+                $ft_page_tags_text_size = 'font-size:' . $ft_page_tags_text_size . ';';
+            }
+            if ( isset( $ft_page_tags_text_color ) && ! empty( $ft_page_tags_text_color ) ) {
+                $ft_page_tags_text_color = 'color:' . $ft_page_tags_text_color . ';';
+            }
+            if ( isset( $ft_page_gallery_tags_background_color ) && ! empty( $ft_page_gallery_tags_background_color ) ) {
+                $ft_page_gallery_tags_background_color = 'background:' . $ft_page_gallery_tags_background_color . ';';
+            }
+            if ( isset( $ft_gallery_page_tags_padding ) && ! empty( $ft_gallery_page_tags_padding ) ) {
+                $ft_gallery_page_tags_padding = 'padding:' . $ft_gallery_page_tags_padding . ';';
+            }
+            if ( isset( $ftg_align_page_tags ) && ! empty( $ftg_align_page_tags ) ) {
+                $ftg_align_page_tags = 'text-align:' . $ftg_align_page_tags . ';';
+            }
+            if ( isset( $ft_gallery_page_tags_text_size ) && ! empty( $ft_gallery_page_tags_text_size ) ) {
+                $ft_gallery_page_tags_text_size = 'font-size:' . $ft_gallery_page_tags_text_size . ';';
+            }
+            if ( isset( $ft_page_tags_text_margin_right ) && ! empty( $ft_page_tags_text_margin_right ) ) {
+                $ft_page_tags_text_margin_right = 'margin-right:' . $ft_page_tags_text_margin_right . ';';
+            }
+
+            if ( ! empty( $ft_page_tags_link_color ) || ! empty( $ft_page_tags_text_size ) || ! empty( $ft_page_tags_text_margin_right ) || ! empty( $ft_page_tags_text_color ) || ! empty( $ft_page_gallery_tags_background_color ) || ! empty( $ft_gallery_page_tags_padding ) || ! empty( $ftg_align_page_tags ) || ! empty( $ft_gallery_page_tags_text_size ) ) {
+                print '<style>';
+                if ( ! empty( $ft_page_gallery_tags_background_color ) || ! empty( $ft_gallery_page_tags_padding ) || ! empty( $ftg_align_page_tags ) ) {
+                    print '.ftg-page-terms-list{' . esc_html( $ft_page_gallery_tags_background_color . $ft_gallery_page_tags_padding . $ftg_align_page_tags ) . '}';
+                }
+                if ( ! empty( $ft_gallery_page_tags_text_size ) || ! empty( $ft_page_tags_text_color ) || ! empty( $ft_page_tags_text_margin_right ) ) {
+                    print '.ftg-page-tags-text{' . esc_html( $ft_gallery_page_tags_text_size . $ft_page_tags_text_color . $ft_page_tags_text_margin_right ) . '}';
+                }
+                if ( ! empty( $ft_page_tags_link_color ) || ! empty( $ft_page_tags_text_size ) ) {
+                    print '.ftg-page-tags-link, .ftg-page-tags-link a{' . esc_html( $ft_page_tags_link_color . $ft_page_tags_text_size ) . '}';
+                }
+                print '</style>';
+            }
+
+            $ftg_woo_icon_background_color = isset( $option['ftg_woo_icon_background_color'] ) ? $option['ftg_woo_icon_background_color'] : '';
+            $ftg_woo_icon_color            = isset( $option['ftg_woo_icon_color'] ) ? $option['ftg_woo_icon_color'] : '';
+            $ftg_woo_icon_hover_color      = isset( $option['ftg_woo_icon_hover_color'] ) ? $option['ftg_woo_icon_hover_color'] : '';
+
+            // END GALLERY TAGS.
+            if ( isset( $option['ft_popup_display_options'] ) && 'full-width-second-half-bottom' === $option['ft_popup_display_options'] ||
+                isset( $option['ft_popup_display_options'] ) && 'full-width-photo-only' === $option['ft_popup_display_options'] ||
+                '' !== $ftg_woo_icon_background_color || '' !== $ftg_woo_icon_color || '' !== $ftg_woo_icon_hover_color ) {
+                ?>
+                <style>
+                    <?php
+                    if ( '' !== $ftg_woo_icon_background_color ) {
+                        ?>
+                    .ft-gallery-responsive-cart-icon {
+                        background: <?php echo esc_attr( $ftg_woo_icon_background_color ); ?>!important
+                    }
+                    <?php
+                }
+                if ( '' !== $ftg_woo_icon_color ) {
+                    ?>
+                    .ft-gallery-responsive-cart-icon a {
+                        color: <?php echo esc_attr( $ftg_woo_icon_color ); ?>!important
+                    }
+
+                    <?php
+                }
+                if ( '' !== $ftg_woo_icon_hover_color ) {
+                    ?>
+                    .fts-feed-type-wp_gallery:hover a {
+                        color: <?php echo esc_attr( $ftg_woo_icon_hover_color ); ?>!important
+                    }
+                    <?php
+                }
+                if ( isset( $option['ft_popup_display_options'] ) && 'full-width-second-half-bottom' === $option['ft_popup_display_options'] ) {
+                    ?>
+                    @media (min-width: 0px) {
+                        .ft-gallery-popup .fts-popup-second-half.fts-instagram-popup-second-half {
+                            float: left !important
+                        }
+
+                        .ft-gallery-popup .fts-popup-second-half {
+                            height: 100% !important;
+                            width: 100% !important;
+                            position: relative !important;
+                            float: left !important;
+                        }
+
+                        .ft-gallery-popup .fts-popup-half {
+                            background: #000 !important;
+                            text-align: center !important;
+                            vertical-align: middle !important;
+                            z-index: 500 !important;
+                            width: 100% !important;
+                        }
+
+                        .ft-gallery-popup .mfp-bottom-bar {
+                            background: #FFF;
+                            padding-bottom: 10px
+                        }
+
+                        .ft-gallery-popup .mfp-iframe-holder .mfp-content {
+                            top: 0
+                        }
+
+                        .ft-gallery-popup .mfp-iframe-holder .fts-popup-image-position {
+                            height: auto !important
+                        }
+
+                        .ft-gallery-popup .mfp-container {
+                            padding-top: 40px;
+                            padding-bottom: 0
+                        }
+
+                        .ft-gallery-popup .mfp-container:before {
+                            display: none
+                        }
+
+                        .fts-popup-image-position {
+                            min-height: 50px !important
+                        }
+
+                        .ft-gallery-popup .fts-popup-second-half .mfp-bottom-bar {
+                            height: auto !important;
+                            overflow: visible !important;
+                            min-height: auto !important
+                        }
+                    }
+
+                    <?php
+                } elseif ( 'full-width-photo-only' === $option['ft_popup_display_options'] ) {
+                    ?>
+                    @media (min-width: 0px) {
+                        .ft-gallery-popup .fts-popup-half {
+                            background: #000 !important;
+                            text-align: center !important;
+                            vertical-align: middle !important;
+                            z-index: 500 !important;
+                            width: 100% !important;
+                        }
+
+                        .ft-gallery-popup .mfp-container:before {
+                            display: inline-block;
+                        }
+
+                        .ft-gallery-popup .fts-popup-second-half {
+                            height: 100%;
+                            width: 100%;
+                            position: relative;
+                            float: left;
+                        }
+
+                        .ft-gallery-popup .mfp-container {
+                            padding-top: 40px;
+                            padding-bottom: 0;
+                        }
+
+                        .ft-gallery-popup .fts-popup-second-half .mfp-bottom-bar {
+                            height: auto !important;
+                            overflow: visible !important;
+                            min-height: auto !important;
+                        }
+
+                        .ft-gallery-popup .mfp-bottom-bar {
+                            background: #FFF;
+                            padding-bottom: 10px;
+                        }
+
+                        .ft-gallery-popup .fts-popup-second-half {
+                            display: none !important;
+                        }
+                    }
+
+                    <?php } ?>
+                </style>
+                <?php
+            }
+        }  // is ajaxing, for loadmore button.
+        $feed_type = 'wp_gallery';
+
+        // Color Options for Album to Gallery Text Link.
+        if ( isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] && ! isset( $_GET['load_more_ajaxing'] ) || isset( $_GET['ftg-tags'], $_GET['type'] ) && 'page' === $_GET['type'] ) {
+            $ft_album_position_text_check = $option['ft_album_position_text'] ? esc_html( $option['ft_album_position_text'] ) : '';
+            if ( 'top' === $ft_album_position_text_check ) {
+                $ft_album_position_text = $option['ft_album_position_text'] ? '.ft-album-contents{top:0}' : '';
+
+            } elseif ( 'bottom' === $ft_album_position_text_check ) {
+                $ft_album_position_text = $option['ft_album_position_text'] ? '.ft-album-contents{bottom:0}' : '';
+
+            } elseif ( 'middle' === $ft_album_position_text_check ) {
+                $ft_album_position_text = $option['ft_album_position_text'] ? '.ft-album-contents{height:100%}' : '';
+            }
+
+            $ft_album_link_padding          = $option['ft_album_link_padding'] ? '.ft-album-contents{padding:' . $option['ft_album_link_padding'] . '!Important}' : '';
+            $ft_album_link_size             = $option['ft_album_link_size'] ? '.ft-album-contents a{font-size:' . $option['ft_album_link_size'] . '!Important}' : '';
+            $ft_album_link_color            = $option['ft_album_link_color'] ? '.ft-album-contents a{color:' . $option['ft_album_link_color'] . '!Important}' : '';
+            $ft_album_link_hover_color      = $option['ft_album_link_hover_color'] ? '.ft-album-contents a:hover, .ft-album-contents:hover .ft-view-photo, .fts-mashup-image-and-video-wrap:hover a.ft-view-photo, .fts-feed-type-wp_gallery:hover a.ft-view-photo {color:' . $option['ft_album_link_hover_color'] . '!Important}' : '';
+            $ft_album_text_weight           = $option['ft_album_text_weight'] ? '.ft-album-contents a{font-weight:' . $option['ft_album_text_weight'] . '!Important}' : '';
+            $ft_album_align_text            = $option['ft_album_align_text'] ? '.ft-album-contents{text-align:' . $option['ft_album_align_text'] . '!Important}' : '';
+            $ft_album_link_background_color = $option['ft_album_link_background_color'] ? '.ft-album-contents-backround{background:' . $option['ft_album_link_background_color'] . '!Important}' : '';
+            $ft_album_background_opacity    = $option['ft_album_background_opacity'] ? '.ft-album-contents-backround{opacity:' . $option['ft_album_background_opacity'] . '!Important}' : '';
+            if ( ! empty( $ft_album_link_padding ) || ! empty( $ft_album_link_size ) || ! empty( $ft_album_link_color ) || ! empty( $ft_album_link_hover_color ) || ! empty( $ft_album_align_text ) || ! empty( $ft_album_link_background_color ) || ! empty( $ft_album_background_opacity ) ) {
+                print '<style>' . esc_html( $ft_album_position_text . $ft_album_link_padding . $ft_album_link_size . $ft_album_link_color . $ft_album_link_hover_color . $ft_album_text_weight . $ft_album_align_text . $ft_album_link_background_color . $ft_album_background_opacity ) . '</style>';
+            }
+        }
+
+        // format types are: post, post-in-grid, gallery.
+        $format_type = isset( $option['ft_gallery_type'] ) ? esc_html( $option['ft_gallery_type'] ) : '';
+
+        $my_request = stripslashes_deep( $_REQUEST );
+        // Make sure it's not ajaxing.
+        if ( ! isset( $_GET['load_more_ajaxing'] ) ) {
+            $my_request['ft_gallery_dynamic_name'] = trim( $this->ft_gallery_rand_string( 10 ) );
+            // Create Dynamic Class Name.
+            $fts_dynamic_class_name = '';
+            if ( isset( $my_request['ft_gallery_dynamic_name'] ) ) {
+                $fts_dynamic_class_name = 'feed_dynamic_class_' . sanitize_text_field( wp_unslash( $my_request['ft_gallery_dynamic_name'] ) );
+            }
+        }
+        $ft_gallery_dynamic_string = trim( $this->ft_gallery_rand_string( 10 ) );
+
+        if ( ! empty( $option['ft_gallery_load_more_option'] ) && 'yes' === $option['ft_gallery_load_more_option'] ) {
+
+            $post_count = null !== $option['ft_gallery_photo_count'] ? $option['ft_gallery_photo_count'] : '999';
+
+        } elseif ( ! empty( $option['ft_gallery_show_true_pagination'] ) && 'yes' === $option['ft_gallery_show_true_pagination'] ) {
+            $post_count = null !== $option['ft_gallery_pagination_photo_count'] ? $option['ft_gallery_pagination_photo_count'] : '999';
+        } else {
+            $post_count = '9999';
+        }
+
+        $scroll_more = isset( $option['ft_gallery_load_more_style'] ) ? $option['ft_gallery_load_more_style'] : '';
+
+        $loadmore_btn_maxwidth = isset( $option['ft_gallery_loadmore_button_width'] ) ? $option['ft_gallery_loadmore_button_width'] : '';
+        $loadmore_btn_margin   = isset( $option['ft_gallery_loadmore_button_margin'] ) ? $option['ft_gallery_loadmore_button_margin'] : '';
+
+        $loadmore_btn_maxwidth = isset( $loadmore_btn_maxwidth ) ? $loadmore_btn_maxwidth : '350px';
+        $loadmore_btn_margin   = isset( $loadmore_btn_margin ) ? $loadmore_btn_margin : '10px';
+
+        $pagination_check = isset( $option['ft_gallery_show_pagination'] ) ? $option['ft_gallery_show_pagination'] : '';
+
+        $pagination = isset( $pagination_check ) ? esc_html( $pagination_check ) : 'yes';
+
+        // this is the image size in written format,ie* thumbnail, medium, large etc.
+        $title_description           = isset( $option['ft_gallery_photo_caption'] ) ? $option['ft_gallery_photo_caption'] : '';
+        $title_description_placement = isset( $option['ft_gallery_photo_caption_placement'] ) ? $option['ft_gallery_photo_caption_placement'] : 'show_top';
+        $stack_animation             = 'no';
+        $feed_name_rand_string       = 'ft_gallery_' . $this->ft_gallery_rand_string( 10 );
+        $padding                     = isset( $option['ft_gallery_padding'] ) ? $option['ft_gallery_padding'] : '';
+        if ( 'post' === $option['ft_gallery_type'] || 'gallery' === $option['ft_gallery_type'] ) {
+            $height = $option['ft_gallery_height'];
+        } else {
+            $height = '';
+        }
+        $mashup_margin               = 'auto';
+        $center_container            = 'yes';
+        $wrapper_margin              = isset( $option['ft_gallery_margin'] ) ? $option['ft_gallery_margin'] : '';
+        $space_between_photos        = isset( $option['ft_gallery_grid_space_between_posts'] ) ? $option['ft_gallery_grid_space_between_posts'] : '';
+        $background_color            = isset( $option['ft_gallery_feed_background_color'] ) ? $option['ft_gallery_feed_background_color'] : '';
+        $border_bottom_color         = isset( $option['ft_gallery_border_bottom_color'] ) ? $option['ft_gallery_border_bottom_color'] : '';
+        $background_color_grid_posts = isset( $option['ft_gallery_grid_posts_background_color'] ) ? $option['ft_gallery_grid_posts_background_color'] : '';
+
+        $image_size = isset( $option['ft_gallery_max_image_vid_width'] ) ? 'max-width:' . esc_html( $option['ft_gallery_max_image_vid_width'] ) . '' : '';
+
+        $ft_gallery_columns_masonry2 = null !== $option['ft_gallery_columns_masonry2'] ? esc_html( $option['ft_gallery_columns_masonry2'] ) : '';
+
+        if ( empty( $ft_gallery_columns_masonry2 ) ) {
+            $masonry_class = 'ftg-masonry-3-column';
+        } elseif ( '2' === $ft_gallery_columns_masonry2 ) {
+            $masonry_class = 'ftg-masonry-2-column';
+        } elseif ( '3' === $ft_gallery_columns_masonry2 ) {
+            $masonry_class = 'ftg-masonry-3-column';
+        } elseif ( '4' === $ft_gallery_columns_masonry2 ) {
+            $masonry_class = 'ftg-masonry-4-column';
+        } elseif ( '5' === $ft_gallery_columns_masonry2 ) {
+            $masonry_class = 'ftg-masonry-5-column';
+        } else {
+            // leaving this else for people who may already have had a size set, however when they resave on the page it will convert to the new method.
+            // I'm forcing this because in this time of mobile devices allowing people to set a size just ruins that experience. and creates more support.
+            $grid_width = isset( $option['ft_gallery_grid_column_width'] ) ? $option['ft_gallery_grid_column_width'] : '';
+        }
+
+        $ft_gallery_columns_masonry_margin = null !== $option['ft_gallery_columns_masonry_margin'] ? $option['ft_gallery_columns_masonry_margin'] : '';
+        // we leave a space before each class to separate it from the class ftg-masonry above.
+        if ( empty( $ft_gallery_columns_masonry_margin ) ) {
+            $masonry_margin = ' ftg-masonry-5px-margin';
+        } elseif ( '1' === $ft_gallery_columns_masonry_margin ) {
+            $masonry_margin = ' ftg-masonry-1px-margin';
+        } elseif ( '2' === $ft_gallery_columns_masonry_margin ) {
+            $masonry_margin = ' ftg-masonry-2px-margin';
+        } elseif ( '3' === $ft_gallery_columns_masonry_margin ) {
+            $masonry_margin = ' ftg-masonry-3px-margin';
+        } elseif ( '4' === $ft_gallery_columns_masonry_margin ) {
+            $masonry_margin = ' ftg-masonry-4px-margin';
+        } elseif ( '5' === $ft_gallery_columns_masonry_margin ) {
+            $masonry_margin = ' ftg-masonry-5px-margin';
+        } elseif ( '10' === $ft_gallery_columns_masonry_margin ) {
+            $masonry_margin = ' ftg-masonry-10px-margin';
+        } elseif ( '15' === $ft_gallery_columns_masonry_margin ) {
+            $masonry_margin = ' ftg-masonry-15px-margin';
+        } elseif ( '20' === $ft_gallery_columns_masonry_margin ) {
+            $masonry_margin = ' ftg-masonry-20px-margin';
+        }
+
+        $feed_width = isset( $option['ft_gallery_width'] ) ? $option['ft_gallery_width'] : '';
+
+        // We use this to activate the watermark options, so they are turned off by default.
+        $ft_gallery_watermark_enable_options = isset( $option['ft_gallery_watermark_enable_options'] ) ? $option['ft_gallery_watermark_enable_options'] : '';
+
+        // Watermark Type.
+        // 2 options: Watermark Overlay Image (Does not Imprint logo on Image) = overlay / Watermark Image (Imprint logo on the selected image sizes) = imprint.
+        $watermark = isset( $option['ft_gallery_watermark'] ) ? $option['ft_gallery_watermark'] : '';
+
+        // 3 options: watermark in popup = popup-only / Watermark for image on page and popup = page-and-popup / Watermark for image on page = page-only.
+        $watermark_overlay_enable = isset( $option['ft_gallery_watermark_overlay_enable'] ) ? $option['ft_gallery_watermark_overlay_enable'] : '';
+
+        $watermark_image_position      = isset( $option['ft_gallery_position'] ) ? $option['ft_gallery_position'] : '';
+        $watermark_image_margin        = isset( $option['ft_watermark_image_margin'] ) ? $option['ft_watermark_image_margin'] : '';
+        $watermark_image_url           = isset( $option['ft_watermark_image_input'] ) ? $option['ft_watermark_image_input'] : '';
+        $watermark_image_opacity       = isset( $option['ft_watermark_image_opacity'] ) ? $option['ft_watermark_image_opacity'] : '';
+        $watermark_right_click_disable = isset( $option['ft_gallery_watermark_disable_right_click'] ) ? $option['ft_gallery_watermark_disable_right_click'] : '';
+
+        // Option to disable the right click to inspect element on page so people can't just steal image easily.
+        if ( isset( $watermark_right_click_disable ) && 'yes' === $watermark_right_click_disable ) {
+            ?>
+            <script>
+                jQuery(document).bind("contextmenu", function (event) {
+                    event.preventDefault();
+                });
+                // window.ondragstart = function() { return false; }
+                jQuery(document).ready(function () {
+                    jQuery('img').on('dragstart', function (event) {
+                        event.preventDefault();
+                    });
+                });
+            </script>
+            <?php
+        }
+
+        $edit_url = get_admin_url() . 'post.php?post=' . $ftg['id'] . '&action=edit';
+        $popup    = isset( $option['ft_gallery_popup'] ) ? $option['ft_gallery_popup'] : '';
+
+        if ( isset( $popup ) && 'yes' === $popup ) {
+
+            // it's ok if these styles & scripts load at the bottom of the page.
+            $fts_fix_magnific = get_option( 'ft_gallery_fix_magnific' ) ? get_option( 'ft_gallery_fix_magnific' ) : '';
+            if ( isset( $fts_fix_magnific ) && '1' !== $fts_fix_magnific ) {
+                wp_enqueue_style( 'ft-gallery-popup', plugins_url( 'feed-them-gallery/includes/feeds/css/magnific-popup.css' ), array(), FTG_CURRENT_VERSION );
+            }
+            if ( ! is_plugin_active( 'feed-them-premium/feed-them-premium.php' ) ) {
+                // run our magnific popup.js in fts instead of double loading.
+                wp_enqueue_script( 'ft-gallery-popup-js', plugins_url( 'feed-them-gallery/includes/feeds/js/magnific-popup.js' ), array(), FTG_CURRENT_VERSION, true );
+            }
+            // here is the click function for our custom popup.
+            wp_enqueue_script( 'ft-gallery-popup-click-js', plugins_url( 'feed-them-gallery/includes/feeds/js/magnific-popup-click.js' ), array(), FTG_CURRENT_VERSION, true );
+        }
+
+        $hide_icon                              = isset( $option['ft_gallery_wp_icon'] ) ? $option['ft_gallery_wp_icon'] : '';
+        $hide_date                              = isset( $option['ft_gallery_wp_date'] ) ? $option['ft_gallery_wp_date'] : '';
+        $show_share                             = isset( $option['ft_gallery_wp_share'] ) ? $option['ft_gallery_wp_share'] : '';
+        $show_purchase_link                     = isset( $option['ft_gallery_purchase_link'] ) ? $option['ft_gallery_purchase_link'] : '';
+        $hide_add_to_cart                       = isset( $option['ft_gallery_hide_add_to_cart'] ) ? $option['ft_gallery_hide_add_to_cart'] : 'no';
+        $ft_gallery_show_add_to_cart_over_image = isset( $option['ft_gallery_show_add_to_cart_over_image'] ) ? $option['ft_gallery_show_add_to_cart_over_image'] : '';
+        $respnsive_gallery_cart_position        = isset( $option['ft_gallery_position_add_to_cart_over_image'] ) ? $option['ft_gallery_position_add_to_cart_over_image'] : 'bottom-right';
+
+        if ( isset( $option['ft_gallery_purchase_word'] ) && null !== $option['ft_gallery_purchase_word'] ) {
+            $purchase_text = isset( $option['ft_gallery_purchase_word'] ) ? $option['ft_gallery_purchase_word'] : '';
+        } else {
+            $purchase_text = 'Purchase';
+        }
+
+        $username      = isset( $option['ft_gallery_username'] ) && null !== $option['ft_gallery_username'] ? $option['ft_gallery_username'] : '';
+        $username_link = isset( $option['ft_gallery_user_link'] ) && null !== $option['ft_gallery_user_link'] ? $option['ft_gallery_user_link'] : 'javacript:;';
+        // link target options are: _blank, _self.
+        $link_target = '_blank';
+        ob_start();
+        if ( ! isset( $_GET['load_more_ajaxing'] ) && isset( $title ) ) {
+            ?>
+            <div class="ft-gallery-main-title"><?php print esc_html( $title ); ?></div>
+            <?php
+        }
+
+        if ( ! isset( $_GET['load_more_ajaxing'] ) && isset( $option['ft_gallery_show_page_tags'] ) && 'above_images' === $option['ft_gallery_show_page_tags'] && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
+            $ftg_tags = new image_and_gallery_tags_class();
+            echo wp_kses(
+                $ftg_tags->ft_gallery_tags( $ftg['id'], null, 'page' ),
+                array(
+                    'a'    => array(
+                        'href'  => array(),
+                        'title' => array(),
+                    ),
+                    'span' => array(
+                        'class' => array(),
+                        'title' => array(),
+                    ),
+                    'div'  => array(
+                        'class' => array(),
+                        'title' => array(),
+                    ),
+                )
+            );
+        }
+
+        $ftg_sorting_options               = null !== $option['ftg_sorting_options'] && 'yes' === $option['ftg_sorting_options'] ? $option['ftg_sorting_options'] : '';
+        $ft_gallery_pagination_photo_count = null !== $option['ft_gallery_pagination_photo_count'] ? $option['ft_gallery_pagination_photo_count'] : '50';
+        $ftg_loadmore_option               = null !== $option['ft_gallery_load_more_option'] && 'yes' === $option['ft_gallery_load_more_option'] ? $option['ft_gallery_load_more_option'] : '';
+        $ftg_photo_count                   = null !== $option['ft_gallery_photo_count'] ? $option['ft_gallery_photo_count'] : '50';
+        $ft_gallery_show_true_pagination   = null !== $option['ft_gallery_show_true_pagination'] && 'yes' === $option['ft_gallery_show_true_pagination'] ? $option['ft_gallery_show_true_pagination'] : '';
+
+        if ( isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] || isset( $_GET['ftg-tags'] ) && 'page' === $_GET['type'] ) {
+
+            $orderby_set = '' !== $option['ftg_sort_type'] ? $option['ftg_sort_type'] : 'date';
+            $orderby     = isset( $_GET['orderby'] ) ? sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) : $orderby_set;
+            if ( isset( $_GET['orderby'] ) && 'menu_order' === $_GET['orderby'] || 'menu_order' === $orderby_set && empty( $_GET['orderby'] ) || 'title' === $orderby_set && empty( $_GET['orderby'] ) || isset( $_GET['orderby'] ) && 'title' === $_GET['orderby'] ) {
+                $order = 'asc';
+            } else {
+                $order = 'desc';
+            }
+
+            $count_per_page = $post_count;
+            if ( 'yes' === $ft_gallery_show_true_pagination || ! empty( $_GET['ftg-tags'] ) ) {
+                $paged = get_query_var( 'page' ) ? get_query_var( 'page' ) : 1;
+                // After that, calculate the offset.
+                $offset = ( $paged - 1 ) * $count_per_page;
+            } else {
+                // This is for the loadmore button, so we use the paged option instead of the offset option which we can't use in this method.
+                $paged  = $ftg['offset'];
+                $offset = '';
+            }
+            // A list of ids that are in this album so we can display them.
+            $image_list_check = $album_gallery_ids;
+
+            if ( ! empty( $_GET['ftg-tags'] ) ) {
+
+                $image_list = get_posts(
+                    array(
+                        'posts_per_page' => esc_html( $count_per_page ),
+                        'post_type'      => 'ft_gallery',
+                        'tax_query'      => array(
+                            array(
+                                'taxonomy' => 'ftg-tags',
+                                'field'    => 'slug',
+                                'terms'    => array( sanitize_text_field( wp_unslash( $_GET['ftg-tags'] ) ) ),
+                                'operator' => 'IN',
+                            ),
+                        ),
+                        'orderby'        => esc_html( $orderby ),
+                        'order'          => esc_html( $order ),
+                        'paged'          => esc_html( $paged ),
+                        'offset'         => $offset,
+                    )
+                );
+
+                // For Albums: we run this a second time so we can count all the posts and pass the value to the pagination for tags only.
+                // the reason being is we are unsure of a way to tell the difference between page tags and image tags.
+                $ftg_gallery_count_for_tags = get_posts(
+                    array(
+                        'posts_per_page' => '-1',
+                        'post_type'      => 'ft_gallery',
+                        'tax_query'      => array(
+                            array(
+                                'taxonomy' => 'ftg-tags',
+                                'field'    => 'slug',
+                                'terms'    => array( sanitize_text_field( wp_unslash( $_GET['ftg-tags'] ) ) ),
+                                'operator' => 'IN',
+                            ),
+                        ),
+                    )
+                );
+                $toal_count_for_tags        = isset( $ftg_gallery_count_for_tags ) ? count( $ftg_gallery_count_for_tags ) : '';
+
+            } else {
+                $image_list = get_posts(
+                    array(
+                        'posts_per_page' => esc_html( $count_per_page ),
+                        'post__in'       => $this->albums_gallery_list_of_ids( $image_list_check ),
+                        'post_type'      => 'ft_gallery',
+                        'orderby'        => esc_html( $orderby ),
+                        'order'          => esc_html( $order ),
+                        'paged'          => esc_html( $paged ),
+                        'offset'         => $offset,
+                    )
+                );
+            }
+
+            // $image_list = get_posts('numberposts=2&include=559,117,129&post_type=ft_gallery');
+            // Return test
+            // $getpost_attr['post_type'] = 'ft_gallery'; $getpost_attr['include'] = $this->albums_gallery_list_of_ids($image_list_check);
+            // $getpost_attr['posts_per_page'] = esc_html( $post_count ); $getpost_attr['orderby'] = esc_html( $orderby );
+            // $getpost_attr['order'] = esc_html( $order );
+            // $getpost_attr['paged'] = esc_html( $paged );
+            // echo '<pre>';
+            // print_r($getpost_attr);
+            // echo '</pre>';
+            // echo '<pre>';
+            // print_r($image_list);
+            // echo '</pre>'; .
+        } else {
+
+
+
+
+            $orderby_set = null !== $option['ftg_sort_type'] ? $option['ftg_sort_type'] : 'menu_order';
+            $orderby     = isset( $_GET['orderby'] ) ? sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) : $orderby_set;
+            if ( isset( $_GET['orderby'] ) && 'menu_order' === $_GET['orderby'] || 'menu_order' === $orderby_set && empty( $_GET['orderby'] ) || 'title' === $orderby_set && empty( $_GET['orderby'] ) || isset( $_GET['orderby'] ) && 'title' === $_GET['orderby'] ) {
+                $order = 'asc';
+            } else {
+                $order = 'desc';
+            }
+
+            if ( 'yes' === $ft_gallery_show_true_pagination ) {
+                $paged  = get_query_var( 'page' ) ? get_query_var( 'page' ) : 1;
+                $offset = ( $paged - 1 ) * $post_count;
+            } else {
+                $paged  = $ftg['offset'];
+                $offset = '';
+            }
+
+            if ( ! empty( $_GET['ftg-tags'] ) ) {
+
+                // echo '<pre>';
+                // print_r($image_list);
+                // echo '</pre>'; .
+                $image_list = get_posts(
+                    array(
+                        'post_type'      => 'attachment',
+                        'post_mime_type' => 'image',
+                        'tax_query'      => array(
+                            array(
+                                'taxonomy' => 'ftg-tags',
+                                'field'    => 'slug',
+                                'terms'    => array( sanitize_text_field( wp_unslash( $_GET['ftg-tags'] ) ) ),
+                                'operator' => 'IN',
+                            ),
+                        ),
+                        'posts_per_page' => esc_html( $post_count ),
+                        'orderby'        => esc_html( $orderby ),
+                        'order'          => esc_html( $order ),
+                        'offset'         => $offset,
+                    )
+                );
+
+                // we run this a second time so we can count all the posts and pass the value to the pagination for tags only.
+                // the reason being is we are unsure of a way to tell the difference between page tags and image tags.
+                $ftg_image_count_for_tags = get_posts(
+                    array(
+                        'post_type'      => 'attachment',
+                        'post_mime_type' => 'image',
+                        'tax_query'      => array(
+                            array(
+                                'taxonomy' => 'ftg-tags',
+                                'field'    => 'slug',
+                                'terms'    => array( sanitize_text_field( wp_unslash( $_GET['ftg-tags'] ) ) ),
+                                'operator' => 'IN',
+                            ),
+                        ),
+                        'posts_per_page' => '-1',
+                    )
+                );
+                $toal_count_for_tags      = isset( $ftg_image_count_for_tags ) ? count( $ftg_image_count_for_tags ) : '';
+
+            } else {
+                $image_list = get_posts(
+                    array(
+                        'post_parent'    => $ftg['id'],
+                        'post_type'      => 'attachment',
+                        'post_mime_type' => 'image',
+                        'posts_per_page' => esc_html( $post_count ),
+                        'orderby'        => esc_html( $orderby ),
+                        'order'          => esc_html( $order ),
+                        'paged'          => esc_html( $paged ),
+                        'offset'         => $offset,
+                    )
+                );
+            }
+        }
+        //  echo '<pre>';
+        // print_r($image_list));
+        //  echo '</pre>';
+
+        // This is related to the tags search select option.
+        // Since we do not seperate the tags between pages and images we use count to see if the numbers are off
+        // if the numbers are off then we show a message suggesting they view the gallery tag instead. Same with the second statement below.
+        if( isset( $_GET['ftg-tags'], $_GET['count'] ) && $_GET['count'] > $toal_count_for_tags ) {
+
+            if('image' === $_GET['type']){
+                $page_type = 'Galleries';
+                $url_page_type = 'page';
+            }
+            else {
+                $page_type = 'Images';
+                $url_page_type = 'image';
+            }
+            echo '<div class="ftg-no-image-tag-wrap">';
+
+            $the_count = isset( $_GET['count'] ) ? '&count=' . $_GET['count'] : '';
+
+            echo sprintf(esc_html__('To also view %4$s tagged with %3$s %1$sclick here%2$s.', 'feed-them-gallery'),
+                '<a href="'.esc_url( get_site_url() .'?type='. esc_attr( $url_page_type ) .'&ftg-tags='.sanitize_text_field( wp_unslash( $_GET['ftg-tags'] . $the_count ) ) ).'">',
+                '</a>',
+                sanitize_text_field( wp_unslash( $_GET['ftg-tags'] ) ),
+                $page_type
+            );
+            echo '</div>';
+        }
+        // This is also related to the tags search select option.
+        // So if no image tags are found in our search, since we are assuming more people might be tagging image than galleries, we show a message
+        // to let the user know they can click the link to search for that tag in the gallery search of our page instead of the image search
+        if( is_array( $image_list ) && !isset( $image_list[0] ) && isset( $_GET['type'] ) && 'image' === $_GET['type'] ) {
+            echo '<div class="ftg-no-image-tag-wrap">';
+            echo sprintf(esc_html__('No Image tags found. To view the Gallery tag of %3$s instead %1$sclick here%2$s.', 'feed-them-gallery'),
+                '<a href="'.esc_url( get_site_url() .'?type=page&ftg-tags='.sanitize_text_field( wp_unslash( $_GET['ftg-tags'] ) ) ).'">',
+                '</a>',
+                sanitize_text_field( wp_unslash( $_GET['ftg-tags'] ) )
+            );
+            echo '</div>';
+        }
 
         if(is_array( $image_list ) && isset( $image_list[0] )){
             // echo '<pre>';
@@ -1805,7 +1805,7 @@ class Display_Gallery {
                         if ( 'post-in-grid' === $format_type || 'gallery-collage' === $format_type ) {
                             echo isset( $grid_width ) ? 'width:' . esc_attr( $grid_width ) . ';' : '';
                             ?>
-                            margin:<?php print esc_attr( $masonry_margin ); ?>;
+                                margin:<?php print esc_attr( $masonry_margin ); ?>;
                             <?php
                         }
                         print esc_attr( $background_color_grid_posts . $padding . $border_bottom_color );
@@ -1816,8 +1816,8 @@ class Display_Gallery {
 
 
 
-                        <?php if ( 'show_top' === $title_description_placement ) { ?>
-                            <div class="ft-text-for-popup" style="
+                            <?php if ( 'show_top' === $title_description_placement ) { ?>
+                                <div class="ft-text-for-popup" style="
                                 <?php
                                 if ( isset( $hide_icon, $username, $hide_date, $title_description ) && 'no' === $hide_icon && 'none' === $username && 'no' === $hide_date && 'none' === $title_description || 'gallery-collage' === $format_type ) {
                                     ?>
@@ -1861,41 +1861,41 @@ class Display_Gallery {
                                                         )
                                                     );
                                                     ?>
-                                                    </p>
-                                                    <?php
-    }
+                                                </p>
+                                                <?php
+                                            }
 
-    if ( empty( $ftg['is_album'] ) || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET['type'] ) {
-        // Image Tags.
-        if ( 'yes' === $option['ft_gallery_show_tags'] && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
-            $ftg_tags = new image_and_gallery_tags_class();
-            echo wp_kses(
-                $ftg_tags->ft_gallery_tags( $image['id'], $ftg['id'], 'image' ),
-                array(
-                    'a'    => array(
-                        'href'  => array(),
-                        'title' => array(),
-                    ),
-                    'span' => array(
-                        'class' => array(),
-                        'title' => array(),
-                    ),
-                    'div'  => array(
-                        'class' => array(),
-                        'title' => array(),
-                    ),
-                )
-            );
-        }
-    }
+                                            if ( empty( $ftg['is_album'] ) || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET['type'] ) {
+                                                // Image Tags.
+                                                if ( 'yes' === $option['ft_gallery_show_tags'] && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
+                                                    $ftg_tags = new image_and_gallery_tags_class();
+                                                    echo wp_kses(
+                                                        $ftg_tags->ft_gallery_tags( $image['id'], $ftg['id'], 'image' ),
+                                                        array(
+                                                            'a'    => array(
+                                                                'href'  => array(),
+                                                                'title' => array(),
+                                                            ),
+                                                            'span' => array(
+                                                                'class' => array(),
+                                                                'title' => array(),
+                                                            ),
+                                                            'div'  => array(
+                                                                'class' => array(),
+                                                                'title' => array(),
+                                                            ),
+                                                        )
+                                                    );
+                                                }
+                                            }
 
-    ?>
-                                            </div>
+                                            ?>
+                                        </div>
 
 
                                     </div>
-                            </div>
-                        <?php } ?>
+                                </div>
+                            <?php } ?>
 
                             <div class="fts-mashup-image-and-video-wrap"
                                 <?php
@@ -1958,110 +1958,110 @@ class Display_Gallery {
 
 
                             <?php if ( 'show_bottom' === $title_description_placement ) { ?>
-                            <div class="ft-text-bottom">
-                                <div class="ft-text-for-popup" style="
-                                <?php
-                                if ( isset( $hide_icon, $username, $hide_date, $title_description ) && 'no' === $hide_icon && 'none' === $username && 'no' === $hide_date && 'none' === $title_description || 'gallery-collage' === $format_type ) {
-                                    ?>
-                                        display:none !important;<?php } ?>">
-                                    <div class="ft-text-for-popup-content">
-                                        <?php if ( isset( $hide_icon ) && 'yes' === $hide_icon && empty( $_GET['ftg-tags'] ) ) { ?>
-                                            <div class="ft-gallery-icon-wrap-right fts-mashup-wp_gallery-icon ft-wp-gallery-icon">
-                                                <a href="<?php print esc_url( $username_link ); ?>"
-                                                   target="<?php print esc_attr( $link_target ); ?>"></a>
-                                            </div>
-                                        <?php } ?>
-                                        <?php if ( isset( $username ) && 'none' !== $username ) { ?>
-                                            <span class="ft-gallery-fb-user-name">
+                                <div class="ft-text-bottom">
+                                    <div class="ft-text-for-popup" style="
+                                    <?php
+                                    if ( isset( $hide_icon, $username, $hide_date, $title_description ) && 'no' === $hide_icon && 'none' === $username && 'no' === $hide_date && 'none' === $title_description || 'gallery-collage' === $format_type ) {
+                                        ?>
+                                            display:none !important;<?php } ?>">
+                                        <div class="ft-text-for-popup-content">
+                                            <?php if ( isset( $hide_icon ) && 'yes' === $hide_icon && empty( $_GET['ftg-tags'] ) ) { ?>
+                                                <div class="ft-gallery-icon-wrap-right fts-mashup-wp_gallery-icon ft-wp-gallery-icon">
+                                                    <a href="<?php print esc_url( $username_link ); ?>"
+                                                       target="<?php print esc_attr( $link_target ); ?>"></a>
+                                                </div>
+                                            <?php } ?>
+                                            <?php if ( isset( $username ) && 'none' !== $username ) { ?>
+                                                <span class="ft-gallery-fb-user-name">
                                             <?php
                                             if ( empty( $_GET['ftg-tags'] ) ) {
                                                 ?>
                                                 <a href="<?php print esc_url( $username_link ); ?>"
                                                    target="<?php print esc_attr( $link_target ); ?>"><?php print esc_html( $username ); ?></a><?php } ?></span>
-                                        <?php } ?>
-                                        <?php if ( isset( $hide_date ) && 'yes' === $hide_date ) { ?>
-                                            <span class="ft-gallery-post-time"><?php print esc_html( $ftg_final_date ); ?></span>
-                                        <?php } ?>
+                                            <?php } ?>
+                                            <?php if ( isset( $hide_date ) && 'yes' === $hide_date ) { ?>
+                                                <span class="ft-gallery-post-time"><?php print esc_html( $ftg_final_date ); ?></span>
+                                            <?php } ?>
 
-                                        <div class="ft-gallery-description-wrap">
-                                            <?php if ( 'title' === $title_description || 'title_description' === $title_description ) { ?>
-                                                <p><strong class="ftg-title-wrap"><?php print esc_html( $img_title ); ?></strong>
-                                                </p><?php } ?><?php if ( 'description' === $title_description || 'title_description' === $title_description ) { ?>
-                                                <p>
+                                            <div class="ft-gallery-description-wrap">
+                                                <?php if ( 'title' === $title_description || 'title_description' === $title_description ) { ?>
+                                                    <p><strong class="ftg-title-wrap"><?php print esc_html( $img_title ); ?></strong>
+                                                    </p><?php } ?><?php if ( 'description' === $title_description || 'title_description' === $title_description ) { ?>
+                                                    <p>
+                                                        <?php
+                                                        print wp_kses(
+                                                            nl2br( $image_description ),
+                                                            array(
+                                                                'a'  => array(
+                                                                    'href' => array(),
+                                                                    'title' => array(),
+                                                                ),
+                                                                'br' => array(),
+                                                                'em' => array(),
+                                                                'strong' => array(),
+                                                                'small' => array(),
+                                                            )
+                                                        );
+                                                        ?>
+                                                    </p>
                                                     <?php
-                                                    print wp_kses(
-                                                        nl2br( $image_description ),
-                                                        array(
-                                                            'a'  => array(
-                                                                'href' => array(),
-                                                                'title' => array(),
-                                                            ),
-                                                            'br' => array(),
-                                                            'em' => array(),
-                                                            'strong' => array(),
-                                                            'small' => array(),
-                                                        )
-                                                    );
-                                                    ?>
-                                                </p>
-                                                    <?php
-    }
+                                                }
 
-    if ( empty( $ftg['is_album'] ) || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET['type'] ) {
-        // Image Tags.
-        if ( 'yes' === $option['ft_gallery_show_tags'] && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
-            $ftg_tags = new image_and_gallery_tags_class();
-            echo wp_kses(
-                $ftg_tags->ft_gallery_tags( $image['id'], $ftg['id'], 'image' ),
-                array(
-                    'a'    => array(
-                        'href'  => array(),
-                        'title' => array(),
-                    ),
-                    'span' => array(
-                        'class' => array(),
-                        'title' => array(),
-                    ),
-                    'div'  => array(
-                        'class' => array(),
-                        'title' => array(),
-                    ),
-                )
-            );
-        }
-    }
+                                                if ( empty( $ftg['is_album'] ) || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET['type'] ) {
+                                                    // Image Tags.
+                                                    if ( 'yes' === $option['ft_gallery_show_tags'] && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
+                                                        $ftg_tags = new image_and_gallery_tags_class();
+                                                        echo wp_kses(
+                                                            $ftg_tags->ft_gallery_tags( $image['id'], $ftg['id'], 'image' ),
+                                                            array(
+                                                                'a'    => array(
+                                                                    'href'  => array(),
+                                                                    'title' => array(),
+                                                                ),
+                                                                'span' => array(
+                                                                    'class' => array(),
+                                                                    'title' => array(),
+                                                                ),
+                                                                'div'  => array(
+                                                                    'class' => array(),
+                                                                    'title' => array(),
+                                                                ),
+                                                            )
+                                                        );
+                                                    }
+                                                }
 
-    ?>
+                                                ?>
+                                            </div>
+
+
                                         </div>
-
-
                                     </div>
                                 </div>
-                            </div>
                                 <?php
-    }
+                            }
 
-    if ( isset( $ftg['is_album'] ) && 'yes' !== $ftg['is_album'] || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET['type'] ) {
+                            if ( isset( $ftg['is_album'] ) && 'yes' !== $ftg['is_album'] && !isset( $_GET['ftg-tags'] ) && 'page' !== $_GET['type'] || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET['type'] ) {
 
-        if ( 'yes' !== $hide_add_to_cart ) {
+                                if ( 'yes' !== $hide_add_to_cart ) {
 
-            print ' <div class="ftg-varation-for-popup">';
-            if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && empty( $ftg['is_album'] ) ) {
+                                    print ' <div class="ftg-varation-for-popup">';
+                                    if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && empty( $ftg['is_album'] ) ) {
 
-                // Get $product object from product ID.
-                $this->ftg_variable_add_to_cart( $product_id );
-            }
-            print '</div>';
+                                        // Get $product object from product ID.
+                                        $this->ftg_variable_add_to_cart( $product_id );
+                                    }
+                                    print '</div>';
 
-        }
+                                }
 
-        $free_image_size = isset( $option['ftg_free_download_size'] ) ? $option['ftg_free_download_size'] : '';
-        if ( 'yes' === $show_share || is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && 'yes' === $show_purchase_link && empty( $ftg['is_album'] ) ) {
-            ?>
+                                $free_image_size = isset( $option['ftg_free_download_size'] ) ? $option['ftg_free_download_size'] : '';
+                                if ( 'yes' === $show_share || is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && 'yes' === $show_purchase_link && empty( $ftg['is_album'] ) ) {
+                                    ?>
 
                                     <div class="fts-mashup-count-wrap">
 
-                <?php if ( 'yes' === $show_share ) { ?>
+                                        <?php if ( 'yes' === $show_share ) { ?>
                                             <div class="fts-share-wrap">
                                                 <a href="javascript:;" class="ft-gallery-link-popup"></a>
                                                 <div class='ft-gallery-share-wrap'>
@@ -2085,59 +2085,59 @@ class Display_Gallery {
                                         <?php } ?>
 
                                         <div class="ft-gallery-cta-button-wrap">
-                    <?php
-                    if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && 'yes' === $show_purchase_link ) {
+                                            <?php
+                                            if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && 'yes' === $show_purchase_link ) {
 
-                        // Check to see if we are working with a variable product and if so make the purchase link go to cart.
-                        $product = wc_get_product( $product_id );
+                                                // Check to see if we are working with a variable product and if so make the purchase link go to cart.
+                                                $product = wc_get_product( $product_id );
 
-                        $ft_gallery_cart_page_name = get_option( 'ft_gallery_cart_page_name' ) ? get_option( 'ft_gallery_cart_page_name' ) : 'cart';
+                                                $ft_gallery_cart_page_name = get_option( 'ft_gallery_cart_page_name' ) ? get_option( 'ft_gallery_cart_page_name' ) : 'cart';
 
-                        if ( 'variable' === $product->get_type( 'variable' ) ) {
-                            $purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name;
-                        } else {
-                            if ( 'prod_page' === $purchase_link_option ) {
-                                $purchase_link = '' . $siteurl . '/product/?p=' . $product_id . '';
-                            } elseif ( 'add_cart' === $purchase_link_option ) {
-                                $purchase_link = '' . $siteurl . '/?add-to-cart=' . $product_id . '';
-                            } elseif ( 'add_cart_checkout' === $purchase_link_option ) {
-                                $purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name . '/?add-to-cart=' . $product_id . '';
-                            } elseif ( 'cart_checkout' === $purchase_link_option ) {
-                                $purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name;
-                            } else {
-                                $purchase_link = '' . $siteurl . '/product/?p=' . $product_id . '';
-                            }
-                        }
+                                                if ( 'variable' === $product->get_type( 'variable' ) ) {
+                                                    $purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name;
+                                                } else {
+                                                    if ( 'prod_page' === $purchase_link_option ) {
+                                                        $purchase_link = '' . $siteurl . '/product/?p=' . $product_id . '';
+                                                    } elseif ( 'add_cart' === $purchase_link_option ) {
+                                                        $purchase_link = '' . $siteurl . '/?add-to-cart=' . $product_id . '';
+                                                    } elseif ( 'add_cart_checkout' === $purchase_link_option ) {
+                                                        $purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name . '/?add-to-cart=' . $product_id . '';
+                                                    } elseif ( 'cart_checkout' === $purchase_link_option ) {
+                                                        $purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name;
+                                                    } else {
+                                                        $purchase_link = '' . $siteurl . '/product/?p=' . $product_id . '';
+                                                    }
+                                                }
 
-                        // If Image already has product meta check the product still exists.
-                        if ( ! empty( $product_id ) && empty( $ftg['is_album'] ) ) {
-                            $product_exist = $gallery_to_woo->ft_gallery_create_woo_prod_exists_check( $product_id );
-                            if ( $product_exist ) {
-                                echo '<a class="ft-gallery-buy-now ft-gallery-link-popup-master" href="' . esc_url( $purchase_link ) . '" ">' . esc_html( $purchase_text ) . '</a>';
-                            }
-                        }
-                    } // end if woo active and product ID set.
+                                                // If Image already has product meta check the product still exists.
+                                                if ( ! empty( $product_id ) && empty( $ftg['is_album'] ) ) {
+                                                    $product_exist = $gallery_to_woo->ft_gallery_create_woo_prod_exists_check( $product_id );
+                                                    if ( $product_exist ) {
+                                                        echo '<a class="ft-gallery-buy-now ft-gallery-link-popup-master" href="' . esc_url( $purchase_link ) . '" ">' . esc_html( $purchase_text ) . '</a>';
+                                                    }
+                                                }
+                                            } // end if woo active and product ID set.
 
-                    if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && ! empty( $free_image_size ) && 'Choose an option' !== $free_image_size ) {
+                                            if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && ! empty( $free_image_size ) && 'Choose an option' !== $free_image_size ) {
 
-                        // this is the image size in written format,ie* thumbnail, medium, large etc.
-                        $item_page_free           = explode( ' ', $free_image_size );
-                        $free_image_url           = wp_get_attachment_image_src( $image['id'], $item_page_free[0], false );
-                        $free_image_download_text = ! empty( $option['ft_gallery_free_download_text'] ) ? $option['ft_gallery_free_download_text'] : '';
+                                                // this is the image size in written format,ie* thumbnail, medium, large etc.
+                                                $item_page_free           = explode( ' ', $free_image_size );
+                                                $free_image_url           = wp_get_attachment_image_src( $image['id'], $item_page_free[0], false );
+                                                $free_image_download_text = ! empty( $option['ft_gallery_free_download_text'] ) ? $option['ft_gallery_free_download_text'] : '';
 
-                        print '<a href="' . esc_url( $free_image_url[0] ) . '" download title="" class="ft-gallery-download noLightbox">' . esc_html( $free_image_download_text ) . '</a>';
-                    }
-                    ?>
+                                                print '<a href="' . esc_url( $free_image_url[0] ) . '" download title="" class="ft-gallery-download noLightbox">' . esc_html( $free_image_download_text ) . '</a>';
+                                            }
+                                            ?>
                                         </div>
 
                                     </div>
 
                                     <div class="clear"></div>
-            <?php
-        }
-    }
+                                    <?php
+                                }
+                            }
 
-    ?>
+                            ?>
                         </div>
                         <?php
                     } elseif ( 'gallery' === $format_type ) {
@@ -2149,9 +2149,9 @@ class Display_Gallery {
                             <?php
                             if ( isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] || isset( $_GET['ftg-tags'] ) && 'page' === $_GET['type'] ) {
                                 ?>
-                            <a href="<?php print esc_url( $image_source_popup ); ?>"
-                               class="ft-gallery-link-popup-master"
-                               style="position: relative; overflow: hidden;"></a>
+                                <a href="<?php print esc_url( $image_source_popup ); ?>"
+                                   class="ft-gallery-link-popup-master"
+                                   style="position: relative; overflow: hidden;"></a>
 
                                 <div class="ft-album-contents"><a href="<?php print esc_url( $gallery_post_link ); ?>"
                                                                   title='<?php print esc_attr( $ft_gallery_alt_text ); ?>'
@@ -2210,8 +2210,8 @@ class Display_Gallery {
                             // refers to tags... ! isset( $_GET['type'] ) && 'page' !== $_GET['type'].
                             if ( isset( $popup ) && 'yes' === $popup ) {
 
-                                if ( 'page' !== $ftg_page_tags_check ) {
-                                    ?>
+                            if ( 'page' !== $ftg_page_tags_check ) {
+                            ?>
                             <div class='slicker-instaG-backg-link'>
                                 <div class="ft-text-for-popup">
                                     <div class="ft-text-for-popup-content">
@@ -2251,36 +2251,36 @@ class Display_Gallery {
                                                         )
                                                     );
                                                     ?>
-                                                    </p>
-                                                    <?php
-    }
-    if ( empty( $ftg['is_album'] ) || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET['type'] ) {
+                                                </p>
+                                                <?php
+                                            }
+                                            if ( empty( $ftg['is_album'] ) || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET['type'] ) {
 
-        // Image Tags.
-        if ( 'yes' === $option['ft_gallery_show_tags'] && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
-            $ftg_tags = new image_and_gallery_tags_class();
+                                                // Image Tags.
+                                                if ( 'yes' === $option['ft_gallery_show_tags'] && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
+                                                    $ftg_tags = new image_and_gallery_tags_class();
 
-            echo wp_kses(
-                $ftg_tags->ft_gallery_tags( $image['id'], $ftg['id'], 'image' ),
-                array(
-                    'a'    => array(
-                        'href'  => array(),
-                        'title' => array(),
-                    ),
-                    'span' => array(
-                        'class' => array(),
-                        'title' => array(),
-                    ),
-                    'div'  => array(
-                        'class' => array(),
-                        'title' => array(),
-                    ),
-                )
-            );
-        }
-    }
+                                                    echo wp_kses(
+                                                        $ftg_tags->ft_gallery_tags( $image['id'], $ftg['id'], 'image' ),
+                                                        array(
+                                                            'a'    => array(
+                                                                'href'  => array(),
+                                                                'title' => array(),
+                                                            ),
+                                                            'span' => array(
+                                                                'class' => array(),
+                                                                'title' => array(),
+                                                            ),
+                                                            'div'  => array(
+                                                                'class' => array(),
+                                                                'title' => array(),
+                                                            ),
+                                                        )
+                                                    );
+                                                }
+                                            }
 
-    ?>
+                                            ?>
                                         </div>
                                     </div>
                                 </div>
@@ -2288,10 +2288,10 @@ class Display_Gallery {
                             <a href="<?php print esc_url( $image_source_popup ); ?>"
                                title='<?php print esc_attr( $ft_gallery_alt_text ); ?>'
                                class="ft-gallery-link-popup-master ft-gallery-link-popup-click-action ft-view-photo">
-                                    <?php
+                                <?php
                                 }
-                            }
-                            ?>
+                                }
+                                ?>
                                 <?php
                                 if ( isset( $ft_gallery_watermark_enable_options, $watermark ) && 'yes' === $ft_gallery_watermark_enable_options && 'overlay' === $watermark ) {
                                     ?>
@@ -2321,26 +2321,26 @@ class Display_Gallery {
                                 <?php
                                 if ( isset( $popup ) && 'yes' === $popup ) {
 
-                                    // Get $product object from product ID.
-                                    ?>
+                                // Get $product object from product ID.
+                                ?>
                             </a>
-                                    <?php
-                                    if ( 'yes' !== $hide_add_to_cart ) {
-                                        print ' <div class="ftg-varation-for-popup" style="display: none!important;">';
-                                        if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && empty( $ftg['is_album'] ) ) {
+                        <?php
+                        if ( 'yes' !== $hide_add_to_cart ) {
+                            print ' <div class="ftg-varation-for-popup" style="display: none!important;">';
+                            if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && empty( $ftg['is_album'] ) ) {
 
-                                            // Get $product object from product ID.
-                                            $this->ftg_variable_add_to_cart( $product_id );
-                                        }
-                                        print '</div>';
-                                    }
+                                // Get $product object from product ID.
+                                $this->ftg_variable_add_to_cart( $product_id );
+                            }
+                            print '</div>';
+                        }
 
-                                    $free_image_size = $option['ftg_free_download_size'] ? $option['ftg_free_download_size'] : '';
-                                    if ( 'yes' === $show_share || is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && 'yes' === $show_purchase_link && empty( $ftg['is_album'] ) || is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && ! empty( $free_image_size ) && 'Choose an option' !== $free_image_size ) {
-                                        ?>
+                        $free_image_size = $option['ftg_free_download_size'] ? $option['ftg_free_download_size'] : '';
+                        if ( 'yes' === $show_share || is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && 'yes' === $show_purchase_link && empty( $ftg['is_album'] ) || is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && ! empty( $free_image_size ) && 'Choose an option' !== $free_image_size ) {
+                            ?>
                             <div class="fts-mashup-count-wrap">
 
-                                            <?php if ( 'yes' === $show_share ) { ?>
+                                <?php if ( 'yes' === $show_share ) { ?>
                                     <div class="fts-share-wrap">
                                         <a href="javascript:;" class="ft-gallery-link-popup"></a>
                                         <div class='ft-gallery-share-wrap'>
@@ -2359,52 +2359,52 @@ class Display_Gallery {
                                 <?php } ?>
 
                                 <div class="ft-gallery-cta-button-wrap">
-                                        <?php
-                                        if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && 'yes' === $show_purchase_link ) {
+                                    <?php
+                                    if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && 'yes' === $show_purchase_link ) {
 
-                                            // Check to see if we are working with a variable product and if so make the purchase link go to cart.
-                                            $product = wc_get_product( $product_id );
+                                        // Check to see if we are working with a variable product and if so make the purchase link go to cart.
+                                        $product = wc_get_product( $product_id );
 
-                                            $ft_gallery_cart_page_name = get_option( 'ft_gallery_cart_page_name' ) ? get_option( 'ft_gallery_cart_page_name' ) : 'cart';
+                                        $ft_gallery_cart_page_name = get_option( 'ft_gallery_cart_page_name' ) ? get_option( 'ft_gallery_cart_page_name' ) : 'cart';
 
-                                            if ( 'variable' === $product->get_type( 'variable' ) ) {
+                                        if ( 'variable' === $product->get_type( 'variable' ) ) {
+                                            $purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name;
+                                        } else {
+                                            if ( 'prod_page' === $purchase_link_option ) {
+                                                $purchase_link = '' . $siteurl . '/product/?p=' . $product_id . '';
+                                            } elseif ( 'add_cart' === $purchase_link_option ) {
+                                                $purchase_link = '' . $siteurl . '/?add-to-cart=' . $product_id . '';
+                                            } elseif ( 'add_cart_checkout' === $purchase_link_option ) {
+                                                $purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name . '/?add-to-cart=' . $product_id . '';
+                                            } elseif ( 'cart_checkout' === $purchase_link_option ) {
                                                 $purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name;
                                             } else {
-                                                if ( 'prod_page' === $purchase_link_option ) {
-                                                    $purchase_link = '' . $siteurl . '/product/?p=' . $product_id . '';
-                                                } elseif ( 'add_cart' === $purchase_link_option ) {
-                                                    $purchase_link = '' . $siteurl . '/?add-to-cart=' . $product_id . '';
-                                                } elseif ( 'add_cart_checkout' === $purchase_link_option ) {
-                                                    $purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name . '/?add-to-cart=' . $product_id . '';
-                                                } elseif ( 'cart_checkout' === $purchase_link_option ) {
-                                                    $purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name;
-                                                } else {
-                                                    $purchase_link = '' . $siteurl . '/product/?p=' . $product_id . '';
-                                                }
+                                                $purchase_link = '' . $siteurl . '/product/?p=' . $product_id . '';
                                             }
-
-                                            // If Image already has product meta check the product still exists.
-                                            if ( ! empty( $product_id ) && empty( $ftg['is_album'] ) ) {
-                                                $product_exist = $gallery_to_woo->ft_gallery_create_woo_prod_exists_check( $product_id );
-                                                if ( $product_exist ) {
-                                                    echo '<a class="ft-gallery-buy-now ft-gallery-link-popup-master" href="' . esc_url( $purchase_link ) . '" ">' . esc_html( $purchase_text ) . '</a>';
-                                                }
-                                            }
-                                        } // end if woo active and product ID set.
-
-                                        if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && ! empty( $free_image_size ) && 'Choose an option' !== $free_image_size ) {
-                                            // this is the image size in written format,ie* thumbnail, medium, large etc.
-                                            $item_page_free           = explode( ' ', $free_image_size );
-                                            $free_image_url           = wp_get_attachment_image_src( $attachment_id = $image['id'], $item_page_free[0], false );
-                                            $free_image_download_text = ! empty( $option['ft_gallery_free_download_text'] ) ? $option['ft_gallery_free_download_text'] : '';
-
-                                            print '<a href="' . esc_url( $free_image_url[0] ) . '" download title="" class="ft-gallery-download noLightbox">' . esc_html( $free_image_download_text ) . '</a>';
                                         }
-                                        ?>
+
+                                        // If Image already has product meta check the product still exists.
+                                        if ( ! empty( $product_id ) && empty( $ftg['is_album'] ) ) {
+                                            $product_exist = $gallery_to_woo->ft_gallery_create_woo_prod_exists_check( $product_id );
+                                            if ( $product_exist ) {
+                                                echo '<a class="ft-gallery-buy-now ft-gallery-link-popup-master" href="' . esc_url( $purchase_link ) . '" ">' . esc_html( $purchase_text ) . '</a>';
+                                            }
+                                        }
+                                    } // end if woo active and product ID set.
+
+                                    if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && ! empty( $free_image_size ) && 'Choose an option' !== $free_image_size ) {
+                                        // this is the image size in written format,ie* thumbnail, medium, large etc.
+                                        $item_page_free           = explode( ' ', $free_image_size );
+                                        $free_image_url           = wp_get_attachment_image_src( $attachment_id = $image['id'], $item_page_free[0], false );
+                                        $free_image_download_text = ! empty( $option['ft_gallery_free_download_text'] ) ? $option['ft_gallery_free_download_text'] : '';
+
+                                        print '<a href="' . esc_url( $free_image_url[0] ) . '" download title="" class="ft-gallery-download noLightbox">' . esc_html( $free_image_download_text ) . '</a>';
+                                    }
+                                    ?>
                                 </div>
                             </div>
                             <div class="clear"></div>
-                                    <?php } ?>
+                        <?php } ?>
 
 
                             <div class="clear"></div>
@@ -2413,7 +2413,7 @@ class Display_Gallery {
                         <?php if ( empty( $ftg['is_album'] ) ) { ?>
                             <!--</div>-->
                             <?php
-    }
+                        }
                     }
                     // END else is no reg post format.
                 }
@@ -2467,13 +2467,13 @@ class Display_Gallery {
                                 jQuery(".<?php echo esc_js( $feed_name_rand_string ); ?>-scrollable").bind("scroll", function () {
                                     if (jQuery(this).scrollTop() + jQuery(this).innerHeight() >= jQuery(this)[0].scrollHeight) {
                                         <?php
-    } else { // this is where we do CLICK function to LOADMORE if = button in shortcode.
-        ?>
+                                        } else { // this is where we do CLICK function to LOADMORE if = button in shortcode.
+                                        ?>
                                         jQuery("#loadMore_<?php echo esc_js( $ft_gallery_dynamic_name ); ?>").click(function () {
-        <?php
-    }
+                                            <?php
+                                            }
                                             $ft_gallery_bounce_color = isset( $ft_gallery_loadmore_text_color ) && null !== $ft_gallery_loadmore_text_color ? ' style="background:' . esc_html( $ft_gallery_loadmore_text_color ) . ';"' : '';
-    ?>
+                                            ?>
                                             jQuery("#loadMore_<?php echo esc_js( $ft_gallery_dynamic_name ); ?>").addClass('fts-fb-spinner');
                                             var button = jQuery('#loadMore_<?php echo esc_js( $ft_gallery_dynamic_name ); ?>').html('<div class="bounce1"<?php echo $ft_gallery_bounce_color; ?>></div><div class="bounce2"<?php echo $ft_gallery_bounce_color; ?>></div><div class="bounce3"<?php echo $ft_gallery_bounce_color; ?>></div>');
                                             console.log(button);
@@ -2509,30 +2509,30 @@ class Display_Gallery {
                                                         // Do something after 3 seconds
                                                         jQuery('.<?php echo esc_js( $fts_dynamic_class_name ); ?>').masonry('layout');
                                                     }, 500);
-                                                        <?php
-    }
+                                                    <?php
+                                                    }
 
-    if ( isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] ) {
-        $final_post_count = $gallery_class->ft_album_count_post_galleries( $ftg['id'] );
-    } else {
-        $final_post_count = $gallery_class->ft_gallery_count_post_images( $ftg['id'] );
-    }
+                                                    if ( isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] ) {
+                                                        $final_post_count = $gallery_class->ft_album_count_post_galleries( $ftg['id'] );
+                                                    } else {
+                                                        $final_post_count = $gallery_class->ft_gallery_count_post_images( $ftg['id'] );
+                                                    }
 
-    ?>
+                                                    ?>
                                                     if (ft_gallery_posts<?php echo sanitize_text_field( wp_unslash( $my_request['ft_gallery_dynamic_name'] ) ); ?> >=  <?php echo esc_js( $final_post_count ); ?>) {
                                                         jQuery('#loadMore_<?php echo esc_js( $ft_gallery_dynamic_name ); ?>').replaceWith('<?php
-                                                                                        print '<div style="';
-                                                                                        if ( isset( $loadmore_btn_maxwidth ) && '' !== $loadmore_btn_maxwidth ) {
-                                                                                            print 'max-width:' . esc_js( $loadmore_btn_maxwidth ) . ';';
-                                                                                        }
-                                                                                        if ( isset( $ft_gallery_loadmore_background_color ) && '' !== $ft_gallery_loadmore_background_color ) {
-                                                                                            print 'background:' . esc_js( $ft_gallery_loadmore_background_color ) . ';';
-                                                                                        }
-                                                                                        if ( isset( $ft_gallery_loadmore_text_color ) && '' !== $ft_gallery_loadmore_text_color ) {
-                                                                                            print 'color:' . esc_js( $ft_gallery_loadmore_text_color ) . ';';
-                                                                                        }
-                                                                                        print 'margin:' . esc_js( $loadmore_btn_margin ) . ' auto ' . esc_js( $loadmore_btn_margin ) . '" class="fts-fb-load-more">' . esc_html( 'No More Photos', 'feed-them-gallery' ) . '</div>';
-                                                                                        ?>
+                                                        print '<div style="';
+                                                        if ( isset( $loadmore_btn_maxwidth ) && '' !== $loadmore_btn_maxwidth ) {
+                                                            print 'max-width:' . esc_js( $loadmore_btn_maxwidth ) . ';';
+                                                        }
+                                                        if ( isset( $ft_gallery_loadmore_background_color ) && '' !== $ft_gallery_loadmore_background_color ) {
+                                                            print 'background:' . esc_js( $ft_gallery_loadmore_background_color ) . ';';
+                                                        }
+                                                        if ( isset( $ft_gallery_loadmore_text_color ) && '' !== $ft_gallery_loadmore_text_color ) {
+                                                            print 'color:' . esc_js( $ft_gallery_loadmore_text_color ) . ';';
+                                                        }
+                                                        print 'margin:' . esc_js( $loadmore_btn_margin ) . ' auto ' . esc_js( $loadmore_btn_margin ) . '" class="fts-fb-load-more">' . esc_html( 'No More Photos', 'feed-them-gallery' ) . '</div>';
+                                                        ?>
                                                         '
                                                     )
                                                         ;
@@ -2545,22 +2545,22 @@ class Display_Gallery {
                                                     // Reload the share each funcion otherwise you can't open share option.
                                                     jQuery.fn.ftsShare();
 
-                                                     <?php
-                                if ( isset( $popup ) && 'yes' === $popup ) {?>
+                                                    <?php
+                                                    if ( isset( $popup ) && 'yes' === $popup ) {?>
                                                     // Reload this function again otherwise the popup won't work correctly for the newly loaded items
                                                     jQuery.fn.slickWordpressPopUpFunction();
-                                <?php }
-                                if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) ) { ?>
+                                                    <?php }
+                                                    if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) ) { ?>
                                                     jQuery.fn.ftg_apply_quant_btn();
                                                     jQuery.getScript("<?php echo esc_url( '/wp-content/plugins/woocommerce/assets/js/frontend/add-to-cart-variation.min.js' ); ?>");
-                                                            <?php
-    }
-    }
-    ?>
+                                                    <?php
+                                                    }
+                                                    }
+                                                    ?>
 
                                                     <?php
                                                     if ( 'gallery' === $format_type ) {
-                                                        ?>
+                                                    ?>
                                                     if (jQuery("#ftg-gallery-demo").hasClass("ftg-demo-1")) {
                                                         outputSRmargin(document.querySelector('#margin').value)
                                                     } // Reload our margin for the demo
@@ -2573,7 +2573,7 @@ class Display_Gallery {
                                             <?php
                                             // string $scroll_more is at top of this js script. exception for scroll option closing tag.
                                             if ( 'autoscroll' === $scroll_more ) {
-                                                ?>
+                                            ?>
                                         }; // end of scroll ajax load.
                                         <?php } ?>
                                     }
@@ -2730,266 +2730,266 @@ class Display_Gallery {
             }//End is ajaxing
         }
 
-		return ob_get_clean();
-	}
+        return ob_get_clean();
+    }
 
 
-	/**
-	 * FT Gallery Get Attachment ID
-	 *
-	 * Get an attachment ID given a URL.
-	 *
-	 * @param string $url
-	 *
-	 * @return int Attachment ID on success, 0 on failure
-	 */
-	public function ft_gallery_get_attachment_id( $url ) {
+    /**
+     * FT Gallery Get Attachment ID
+     *
+     * Get an attachment ID given a URL.
+     *
+     * @param string $url
+     *
+     * @return int Attachment ID on success, 0 on failure
+     */
+    public function ft_gallery_get_attachment_id( $url ) {
 
-		$attachment_id = 0;
+        $attachment_id = 0;
 
-		$dir = wp_upload_dir();
+        $dir = wp_upload_dir();
 
-		if ( false !== strpos( $url, $dir['baseurl'] . '/' ) ) { // Is URL in uploads directory?
+        if ( false !== strpos( $url, $dir['baseurl'] . '/' ) ) { // Is URL in uploads directory?
 
-			$file = basename( $url );
+            $file = basename( $url );
 
-			$query_args = array(
-				'post_type'   => 'attachment',
-				'post_status' => 'inherit',
-				'fields'      => 'ids',
-				'meta_query'  => array(
-					array(
-						'value'   => $file,
-						'compare' => 'LIKE',
-						'key'     => '_wp_attachment_metadata',
-					),
-				),
-			);
+            $query_args = array(
+                'post_type'   => 'attachment',
+                'post_status' => 'inherit',
+                'fields'      => 'ids',
+                'meta_query'  => array(
+                    array(
+                        'value'   => $file,
+                        'compare' => 'LIKE',
+                        'key'     => '_wp_attachment_metadata',
+                    ),
+                ),
+            );
 
-			$query = new \ WP_Query( $query_args );
+            $query = new \ WP_Query( $query_args );
 
-			if ( $query->have_posts() ) {
+            if ( $query->have_posts() ) {
 
-				foreach ( $query->posts as $post_id ) {
+                foreach ( $query->posts as $post_id ) {
 
-					$meta = wp_get_attachment_metadata( $post_id );
+                    $meta = wp_get_attachment_metadata( $post_id );
 
-					$original_file       = basename( $meta['file'] );
-					$cropped_image_files = wp_list_pluck( $meta['sizes'], 'file' );
+                    $original_file       = basename( $meta['file'] );
+                    $cropped_image_files = wp_list_pluck( $meta['sizes'], 'file' );
 
-					if ( $original_file === $file || in_array( $file, $cropped_image_files, true ) ) {
-						$attachment_id = $post_id;
-						break;
-					}
-				}
-			}
-		}
+                    if ( $original_file === $file || in_array( $file, $cropped_image_files, true ) ) {
+                        $attachment_id = $post_id;
+                        break;
+                    }
+                }
+            }
+        }
 
-		return $attachment_id;
-	}
-
-
-	/**
-	 * FT Gallery 2day Array
-	 *
-	 * Arrange 2 dimensional array
-	 *
-	 * @param $array
-	 * @param int   $col_count
-	 * @return bool
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_array_2d( $array, $col_count = 1 ) {
-		$result = false;
-		if ( ! empty( $array ) && is_array( $array ) ) {
-			$row_count = ceil( count( $array ) / $col_count );
-			$pointer   = 0;
-			for ( $row = 0; $row < $row_count; $row++ ) {
-				for ( $col = 0; $col < $col_count; ++$col ) {
-					if ( isset( $array[ $pointer ] ) ) {
-						$result[ $row ]['id'] = $array[ $pointer ];
-						$pointer++;
-					}
-				}
-			}
-		}
-
-		return $result;
-	}
+        return $attachment_id;
+    }
 
 
-	/**
-	 * FT Gallery Sort Image List
-	 *
-	 * Sort the list of images
-	 *
-	 * @param string $gallery_id The gallery ID to pass.
-	 * @return string
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_sort_image_list( $gallery_id ) {
-		// IF images are sorted on gallery post.
-		$option = $this->ft_gallery_get_option_or_get_postmeta( $gallery_id );
+    /**
+     * FT Gallery 2day Array
+     *
+     * Arrange 2 dimensional array
+     *
+     * @param $array
+     * @param int   $col_count
+     * @return bool
+     * @since 1.0.0
+     */
+    public function ft_gallery_array_2d( $array, $col_count = 1 ) {
+        $result = false;
+        if ( ! empty( $array ) && is_array( $array ) ) {
+            $row_count = ceil( count( $array ) / $col_count );
+            $pointer   = 0;
+            for ( $row = 0; $row < $row_count; $row++ ) {
+                for ( $col = 0; $col < $col_count; ++$col ) {
+                    if ( isset( $array[ $pointer ] ) ) {
+                        $result[ $row ]['id'] = $array[ $pointer ];
+                        $pointer++;
+                    }
+                }
+            }
+        }
 
-		$image_list_sort = $this->ft_gallery_get_media_rest( $gallery_id, '100' );
-		// We take the saved array that gets stored in the post meta field, ft-gallery-images-sort-order, when you sort the images on a gallery page and use the function below ft_gallery_array_2d to format the array so we can flip the array and use the number count and compare the $image_list arrays id's with our usort function below that.
-		$image_sort = $option['ft-gallery-images-sort-order'];
-		echo '<pre>' . print_r( $image_list_sort, 1 ) . '</pre>';
-		// http://snipplr.com/view/67672/.
-		function ft_gallery_array_2d( $array, $col_count = 1 ) {
-			$result = false;
-			if ( ! empty( $array ) && is_array( $array ) ) {
-				$row_count = ceil( count( $array ) / $col_count );
-				$pointer   = 0;
-				for ( $row = 0; $row < $row_count; $row++ ) {
-					for ( $col = 0; $col < $col_count; ++$col ) {
-						if ( isset( $array[ $pointer ] ) ) {
-							$result[ $row ]['id'] = $array[ $pointer ];
-							$pointer++;
-						}
-					}
-				}
-			}
+        return $result;
+    }
 
-			return $result;
-		}
 
-		$result = ft_gallery_array_2d( $image_sort, 1 );
-		echo '<pre>' . print_r( $image_sort, 1 ) . '</pre>';
+    /**
+     * FT Gallery Sort Image List
+     *
+     * Sort the list of images
+     *
+     * @param string $gallery_id The gallery ID to pass.
+     * @return string
+     * @since 1.0.0
+     */
+    public function ft_gallery_sort_image_list( $gallery_id ) {
+        // IF images are sorted on gallery post.
+        $option = $this->ft_gallery_get_option_or_get_postmeta( $gallery_id );
 
-		$skeys = array_flip( $image_sort );
+        $image_list_sort = $this->ft_gallery_get_media_rest( $gallery_id, '100' );
+        // We take the saved array that gets stored in the post meta field, ft-gallery-images-sort-order, when you sort the images on a gallery page and use the function below ft_gallery_array_2d to format the array so we can flip the array and use the number count and compare the $image_list arrays id's with our usort function below that.
+        $image_sort = $option['ft-gallery-images-sort-order'];
+        echo '<pre>' . print_r( $image_list_sort, 1 ) . '</pre>';
+        // http://snipplr.com/view/67672/.
+        function ft_gallery_array_2d( $array, $col_count = 1 ) {
+            $result = false;
+            if ( ! empty( $array ) && is_array( $array ) ) {
+                $row_count = ceil( count( $array ) / $col_count );
+                $pointer   = 0;
+                for ( $row = 0; $row < $row_count; $row++ ) {
+                    for ( $col = 0; $col < $col_count; ++$col ) {
+                        if ( isset( $array[ $pointer ] ) ) {
+                            $result[ $row ]['id'] = $array[ $pointer ];
+                            $pointer++;
+                        }
+                    }
+                }
+            }
 
-		echo '<pre>' . print_r( $skeys, 1 ) . '</pre>';
-		usort(
-			$image_list_sort,
-			function ( $a, $b ) use ( $skeys ) {
-				$final   = isset( $skeys[ $a['id'] ] ) ? $skeys[ $a['id'] ] : null;
-				$a       = $final;
-				$b       = $skeys[ $b['id'] ];
-				$newlist = $a - $b;
-				echo '<pre>' . print_r( $newlist, 1 ) . '</pre>';
+            return $result;
+        }
 
-				return $newlist;
-			}
-		);
+        $result = ft_gallery_array_2d( $image_sort, 1 );
+        echo '<pre>' . print_r( $image_sort, 1 ) . '</pre>';
 
-		// END IF images are sorted on gallery post
-	}
+        $skeys = array_flip( $image_sort );
 
-	/**
-	 * My FT Gallery Load More
-	 *
-	 * This function is being called from the fb feed... it calls the ajax in this case.
-	 *
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_load_more() {
+        echo '<pre>' . print_r( $skeys, 1 ) . '</pre>';
+        usort(
+            $image_list_sort,
+            function ( $a, $b ) use ( $skeys ) {
+                $final   = isset( $skeys[ $a['id'] ] ) ? $skeys[ $a['id'] ] : null;
+                $a       = $final;
+                $b       = $skeys[ $b['id'] ];
+                $newlist = $a - $b;
+                echo '<pre>' . print_r( $newlist, 1 ) . '</pre>';
 
-		$my_request = stripslashes_deep( $_REQUEST );
+                return $newlist;
+            }
+        );
 
-		if ( ! wp_verify_nonce( $my_request['fts_security'], $my_request['fts_time'] . 'load-more-nonce' ) ) {
-			exit( 'Sorry, You can\'t do that!' );
-		} else {
+        // END IF images are sorted on gallery post
+    }
 
-			$post_count = sanitize_text_field( wp_unslash( $my_request['ft_gallery_post_count'] ) );
-			$offset     = sanitize_text_field( wp_unslash( $my_request['ft_gallery_offset'] ) );
-			$media      = sanitize_text_field( wp_unslash( $my_request['ft_gallery_media_count'] ) );
-			$is_album   = $my_request['ft_gallery_is_album'] && 'yes' === sanitize_text_field( wp_unslash( $my_request['ft_gallery_is_album'] ) ) ? 'is_album=yes' : '';
+    /**
+     * My FT Gallery Load More
+     *
+     * This function is being called from the fb feed... it calls the ajax in this case.
+     *
+     * @since 1.0.0
+     */
+    public function ft_gallery_load_more() {
 
-			$shortcode = $my_request['ft_gallery_is_album'] && 'yes' === sanitize_text_field( wp_unslash( $my_request['ft_gallery_is_album'] ) ) ? 'ft-gallery-album' : 'feed-them-gallery';
+        $my_request = stripslashes_deep( $_REQUEST );
 
-			echo do_shortcode( '[' . esc_html( $shortcode ) . ' id=' . sanitize_text_field( wp_unslash( $my_request['ft_gallery_id'] ) ) . ' ' . $is_album . ' offset=' . sanitize_text_field( wp_unslash( $offset ) ) . ' media_count=' . sanitize_text_field( wp_unslash( $media ) ) . ']' );
-		}
-		die();
-	}
+        if ( ! wp_verify_nonce( $my_request['fts_security'], $my_request['fts_time'] . 'load-more-nonce' ) ) {
+            exit( 'Sorry, You can\'t do that!' );
+        } else {
 
-	/**
-	 * FTG Variable Add To Cart
-	 *
-	 * Used to load the simple price or variable price and add to cart buttons etc.
-	 *
-	 * @param string $product_id The product ID to pass.
-	 * @since 1.0.0
-	 */
-	public function ftg_variable_add_to_cart( $product_id ) {
-		global $product;
+            $post_count = sanitize_text_field( wp_unslash( $my_request['ft_gallery_post_count'] ) );
+            $offset     = sanitize_text_field( wp_unslash( $my_request['ft_gallery_offset'] ) );
+            $media      = sanitize_text_field( wp_unslash( $my_request['ft_gallery_media_count'] ) );
+            $is_album   = $my_request['ft_gallery_is_album'] && 'yes' === sanitize_text_field( wp_unslash( $my_request['ft_gallery_is_album'] ) ) ? 'is_album=yes' : '';
 
-		$product = wc_get_product( $product_id );
+            $shortcode = $my_request['ft_gallery_is_album'] && 'yes' === sanitize_text_field( wp_unslash( $my_request['ft_gallery_is_album'] ) ) ? 'ft-gallery-album' : 'feed-them-gallery';
 
-		if ( 'variable' === $product->get_type( 'variable' ) ) {
-			?>
-			<div class="ft-gallery-variations-wrap">
-				<div class="ft-gallery-variations-price-wrap">
-					<?php
-					// Saving commented out items: Use case... if we want to have a From: $10 - $50 option.
-					// $prefix = sprintf('%s: ', __('From', 'feed-them-gallery')); .
-					$min_price_regular = $product->get_variation_regular_price( 'min', true );
-					$min_price_sale    = $product->get_variation_sale_price( 'min', true );
-					$max_price         = $product->get_variation_price( 'max', true );
-					// $min_price = $product->get_variation_price('min', true); .
-					$price = ( $min_price_sale === $min_price_regular ) ? wc_price( $min_price_regular ) . ' - ' . wc_price( $max_price ) : print '<del>' . wc_price( $min_price_regular ) . '</del><ins>' . wc_price( $min_price_sale ) . '</ins>';
-					// print ( $min_price == $max_price ) ? $price : sprintf('%s%s', $prefix, $price); .
-					print wp_kses(
-						$price,
-						array(
-							'span' => array(
-								'class' => array(),
-							),
-							'del'  => array(),
-							'ins'  => array(),
-						)
-					);
-					?>
-				</div>
-				<div class="ft-gallery-variations-text ft-gallery-js-load">
-					<?php
-					// Enqueue variation scripts.
-					wp_enqueue_script( 'wc-add-to-cart-variation' );
-					// Load the template.
-					wc_get_template(
-						'single-product/add-to-cart/variable.php',
-						array(
-							'available_variations' => $product->get_available_variations(),
-							'attributes'           => $product->get_variation_attributes(),
-							'selected_attributes'  => $product->get_default_attributes(),
-						)
-					);
-					?>
-				</div>
-			</div>
-			<?php
-		} elseif ( 'simple' === $product->get_type( 'variable' ) ) {
-			?>
+            echo do_shortcode( '[' . esc_html( $shortcode ) . ' id=' . sanitize_text_field( wp_unslash( $my_request['ft_gallery_id'] ) ) . ' ' . $is_album . ' offset=' . sanitize_text_field( wp_unslash( $offset ) ) . ' media_count=' . sanitize_text_field( wp_unslash( $media ) ) . ']' );
+        }
+        die();
+    }
 
-			<div class="ft-gallery-variations-wrap">
-				<div class="ft-gallery-variations-price-wrap ft-gallery-simple-price">
+    /**
+     * FTG Variable Add To Cart
+     *
+     * Used to load the simple price or variable price and add to cart buttons etc.
+     *
+     * @param string $product_id The product ID to pass.
+     * @since 1.0.0
+     */
+    public function ftg_variable_add_to_cart( $product_id ) {
+        global $product;
 
-					<?php
-					$price_regular = $product->get_regular_price( 'min', true );
-					$price_sale    = $product->get_sale_price( 'min', true );
-					$price         = $price_sale ? '<del>' . wc_price( $price_regular ) . '</del><ins>' . wc_price( $price_sale ) . '</ins>' : wc_price( $price_regular );
+        $product = wc_get_product( $product_id );
 
-					print wp_kses(
-						$price,
-						array(
-							'span' => array(
-								'class' => array(),
-							),
-							'del'  => array(),
-							'ins'  => array(),
-						)
-					);
-					?>
-				</div>
-				<div class="ft-gallery-simple-cart">
-					<?php
-					// Enqueue variation scripts.
-					wc_get_template( 'single-product/add-to-cart/simple.php' );
-					?>
-				</div>
-			</div>
-		<?php }
-	}
+        if ( 'variable' === $product->get_type( 'variable' ) ) {
+            ?>
+            <div class="ft-gallery-variations-wrap">
+                <div class="ft-gallery-variations-price-wrap">
+                    <?php
+                    // Saving commented out items: Use case... if we want to have a From: $10 - $50 option.
+                    // $prefix = sprintf('%s: ', __('From', 'feed-them-gallery')); .
+                    $min_price_regular = $product->get_variation_regular_price( 'min', true );
+                    $min_price_sale    = $product->get_variation_sale_price( 'min', true );
+                    $max_price         = $product->get_variation_price( 'max', true );
+                    // $min_price = $product->get_variation_price('min', true); .
+                    $price = ( $min_price_sale === $min_price_regular ) ? wc_price( $min_price_regular ) . ' - ' . wc_price( $max_price ) : print '<del>' . wc_price( $min_price_regular ) . '</del><ins>' . wc_price( $min_price_sale ) . '</ins>';
+                    // print ( $min_price == $max_price ) ? $price : sprintf('%s%s', $prefix, $price); .
+                    print wp_kses(
+                        $price,
+                        array(
+                            'span' => array(
+                                'class' => array(),
+                            ),
+                            'del'  => array(),
+                            'ins'  => array(),
+                        )
+                    );
+                    ?>
+                </div>
+                <div class="ft-gallery-variations-text ft-gallery-js-load">
+                    <?php
+                    // Enqueue variation scripts.
+                    wp_enqueue_script( 'wc-add-to-cart-variation' );
+                    // Load the template.
+                    wc_get_template(
+                        'single-product/add-to-cart/variable.php',
+                        array(
+                            'available_variations' => $product->get_available_variations(),
+                            'attributes'           => $product->get_variation_attributes(),
+                            'selected_attributes'  => $product->get_default_attributes(),
+                        )
+                    );
+                    ?>
+                </div>
+            </div>
+            <?php
+        } elseif ( 'simple' === $product->get_type( 'variable' ) ) {
+            ?>
+
+            <div class="ft-gallery-variations-wrap">
+                <div class="ft-gallery-variations-price-wrap ft-gallery-simple-price">
+
+                    <?php
+                    $price_regular = $product->get_regular_price( 'min', true );
+                    $price_sale    = $product->get_sale_price( 'min', true );
+                    $price         = $price_sale ? '<del>' . wc_price( $price_regular ) . '</del><ins>' . wc_price( $price_sale ) . '</ins>' : wc_price( $price_regular );
+
+                    print wp_kses(
+                        $price,
+                        array(
+                            'span' => array(
+                                'class' => array(),
+                            ),
+                            'del'  => array(),
+                            'ins'  => array(),
+                        )
+                    );
+                    ?>
+                </div>
+                <div class="ft-gallery-simple-cart">
+                    <?php
+                    // Enqueue variation scripts.
+                    wc_get_template( 'single-product/add-to-cart/simple.php' );
+                    ?>
+                </div>
+            </div>
+        <?php }
+    }
 }
 
 ?>
