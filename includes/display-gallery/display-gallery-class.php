@@ -109,6 +109,9 @@ class Display_Gallery {
 	 */
 	public function ft_gallery_display_gallery_scripts() {
 		$current_screen = get_current_screen();
+       // if(isset( $_GET['page'], $_GET['tab'] ) && 'wc-settings' === $_GET['page'] && 'slickremix_hide_woo_products' === $_GET['tab'] ) {
+       //     wp_enqueue_script( 'ft_gallery_display_gallery_scripts', plugins_url( '/feed-them-gallery/admin/js/admin.js' ), array('jquery'), FTG_CURRENT_VERSION, true );
+       // }.
 
 		if ( 'ft_gallery' === $current_screen->post_type && 'post' === $current_screen->base || 'ft_gallery' === $current_screen->post_type && isset( $_GET['page'] ) && 'template_settings_page' === $_GET['page'] || is_admin() && 'ft_gallery_albums' === $current_screen->post_type && 'post' === $current_screen->base ) {
 			wp_enqueue_script( 'js_color', plugins_url( '/feed-them-gallery/metabox-settings/js/jscolor/jscolor.js' ), array( 'jquery' ), FTG_CURRENT_VERSION, true );
@@ -1144,7 +1147,7 @@ class Display_Gallery {
 			$ft_album_link_padding          = $option['ft_album_link_padding'] ? '.ft-album-contents{padding:' . $option['ft_album_link_padding'] . '!Important}' : '';
 			$ft_album_link_size             = $option['ft_album_link_size'] ? '.ft-album-contents a{font-size:' . $option['ft_album_link_size'] . '!Important}' : '';
 			$ft_album_link_color            = $option['ft_album_link_color'] ? '.ft-album-contents a{color:' . $option['ft_album_link_color'] . '!Important}' : '';
-			$ft_album_link_hover_color      = $option['ft_album_link_hover_color'] ? '.ft-album-contents a:hover, .ft-album-contents:hover .ft-view-photo, .fts-mashup-image-and-video-wrap:hover a.ft-view-photo {color:' . $option['ft_album_link_hover_color'] . '!Important}' : '';
+			$ft_album_link_hover_color      = $option['ft_album_link_hover_color'] ? '.ft-album-contents a:hover, .ft-album-contents:hover .ft-view-photo, .fts-mashup-image-and-video-wrap:hover a.ft-view-photo, .fts-feed-type-wp_gallery:hover a.ft-view-photo {color:' . $option['ft_album_link_hover_color'] . '!Important}' : '';
 			$ft_album_text_weight           = $option['ft_album_text_weight'] ? '.ft-album-contents a{font-weight:' . $option['ft_album_text_weight'] . '!Important}' : '';
 			$ft_album_align_text            = $option['ft_album_align_text'] ? '.ft-album-contents{text-align:' . $option['ft_album_align_text'] . '!Important}' : '';
 			$ft_album_link_background_color = $option['ft_album_link_background_color'] ? '.ft-album-contents-backround{background:' . $option['ft_album_link_background_color'] . '!Important}' : '';
@@ -2146,6 +2149,9 @@ class Display_Gallery {
                             <?php
                             if ( isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] || isset( $_GET['ftg-tags'] ) && 'page' === $_GET['type'] ) {
                                 ?>
+                            <a href="<?php print esc_url( $image_source_popup ); ?>"
+                               class="ft-gallery-link-popup-master"
+                               style="position: relative; overflow: hidden;"></a>
 
                                 <div class="ft-album-contents"><a href="<?php print esc_url( $gallery_post_link ); ?>"
                                                                   title='<?php print esc_attr( $ft_gallery_alt_text ); ?>'
