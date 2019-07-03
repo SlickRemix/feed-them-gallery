@@ -665,6 +665,9 @@ class Metabox_Settings {
 
 				$final_value = isset( $old_settings[ $option_name ] ) && ! empty( $old_settings[ $option_name ] ) ? $old_settings[ $option_name ] : $option['default_value'];
 
+				$default_option_types = array( 'input', 'select', 'checkbox' );
+				$option_type          = $option['option_type'];
+
 				// Do we need to output any Metabox Specific Form Inputs?
 				if ( isset( $this->metabox_specific_form_inputs ) && true == $this->metabox_specific_form_inputs ) {
 					// Set Current Params.
@@ -842,7 +845,9 @@ class Metabox_Settings {
 						// $option_name = isset( $this->option_prefix ) ? $this->option_prefix . $option['name'] : $option['name'];.
 						$option_name = isset( $option['name'] ) ? $option['name'] : '';
 
-						if ( 'checkbox' === $option['option_type'] ) {
+						$option_type = $option['option_type'];
+
+						if ( 'checkbox' === $option_type ) {
 							$new = isset( $_POST[ $option_name ] ) && 'false' !== $_POST[ $option_name ] ? 'true' : 'false';
 						} else {
 							$new = isset( $_POST[ $option_name ] ) && ! empty( $option_name ) ? wp_unslash( $_POST[ $option_name ] ) : '';
@@ -871,6 +876,9 @@ class Metabox_Settings {
 			wp_safe_redirect( urldecode( $url ) );
 			exit;
 		}
+
+       // error_log( print_r( $array_to_save, true ) );
+
 		// If not doing Page stuff Update options for a Post.
 		update_post_meta( $post_id, $current_info['post_type'] . '_settings_options', $array_to_save );
 
