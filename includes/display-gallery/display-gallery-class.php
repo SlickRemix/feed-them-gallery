@@ -2041,7 +2041,7 @@ class Display_Gallery {
                                 <?php
     }
 
-    if ( isset( $ftg['is_album'] ) && 'yes' !== $ftg['is_album'] || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET['type'] ) {
+    if ( isset( $ftg['is_album'], $_GET['ftg-tags'] ) && 'yes' !== $ftg['is_album'] && 'page' !== $_GET['type'] ) {
 
         if ( 'yes' !== $hide_add_to_cart ) {
 
