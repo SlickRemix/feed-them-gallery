@@ -1897,17 +1897,17 @@ class Display_Gallery {
                             </div>
                         <?php } ?>
 
-
-
-
                             <div class="fts-mashup-image-and-video-wrap"
                                 <?php
+
+                                $popup_not_album_or_tag = isset( $ftg['is_album'] )&& 'yes' === $ftg['is_album'] || isset( $_GET['ftg-tags'] ) && 'page' === $_GET['type'] ? '' : ' ft-gallery-link-popup-click-action';
+
                                 if ( isset( $image_size ) && '' !== $image_size ) {
                                     ?>
                                     style="<?php print esc_attr( $image_size ); ?>"<?php } ?>>
 
                                 <a href="<?php print esc_url( $image_source_popup ); ?>"
-                                   class="ft-gallery-link-popup-master ft-gallery-link-popup-click-action"
+                                   class="ft-gallery-link-popup-master<?php print esc_attr( $popup_not_album_or_tag ); ?>"
                                    style="position: relative; overflow: hidden;"><img class="fts-mashup-instagram-photo "
                                                                                       src="<?php print esc_url( $image_source_page ); ?>"
                                                                                       alt="<?php print esc_attr( $ft_gallery_alt_text ); ?>">
@@ -2544,9 +2544,13 @@ class Display_Gallery {
                                                     <?php if ( 'yes' !== $ftg['is_album'] ) { ?>
                                                     // Reload the share each funcion otherwise you can't open share option.
                                                     jQuery.fn.ftsShare();
+
+                                                     <?php
+                                if ( isset( $popup ) && 'yes' === $popup ) {?>
                                                     // Reload this function again otherwise the popup won't work correctly for the newly loaded items
                                                     jQuery.fn.slickWordpressPopUpFunction();
-                                                        <?php if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) ) { ?>
+                                <?php }
+                                if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) ) { ?>
                                                     jQuery.fn.ftg_apply_quant_btn();
                                                     jQuery.getScript("<?php echo esc_url( '/wp-content/plugins/woocommerce/assets/js/frontend/add-to-cart-variation.min.js' ); ?>");
                                                             <?php

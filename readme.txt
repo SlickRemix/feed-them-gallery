@@ -132,6 +132,7 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
    * FIX: When editing an image description single or double quotes would return a backslash. Also you can now simple use the return keyboard key to make line/paragraph breaks. No more html like <br/> required to make line breaks.
    * FIX: Settings: Link to product in shop option not working.
    * FIX: Settings: Some file renaming options not working proper.
+   * FIX: Popup option throwing error if not set to yes and using the loadmore button.
    * FIX: Loadmore option was duplicating the output of images if you had not sorted the images in your gallery. Now the default option is sorted by date.
    * PREMIUM NEW: WooCommerce Tab: Cart Icon over image if using the Gallery layout option. You can choose the position, and colors for the icon.
    * PREMIUM NEW: WooCommerce Tab: Hide the Add to Cart options/variations on page and popup.
