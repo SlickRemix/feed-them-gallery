@@ -1028,7 +1028,7 @@ class Settings_Page {
 
 									<h5 style="margin-top: 30px;"><?php esc_html_e( 'Add to Cart Button Functionality', 'feed-them-gallery' ); ?></h5>
 
-									<?php $woo_options = get_option( 'ft_gallery_woo_add_to_cart' ) ? get_option( 'ft_gallery_woo_add_to_cart' ) : 0; ?>
+									<?php $woo_options = get_option( 'ft_gallery_woo_add_to_cart' ) ? get_option( 'ft_gallery_woo_add_to_cart' ) : 0;   // print_r($woo_options)?>
 
 									<label><input name="ft_gallery_woo_add_to_cart[ft_gallery_woo_options]" type="radio" value="prod_page" <?php checked( 'prod_page', $woo_options['ft_gallery_woo_options'] ); ?>> <strong><?php esc_html_e( '(Default)', 'feed-them-gallery' ); ?></strong> <?php esc_html_e( 'Take Customers to product page. (Doesn\'t add product to cart)', 'feed-them-gallery' ); ?>
 									</label>
