@@ -126,6 +126,10 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.2.0 Monday, July 8th, 2019 =
+   * FIX: Settings: Take user to product option not working if your product was a variable.
+   * PREMIUM NEW: Tags Page: Added WooCommerce Add to cart options so you can make your tags page look similar to your gallery if you want.
+
 = Version 1.1.9 Wednesday, July 3rd, 2019 =
    * NEW: Security Refactor of the whole plugin to stop XSS injections and other possibly malicious attempts to hack through the plugin.
    * NEW: Layout Tab: Show the image caption info above or below the photos.

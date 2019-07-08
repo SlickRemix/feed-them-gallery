@@ -2041,7 +2041,9 @@ class Display_Gallery {
                                 <?php
                             }
 
-                            if ( isset( $ftg['is_album'] ) && 'yes' !== $ftg['is_album'] && !isset( $_GET['ftg-tags'] ) && 'page' !== $_GET['type'] || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET['type'] ) {
+                            $my_get = stripslashes_deep( $_GET );
+                            $my_get['type'] = isset( $my_get['type'] ) ? $my_get['type'] : '';
+                            if ( isset( $ftg['is_album'] ) && 'yes' !== $ftg['is_album'] && !isset( $my_get['ftg-tags'], $my_get['type'] ) && 'page' !== $my_get['type'] || isset( $my_get['ftg-tags'], $my_get['type'] ) && 'page' !== $my_get['type'] ) {
 
                                 if ( 'yes' !== $hide_add_to_cart ) {
 
@@ -2093,7 +2095,7 @@ class Display_Gallery {
 
                                                 $ft_gallery_cart_page_name = get_option( 'ft_gallery_cart_page_name' ) ? get_option( 'ft_gallery_cart_page_name' ) : 'cart';
 
-                                                if ( 'variable' === $product->get_type( 'variable' ) ) {
+                                                if ( 'variable' === $product->get_type( 'variable' ) && 'prod_page' !== $purchase_link_option ) {
                                                     $purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name;
                                                 } else {
                                                     if ( 'prod_page' === $purchase_link_option ) {
@@ -2176,7 +2178,7 @@ class Display_Gallery {
 
                                 $ft_gallery_cart_page_name = get_option( 'ft_gallery_cart_page_name' ) ? get_option( 'ft_gallery_cart_page_name' ) : 'cart';
 
-                                if ( 'variable' === $product->get_type( 'variable' ) ) {
+                                if ( 'variable' === $product->get_type( 'variable' ) && 'prod_page' !== $purchase_link_option ) {
                                     $purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name;
                                 } else {
                                     if ( 'prod_page' === $purchase_link_option ) {
@@ -2367,7 +2369,7 @@ class Display_Gallery {
 
                                         $ft_gallery_cart_page_name = get_option( 'ft_gallery_cart_page_name' ) ? get_option( 'ft_gallery_cart_page_name' ) : 'cart';
 
-                                        if ( 'variable' === $product->get_type( 'variable' ) ) {
+                                        if ( 'variable' === $product->get_type( 'variable' ) && 'prod_page' !== $purchase_link_option ) {
                                             $purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name;
                                         } else {
                                             if ( 'prod_page' === $purchase_link_option ) {
