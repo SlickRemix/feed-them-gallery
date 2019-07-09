@@ -84,7 +84,6 @@ class Gallery {
 	 */
 	public static function load( $all_options, $main_post_type ) {
 		$instance = new self();
-
 		$instance->set_class_vars( $all_options, $main_post_type );
 		$instance->add_actions_filters();
 	}
@@ -105,23 +104,28 @@ class Gallery {
 	 * @since 1.1.8
 	 */
 	public function set_class_vars( $all_options, $main_post_type ) {
+		// we set is_admin() so our backend functions don't get loaded to the front end.
+		// this came about after a ticket we received about our plugin being active and
+		// causing a woo booking plugin to not be able to checkout proper, when checking out it would show the cart was empty.
+		// this is_admin resolves that problem.
+		if ( is_admin() ) {
+			$this->core_functions_class = new Core_Functions();
 
-		$this->core_functions_class = new Core_Functions();
+			$this->saved_settings_array = $all_options;
 
-		$this->saved_settings_array = $all_options;
+			// Load Metabox Setings Class (including all of the scripts and styles attached).
+			$this->metabox_settings_class = new Metabox_Settings( $this, $this->saved_settings_array );
 
-		// Load Metabox Setings Class (including all of the scripts and styles attached).
-		$this->metabox_settings_class = new Metabox_Settings( $this, $this->saved_settings_array );
+			// Set Main Post Type.
+			$this->metabox_settings_class->set_main_post_type( $main_post_type );
 
-		// Set Main Post Type.
-		$this->metabox_settings_class->set_main_post_type( $main_post_type );
+			// Set Metabox Specific Form Inputs.
+			$this->metabox_settings_class->set_metabox_specific_form_inputs( true );
 
-		// Set Metabox Specific Form Inputs.
-		$this->metabox_settings_class->set_metabox_specific_form_inputs( true );
-
-		// If Premium add Functionality!
-		if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
-			$this->zip_gallery_class = new Zip_Gallery();
+			// If Premium add Functionality!
+			if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
+				$this->zip_gallery_class = new Zip_Gallery();
+			}
 		}
 	}
 
@@ -2183,6 +2187,10 @@ class Gallery {
 			$final_title .= $attachment_ID . ' ';
 		}
 
+		if ( '1' !== get_option( 'ft_gallery_attch_title_gallery_name' ) && '1' !== get_option( 'ft_gallery_attch_title_post_id' ) && '1' !== get_option( 'ft_gallery_attch_title_date' ) && '1' !== get_option( 'ft_gallery_attch_title_attch_id' ) ) {
+            $final_title .= $file_name . ' ';
+        }
+
 		$this->ft_gallery_format_attachment_title( $final_title, $attachment_ID, 'true' );
 	}
 
@@ -2517,9 +2525,9 @@ class Gallery {
 					$wpdb->query(
 						$wpdb->prepare(
 							"INSERT INTO $wpdb->postmeta ( post_id, meta_key, meta_value ) VALUES ( %d, %s, %s )",
-                            $new_post_id,
-                            $meta_info->meta_key,
-                            $meta_info->meta_value
+							$new_post_id,
+							$meta_info->meta_key,
+							$meta_info->meta_value
 						)
 					);
 				}

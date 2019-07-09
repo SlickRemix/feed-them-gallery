@@ -229,6 +229,10 @@ class Settings_Page {
 									$attch_title_output .= '<span class="ft_gallery_attch_title_attch_id">1234</span>';
 								}
 
+								if ( '1' !== get_option( 'ft_gallery_attch_title_gallery_name' ) && '1' !== get_option( 'ft_gallery_attch_title_post_id' ) && '1' !== get_option( 'ft_gallery_attch_title_date' ) && '1' !== get_option( 'ft_gallery_attch_title_file_name' ) && '1' !== get_option( 'ft_gallery_attch_title_attch_id' ) ) {
+									$attch_title_output .= '<span class="ft_gallery_attch_title_attch_id">My Image Name</span>';
+								}
+
 								// Output Filename Example.
 								$final_output = $attch_title_output . '.jpg';
 
@@ -430,21 +434,21 @@ class Settings_Page {
 
 					<h4><?php esc_html_e( 'Gallery Image Color & Size Options', 'feed-them-gallery' ); ?></h4>
 
-                    <p><label><?php esc_html_e( 'Title', 'feed-them-gallery' ); ?></label>
-                        <input type="text" name="ft_gallery_text_color" class="feed-them-social-admin-input fb-text-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:'#eee',pickerFace:3,pickerBorder:0,pickerInsetColor:'white'}" id="fb-text-color-input" placeholder="#222" value="<?php echo esc_attr( get_option( 'ft_gallery_text_color' ) ); ?>" />
-                    </p>
+					<p><label><?php esc_html_e( 'Title', 'feed-them-gallery' ); ?></label>
+						<input type="text" name="ft_gallery_text_color" class="feed-them-social-admin-input fb-text-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:'#eee',pickerFace:3,pickerBorder:0,pickerInsetColor:'white'}" id="fb-text-color-input" placeholder="#222" value="<?php echo esc_attr( get_option( 'ft_gallery_text_color' ) ); ?>" />
+					</p>
 
-                    <p><label><?php esc_html_e( 'Title Size', 'feed-them-gallery' ); ?></label>
-                        <input type="text" name="ft_gallery_text_size" class="feed-them-social-admin-input" id="fb-text-size-input" placeholder="14px" value="<?php echo esc_attr( get_option( 'ft_gallery_text_size' ) ); ?>" />
-                    </p>
+					<p><label><?php esc_html_e( 'Title Size', 'feed-them-gallery' ); ?></label>
+						<input type="text" name="ft_gallery_text_size" class="feed-them-social-admin-input" id="fb-text-size-input" placeholder="14px" value="<?php echo esc_attr( get_option( 'ft_gallery_text_size' ) ); ?>" />
+					</p>
 
 					<p><label><?php esc_html_e( 'Description', 'feed-them-gallery' ); ?></label>
 						<input type="text" name="ft_gallery_description_color" class="feed-them-social-admin-input fb-text-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:'#eee',pickerFace:3,pickerBorder:0,pickerInsetColor:'white'}" id="fb-text-color-input" placeholder="#222" value="<?php echo esc_attr( get_option( 'ft_gallery_description_color' ) ); ?>" />
 					</p>
 
-                    <p><label><?php esc_html_e( 'Description Size', 'feed-them-gallery' ); ?></label>
-                        <input type="text" name="ft_gallery_description_size" class="feed-them-social-admin-input" id="fb-description-size-input" placeholder="14px" value="<?php echo esc_attr( get_option( 'ft_gallery_description_size' ) ); ?>" />
-                    </p>
+					<p><label><?php esc_html_e( 'Description Size', 'feed-them-gallery' ); ?></label>
+						<input type="text" name="ft_gallery_description_size" class="feed-them-social-admin-input" id="fb-description-size-input" placeholder="14px" value="<?php echo esc_attr( get_option( 'ft_gallery_description_size' ) ); ?>" />
+					</p>
 
 					<p><label><?php esc_html_e( 'Link', 'feed-them-gallery' ); ?></label>
 						<input type="text" name="ft_gallery_link_color" class="feed-them-social-admin-input fb-link-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:'#eee',pickerFace:3,pickerBorder:0,pickerInsetColor:'white'}" id="fb-link-color-input" placeholder="#222" value="<?php echo esc_attr( get_option( 'ft_gallery_link_color' ) ); ?>" />
@@ -1028,7 +1032,7 @@ class Settings_Page {
 
 									<h5 style="margin-top: 30px;"><?php esc_html_e( 'Add to Cart Button Functionality', 'feed-them-gallery' ); ?></h5>
 
-									<?php $woo_options = get_option( 'ft_gallery_woo_add_to_cart' ) ? get_option( 'ft_gallery_woo_add_to_cart' ) : 0;   // print_r($woo_options)?>
+									<?php $woo_options = get_option( 'ft_gallery_woo_add_to_cart' ) ? get_option( 'ft_gallery_woo_add_to_cart' ) : 0;   // print_r($woo_options) ?>
 
 									<label><input name="ft_gallery_woo_add_to_cart[ft_gallery_woo_options]" type="radio" value="prod_page" <?php checked( 'prod_page', $woo_options['ft_gallery_woo_options'] ); ?>> <strong><?php esc_html_e( '(Default)', 'feed-them-gallery' ); ?></strong> <?php esc_html_e( 'Take Customers to product page. (Doesn\'t add product to cart)', 'feed-them-gallery' ); ?>
 									</label>
