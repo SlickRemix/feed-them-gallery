@@ -3,7 +3,7 @@ Contributors: slickremix
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
 Tested up to: 5.2.2
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 
 Create customizable Image Galleries and sell your images using WooCommerce.
@@ -126,6 +126,11 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.2.2 Tuesday, July 9th, 2019 =
+   * FIX: Settings: Made default image title be the file name minus any dashes in the filename.
+   * FIX: Wrapped Gallery Class calls in is_admin() since we only need to load these functions in wp-admin
+   * PREMIUM NEW: Tags Settings: When using the Image post in grid (Masonry) layout we added an additional option for Photo Caption Placement above or below the image.
+
 = Version 1.2.0 - 1.2.1 Monday, July 8th, 2019 =
    * FIX: Settings: Take user to product option not working if your product was a variable.
    * PREMIUM NEW: Tags Page: Added WooCommerce Add to cart options so you can make your tags page look similar to your gallery if you want.
