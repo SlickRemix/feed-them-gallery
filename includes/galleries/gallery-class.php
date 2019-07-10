@@ -104,15 +104,19 @@ class Gallery {
 	 * @since 1.1.8
 	 */
 	public function set_class_vars( $all_options, $main_post_type ) {
-		// we set is_admin() so our backend functions don't get loaded to the front end.
-		// this came about after a ticket we received about our plugin being active and
-		// causing a woo booking plugin to not be able to checkout proper, when checking out it would show the cart was empty.
-		// this is_admin resolves that problem.
-		if ( is_admin() ) {
 			$this->core_functions_class = new Core_Functions();
 
 			$this->saved_settings_array = $all_options;
 
+		// we set current_user_can so our backend functions don't get loaded to the front end.
+		// this came about after a ticket we received about our plugin being active and
+		// causing a woo booking plugin to not be able to checkout proper, when checking out it would show the cart was empty.
+		// this current_user_can resolves that problem.
+		if ( ! function_exists( 'wp_get_current_user' ) ) {
+			include ABSPATH . 'wp-includes/pluggable.php';
+		}
+
+		if ( current_user_can( 'manage_options' ) ) {
 			// Load Metabox Setings Class (including all of the scripts and styles attached).
 			$this->metabox_settings_class = new Metabox_Settings( $this, $this->saved_settings_array );
 
@@ -121,11 +125,11 @@ class Gallery {
 
 			// Set Metabox Specific Form Inputs.
 			$this->metabox_settings_class->set_metabox_specific_form_inputs( true );
+		}
 
 			// If Premium add Functionality!
-			if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
-				$this->zip_gallery_class = new Zip_Gallery();
-			}
+		if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
+			$this->zip_gallery_class = new Zip_Gallery();
 		}
 	}
 
@@ -2188,8 +2192,8 @@ class Gallery {
 		}
 
 		if ( '1' !== get_option( 'ft_gallery_attch_title_gallery_name' ) && '1' !== get_option( 'ft_gallery_attch_title_post_id' ) && '1' !== get_option( 'ft_gallery_attch_title_date' ) && '1' !== get_option( 'ft_gallery_attch_title_attch_id' ) ) {
-            $final_title .= $file_name . ' ';
-        }
+			$final_title .= $file_name . ' ';
+		}
 
 		$this->ft_gallery_format_attachment_title( $final_title, $attachment_ID, 'true' );
 	}
