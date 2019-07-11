@@ -244,7 +244,7 @@ class Settings_Page {
 											'class' => array(),
 										),
 									)
-								) . '';
+								) . '</div>';
 								?>
 							</div>
 
