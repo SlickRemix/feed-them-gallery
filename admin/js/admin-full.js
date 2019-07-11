@@ -29,6 +29,11 @@ jQuery(document).ready(
         jQuery('#ft_gallery_image_to_woo_model_prod').on(
             'change',
             function (e) {
+
+                if(jQuery('#ft_gallery_smart_image_orient_prod').is(":checked")){
+                    jQuery('#ft_gallery_smart_image_orient_prod').prop('checked', false)
+                }
+
                 var ftgGlobalValue = jQuery("select#ft_gallery_image_to_woo_model_prod").val();
                 // console.log(ftgGlobalValue);
                 if (ftgGlobalValue) {
