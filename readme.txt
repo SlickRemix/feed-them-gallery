@@ -126,9 +126,10 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
-= Version 1.2.3 Wednesday, July 10th, 2019 =
+= Version 1.2.3 Thursday, July 11th, 2019 =
    * FIX: Wrapped Gallery Class calls in current_user_can( 'manage_options' ) since we only need to load these functions for logged in admin users.
    * PREMIUM FIX: Wrapped Album Class calls in current_user_can( 'manage_options' ) since we only need to load these functions for logged in admin users.
+   * PREMIUM FIX: If you checked the Smart Image Orientation checkbox and then decided to use the Global Model Product instead it would throw a js error because both options cannot be used at the same time.
 
 = Version 1.2.2 Tuesday, July 9th, 2019 =
    * FIX: Settings: Made default image title be the file name minus any dashes in the filename.
