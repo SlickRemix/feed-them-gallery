@@ -625,7 +625,7 @@ class Gallery_Options {
 					'type'               => 'select',
 					'id'                 => 'ft_gallery_images_sizes_popup',
 					'name'               => 'ft_gallery_images_sizes_popup',
-					'default_value'      => '',
+					'default_value'      => 'full',
 					'placeholder'        => '',
 					'autocomplete'       => 'off',
 				),

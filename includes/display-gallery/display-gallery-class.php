@@ -1734,7 +1734,7 @@ class Display_Gallery {
                     $ft_gallery_alt_text = null !== $image['alt'] ? $image['alt'] : $img_title;
 
                     // The size of the image in the popup.
-                    $image_size_name = isset( $option['ft_gallery_images_sizes_popup'] ) ? $option['ft_gallery_images_sizes_popup'] : '';
+                    $image_size_name = $option['ft_gallery_images_sizes_popup'];
                     // this is the image size in written format,ie* thumbnail, medium, large etc.
                     $item_popup       = explode( ' ', $image_size_name );
                     $item_final_popup = wp_get_attachment_image_src( $image['id'], $item_popup[0], false );
@@ -1745,16 +1745,13 @@ class Display_Gallery {
                     $item_page       = explode( ' ', $image_size_page );
                     $item_final_page = wp_get_attachment_image_src( $image['id'], $item_page[0], false );
 
-                    // echo '<pre>';
-                    // print_r($item_final_popup);
-                    // echo '</pre>';.
                     $image_source_full = wp_get_attachment_image_src( $image['id'], 'full', false );
 
                     $image_source_large        = wp_get_attachment_image_src( $image['id'], 'large', false );
                     $image_source_medium_large = wp_get_attachment_image_src( $image['id'], 'medium_large', false );
                     $image_source_medium       = wp_get_attachment_image_src( $image['id'], 'medium', false );
 
-                    if ( isset( $image_size_page, $image_size_page ) && 'Choose an option' !== $image_size_page ) {
+                    if ( isset( $image_size_page ) && 'Choose an option' !== $image_size_page ) {
                         $image_source_page = $item_final_page[0];
                     } elseif ( isset( $image_size_page, $image_source_large ) ) {
                         $image_source_page = $image_source_large[0];
@@ -1767,18 +1764,22 @@ class Display_Gallery {
                     }
 
                     if ( isset( $popup ) && 'yes' === $popup ) {
-                        if ( isset( $image_size_name, $image_source_popup ) && 'Choose an option' !== $image_source_popup ) {
+                        if ( isset( $image_size_name ) && 'Choose an option' !== $image_source_popup ) {
                             $image_source_popup = $item_final_popup[0];
-                        } elseif ( isset( $image_source_large ) ) {
+                        } elseif ( isset( $image_size_name, $image_source_large ) ) {
                             $image_source_popup = $image_source_large[0];
-                        } elseif ( isset( $image_source_medium_large ) ) {
+                        } elseif ( isset( $image_size_name, $image_source_medium_large ) ) {
                             $image_source_popup = $image_source_medium_large[0];
-                        } elseif ( isset( $image_source_medium ) ) {
+                        } elseif ( isset( $image_size_name, $image_source_medium ) ) {
                             $image_source_popup = $image_source_medium[0];
                         } else {
                             $image_source_popup = '';
                         }
                     }
+
+                  //  echo '<pre>';
+                  //  print_r($item_final_popup);
+                  //  echo '</pre>';
 
                     if ( isset( $ftg['is_album'], $featured_image ) && 'yes' === $ftg['is_album'] || isset( $_GET['ftg-tags'], $_GET['type'] ) && 'page' === $_GET['type'] ) {
                         $image_source_page  = $image_source_page;
