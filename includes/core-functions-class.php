@@ -72,6 +72,7 @@ class Core_Functions {
 		add_filter( 'taxonomy_template', array( $this, 'ft_gallery_locate_template' ), 999 );
 		add_filter( 'page_template', array( $this, 'ft_gallery_locate_template' ), 999 );
 		add_action( 'parse_query', array( $this, 'ft_gallery_cpt_request_redirect_fix' ) );
+
 	}
 
 	/**
