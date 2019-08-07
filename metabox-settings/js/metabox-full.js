@@ -187,8 +187,9 @@ jQuery( document ).ready(
         );
 
 
-
-        jQuery( '<div id="ftg-watermark-logo-wrap"></div>' ).insertAfter( '#ft-watermark-image' );
+        if ( jQuery('div.ft-gallery-popup-form').hasClass('ftg-premium-active')  ) {
+            jQuery('<div id="ftg-watermark-logo-wrap"></div>').insertAfter('#ft-watermark-image');
+        }
 
         // Media Library button hook (WP >= 3.5):
         $( 'input#ft-watermark-image' ).click(
@@ -243,7 +244,7 @@ jQuery( document ).ready(
 
                                 },
                                 error: function () {
-                                    alert( 'Error, please contact us at http://slickremix.com/support-forum for help.' )
+                                    alert( 'Error, please contact us at https://www.slickremix.com/support for help.' )
                                 }
                             }
                         ); // end of ajax()

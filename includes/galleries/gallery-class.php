@@ -790,9 +790,8 @@ class Gallery {
 	 * @since 1.1.6
 	 */
 	public function ft_gallery_edit_page_popup( $gallery_id ) {
-
 		?>
-		<div class="ft-gallery-popup-form" style="display:none">
+		<div class="ft-gallery-popup-form <?php echo $premium_active = is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ? 'ftg-premium-active' : 'ftg-premium-not-active' ?>" style="display:none">
 
 			<label><?php esc_html_e( 'Title of image', 'feed-them-gallery' ); ?></label>
 			<input value="" class="fts-gallery-title"/>
@@ -800,6 +799,8 @@ class Gallery {
 			<input value="" class="fts-gallery-alttext"/>
 			<label><?php esc_html_e( 'Description of image', 'feed-them-gallery' ); ?></label>
 			<textarea class="fts-gallery-description"></textarea><br/>
+
+            <?php if( 'ftg-premium-active' === $premium_active ) {?>
 			<div class="tagsdiv popup-ftg-tags" id="ftg-tags" data-id="<?php echo esc_attr( $gallery_id ); ?>"
 				 data-taxonomy="ftg-tags">
 				<div class="jaxtag">
@@ -820,10 +821,9 @@ class Gallery {
 				<ul class="tagchecklist" role="list"></ul>
 			</div>
 
-
 			<div class="fts-gallery-tags-edit-wrap"></div>
+			<?php } ?>
 
-			<br/>
 			<div class="ft-submit-wrap"><a class="ft-gallery-edit-img-ajax button button-primary button-large"
 										   id="ft-gallery-edit-img-ajax" href="javascript:;"
 										   data-nonce="<?php echo esc_attr( wp_create_nonce( 'ft_gallery_edit_image_nonce' ) ); ?>"> <?php esc_html_e( 'Save', 'feed-them-gallery' ); ?> </a>
