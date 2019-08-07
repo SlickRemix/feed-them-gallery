@@ -84,6 +84,16 @@ FREE PLUGIN OPTIONS
  * Change the color of the pagination numbers
 
 [PREMIUM PLUGIN FEATURES](https://www.slickremix.com/downloads/feed-them-gallery/)
+= Albums Options =
+ * Create Albums out of your Galleries. [Demo](https://feedthemgallery.com/album-demo/)
+ * Make as many albums as you want, and choose different layout options.
+ * Pagination and more similar to the gallery options.
+
+= Tags Options =
+ * Add tags to images and galleries. [Demo](https://feedthemgallery.com/?type=image&count=22&ftg-tags=clouds)
+ * Customize the Tags page with our template options.
+ * The tags drop down option is a great way for people to be able to search your images.
+
 = Watermark Options =
  * Disable the right click option for desktop computers
  * Upload your own watermark image
