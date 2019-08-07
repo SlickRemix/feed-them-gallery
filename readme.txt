@@ -84,6 +84,16 @@ FREE PLUGIN OPTIONS
  * Change the color of the pagination numbers
 
 [PREMIUM PLUGIN FEATURES](https://www.slickremix.com/downloads/feed-them-gallery/)
+= Albums Options =
+ * Create Albums out of your Galleries. [Demo](https://feedthemgallery.com/album-demo/)
+ * Make as many albums as you want, and choose different layout options.
+ * Pagination and more similar to the gallery options.
+
+= Tags Options =
+ * Add tags to images and galleries. [Demo](https://feedthemgallery.com/?type=image&count=22&ftg-tags=clouds)
+ * Customize the Tags page with our template options.
+ * The tags drop down option is a great way for people to be able to search your images.
+
 = Watermark Options =
  * Disable the right click option for desktop computers
  * Upload your own watermark image
@@ -114,6 +124,18 @@ FREE PLUGIN OPTIONS
  * View the files names in each zip
  * Create a Product from the zipped gallery
  * Edit Product button appears after creation
+
+[HIDE PRODUCTS & CATEGORIES PLUGIN FEATURES](https://www.slickremix.com/downloads/hide-woocommerce-products-categories/)
+= Options =
+ * Hide the Shop page from showing products
+ * Add a custom Shop Page Redirect
+ * Hide all products from being displayed if using a product search
+ * Remove links for products
+ * Hide all products from displaying on the single product page template
+ * Single Product Page Redirect
+ * Hide Product Categories
+ * Product Category Page Redirect
+ * Hide Specific Products
 
 See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
 
