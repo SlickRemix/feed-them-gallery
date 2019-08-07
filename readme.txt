@@ -125,6 +125,18 @@ FREE PLUGIN OPTIONS
  * Create a Product from the zipped gallery
  * Edit Product button appears after creation
 
+[HIDE PRODUCTS & CATEGORIES PLUGIN FEATURES](https://www.slickremix.com/downloads/hide-woocommerce-products-categories/)
+= Options =
+ * Hide the Shop page from showing products
+ * Add a custom Shop Page Redirect
+ * Hide all products from being displayed if using a product search
+ * Remove links for products
+ * Hide all products from displaying on the single product page template
+ * Single Product Page Redirect
+ * Hide Product Categories
+ * Product Category Page Redirect
+ * Hide Specific Products
+
 See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
 
 == Installation ==
