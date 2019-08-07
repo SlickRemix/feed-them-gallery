@@ -126,7 +126,7 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
-= Version 1.2.4 Tuesday, July 30th, 2019 =
+= Version 1.2.4 Wednesday, August 7th, 2019 =
    * FIX: Popup Image size selection not displaying proper image size in popup.
    * FIX: Tags options displaying on popup in the free version.
 
