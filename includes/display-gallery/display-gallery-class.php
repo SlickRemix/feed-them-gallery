@@ -1684,7 +1684,7 @@ class Display_Gallery {
                     $albums_class = new Albums();
                 }
 
-                foreach ( $image_list as $image ) {
+                foreach ( $image_list as $key => $image ) {
 
                     $date = isset( $image->post_date ) ? $image->post_date : '';
 
@@ -1720,7 +1720,17 @@ class Display_Gallery {
                     $image_description = isset( $description ) ? $description : '';
 
                     // Social media sharing URLs.
-                    $link                      = get_permalink();
+
+                    $parse = parse_url(get_permalink());
+
+                    // need to fix this so the pagination number is in the url, we need this for the new share image url option
+                    // also need to only make this hash tag view image option only for the image url for the input in the share wrapper.
+                    // right now it's tied to all the urls. So the social media buttons will only link to the gallery because social media
+                    // companies parse out he hashtag in the url so people will have to manually share until we find a better solution.
+                    $link                      = $parse['scheme'] .'://'. $parse['host'] . $_SERVER['REQUEST_URI'] . '#ftg-image-' . esc_attr( $key + 1 );
+
+                   // echo 'asdfsadf'. $link;
+
                     $ft_gallery_share_facebook = 'https://www.facebook.com/sharer/sharer.php?u=' . $link;
                     $ft_gallery_share_twitter  = 'https://twitter.com/intent/tweet?text=' . $link;
                     $ft_gallery_share_google   = 'https://plus.google.com/share?url=' . $link;
@@ -1762,9 +1772,8 @@ class Display_Gallery {
                     } else {
                         $image_source_page = '';
                     }
-
                     if ( isset( $popup ) && 'yes' === $popup ) {
-                        if ( isset( $image_size_name ) && 'Choose an option' !== $image_source_popup ) {
+                        if ( isset( $image_size_name ) && 'Choose an option' !== $image_size_name ) {
                             $image_source_popup = $item_final_popup[0];
                         } elseif ( isset( $image_size_name, $image_source_large ) ) {
                             $image_source_popup = $image_source_large[0];
@@ -1908,6 +1917,8 @@ class Display_Gallery {
                                     style="<?php print esc_attr( $image_size ); ?>"<?php } ?>>
 
                                 <a href="<?php print esc_url( $image_source_popup ); ?>"
+                                   title='<?php print esc_attr( $ft_gallery_alt_text ); ?>'
+                                   data-image_id='<?php echo esc_attr( $key + 1 ); ?>'
                                    class="ft-gallery-link-popup-master<?php print esc_attr( $popup_not_album_or_tag ); ?>"
                                    style="position: relative; overflow: hidden;"><img class="fts-mashup-instagram-photo "
                                                                                       src="<?php print esc_url( $image_source_page ); ?>"
@@ -2064,10 +2075,12 @@ class Display_Gallery {
 
                                     <div class="fts-mashup-count-wrap">
 
-                                        <?php if ( 'yes' === $show_share ) { ?>
+                                        <?php if ( 'yes' === $show_share ) {
+                                            $is_loadmore = 'yes' === $ftg_loadmore_option ? ' ftg-share-loadmore' : '';
+                                            ?>
                                             <div class="fts-share-wrap">
                                                 <a href="javascript:;" class="ft-gallery-link-popup"></a>
-                                                <div class='ft-gallery-share-wrap'>
+                                                <div class='ft-gallery-share-wrap<?php echo $is_loadmore ?>'>
                                                     <a href='<?php print esc_url( $ft_gallery_share_facebook ); ?>'
                                                        target='_blank'
                                                        class='ft-galleryfacebook-icon'><i class='fa fa-facebook-square'></i></a>
@@ -2083,6 +2096,13 @@ class Display_Gallery {
                                                     <a href='<?php print esc_url( $ft_gallery_share_email ); ?>'
                                                        target='_blank'
                                                        class='ft-galleryemail-icon'><i class='fa fa-envelope'></i></a>
+                                                    <?php if ( 'yes' !== $ftg_loadmore_option ) { ?>
+                                                        <div class="ft-gallery-clear"></div>
+                                                        <div class="ftg-share-text"><?php esc_html_e( 'Use link to share image', 'feed-them-gallery' ) ?></div>
+                                                        <div class="ftg-text-copied"><?php esc_html_e( 'Copied to Clipboard', 'feed-them-gallery' ) ?></div>
+                                                        <a href='javascript:;'
+                                                           class='ft-gallerylink-icon' onclick="ftgallerycopy('ftg-image-link<?php echo $key + 1 ?>');"><i class='fa fa-link'></i></a> <input id="ftg-image-link<?php echo $key + 1 ?>" onclick="this.select()" value="<?php echo $link ?>">
+                                                    <?php } ?>
                                                 </div>
                                             </div>
                                         <?php } ?>
@@ -2153,6 +2173,8 @@ class Display_Gallery {
                             if ( isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] || isset( $_GET['ftg-tags'] ) && 'page' === $_GET['type'] ) {
                                 ?>
                                 <a href="<?php print esc_url( $image_source_popup ); ?>"
+                                   title='<?php print esc_attr( $ft_gallery_alt_text ); ?>'
+                                   data-image_id='<?php echo esc_attr( $key + 1 ); ?>'
                                    class="ft-gallery-link-popup-master"
                                    style="position: relative; overflow: hidden;"></a>
 
@@ -2290,6 +2312,7 @@ class Display_Gallery {
                             </div>
                             <a href="<?php print esc_url( $image_source_popup ); ?>"
                                title='<?php print esc_attr( $ft_gallery_alt_text ); ?>'
+                               data-image_id='<?php echo esc_attr( $key + 1 ); ?>'
                                class="ft-gallery-link-popup-master ft-gallery-link-popup-click-action ft-view-photo">
                                 <?php
                                 }
@@ -2343,10 +2366,12 @@ class Display_Gallery {
                             ?>
                             <div class="fts-mashup-count-wrap">
 
-                                <?php if ( 'yes' === $show_share ) { ?>
+                                <?php if ( 'yes' === $show_share ) {
+                                    $is_loadmore = 'yes' === $ftg_loadmore_option ? ' ftg-share-loadmore' : '';
+                                    ?>
                                     <div class="fts-share-wrap">
                                         <a href="javascript:;" class="ft-gallery-link-popup"></a>
-                                        <div class='ft-gallery-share-wrap'>
+                                        <div class='ft-gallery-share-wrap<?php echo $is_loadmore ?>'>
                                             <a href='<?php print esc_url( $ft_gallery_share_facebook ); ?>' target='_blank'
                                                class='ft-galleryfacebook-icon'><i class='fa fa-facebook-square'></i></a>
                                             <a href='<?php print esc_url( $ft_gallery_share_twitter ); ?>' target='_blank'
@@ -2357,6 +2382,13 @@ class Display_Gallery {
                                                class='ft-gallerylinkedin-icon'><i class='fa fa-linkedin'></i></a>
                                             <a href='<?php print esc_url( $ft_gallery_share_email ); ?>' target='_blank'
                                                class='ft-galleryemail-icon'><i class='fa fa-envelope'></i></a>
+                                            <?php if ( 'yes' !== $ftg_loadmore_option ) { ?>
+                                                <div class="ft-gallery-clear"></div>
+                                                <div class="ftg-share-text"><?php esc_html_e( 'Use link to share image', 'feed-them-gallery' ) ?></div>
+                                                <div class="ftg-text-copied"><?php esc_html_e( 'Copied to Clipboard', 'feed-them-gallery' ) ?></div>
+                                                <a href='javascript:;'
+                                                   class='ft-gallerylink-icon' onclick="ftgallerycopy('ftg-image-link<?php echo $key + 1 ?>');"><i class='fa fa-link'></i></a> <input id="ftg-image-link<?php echo $key + 1 ?>" onclick="this.select()" value="<?php echo $link ?>">
+                                            <?php } ?>
                                         </div>
                                     </div>
                                 <?php } ?>
