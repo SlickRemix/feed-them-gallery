@@ -2,8 +2,8 @@
 Contributors: slickremix
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
-Tested up to: 5.2.2
-Stable tag: 1.2.4
+Tested up to: 5.2.3
+Stable tag: 1.2.5
 License: GPLv2 or later
 
 Create customizable Image Galleries and sell your images using WooCommerce.
@@ -148,6 +148,10 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.2.5 Thursday, September 19th, 2019 =
+   * NEW: Click the share option for any image and share a url that will take the user to your gallery and open the image up in the popup. This will not work for the loadmore option but will work for regular or paginated galleries.
+   * FIX: Leave a review box would not go away in the wp-admin if you clicked Already left a review or No Thanks. Thanks to [Paul Bedford](https://wordpress.org/support/topic/great-plugin-and-even-better-support-55/) for pointing this out to us.
+
 = Version 1.2.4 Wednesday, August 7th, 2019 =
    * FIX: Popup Image size selection not displaying proper image size in popup.
    * FIX: Tags options displaying on popup in the free version.

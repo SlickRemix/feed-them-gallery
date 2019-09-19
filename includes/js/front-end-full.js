@@ -1,3 +1,22 @@
+function ftgallerycopy(id)
+{
+    try
+    {
+        var ftgallerycopyText = document.getElementById(id);
+        ftgallerycopyText.select();
+        ftgallerycopyText.setSelectionRange(0, 99999); /*For mobile devices*/
+        document.execCommand('ftgallerycopy');
+
+        jQuery('#'+ id).parent().find('.ftg-share-text').hide();
+        jQuery('#'+ id).parent().find('.ftg-text-copied').show();
+
+    }
+    catch(e)
+    {
+        alert(e);
+    }
+};
+
 jQuery(window).on("load",function() {
 
     if (ftgPremiumOption.enable_right_click == 'true'){
@@ -22,7 +41,27 @@ jQuery(window).on("load",function() {
     });
 
 
-    jQuery.fn.masonry&&jQuery(".masonry").hasClass("ft-wp-gallery-masonry")&&(jQuery(".ft-wp-gallery-masonry").masonry(),setTimeout(function(){jQuery(".ft-wp-gallery-masonry").masonry("reloadItems"),jQuery(".ft-wp-gallery-masonry").masonry("layout")},600))}),jQuery(document).ready(function(){jQuery.fn.ftsShare=function(){jQuery(".fts-share-wrap").each(function(){var r=jQuery(this);r.find(".ft-gallery-link-popup").unbind().bind("click",function(){r.find(".ft-gallery-share-wrap").toggle()})})},jQuery.fn.ftsShare&&jQuery.fn.ftsShare()});
+    jQuery.fn.masonry&&jQuery(".masonry").hasClass("ft-wp-gallery-masonry")&&(jQuery(".ft-wp-gallery-masonry").masonry(),setTimeout(function(){jQuery(".ft-wp-gallery-masonry").masonry("reloadItems"),jQuery(".ft-wp-gallery-masonry").masonry("layout")},600))}),
+
+
+
+
+
+
+    jQuery(document).ready(
+
+
+
+        function(){
+            jQuery.fn.ftsShare=function(){
+                jQuery(".fts-share-wrap").each(function(){
+                    var r=jQuery(this);
+                    r.find(".ft-gallery-link-popup").unbind().bind("click",function(){
+                        r.find(".ft-gallery-share-wrap").toggle()
+                    })
+                })
+            },
+            jQuery.fn.ftsShare&&jQuery.fn.ftsShare()});
 
 // https://www.w3schools.com/js/js_comparisons.asp
 // >	greater than   x > 8	true

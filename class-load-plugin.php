@@ -98,7 +98,7 @@ class Feed_Them_Gallery {
 		new feed_them_gallery\updater_init();
 
 		// Variables to define specific terms!
-		$transient = 'ftg_slick_rating_notice_waiting';
+		$transient = 'ftg_slick_rating_notice_waiting5';
 		$option    = 'ftg_slick_rating_notice';
 		$nag       = 'ftg_slick_ignore_rating_notice_nag';
 
@@ -571,7 +571,7 @@ class Feed_Them_Gallery {
 	public function ftg_check_nag_get( $get, $nag, $option, $transient ) {
 
 		if ( isset( $_GET[ $nag ] ) ) {
-			if ( 1 === $get[ $nag ] ) {
+			if ( '1' === $get[ $nag ] ) {
 				update_option( $option, 'dismissed' );
 			} elseif ( 'later' === $get[ $nag ] ) {
 				$time = 2 * WEEK_IN_SECONDS;
@@ -590,15 +590,18 @@ class Feed_Them_Gallery {
 	 * @param string $transient Check the transient exists or not.
 	 * @since 1.0.8
 	 */
-	public function set_review_status( $option, $transient ) {
-		$notice_status = get_option( $option, false );
+	public function set_review_status( $option, $transient )
+    {
+        $notice_status = get_option( $option, false );
+        // Only display the notice if the time offset has passed and the user hasn't already dismissed it!.
+        if ( 'ftg-review-waiting' !== get_transient( $transient ) && 'dismissed' !== $notice_status ) {
+            add_action( 'admin_notices', array($this, 'ftg_rating_notice_html') );
+        }
 
-		// Only display the notice if the time offset has passed and the user hasn't already dismissed it!.
-		if ( 'ftg-review-waiting' !== get_transient( $transient ) && 'dismissed' !== $notice_status ) {
-			add_action( 'admin_notices', array( $this, 'ftg_rating_notice_html' ) );
-		}
-		// Uncomment this for testing the notice.
-		// add_action( 'admin_notices', array( $this, 'ftg_rating_notice_html' ) );.
+        // Uncomment this for testing the notice.
+       // if ( !isset( $_GET['ftg_slick_ignore_rating_notice_nag'] ) ) {
+       //    add_action( 'admin_notices', array($this, 'ftg_rating_notice_html') );
+       // }.
 	}
 
 	/**
