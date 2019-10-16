@@ -2,26 +2,38 @@
 Contributors: slickremix
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
-Tested up to: 5.2.3
-Stable tag: 1.2.5
+Tested up to: 5.2.4
+Stable tag: 1.2.5.1
 License: GPLv2 or later
 
-Create customizable Image Galleries and sell your images using WooCommerce.
+Photo Gallery creation made easy. Sell images with Auto Create Product feature for WooCommerce. Watermarking, Lightbox Popup, ZIP'ing, Tags and more!
 
 == Description ==
 
+[youtube https://www.youtube.com/watch?v=LtmgAVmW5H4&rel=0]
+
 [View Demo](https://feedthemgallery.com/gallery-demo-one/) and adjust columns, spacing, size & look of the image gallery.
 
-See how fast you can setup a gallery.
-[youtube https://www.youtube.com/watch?v=Fa2mjmFAGZQ&rel=0]
+SEE WHAT PEOPLE ARE SAYING ABOUT OUR PLUGIN AND SUPPORT.
 
-ALL SlickRemix plugins come with Amazing Support. If you need help or have questions we're here to help, just create a ticket on our [website](https://www.slickremix.com/support/) and we’ll get to you as quickly as we can! (usually within 24hrs)
+= See what people are saying about our Plugin and Support. =
+
+*"I love this plugin for bulk creating products from images. It makes it so easy to create downloadable products from images."* ~ [@monkey-puzzle](https://wordpress.org/support/topic/bulk-product-creation-is-awesome/)
+
+*"Not only is this plugin great from a functionality standpoint, but if you have any questions, support has been stellar! It is not always just abut the product itself, but also the service. 5 stars all around!"* ~ [@davel55](https://wordpress.org/support/topic/great-plugin-great-support-945/)
+
+*"This plugin was exactly what I needed. My client wanted a way to sell her photos online and to protect her photos from unauthorised downloading and copying. A big bonus is that it works really well with WooCommerce – so the plugin can grow with my client. Thinking up new and creative products are no problem."* ~ [@lukeocharliemac](https://wordpress.org/support/topic/awesome-features-14/)
+
+ALL SlickRemix plugins come with Amazing Support. If you need help or have questions we're here to help, just create a ticket on our [website](https://www.slickremix.com/support/) and we’ll get to you as quickly as we can! (usually within 24-48hrs)
 
 = Who is this plugin for? =
 If you are a Photographer, Developer, Artist, Someone looking to help others sell their photos, or just looking to create awesome, easy-to-use Galleries this plugin is for you! We made the process of setting up Galleries super simple. We included TONS of options to change the style and layout keeping focus on organization and simplicity. We want to make it so anyone can create a Gallery and sell photos with ease giving your customers/clients a hassle free experience when looking at or buying your images or art!
 
 = What does this plugin do? =
 With this plugin you can create and display clean responsive image galleries in minutes. We have 4 different layouts you can choose from and many options to configure the look and feel of the gallery on your site. In our premium version we've also made it super easy for you to connect your galleries to WooCommerce. In one click you can easily turn a Gallery into a ZIP and WooCommerce product. You can also in one click and based on a model product turn EACH individual photo into a WooCommerce product saving you MANY HOURS of tedious product creation!
+
+See how fast you can setup a gallery.
+[youtube https://www.youtube.com/watch?v=Fa2mjmFAGZQ&rel=0]
 
 FREE PLUGIN OPTIONS
 = Image Options =
@@ -148,6 +160,11 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.2.5.1 Wednesday, October 16th, 2019 =
+   * UPDATE: Add New Promo video to the ReadMe.
+   * UPDATE: Plugin Description.
+   * ADD: Plugins reviews to ReadMe.
+
 = Version 1.2.5 Thursday, September 19th, 2019 =
    * NEW: Click the share option for any image and share a url that will take the user to your gallery and open the image up in the popup. This will not work for the loadmore option but will work for regular or paginated galleries.
    * FIX: Leave a review box would not go away in the wp-admin if you clicked Already left a review or No Thanks. Thanks to [Paul Bedford](https://wordpress.org/support/topic/great-plugin-and-even-better-support-55/) for pointing this out to us.
