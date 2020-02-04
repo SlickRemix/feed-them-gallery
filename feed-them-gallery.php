@@ -22,7 +22,7 @@
  *
  * @version  1.2.7
  * @package  FeedThemSocial/Core
- * @copyright   Copyright (c) 2012-2019 SlickRemix
+ * @copyright   Copyright (c) 2012-2020 SlickRemix
  *
  * Need Support? https://www.slickremix.com/my-account
  */
