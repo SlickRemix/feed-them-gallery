@@ -1199,7 +1199,7 @@ class Gallery {
 						</div>
 						<div class="ftg-clear"></div>
 
-						  </div><div class="ftg-clear"></div>
+						  </div>
 
 							<?php
 					}
@@ -1287,7 +1287,6 @@ class Gallery {
 						</div>
 						<?php // } ?>
 					</div>
-					<div class="clear"></div>
 					<?php } ?>
 				<div class="gallery-edit-question-message gallery-edit-question-download-gallery"
 					 style="display: none;">
@@ -1340,7 +1339,6 @@ class Gallery {
 					<?php
 					// }
 					?>
-				<div class="clear"></div>
 
 				<ul class="plupload-thumbs
 							<?php
