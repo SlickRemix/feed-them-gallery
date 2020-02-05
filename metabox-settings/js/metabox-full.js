@@ -187,7 +187,7 @@ jQuery( document ).ready(
         );
 
 
-        if ( jQuery('div.ft-gallery-popup-form').hasClass('ftg-premium-active')  ) {
+        if ( jQuery('div.ft-gallery-popup-form').hasClass('ftg-premium-active') ||  jQuery('body').hasClass('post-type-ft_gallery_albums') ) {
             jQuery('<div id="ftg-watermark-logo-wrap"></div>').insertAfter('#ft-watermark-image');
         }
 
