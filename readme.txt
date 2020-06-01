@@ -2,8 +2,8 @@
 Contributors: slickremix, slickchris
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
-Tested up to: 5.3.2
-Stable tag: 1.2.8
+Tested up to: 5.4.2
+Stable tag: 1.2.9
 License: GPLv2 or later
 
 Photo Gallery creation made easy. Sell images with Auto Create Product feature for WooCommerce. Watermarking, Lightbox Popup, ZIP'ing, Tags and more!
@@ -151,6 +151,9 @@ FREE PLUGIN OPTIONS
 
 See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
 
+= Translate Plugin =
+You can [register to translate the site here](http://translate.slickremix.com/wp-login.php?action=register), then [click here to translate the plugin](http://translate.slickremix.com/glotpress/projects/feed-them-gallery/) and download your translation files right away. Add the files to the languages folder in the root of our plugin. After that just make sure you have chosen the correct language in the WordPress Settings area.
+
 == Installation ==
 
 = Install from WordPress Dashboard =
@@ -160,6 +163,9 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.2.9 Monday, June 1st, 2020 =
+   * NEW: Added languages folder to the root of plugin for those who want to add a translation files. You can [register to translate the site here](http://translate.slickremix.com/wp-login.php?action=register), then go to this link to [translate the plugin](http://translate.slickremix.com/glotpress/projects/feed-them-gallery/) and download your translation files right away.
+
 = Version 1.2.8 Wednesday, February 5th, 2020 =
    * FIX: CSS: Extra spacing on a few elements on the edit gallery page.
    * PREMIUM FIX: JS: Albums Watermark: Preview image was not appearing after the image was chosen.
@@ -169,7 +175,7 @@ See [Full Documentation](https://www.slickremix.com/feed-them-gallery/)
 
 = Version 1.2.6 Tuesday, November 19th, 2019 =
    * TESTED: WordPress 5.3.0 compatibility tested. No issues currently found.
-   * ADD: SlickChris as a plugin contributer to .org repo.
+   * ADD: SlickChris as a plugin contributor to .org repo.
    
 = Version 1.2.5.1 Wednesday, October 16th, 2019 =
    * UPDATE: Add New Promo video to the ReadMe.
