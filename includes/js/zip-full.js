@@ -60,6 +60,7 @@ function ft_gallery_create_zip(postID, activate_download, create_woo_prod, downl
                 window.location.assign(data);
             }
             else if(activate_download !== 'yes' && download_newest_zip !== 'yes' && create_woo_prod == 'yes'){
+                // need to address the fact that the this link does not bring back the proper zip tab to show... ' + window.location.href + '&tab=ft_zip_gallery
                 jQuery('.ft-gallery-notice').html('ZIP Created! You can view it in the <a href="' + window.location.href + '&tab=ft_zip_gallery">ZIPs tab</a>. The Woocommerce product was also created you view it on the <a href="edit.php?post_status=publish&post_type=product&orderby=menu_order+title&order=ASC" target="_blank">Products Page</a>.');
                 jQuery('.ft-gallery-notice').prepend('<div class="fa fa-check-circle fa-3x fa-fw ft-gallery-success" ></div>');
                 jQuery('.ft-gallery-notice').addClass('updated');
