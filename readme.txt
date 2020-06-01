@@ -164,7 +164,7 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
 
 == Changelog ==
 = Version 1.2.9 Monday, June 1st, 2020 =
-   * NEW: Added languages folder to the root of plugin for those who want to add a translation files. You can [register to translate the site here](http://translate.slickremix.com/wp-login.php?action=register), then go to this link to [translate the plugin](http://translate.slickremix.com/glotpress/projects/feed-them-gallery/) and download your translation files right away.
+   * NEW: Added languages/feed-them-gallery.pot file to the root of plugin for those who want to add a translation files. You can [register to translate the site here](http://translate.slickremix.com/wp-login.php?action=register), then go to this link to [translate the plugin](http://translate.slickremix.com/glotpress/projects/feed-them-gallery/) and download your translation files right away.
 
 = Version 1.2.8 Wednesday, February 5th, 2020 =
    * FIX: CSS: Extra spacing on a few elements on the edit gallery page.
