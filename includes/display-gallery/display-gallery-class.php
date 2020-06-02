@@ -3026,5 +3026,3 @@ class Display_Gallery {
         <?php }
     }
 }
-
-?>
