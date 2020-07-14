@@ -877,7 +877,7 @@ class Metabox_Settings {
 			exit;
 		}
 
-       // error_log( print_r( $array_to_save, true ) );
+       // error_log( print_r( $array_to_save, true ) );.
 
 		// If not doing Page stuff Update options for a Post.
 		update_post_meta( $post_id, $current_info['post_type'] . '_settings_options', $array_to_save );

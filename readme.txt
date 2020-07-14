@@ -3,7 +3,7 @@ Contributors: slickremix, slickchris
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
 Tested up to: 5.4.2
-Stable tag: 1.2.9.1
+Stable tag: 1.3.0
 License: GPLv2 or later
 
 Photo Gallery creation made easy. Sell images with Auto Create Product feature for WooCommerce. Watermarking, Lightbox Popup, ZIP'ing, Tags and more!
@@ -163,6 +163,9 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.3.0 Tuesday, July 14th, 2020 =
+   * FIX: Added basename( dirname( __FILE__ ) ) within add_action to prevent warning message about languages folder path not being correct.
+
 = Version 1.2.9.1 Tuesday, June 2nd, 2020 =
    * FIX: Remove closing php bracket at the end of the display-gallery-class.php file as it was causing headers already sent message for some servers.
 

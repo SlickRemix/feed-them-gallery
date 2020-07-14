@@ -90,4 +90,3 @@ $image_or_gallery = isset( $_GET['ftg-tags'], $_GET['type'] ) && 'page' === $_GE
 
 <?php
 get_footer();
-
