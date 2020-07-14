@@ -163,6 +163,9 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.3.0 Tuesday, July 14th, 2020 =
+   * FIX: Added basename( dirname( __FILE__ ) ) within add_action to prevent warning message about languages folder path not being correct.
+
 = Version 1.2.9.1 Tuesday, June 2nd, 2020 =
    * FIX: Remove closing php bracket at the end of the display-gallery-class.php file as it was causing headers already sent message for some servers.
 
