@@ -3,7 +3,7 @@ Contributors: slickremix, slickchris
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
 Tested up to: 5.4.2
-Stable tag: 1.2.9.1
+Stable tag: 1.3.0
 License: GPLv2 or later
 
 Photo Gallery creation made easy. Sell images with Auto Create Product feature for WooCommerce. Watermarking, Lightbox Popup, ZIP'ing, Tags and more!

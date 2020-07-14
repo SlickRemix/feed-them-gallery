@@ -428,7 +428,7 @@ class Feed_Them_Gallery {
 	 */
 	public function ft_gallery_action_init() {
 		// Localization.
-		load_plugin_textdomain( 'feed-them-gallery', false, FEED_THEM_GALLERY_PLUGIN_BASENAME . '/languages' );
+		load_plugin_textdomain( 'feed-them-gallery', false,  basename( dirname( __FILE__ ) ) . '/languages' );
 	}
 
 	/**

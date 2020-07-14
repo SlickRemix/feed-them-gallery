@@ -2819,4 +2819,4 @@ class Gallery {
 						<?php
 		}
 	}
-} ?>
+}
