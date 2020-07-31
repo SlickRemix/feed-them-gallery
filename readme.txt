@@ -2,8 +2,8 @@
 Contributors: slickremix, slickchris
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
-Tested up to: 5.4.2
-Stable tag: 1.3.0
+Tested up to: 5.5
+Stable tag: 1.3.1
 License: GPLv2 or later
 
 Photo Gallery creation made easy. Sell images with Auto Create Product feature for WooCommerce. Watermarking, Lightbox Popup, ZIP'ing, Tags and more!
@@ -12,7 +12,9 @@ Photo Gallery creation made easy. Sell images with Auto Create Product feature f
 
 [youtube https://www.youtube.com/watch?v=LtmgAVmW5H4&rel=0]
 
-[View Demo](https://feedthemgallery.com/gallery-demo-one/) and adjust columns, spacing, size & look of the image gallery.
+[Try the Demo!](https://demo.feedthemgallery.com/)
+
+[View Examples](https://feedthemgallery.com/gallery-demo-one/) and adjust columns, spacing, size & look of the image gallery.
 
 SEE WHAT PEOPLE ARE SAYING ABOUT OUR PLUGIN AND SUPPORT.
 
@@ -47,7 +49,7 @@ FREE PLUGIN OPTIONS
  * Choose images already uploaded and add to your gallery
 
 = Layout Options =
- * Image Gallery Squared, similar to Instagram. [Demos](https://feedthemgallery.com/gallery-demo-one/)
+ * Image Gallery Squared, similar to Instagram. [Examples](https://feedthemgallery.com/gallery-demo-one/)
  * Image Post Gallery that looks similar to a blog post.
  * Image Post in Grid Gallery.
  * Image Gallery Collage, were different heights and width images will stack.
@@ -163,6 +165,11 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.3.1 Thursday, July 30th, 2020 =
+   * FIX: Multi-site compatibility that was causing Feed Them Gallery to not be activated and error on Multi-site network.
+   * UPDATED: Text in Readme and FeedThemGallery.com Examples versus Demo text to make things more understandable.
+   * NEW: Demo Builder launched! You can now try Feed Them Gallery out and it's premium extensions before purchasing. [Try the Demo!](https://demo.feedthemgallery.com/)
+
 = Version 1.3.0 Tuesday, July 14th, 2020 =
    * FIX: Added basename( dirname( __FILE__ ) ) within add_action to prevent warning message about languages folder path not being correct.
 
@@ -332,4 +339,4 @@ You can find answers to your questions in our [documentation](https://www.slickr
 
 == Screenshots ==
 
-Please view our [super fun demo](https://feed-them-gallery.com) for the most up to date screenshots.
+Please view our [super fun Examples](https://feed-them-gallery.com) for the most up to date screenshots.

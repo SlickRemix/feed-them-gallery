@@ -108,17 +108,9 @@ class Gallery {
 
 			$this->saved_settings_array = $all_options;
 
-		// we set current_user_can so our backend functions don't get loaded to the front end.
-		// this came about after a ticket we received about our plugin being active and
-		// causing a woo booking plugin to not be able to checkout proper, when checking out it would show the cart was empty.
-		// this current_user_can resolves that problem.
-		if ( ! function_exists( 'wp_get_current_user' ) ) {
-			include ABSPATH . 'wp-includes/pluggable.php';
-		}
-
-		if ( current_user_can( 'manage_options' ) ) {
-			// Load Metabox Setings Class (including all of the scripts and styles attached).
-			$this->metabox_settings_class = new Metabox_Settings( $this, $this->saved_settings_array );
+		if ( is_admin() ) {
+				// Load Metabox Setings Class (including all of the scripts and styles attached).
+				$this->metabox_settings_class = new Metabox_Settings( $this, $this->saved_settings_array );
 
 			// Set Main Post Type.
 			$this->metabox_settings_class->set_main_post_type( $main_post_type );
