@@ -165,7 +165,7 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
-= Version 1.3.1 Thursday, July 30th, 2020 =
+= Version 1.3.1 Tuesday, August 11th, 2020 =
    * FIX: Multi-site compatibility that was causing Feed Them Gallery to not be activated and error on Multi-site network.
    * UPDATED: Text in Readme and FeedThemGallery.com Examples versus Demo text to make things more understandable.
    * NEW: Demo Builder launched! You can now try Feed Them Gallery out and it's premium extensions before purchasing. [Try the Demo!](https://demo.feedthemgallery.com/)
