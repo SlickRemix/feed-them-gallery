@@ -166,7 +166,7 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
 
 == Changelog ==
 = Version 1.3.2 Saturday, August 15th, 2020 =
-   * FIX: Make compatible with WordPress 5.5 update. ( There is still a [bug](https://core.trac.wordpress.org/ticket/50976#comment:7) with pagination on the front end but this is a core issue we hope will be resoloved in the next week )
+   * FIX: Make compatible with WordPress 5.5 update. ( There is still a [bug](https://core.trac.wordpress.org/ticket/50976#comment:7) with pagination on the front end but this is a core issue we hope will be resolved in the next week )
 
 = Version 1.3.1 Tuesday, August 11th, 2020 =
    * FIX: Multi-site compatibility that was causing Feed Them Gallery to not be activated and error on Multi-site network.
