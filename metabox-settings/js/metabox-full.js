@@ -265,8 +265,7 @@ jQuery( document ).ready(
         }
 
         // Set as featured image hook (WP < 3.5):
-        $( 'a.wp-post-thumbnail' ).live(
-            'click',
+        $('body').on('click', 'a.wp-post-thumbnail',
             function (e) {
                 parent.tb_remove();
                 parent.location.reload( 1 );
@@ -274,8 +273,7 @@ jQuery( document ).ready(
         );
 
         // Set as featured image handler (WP >= 3.5):
-        $( 'a#insert-media-button' ).live(
-            'click',
+        $('body').on('click', 'a#insert-media-button',
             function () {
                 if (typeof wp !== 'undefined') {
                     var editor_id = $( '.wp-media-buttons:eq(0) .add_media' ).attr( 'data-editor' );

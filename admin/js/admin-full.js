@@ -1,3 +1,19 @@
+// Toggle Function for Images
+jQuery.fn.ftgToggleClick = function(func1, func2) {
+    var funcs = [func1, func2];
+    this.data( 'toggleclicked', 0 );
+    this.click(
+        function() {
+            var data = jQuery( this ).data();
+            var tc   = data.toggleclicked;
+            jQuery.proxy( funcs[tc], this )();
+            data.toggleclicked = (tc + 1) % 2;
+        }
+    );
+    return this;
+};
+
+
 // SLICKREMIX START OUR CUSTOM POPUPS
 jQuery( document ).ready(
     function () {
@@ -29,11 +45,6 @@ jQuery( document ).ready(
         jQuery( '#ft_gallery_image_to_woo_model_prod' ).on(
             'change',
             function (e) {
-
-                if (jQuery( '#ft_gallery_smart_image_orient_prod' ).is( ":checked" )) {
-                    jQuery( '#ft_gallery_smart_image_orient_prod' ).prop( 'checked', false )
-                }
-
                 var ftgGlobalValue = jQuery( "select#ft_gallery_image_to_woo_model_prod" ).val();
                 // console.log(ftgGlobalValue);
                 if (ftgGlobalValue) {
@@ -149,10 +160,12 @@ jQuery( document ).ready(
             }
         );
 
-        jQuery( '#fts-gallery-checkAll' ).toggle(
-            function (event) {
-                event.preventDefault(); // stop post action
+        jQuery( '.post-type-ft_gallery #fts-gallery-checkAll' ).ftgToggleClick(
+            function ( func1, func2 ) {
+                // jQuery('#fts-gallery-checkAll').clicktoggle(even,odd);
+                // event.preventDefault(); // stop post action
                 jQuery( '#img1plupload-thumbs input:checkbox' ).attr( 'checked', 'checked' );
+                jQuery( ".ft-gallery-myCheckbox" ).parents( '.thumb' ).addClass( 'ft-gallery-checked' );
                 jQuery( this ).html( 'Clear All' )
                 jQuery( ".wp-core-ui .button-primary.ft-gallery-download-selection-option" ).show();
                 var ftgGlobalValue           = jQuery( "select#ft_gallery_image_to_woo_model_prod" ).val();
@@ -160,7 +173,7 @@ jQuery( document ).ready(
                 var ftgSquareValue           = jQuery( "select#ft_gallery_square_to_woo_model_prod" ).val();
                 var ftgPortraitValue         = jQuery( "select#ft_gallery_portrait_to_woo_model_prod" ).val();
                 var ftgorientationValueCheck = jQuery( "#ft_gallery_smart_image_orient_prod" ).is( ':checked' );
-                var ftgchechecked            = jQuery( ".ft-gallery-myCheckbox input" ).is( ':checked' );
+                var ftgchechecked            = jQuery( ".ft-gallery-myCheckbox" ).parents( '.thumb' ).hasClass( 'ft-gallery-checked' );
 
                 if (ftgGlobalValue && ftgchechecked === true || ftgLandscapeValue && ftgSquareValue && ftgPortraitValue && ftgorientationValueCheck && ftgchechecked === true) {
                     jQuery( '#ftg-tab-content1 .ft-gallery-create-woo' ).attr( 'disabled', false );
@@ -169,19 +182,21 @@ jQuery( document ).ready(
             },
             function () {
                 jQuery( '#img1plupload-thumbs input:checkbox' ).removeAttr( 'checked' );
+                jQuery( ".ft-gallery-myCheckbox" ).parents( '.thumb' ).removeClass( 'ft-gallery-checked' );
                 jQuery( ".wp-core-ui .button-primary.ft-gallery-download-selection-option" ).hide();
                 jQuery( '#ftg-tab-content1 .ft-gallery-create-woo' ).attr( 'disabled', true );
                 jQuery( this ).html( 'Select All' );
             }
         );
 
-        jQuery( '#img1plupload-thumbs img, #img1plupload-thumbs .ft-gallery-myCheckbox' ).toggle(
-            function (event) {
-                event.preventDefault(); // stop post action
+        jQuery( '.post-type-ft_gallery #img1plupload-thumbs .ft-gallery-myCheckbox span, .post-type-ft_gallery #img1plupload-thumbs img' ).ftgToggleClick(
+            function ( func1, func2 ) {
+                // event.preventDefault(); // stop post action
                 if (jQuery( "#img1plupload-thumbs input" ).length > 0) {
                     jQuery( ".wp-core-ui .button-primary.ft-gallery-download-selection-option" ).show();
                 }
 
+                jQuery( this ).parents( '.thumb' ).addClass( 'ft-gallery-checked' );
                 jQuery( this ).parents( '.thumb' ).find( 'input:checkbox' ).attr( 'checked', 'checked' );
 
                 var ftgGlobalValue           = jQuery( "select#ft_gallery_image_to_woo_model_prod" ).val();
@@ -189,7 +204,7 @@ jQuery( document ).ready(
                 var ftgSquareValue           = jQuery( "select#ft_gallery_square_to_woo_model_prod" ).val();
                 var ftgPortraitValue         = jQuery( "select#ft_gallery_portrait_to_woo_model_prod" ).val();
                 var ftgorientationValueCheck = jQuery( "#ft_gallery_smart_image_orient_prod" ).is( ':checked' );
-                var ftgchechecked            = jQuery( ".ft-gallery-myCheckbox input" ).is( ':checked' );
+                var ftgchechecked            = jQuery( this ).parents( '.thumb' ).hasClass( 'ft-gallery-checked' );
 
                 if (ftgGlobalValue && ftgchechecked === true || ftgLandscapeValue && ftgSquareValue && ftgPortraitValue && ftgorientationValueCheck && ftgchechecked === true) {
                     jQuery( '#ftg-tab-content1 .ft-gallery-create-woo' ).attr( 'disabled', false );
@@ -197,8 +212,8 @@ jQuery( document ).ready(
             },
             function () {
                 jQuery( this ).parents( '.thumb' ).find( 'input:checkbox' ).removeAttr( 'checked' );
-                if ( ! jQuery( "#img1plupload-thumbs input" ).is( ":checked" )) {
-
+                jQuery( this ).parents( '.thumb' ).removeClass( 'ft-gallery-checked' );
+                if ( ! jQuery( ".ft-gallery-myCheckbox" ).parents( '.thumb' ).hasClass( 'ft-gallery-checked' ) ) {
                     jQuery( ".wp-core-ui .button-primary.ft-gallery-download-selection-option" ).hide();
                     jQuery( '#ftg-tab-content1 .ft-gallery-create-woo' ).attr( 'disabled', true );
                 }
@@ -269,22 +284,19 @@ jQuery( document ).ready(
             }
 
             // Create the Tags in Popup and add them to the UL!
-            CreateTags(tags, imageid)
-            {
-                if ( jQuery( 'div.ft-gallery-popup-form' ).hasClass( 'ftg-premium-active' ) ) {
-                    if (tags !== 'no tags') {
-                        for (var tag of tags) {
-                            jQuery( '.popup-ftg-tags ul.tagchecklist' ).show();
-                            jQuery( ".popup-ftg-tags ul.tagchecklist" ).append( '<li class="ftg-term-li" data-termli="' + tag.term_id + '"><button type="button" id="delete-media-term-' + tag.term_id + '" data-termid="' + tag.term_id + '" data-imageid="' + imageid + '" class="delete-media-term ntdelbutton"><span class="remove-tag-icon" aria-hidden="true"></span><span class="screen-reader-text">Remove Tag: ' + tag.name + '</span></button>&nbsp; ' + tag.name + '</li>' );
-                        }
-
-                        // Hide No Tags Message!
-                        jQuery( '.ftg-tags-none' ).hide();
-                    } else {
-                        // Hide No Tags Message!
-                        jQuery( '.popup-ftg-tags ul.tagchecklist' ).hide();
-                        jQuery( '.ftg-tags-none' ).show();
+            CreateTags(tags, imageid) {
+                if (tags !== 'no tags') {
+                    for (var tag of tags) {
+                        jQuery( '.popup-ftg-tags ul.tagchecklist' ).show();
+                        jQuery( ".popup-ftg-tags ul.tagchecklist" ).append( '<li class="ftg-term-li" data-termli="' + tag.term_id + '"><button type="button" id="delete-media-term-' + tag.term_id + '" data-termid="' + tag.term_id + '" data-imageid="' + imageid + '" class="delete-media-term ntdelbutton"><span class="remove-tag-icon" aria-hidden="true"></span><span class="screen-reader-text">Remove Tag: ' + tag.name + '</span></button>&nbsp; ' + tag.name + '</li>' );
                     }
+
+                    // Hide No Tags Message!
+                    jQuery( '.ftg-tags-none' ).hide();
+                } else {
+                    // Hide No Tags Message!
+                    jQuery( '.popup-ftg-tags ul.tagchecklist' ).hide();
+                    jQuery( '.ftg-tags-none' ).show();
                 }
             }
 
@@ -326,12 +338,11 @@ jQuery( document ).ready(
 
                             // Update Popup information for image!
                             this.UpdatePopInfo( jsArray );
-                            if ( jQuery('div.ft-gallery-popup-form').hasClass('ftg-premium-active') ) {
-                                let tags = jsArray['tags'];
 
-                                // Create tags and append to tags list!
-                                this.CreateTags(tags, id);
-                            }
+                            let tags = jsArray['tags'];
+
+                            // Create tags and append to tags list!
+                            this.CreateTags( tags, id );
                         },
                         error: () => {
                             alert( 'Error, please contact us at https://www.slickremix.com/support/ for help.' )
@@ -619,8 +630,8 @@ jQuery( document ).ready(
             () => {
                 var inst_items = jQuery.magnificPopup.instance;
                 let item_info  = FtgPopupClass.NextPrev( inst_items.items, inst_items.index, 'previous' ),
-                    id                 = item_info.data.imgid,
-                    nonce              = item_info.data.nonce;
+                    id             = item_info.data.imgid,
+                    nonce          = item_info.data.nonce;
                 inst_items.prev();
                 jQuery( ".fts-popup-image-position, .fts-popup-second-half .mfp-bottom-bar" ).height() < jQuery( ".mfp-img" ).height() ? jQuery( ".fts-popup-image-position, .fts-popup-second-half .mfp-bottom-bar" ).css( "height", jQuery( ".mfp-img" ).height() ) : jQuery( ".fts-popup-second-half .mfp-bottom-bar" ).css( "height", jQuery( ".fts-popup-image-position" ).height() );
                 // Set Attribute for Image ID!
