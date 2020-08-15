@@ -165,7 +165,7 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
-= Version 1.3.2 Saturday, August 14th, 2020 =
+= Version 1.3.2 Saturday, August 15th, 2020 =
    * FIX: Make compatible with WordPress 5.5 update.
 
 = Version 1.3.1 Tuesday, August 11th, 2020 =
