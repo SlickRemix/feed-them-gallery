@@ -3,7 +3,7 @@ Contributors: slickremix, slickchris
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
 Tested up to: 5.5
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPLv2 or later
 
 Photo Gallery creation made easy. Sell images with Auto Create Product feature for WooCommerce. Watermarking, Lightbox Popup, ZIP'ing, Tags and more!
@@ -165,6 +165,9 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.3.2 Saturday, August 15th, 2020 =
+   * FIX: Make compatible with WordPress 5.5 update.
+
 = Version 1.3.1 Tuesday, August 11th, 2020 =
    * FIX: Multi-site compatibility that was causing Feed Them Gallery to not be activated and error on Multi-site network.
    * UPDATED: Text in Readme and FeedThemGallery.com Examples versus Demo text to make things more understandable.
