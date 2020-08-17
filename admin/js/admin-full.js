@@ -339,10 +339,11 @@ jQuery( document ).ready(
                             // Update Popup information for image!
                             this.UpdatePopInfo( jsArray );
 
-                            let tags = jsArray['tags'];
-
-                            // Create tags and append to tags list!
-                            this.CreateTags( tags, id );
+                            if( !jQuery( '.ft-gallery-popup-form').hasClass( "ftg-premium-not-active" ) ) {
+                                let tags = jsArray['tags'];
+                                // Create tags and append to tags list!
+                                this.CreateTags(tags, id);
+                            }
                         },
                         error: () => {
                             alert( 'Error, please contact us at https://www.slickremix.com/support/ for help.' )

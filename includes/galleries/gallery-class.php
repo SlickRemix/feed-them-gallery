@@ -283,6 +283,7 @@ class Gallery {
             array(
                 'methods'  => \WP_REST_Server::READABLE,
                 'callback' => array( $this, 'ft_gallery_get_gallery_options' ),
+                'permission_callback' => '__return_true'
             )
         );
     }
