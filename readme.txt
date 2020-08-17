@@ -165,8 +165,11 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
-= Version 1.3.2 Saturday, August 15th, 2020 =
-   * FIX: Make compatible with WordPress 5.5 update. ( There is still a [bug](https://core.trac.wordpress.org/ticket/50976#comment:7) with pagination on the front end but this is a core issue we hope will be resolved in the next week )
+= Version 1.3.2 Monday, August 17th, 2020 =
+   * MAJOR FIX: Make compatible with WordPress 5.5 update. (There is still a [bug](https://core.trac.wordpress.org/ticket/50976#comment:7) with pagination on the front end but this is a core issue we hope will be resolved in the next week)
+   * FIX: Check for hasClass ftg-premium-not-active so we don't run a load tags js function causing js error in popup if premium is not active.
+   * FIX: permission_callback "__return_true" set for register_rest_route
+   * STYLES: Settings page inputs and select padding/spacing and adjust background/border for the copy shortcode areas.
 
 = Version 1.3.1 Tuesday, August 11th, 2020 =
    * FIX: Multi-site compatibility that was causing Feed Them Gallery to not be activated and error on Multi-site network.

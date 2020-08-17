@@ -96,6 +96,7 @@ class Display_Gallery {
             array(
                 'methods'  => \WP_REST_Server::READABLE,
                 'callback' => array( $this, 'ft_gallery_display_post_images' ),
+                'permission_callback' => '__return_true'
             )
         );
     }
@@ -712,14 +713,14 @@ class Display_Gallery {
 
         $check_total_pagination_count = ceil( esc_html( $total_pagination_count ) / esc_html( $per_page ) );
 
-        if ( $check_total_pagination_count <= get_query_var( 'page' ) ) {
+        if ( $check_total_pagination_count <= get_query_var( 'paged' ) ) {
             // This is the final count number, meaning the last page of pagination.
-            $count_fix      = get_query_var( 'page' ) - '1';
+            $count_fix      = get_query_var( 'paged' ) - '1';
             $per_page_final = $per_page * $count_fix + 1;
             $count_per_page = $total_pagination_count;
-        } elseif ( '1' < get_query_var( 'page' ) ) {
+        } elseif ( '1' < get_query_var( 'paged' ) ) {
             // This is any other number that 1 or the last page.
-            $count_per_page = min( $total_pagination_count, $per_page * get_query_var( 'page' ) );
+            $count_per_page = min( $total_pagination_count, $per_page * get_query_var( 'paged' ) );
             $per_page_final = $count_per_page - $per_page + 1;
         } else {
             // This is only for the 1st page.
@@ -763,9 +764,9 @@ class Display_Gallery {
 
         $pagination_counts = paginate_links(
             array(
-                'base'      => add_query_arg( 'page', '%#%' ),
-                'format'    => '?page=%#%',
-                'current'   => max( 1, get_query_var( 'page' ) ),
+                'base'      => add_query_arg( 'paged', '%#%' ),
+                'format'    => '?paged=%#%',
+                'current'   => max( 1, get_query_var( 'paged' ) ),
                 'mid_size'  => 3,
                 'end_size'  => 3,
                 'prev_text' => __( '&#10094;' ),
