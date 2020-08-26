@@ -24,7 +24,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Display_Gallery {
 
-
 	/**
 	 * Holds the base class object.
 	 *
@@ -695,6 +694,7 @@ class Display_Gallery {
 
 			$total_pagination_count = $gallery_class->ft_album_count_post_galleries( $ftg_id );
 			$pagination_text        = esc_html( 'Galleries', 'feed-them-gallery' );
+            $pagination_query_var   = 'paged';
 
 		} elseif ( isset( $tags ) && 'yes' === $tags ) {
 
@@ -704,22 +704,24 @@ class Display_Gallery {
 			$total_pagination_count = $image_count_for_tags;
 			$ftg_tags               = sanitize_text_field( wp_unslash( $my_get[ $taxonomy ] ) );
 			$pagination_text        = isset( $ftg_tags ) && 'page' === $ftg_tags ? esc_html( 'Galleries', 'feed-them-gallery' ) : esc_html( 'Images', 'feed-them-gallery' );
+			$pagination_query_var   = 'page';
 
 		} else {
 			$total_pagination_count = $gallery_class->ft_gallery_count_post_images( $ftg_id );
 			$pagination_text        = esc_html( 'Images', 'feed-them-gallery' );
+            $pagination_query_var   = 'paged';
 		}
 
 		$check_total_pagination_count = ceil( esc_html( $total_pagination_count ) / esc_html( $per_page ) );
 
-		if ( $check_total_pagination_count <= get_query_var( 'page' ) ) {
+		if ( $check_total_pagination_count <= get_query_var( $pagination_query_var ) ) {
 			// This is the final count number, meaning the last page of pagination.
-			$count_fix      = get_query_var( 'page' ) - '1';
+			$count_fix      = get_query_var( $pagination_query_var ) - '1';
 			$per_page_final = $per_page * $count_fix + 1;
 			$count_per_page = $total_pagination_count;
-		} elseif ( '1' < get_query_var( 'page' ) ) {
+		} elseif ( '1' < get_query_var( $pagination_query_var ) ) {
 			// This is any other number that 1 or the last page.
-			$count_per_page = min( $total_pagination_count, $per_page * get_query_var( 'page' ) );
+			$count_per_page = min( $total_pagination_count, $per_page * get_query_var( $pagination_query_var ) );
 			$per_page_final = $count_per_page - $per_page + 1;
 		} else {
 			// This is only for the 1st page.
@@ -763,9 +765,9 @@ class Display_Gallery {
 
 		$pagination_counts = paginate_links(
 			array(
-				'base'      => add_query_arg( 'page', '%#%' ),
-				'format'    => '?page=%#%',
-				'current'   => max( 1, get_query_var( 'page' ) ),
+				'base'      => add_query_arg( $pagination_query_var, '%#%' ),
+				'format'    => "?'.$pagination_query_var.'=%#%",
+				'current'   => max( 1, get_query_var( $pagination_query_var ) ),
 				'mid_size'  => 3,
 				'end_size'  => 3,
 				'prev_text' => __( '&#10094;' ),
@@ -1360,6 +1362,8 @@ class Display_Gallery {
 		$ftg_photo_count                   = null !== $option['ft_gallery_photo_count'] ? $option['ft_gallery_photo_count'] : '50';
 		$ft_gallery_show_true_pagination   = null !== $option['ft_gallery_show_true_pagination'] && 'yes' === $option['ft_gallery_show_true_pagination'] ? $option['ft_gallery_show_true_pagination'] : '';
 
+        $pagination_query_var   = isset( $_GET['ftg-tags'] ) ? 'page' : 'paged';
+
 		if ( isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] || isset( $_GET['ftg-tags'] ) && 'page' === $_GET['type'] ) {
 
 			$orderby_set = '' !== $option['ftg_sort_type'] ? $option['ftg_sort_type'] : 'date';
@@ -1372,7 +1376,7 @@ class Display_Gallery {
 
 			$count_per_page = $post_count;
 			if ( 'yes' === $ft_gallery_show_true_pagination || ! empty( $_GET['ftg-tags'] ) ) {
-				$paged = get_query_var( 'page' ) ? get_query_var( 'page' ) : 1;
+				$paged = get_query_var( $pagination_query_var ) ? get_query_var( $pagination_query_var ) : 1;
 				// After that, calculate the offset.
 				$offset = ( $paged - 1 ) * $count_per_page;
 			} else {
@@ -1444,7 +1448,7 @@ class Display_Gallery {
 			// $getpost_attr['paged'] = esc_html( $paged );
 			// echo '<pre>';
 			// print_r($getpost_attr);
-			// echo '</pre>';
+			// echo '</pre>';s
 			// echo '<pre>';
 			// print_r($image_list);
 			// echo '</pre>'; .
@@ -1459,7 +1463,7 @@ class Display_Gallery {
 			}
 
 			if ( 'yes' === $ft_gallery_show_true_pagination ) {
-				$paged  = get_query_var( 'page' ) ? get_query_var( 'page' ) : 1;
+				$paged  = get_query_var( $pagination_query_var ) ? get_query_var( $pagination_query_var ) : 1;
 				$offset = ( $paged - 1 ) * $post_count;
 			} else {
 				$paged  = $ftg['offset'];

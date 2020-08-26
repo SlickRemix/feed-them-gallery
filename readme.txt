@@ -3,7 +3,7 @@ Contributors: slickremix, slickchris
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
 Tested up to: 5.5
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 License: GPLv2 or later
 
 Photo Gallery creation made easy. Sell images with Auto Create Product feature for WooCommerce. Watermarking, Lightbox Popup, ZIP'ing, Tags and more!
@@ -165,6 +165,10 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.3.3 Wednesday, August 26th, 2020 =
+   * FIX: Pagination not working on the front end after WordPress 5.5 update
+   * UPDATED: Works with WooCommerce vs 4.4.1
+
 = Version 1.3.2 Monday, August 17th, 2020 =
    * MAJOR FIX: Make compatible with WordPress 5.5 update. (There is still a [bug](https://core.trac.wordpress.org/ticket/50976#comment:7) with pagination on the front end but this is a core issue we hope will be resolved in the next week)
    * FIX: Check for hasClass ftg-premium-not-active so we don't run a load tags js function causing js error in popup if premium is not active.
