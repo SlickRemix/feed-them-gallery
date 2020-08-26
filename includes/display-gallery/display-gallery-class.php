@@ -24,7 +24,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Display_Gallery {
 
-
 	/**
 	 * Holds the base class object.
 	 *

@@ -166,7 +166,7 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
 
 == Changelog ==
 = Version 1.3.3 Wednesday, August 26th, 2020 =
-   * FIX: Pagination not working on the front end after latest change in WordPress 5.5
+   * FIX: Pagination not working on the front end after WordPress 5.5 update
    * UPDATED: Works with WooCommerce vs 4.4.1
 
 = Version 1.3.2 Monday, August 17th, 2020 =
