@@ -53,6 +53,7 @@ class Gallery_Options {
 		$instance->woocommerce_extra_options();
 		$instance->pagination_options();
 		$instance->tags_options();
+		$instance->clients_options();
 
 		return $instance->all_options;
 	}
@@ -1111,10 +1112,10 @@ class Gallery_Options {
 					'name'             => 'ft_gallery_hide_add_to_cart',
 					'default_value'    => 'yes',
 					'options'          => array(
-                        array(
-                            'label' => esc_html__( 'No', 'feed-them-gallery' ),
-                            'value' => 'no',
-                        ),
+						array(
+							'label' => esc_html__( 'No', 'feed-them-gallery' ),
+							'value' => 'no',
+						),
 						array(
 							'label' => esc_html__( 'Yes', 'feed-them-gallery' ),
 							'value' => 'yes',
@@ -1137,10 +1138,10 @@ class Gallery_Options {
 					'name'             => 'ft_gallery_show_add_to_cart_over_image',
 					'default_value'    => 'yes',
 					'options'          => array(
-                        array(
-                            'label' => esc_html__( 'No', 'feed-them-gallery' ),
-                            'value' => 'no',
-                        ),
+						array(
+							'label' => esc_html__( 'No', 'feed-them-gallery' ),
+							'value' => 'no',
+						),
 						array(
 							'label' => esc_html__( 'Yes', 'feed-them-gallery' ),
 							'value' => 'yes',
@@ -2298,4 +2299,46 @@ class Gallery_Options {
 
 		return $this->all_options['tags'];
 	} //END TAGS OPTIONS
+
+	/**
+	 * Client Manager Options
+	 *
+	 * Options for the Tags Tab
+	 *
+	 * @return mixed
+	 * @since 1.0.0
+	 */
+	public function clients_options() {
+		$this->all_options['clients'] = array(
+			'required_prem_plugin' => 'feed_them_gallery_clients_manager',
+			'section_attr_key'     => 'clients_',
+			'section_title'        => esc_html__( 'Client Options', 'feed-them-gallery' ),
+			'main_options'         => array(
+
+				// ******************************************
+				// Gallery Clients Manager Options
+				// ******************************************
+				array(
+					'option_type'   => 'select',
+					'label'         => esc_html__( 'Choose Client Email', 'feed-them-gallery' ),
+					'type'          => 'text',
+					'id'            => 'ft-gallery-client-email',
+					'name'          => 'ft_gallery_client_email',
+					'default_value' => 'no',
+					'options'       => array(
+						array(
+							'label' => esc_html__( 'No', 'feed-them-gallery' ),
+							'value' => 'no',
+						),
+						array(
+							'label' => esc_html__( 'Yes', 'feed-them-gallery' ),
+							'value' => 'yes',
+						),
+					),
+				),
+			),
+		);
+
+		return $this->all_options['clients'];
+	} //END CLIENT MANAGER OPTIONS
 }
