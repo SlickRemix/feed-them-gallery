@@ -282,6 +282,20 @@ class Settings_Page {
             'misc' => apply_filters( 'ftg_settings_misc',
                 array(
                     'main' => array(
+						'timezone' => array(
+							'id'      => 'timezone',
+							'name'    => __( 'TimeZone', 'feed-them-gallery' ),
+							'type'    => 'select',
+							'options' => ftg_get_timezone_setting_options(),
+							'std'     => 'America/Los_Angeles'
+						),
+						'date_time_format' => array(
+							'id'      => 'date_time_format',
+							'name'    => __( 'Image Date Format', 'feed-them-gallery' ),
+							'type'    => 'select',
+							'options' => ftg_get_date_format_setting_options(),
+							'std'     => 'l, F jS, Y \a\t g:ia'
+						),
                         'fix_magnific' => array(
                             'id'      => 'fix_magnific',
                             'name'    => __( 'Disable Magnific Popup CSS?', 'feed-them-gallery' ),
@@ -301,7 +315,14 @@ class Settings_Page {
                             'name'    => __( 'Show Admin Menu Bar?', 'feed-them-gallery' ),
                             'type'    => 'checkbox',
                             'std'     => 1
-                        )
+                        ),
+						'show_powered_by' => array(
+							'id'      => 'show_powered_by',
+							'name'    => __( 'Show Powered by Text?', 'feed-them-gallery' ),
+							'type'    => 'checkbox',
+							'std'     => 0,
+							'desc'    => __( 'If enabled, powered by text will appear in the popup. Awesome! Thanks so much for sharing', 'feed-them-gallery' )
+						)
                     )
                 )		
             )

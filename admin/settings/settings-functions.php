@@ -911,3 +911,133 @@ function ftg_get_file_name_setting_options()    {
 
     return apply_filters( 'ftg_file_name_setting_options', $naming_options );
 } // ftg_get_file_name_setting_options
+
+/**
+ * Get timezone options.
+ *
+ * @since	1.4
+ * @return	array	Array of timezone options
+ */
+function ftg_get_timezone_setting_options()	{
+	date_default_timezone_set( ftg_get_option( 'timezone' ) );
+
+	$timezones = array(
+		'Pacific/Midway'                 => __( '(GMT-11:00) Midway Island, Samoa', 'feed-them-social' ),
+		'America/Adak'                   => __( '(GMT-10:00) Hawaii-Aleutian', 'feed-them-social' ),
+		'Etc/GMT+10'                     => __( '(GMT-10:00) Hawaii', 'feed-them-social' ),
+		'Pacific/Marquesas'              => __( '(GMT-09:30) Marquesas Islands', 'feed-them-social' ),
+		'Pacific/Gambier'                => __( '(GMT-09:00) Gambier Islands', 'feed-them-social' ),
+		'America/Anchorage'              => __( '(GMT-09:00) Alaska', 'feed-them-social' ),
+		'America/Anchorage'              => __( '(GMT-09:00) Gambier Islands', 'feed-them-social' ),
+		'America/Ensenada'               => __( '((GMT-08:00) Tijuana, Baja California', 'feed-them-social' ),
+		'Etc/GMT+8'                      => __( '(GMT-08:00) Pitcairn Islands', 'feed-them-social' ),
+		'America/Los_Angeles'            => __( '(GMT-08:00) Pacific Time (US & Canada)', 'feed-them-social' ),
+		'America/Denver'                 => __( '(GMT-07:00) Mountain Time (US & Canada)', 'feed-them-social' ),
+		'America/Chihuahua'              => __( '(GMT-07:00) Chihuahua, La Paz, Mazatlan', 'feed-them-social' ),
+		'America/Dawson_Creek'           => __( '(GMT-07:00) Arizona', 'feed-them-social' ),
+		'America/Belize'                 => __( '(GMT-06:00) Saskatchewan', 'feed-them-social' ),
+		'America/Cancun'                 => __( '(GMT-06:00) Guadalajara, Mexico City', 'feed-them-social' ),
+		'Chile/EasterIsland'             => __( '(GMT-06:00) Easter Island', 'feed-them-social' ),
+		'America/Chicago'                => __( '(GMT-06:00) Central Time (US & Canada)', 'feed-them-social' ),
+		'America/New_York'               => __( '(GMT-05:00) Eastern Time (US & Canada)', 'feed-them-social' ),
+		'America/Havana'                 => __( '(GMT-05:00) Cuba', 'feed-them-social' ),
+		'America/Bogota'                 => __( '(GMT-05:00) Bogota, Lima, Quito, Rio Branco', 'feed-them-social' ),
+		'America/Caracas'                => __( '(GMT-04:30) Caracas', 'feed-them-social' ),
+		'America/Santiago'               => __( '(GMT-04:00) Santiago', 'feed-them-social' ),
+		'America/La_Paz'                 => __( '(GMT-04:00) La Paz', 'feed-them-social' ),
+		'Atlantic/Stanley'               => __( '(GMT-04:00) Faukland Islands', 'feed-them-social' ),
+		'America/Goose_Bay'              => __( '(GMT-04:00) Atlantic Time (Goose Bay)', 'feed-them-social' ),
+		'America/Glace_Bay'              => __( '(GMT-04:00) Atlantic Time (Canada)', 'feed-them-social' ),
+		'America/St_Johns'               => __( '(GMT-03:30) Newfoundland', 'feed-them-social' ),
+		'America/Araguaina'              => __( '(GMT-03:00) UTC-3', 'feed-them-social' ),
+		'America/Montevideo'             => __( '(GMT-03:00) Montevideo', 'feed-them-social' ),
+		'America/Miquelon'               => __( '(GMT-03:00) Miquelon, St. Pierre', 'feed-them-social' ),
+		'America/Godthab'                => __( '(GMT-03:00) Greenland', 'feed-them-social' ),
+		'America/Argentina/Buenos_Aires' => __( '(GMT-03:00) Buenos Aires', 'feed-them-social' ),
+		'America/Sao_Paulo'              => __( '(GMT-03:00) Brasilia', 'feed-them-social' ),
+		'AAmerica/Noronha'               => __( '(GMT-02:00) Mid-Atlantic', 'feed-them-social' ),
+		'Atlantic/Cape_Verde'            => __( '(GMT-01:00) Cape Verde Is.', 'feed-them-social' ),
+		'Atlantic/Azores'                => __( '(GMT-01:00) Azores', 'feed-them-social' ),
+		'Europe/Belfast'                 => __( '(GMT) Greenwich Mean Time : Belfast', 'feed-them-social' ),
+		'Europe/Dublin'                  => __( '(GMT) Greenwich Mean Time : Dublin', 'feed-them-social' ),
+		'Europe/Lisbon'                  => __( 'GMT) Greenwich Mean Time : Lisbon', 'feed-them-social' ),
+		'Europe/London'                  => __( '(GMT) Greenwich Mean Time : London', 'feed-them-social' ),
+		'Africa/Abidjan'                 => __( '(GMT) Monrovia, Reykjavik', 'feed-them-social' ),
+		'Europe/Amsterdam'               => __( '(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna', 'feed-them-social' ),
+		'Europe/Belgrade'                => __( '(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague', 'feed-them-social' ),
+		'Africa/Algiers'                 => __( '(GMT+01:00) West Central Africa', 'feed-them-social' ),
+		'Africa/Windhoek'                => __( '(GMT+01:00) Windhoek', 'feed-them-social' ),
+		'Asia/Beirut'                    => __( 'GMT+02:00) Beirut', 'feed-them-social' ),
+		'Africa/Cairo'                   => __( '(GMT+02:00) Cairo', 'feed-them-social' ),
+		'Asia/Gaza'                      => __( '(GMT+02:00) Gaza', 'feed-them-social' ),
+		'Africa/Blantyre'                => __( '(GMT+02:00) Harare, Pretoria', 'feed-them-social' ),
+		'Asia/Jerusalem'                 => __( '(GMT+02:00) Jerusalem', 'feed-them-social' ),
+		'Europe/Minsk'                   => __( '(GMT+02:00) Minsk', 'feed-them-social' ),
+		'Asia/Damascus'                  => __( '(GMT+02:00) Syria', 'feed-them-social' ),
+		'Europe/Moscow'                  => __( '(GMT+03:00) Moscow, St. Petersburg, Volgograd', 'feed-them-social' ),
+		'Africa/Addis_Ababa'             => __( '(GMT+03:00) Nairobi', 'feed-them-social' ),
+		'Asia/Tehran'                    => __( '(GMT+03:30) Tehran', 'feed-them-social' ),
+		'Asia/Dubai'                     => __( '(GMT+04:00) Abu Dhabi, Muscat', 'feed-them-social' ),
+		'Asia/Yerevan'                   => __( '(GMT+04:00) Yerevan', 'feed-them-social' ),
+		'Asia/Kabul'                     => __( '(GMT+04:30) Kabul', 'feed-them-social' ),
+		'Asia/Yekaterinburg'             => __( '(GMT+05:00) Ekaterinburg', 'feed-them-social' ),
+		'Asia/Tashkent'                  => __( '(GMT+05:00) Tashkent', 'feed-them-social' ),
+		'Asia/Kolkata'                   => __( '(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi', 'feed-them-social' ),
+		'Asia/Katmandu'                  => __( '(GMT+05:45) Kathmandu', 'feed-them-social' ),
+		'Asia/Dhaka'                     => __( '(GMT+06:00) Astana, Dhaka', 'feed-them-social' ),
+		'Asia/Novosibirsk'               => __( '(GMT+06:00) Novosibirsk', 'feed-them-social' ),
+		'Asia/Rangoon'                   => __( '(GMT+06:30) Yangon (Rangoon)', 'feed-them-social' ),
+		'Asia/Bangkok'                   => __( 'GMT+07:00) Bangkok, Hanoi, Jakarta', 'feed-them-social' ),
+		'Asia/Krasnoyarsk'               => __( '(GMT+07:00) Krasnoyarsk', 'feed-them-social' ),
+		'Asia/Hong_Kong'                 => __( 'GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi', 'feed-them-social' ),
+		'Asia/Irkutsk'                   => __( '(GMT+08:00) Irkutsk, Ulaan Bataar', 'feed-them-social' ),
+		'Australia/Perth'                => __( '(GMT+08:00) Perth', 'feed-them-social' ),
+		'Australia/Eucla'                => __( '(GMT+08:45) Eucla', 'feed-them-social' ),
+		'Asia/Tokyo'                     => __( '(GMT+09:00) Osaka, Sapporo, Tokyo', 'feed-them-social' ),
+		'Asia/Seoul'                     => __( '(GMT+09:00) Seoul', 'feed-them-social' ),
+		'Asia/Yakutsk'                   => __( '(GMT+09:00) Yakutsk', 'feed-them-social' ),
+		'Australia/Darwin'               => __( '(GMT+09:30) Darwin', 'feed-them-social' ),
+		'Australia/Brisbane'             => __( '(GMT+10:00) Brisbane', 'feed-them-social' ),
+		'Australia/Hobart'               => __( '(GMT+10:00) Sydney', 'feed-them-social' ),
+		'Asia/Vladivostok'               => __( '(GMT+10:00) Vladivostok', 'feed-them-social' ),
+		'Australia/Lord_Howe'            => __( '(GMT+10:30) Lord Howe Island', 'feed-them-social' ),
+		'Etc/GMT-11'                     => __( '(GMT+11:00) Solomon Is., New Caledonia', 'feed-them-social' ),
+		'Asia/Magadan'                   => __( '(GMT+11:00) Magadan', 'feed-them-social' ),
+		'Pacific/Norfolk'                => __( '(GMT+11:30) Norfolk Island', 'feed-them-social' ),
+		'Asia/Anadyr'                    => __( '(GMT+12:00) Anadyr, Kamchatka', 'feed-them-social' ),
+		'Pacific/Auckland'               => __( '(GMT+12:00) Auckland, Wellington', 'feed-them-social' ),
+		'Etc/GMT-12'                     => __( '(GMT+12:00) Fiji, Kamchatka, Marshall Is.', 'feed-them-social' ),
+		'Pacific/Chatham'                => __( 'GMT+12:45) Chatham Islands', 'feed-them-social' ),
+		'Pacific/Tongatapu'              => __( '(GMT+13:00) Nuku\'alofa', 'feed-them-social' ),
+		'Pacific/Kiritimati'             => __( '(GMT+14:00) Kiritimati', 'feed-them-social' )
+	);
+
+	return $timezones;
+} // ftg_get_timezone_setting_options
+
+/**
+ * Get date format options.
+ *
+ * @since	1.4
+ * @return	array	Array of date format options
+ */
+function ftg_get_date_format_setting_options()	{
+	$formats = array(
+		'l, F jS, Y \a\t g:ia' => date( 'l, F jS, Y \a\t g:ia' ),
+		'F j, Y \a\t g:ia'     => date( 'F j, Y \a\t g:ia' ),
+		'F j, Y g:ia'          => date( 'F j, Y g:ia' ),
+		'F, Y \a\t g:ia'       => date( 'F, Y \a\t g:ia' ),
+		'M j, Y @ g:ia'        => date( 'M j, Y @ g:ia' ),
+		'M j, Y @ G:i'         => date( 'M j, Y @ G:i' ),
+		'm/d/Y \a\t g:ia'      => date( 'm/d/Y \a\t g:ia' ),
+		'm/d/Y @ G:i'          => date( 'm/d/Y @ G:i' ),
+		'd/m/Y \a\t g:ia'      => date( 'd/m/Y \a\t g:ia' ),
+		'd/m/Y @ G:i'          => date( 'd/m/Y @ G:i' ),
+		'Y/m/d \a\t g:ia'      => date( 'Y/m/d \a\t g:ia' ),
+		'Y/m/d @ G:i'          => date( 'Y/m/d @ G:i' ),
+		'one-day-ago'          => __( '1 day ago', 'feed-them-gallery' ),
+		'fts-custom-date'      => __( 'Use Custom Date and Time Option Below', 'feed-them-gallery' )
+	);
+
+	return $formats;
+} // ftg_get_date_format_setting_options
