@@ -65,11 +65,26 @@ class FTG_Backwards_Compat {
             'ft-gallery-options-settings-custom-css-second',
             'ft-gallery-settings-admin-textarea-css',
 			'ft-gallery-timezone',
-			'date_time_format',
+			'ft-gallery-date-and-time-format',
 			'ft_gallery_fix_magnific',
             'ft_gallery_duplicate_post_show',
             'ft-gallery-admin-bar-menu',
-            'ft-gallery-powered-text-options-settings'
+            'ft-gallery-powered-text-options-settings',
+			'ft_gallery_language_second',
+			'ft_gallery_language_seconds',
+			'ft_gallery_language_minute',
+			'ft_gallery_language_minutes',
+			'ft_gallery_language_hour',
+			'ft_gallery_language_hours',
+			'ft_gallery_language_day',
+			'ft_gallery_language_days',
+			'ft_gallery_language_week',
+			'ft_gallery_language_weeks',
+			'ft_gallery_language_month',
+			'ft_gallery_language_months',
+			'ft_gallery_language_year',
+			'ft_gallery_language_years',
+			'ft_gallery_language_ago'
 		);
 
 		// Add Actions and Filters.
@@ -171,6 +186,24 @@ class FTG_Backwards_Compat {
 				break;
 			case 'ft-gallery-powered-text-options-settings':
 				$value = ftg_get_option( 'show_powered_by' );
+				break;
+			case 'ft_gallery_language_second':
+			case 'ft_gallery_language_seconds':
+			case 'ft_gallery_language_minute':
+			case 'ft_gallery_language_minutes':
+			case 'ft_gallery_language_hour':
+			case 'ft_gallery_language_hours':
+			case 'ft_gallery_language_day':
+			case 'ft_gallery_language_days':
+			case 'ft_gallery_language_week':
+			case 'ft_gallery_language_weeks':
+			case 'ft_gallery_language_month':
+			case 'ft_gallery_language_months':
+			case 'ft_gallery_language_year':
+			case 'ft_gallery_language_years':
+			case 'ft_gallery_language_ago':
+				$key   = str_replace( 'ft_gallery_', '', $option );
+				$value = ftg_get_option( $key );
 				break;
 		}
 

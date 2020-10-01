@@ -127,6 +127,8 @@ class FTG_Upgrades {
             'ft_gallery_attch_title_file_name',
             'ft_gallery_attch_title_attch_id',
 			'ft_gallery_format_attachment_titles_options',
+			'ft-gallery-timezone',
+			'ft-gallery-date-and-time-format',
 			'ft_gallery_text_color',
             'ft_gallery_text_size',
             'ft_gallery_description_color',
@@ -140,7 +142,21 @@ class FTG_Upgrades {
             'ft_gallery_duplicate_post_show',
             'ft-gallery-admin-bar-menu',
             'ft-gallery-powered-text-options-settings',
-			'ft-gallery-timezone'
+			'ft_gallery_language_second',
+			'ft_gallery_language_seconds',
+			'ft_gallery_language_minute',
+			'ft_gallery_language_minutes',
+			'ft_gallery_language_hour',
+			'ft_gallery_language_hours',
+			'ft_gallery_language_day',
+			'ft_gallery_language_days',
+			'ft_gallery_language_week',
+			'ft_gallery_language_weeks',
+			'ft_gallery_language_month',
+			'ft_gallery_language_months',
+			'ft_gallery_language_year',
+			'ft_gallery_language_years',
+			'ft_gallery_language_ago'
 		);
 
 		foreach( $old_options as $option )	{

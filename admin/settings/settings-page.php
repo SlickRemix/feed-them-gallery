@@ -47,6 +47,9 @@ class Settings_Page {
         // Register Settings
         add_action( 'admin_init', array( $this, 'register_settings' ) );
 
+		// Additional date format fields
+		add_filter( 'ftg_after_setting_output', array( $this, 'date_translate_fields' ), 10, 2 );
+
         // Add authors note
         add_action( 'ftg_settings_bottom', array( $this, 'authors_note' ) );
 	}
@@ -216,6 +219,22 @@ class Settings_Page {
             'styles' => apply_filters( 'ftg_settings_styles',
                 array(
                     'main' => array(
+						'timezone' => array(
+							'id'      => 'timezone',
+							'name'    => __( 'TimeZone', 'feed-them-gallery' ),
+							'type'    => 'select',
+							'options' => ftg_get_timezone_setting_options(),
+							'std'     => 'America/Los_Angeles'
+						),
+						'date_time_format' => array(
+							'id'      => 'date_time_format',
+							'name'    => __( 'Image Date Format', 'feed-them-gallery' ),
+							'type'    => 'select',
+							'options' => ftg_get_date_format_setting_options(),
+							'std'     => 'l, F jS, Y \a\t g:ia'
+						)
+					),
+					'color_size' => array(
                         'text_color' => array(
                             'id'          => 'text_color',
                             'name'        => __( 'Title Text Color', 'feed-them-gallery' ),
@@ -282,20 +301,6 @@ class Settings_Page {
             'misc' => apply_filters( 'ftg_settings_misc',
                 array(
                     'main' => array(
-						'timezone' => array(
-							'id'      => 'timezone',
-							'name'    => __( 'TimeZone', 'feed-them-gallery' ),
-							'type'    => 'select',
-							'options' => ftg_get_timezone_setting_options(),
-							'std'     => 'America/Los_Angeles'
-						),
-						'date_time_format' => array(
-							'id'      => 'date_time_format',
-							'name'    => __( 'Image Date Format', 'feed-them-gallery' ),
-							'type'    => 'select',
-							'options' => ftg_get_date_format_setting_options(),
-							'std'     => 'l, F jS, Y \a\t g:ia'
-						),
                         'fix_magnific' => array(
                             'id'      => 'fix_magnific',
                             'name'    => __( 'Disable Magnific Popup CSS?', 'feed-them-gallery' ),
@@ -394,7 +399,8 @@ class Settings_Page {
                 'options'    => __( 'Title Options', 'feed-them-gallery' )
             ) ),
             'styles'  => apply_filters( 'ftg_settings_sections_styles', array(
-                'main'       => __( 'Image Color & Size', 'feed-them-gallery' ),
+				'main'       => __( 'Image Date Options', 'feed-them-gallery' ),
+                'color_size' => __( 'Image Color & Size', 'feed-them-gallery' ),
                 'css'        => __( 'Custom CSS', 'feed-them-gallery' )
             ) ),
             'misc'  => apply_filters( 'ftg_settings_sections_misc', array(
@@ -671,6 +677,72 @@ class Settings_Page {
         <?php
         echo ob_get_clean();
     }
+
+	/**
+	 * Adds the translation fields to the image date setting field.
+	 *
+	 * @since	1.4
+	 * @param	string	$html	HTML output
+	 * @param	array	$args	Array of arguments passed to setting
+	 * @return	string	HTML output
+	 */
+	public function date_translate_fields( $html, $args )	{
+		if ( 'date_time_format' == $args['id'] )	{
+			ob_start();
+			?>
+
+			<tr class="custom_time_ago_wrap" style="display: none;">
+				<th scope="row"><?php _e( 'Translations for 1 day ago', 'feed-them-gallery' ); ?></th>
+				<td>&nbsp;</td>
+			</tr>
+
+			<?php
+			foreach( $this->get_translation_fields() as $field => $value ) : ?>
+				<tr class="custom_time_ago_wrap" style="display: none;">
+					<th scope="row"><?php echo str_replace( 'language_', '', esc_html( $field ) ); ?></th>
+					<td>
+					<?php ftg_text_callback( array(
+						'id'  => $field,
+						'std' => $value
+					) ); ?>
+					</td>
+				</tr>
+
+			<?php endforeach;
+
+			$html .= ob_get_clean();
+		}
+
+		return $html;
+	} // date_translate_fields
+
+	/**
+	 * Retrieve the translation fields.
+	 *
+	 * @since	1.4
+	 * @return	array	Array of fields and defaults
+	 */
+	public function get_translation_fields()	{
+		$fields = array(
+			'language_second'  => ftg_get_option( 'language_second', __( 'second', 'feed-them-gallery' ) ),
+			'language_seconds' => ftg_get_option( 'language_second', __( 'seconds', 'feed-them-gallery' ) ),
+			'language_minute'  => ftg_get_option( 'language_second', __( 'minute', 'feed-them-gallery' ) ),
+			'language_minutes' => ftg_get_option( 'language_second', __( 'minutes', 'feed-them-gallery' ) ),
+			'language_hour'    => ftg_get_option( 'language_second', __( 'hour', 'feed-them-gallery' ) ),
+			'language_hours'   => ftg_get_option( 'language_second', __( 'hours', 'feed-them-gallery' ) ),
+			'language_day'     => ftg_get_option( 'language_second', __( 'day', 'feed-them-gallery' ) ),
+			'language_days'    => ftg_get_option( 'language_second', __( 'days', 'feed-them-gallery' ) ),
+			'language_week'    => ftg_get_option( 'language_second', __( 'week', 'feed-them-gallery' ) ),
+			'language_weeks'   => ftg_get_option( 'language_second', __( 'weeks', 'feed-them-gallery' ) ),
+			'language_month'   => ftg_get_option( 'language_second', __( 'month', 'feed-them-gallery' ) ),
+			'language_months'  => ftg_get_option( 'language_second', __( 'months', 'feed-them-gallery' ) ),
+			'language_year'    => ftg_get_option( 'language_second', __( 'year', 'feed-them-gallery' ) ),
+			'language_years'   => ftg_get_option( 'language_second', __( 'years', 'feed-them-gallery' ) ),
+			'language_ago'     => ftg_get_option( 'language_second', __( 'ago', 'feed-them-gallery' ) ),
+		);
+
+		return $fields;
+	} // get_translation_fields
 
     /**
      * Adds the authors note to the bottom of all FTG settings pages.
