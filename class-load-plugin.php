@@ -358,10 +358,10 @@ class Feed_Them_Gallery {
 	private static function includes() {
 
 		// Admin Pages.
-        include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'admin/settings/register-settings.php';
+        include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'admin/settings/settings-page.php';
+        include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'admin/settings/settings-functions.php';
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'admin/system-info.php';
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'metabox-settings/metabox-settings-class.php';
-		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'admin/settings-page.php';
 
 		// Setup Functions Class.
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/setup-functions-class.php';

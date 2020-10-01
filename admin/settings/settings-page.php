@@ -40,10 +40,14 @@ class Settings_Page {
 	 * @since 1.0.0
 	 */
 	public function add_actions_filters() {
-		if ( is_admin() ) {
-			// Adds setting page to Feed Them Gallery menu.
-			add_action( 'admin_menu', array( $this, 'add_submenu_page' ) );
-		}
+
+        // Add the settings menu page
+        add_action( 'admin_menu', array( $this, 'add_submenu_page' ) );
+
+        // Register Settings
+        add_action( 'admin_init', array( $this, 'register_settings' ) );
+
+        // Add authors note
         add_action( 'ftg_settings_bottom', array( $this, 'authors_note' ) );
 	}
 
@@ -51,26 +55,6 @@ class Settings_Page {
 	 * Settings_Page constructor.
 	 */
 	public function __construct() {}
-
-    public function mappings()  {
-        $mappings = array(
-            // These are using the file_naming option array
-            'ft-gallery-use-attachment-naming'            => 'use_attachment_naming',
-            'ft_gallery_attch_name_gallery_name'          => 'attch_name_gallery_name',
-            'ft_gallery_attch_name_post_id'               => 'attch_name_post_id',
-            'ft_gallery_attch_name_date'                  => 'attch_name_date',
-            'ft_gallery_attch_name_file_name'             => 'attch_name_file_name',
-            'ft_gallery_attch_name_attch_id'              => 'attch_name_attch_id',
-            'ft_gallery_attch_title_gallery_name'         => 'attch_title_gallery_name',
-            'ft_gallery_attch_title_post_id'              => 'attch_title_post_id',
-            'ft_gallery_attch_title_date'                 => 'attch_title_date',
-            'ft_gallery_attch_title_file_name'            => 'attch_title_file_name',
-            'ft_gallery_attch_title_attch_id'             => 'attch_title_attch_id',
-            // End of file_naming option array
-            // This is an array already
-            'ft_gallery_format_attachment_titles_options' => 'format_attachment_titles_options'
-        );
-    }
 
 	/**
 	 * FT Gallery Submenu Pages
@@ -87,10 +71,401 @@ class Settings_Page {
 			esc_html__( 'Settings', 'feed-them-gallery' ),
 			'manage_options',
 			'ft-gallery-settings-page',
-			array( $this, 'Settings_Page' )
+			array( $this, 'display_settings_page' )
 		);
 
 	}
+
+    /**
+     * Add all settings sections and fields.
+     *
+     * @since	1.0
+     * @return	void
+    */
+    public function register_settings() {
+
+        if ( false == get_option( 'ftg_settings' ) ) {
+            add_option( 'ftg_settings' );
+        }
+
+        foreach ( $this->get_registered_settings() as $tab => $sections ) {
+            foreach ( $sections as $section => $settings) {
+
+                // Check for backwards compatibility
+                $section_tabs = $this->get_settings_tab_sections( $tab );
+                if ( ! is_array( $section_tabs ) || ! array_key_exists( $section, $section_tabs ) ) {
+                    $section = 'main';
+                    $settings = $sections;
+                }
+
+                add_settings_section(
+                    'ftg_settings_' . $tab . '_' . $section,
+                    __return_null(),
+                    '__return_false',
+                    'ftg_settings_' . $tab . '_' . $section
+                );
+
+                foreach ( $settings as $option ) {
+                    // For backwards compatibility
+                    if ( empty( $option['id'] ) ) {
+                        continue;
+                    }
+
+                    $args = wp_parse_args( $option, array(
+                        'section'       => $section,
+                        'id'            => null,
+                        'desc'          => '',
+                        'name'          => '',
+                        'size'          => null,
+                        'options'       => '',
+                        'std'           => '',
+                        'min'           => null,
+                        'max'           => null,
+                        'step'          => null,
+                        'chosen'        => null,
+                        'placeholder'   => null,
+                        'allow_blank'   => true,
+                        'readonly'      => false,
+                        'faux'          => false,
+                        'tooltip_title' => false,
+                        'tooltip_desc'  => false,
+                        'field_class'   => ''
+                    ) );
+
+                    add_settings_field(
+                        'ftg_settings[' . $args['id'] . ']',
+                        $args['name'],
+                        function_exists( 'ftg_' . $args['type'] . '_callback' ) ? 'ftg_' . $args['type'] . '_callback' : 'ftg_missing_callback',
+                        'ftg_settings_' . $tab . '_' . $section,
+                        'ftg_settings_' . $tab . '_' . $section,
+                        $args
+                    );
+                }
+            }
+
+        }
+
+        // Creates our settings in the options table
+        register_setting( 'ftg_settings', 'ftg_settings', array( $this, 'settings_sanitize' ) );
+
+    } // register_settings
+
+    /**
+     * Retrieve the array of plugin settings.
+     *
+     * @since	1.4
+     * @return	array    Array of plugin settings to register
+     */
+    public function get_registered_settings() {
+
+        /**
+         * 'Whitelisted' FTG settings, filters are provided for each settings
+         * section to allow extensions and other plugins to add their own settings.
+         */
+        $ftg_settings = array(
+            /** General Settings */
+            'general' => apply_filters( 'ftg_settings_general',
+                array(
+                    'main' => array(
+                        'use_attachment_naming' => array(
+                            'id'    => 'use_attachment_naming',
+                            'name'  => __( 'Rename on Upload?', 'feed-them-gallery' ),
+                            'desc'  => __( 'Enable to use Attachment File and Title Renaming when uploading each image.', 'feed-them-gallery' ),
+                            'type'  => 'checkbox',
+                            'std'   => 0,
+                            'class' => 'ftg_setting_option_attachment_naming'
+                        ),
+                        'file_naming' => array(
+                            'id'      => 'file_naming',
+                            'name'    => __( 'File & Title Renaming', 'feed-them-gallery' ),
+                            'type'    => 'file_naming'
+                        )
+                    ),
+                    'formatting' => array(
+                        'attachment_titles' => array(
+                            'id'      => 'attachment_titles',
+                            'name'    => __( 'Format Attachment Titles', 'feed-them-gallery' ),
+                            'type'    => 'attachment_titles'
+                        )
+                    ),
+                    'options' => array(
+                        'fat_alt' => array(
+                            'id'      => 'fat_alt',
+                            'name'    => __( 'Title as Alt Text', 'feed-them-gallery' ),
+                            'type'    => 'checkbox',
+                            'std'     => 0,
+                            'desc'    => __( "If enabled, the attachment title will be added to the 'Alternative Text' field", 'feed-them-gallery' )
+                        ),
+                        'fat_caption' => array(
+                            'id'      => 'fat_caption',
+                            'name'    => __( 'Title as Caption', 'feed-them-gallery' ),
+                            'type'    => 'checkbox',
+                            'std'     => 0,
+                            'desc'    => __( "If enabled, the attachment title will be added to the 'Caption' field", 'feed-them-gallery' )
+                        ),
+                        'fat_description' => array(
+                            'id'      => 'fat_description',
+                            'name'    => __( 'Title as Description', 'feed-them-gallery' ),
+                            'type'    => 'checkbox',
+                            'std'     => 0,
+                            'desc'    => __( "If enabled, the attachment title will be added to the 'Description' field", 'feed-them-gallery' )
+                        )
+                    )
+                )		
+            ),
+            'styles' => apply_filters( 'ftg_settings_styles',
+                array(
+                    'main' => array(
+                        'text_color' => array(
+                            'id'          => 'text_color',
+                            'name'        => __( 'Title Text Color', 'feed-them-gallery' ),
+                            'type'        => 'color',
+                            'placeholder' => __( '#222', 'feed-them-gallery' )
+                        ),
+                        'text_size' => array(
+                            'id'          => 'text_size',
+                            'name'        => __( 'Title Text Size', 'feed-them-gallery' ),
+                            'type'        => 'text',
+                            'placeholder' => '14px',
+                            'size'        => 'small'
+                        ),
+                        'description_color' => array(
+                            'id'          => 'description_color',
+                            'name'        => __( 'Description Text Color', 'feed-them-gallery' ),
+                            'type'        => 'color',
+                            'placeholder' => __( '#222', 'feed-them-gallery' )
+                        ),
+                        'description_size' => array(
+                            'id'          => 'description_size',
+                            'name'        => __( 'Description Text Size', 'feed-them-gallery' ),
+                            'type'        => 'text',
+                            'placeholder' => '14px',
+                            'size'        => 'small'
+                        ),
+                        'link_color' => array(
+                            'id'          => 'link_color',
+                            'name'        => __( 'Link Text Color', 'feed-them-gallery' ),
+                            'type'        => 'color',
+                            'placeholder' => __( '#ddd', 'feed-them-gallery' )
+                        ),
+                        'link_color_hover' => array(
+                            'id'          => 'link_color_hover',
+                            'name'        => __( 'Link Hover Text Size', 'feed-them-gallery' ),
+                            'type'        => 'text',
+                            'placeholder' => '14px',
+                            'size'        => 'small'
+                        ),
+                        'post_time' => array(
+                            'id'          => 'post_time',
+                            'name'        => __( 'Date Text Color', 'feed-them-gallery' ),
+                            'type'        => 'color',
+                            'placeholder' => __( '#ddd', 'feed-them-gallery' )
+                        )
+                    ),
+                    'css' => array(
+                        'custom_css_second' => array(
+                            'id'      => 'custom_css_second',
+                            'name'    => __( 'Use Custom CSS?', 'feed-them-gallery' ),
+                            'type'    => 'checkbox',
+                            'std'     => 0,
+                            'desc'    => __( 'If enabled, CSS you enter below will be loaded and used', 'feed-them-gallery' )
+                        ),
+                        'custom_css' => array(
+                            'id'      => 'custom_css',
+                            'name'    => __( 'Custom CSS?', 'feed-them-gallery' ),
+                            'type'    => 'textarea',
+                            'desc'    => __( 'Add your custom CSS code into the textarea', 'feed-them-gallery' )
+                        )
+                    )
+                )
+            ),
+            'misc' => apply_filters( 'ftg_settings_misc',
+                array(
+                    'main' => array(
+                        'fix_magnific' => array(
+                            'id'      => 'fix_magnific',
+                            'name'    => __( 'Disable Magnific Popup CSS?', 'feed-them-gallery' ),
+                            'type'    => 'checkbox',
+                            'std'     => 0,
+                            'desc'    => __( 'Enable this if your theme is already loading the style sheet for the popup.', 'feed-them-gallery' )
+                        ),
+                        'duplicate_post_show' => array(
+                            'id'      => 'duplicate_post_show',
+                            'name'    => __( 'Disable Duplicate Gallery?', 'feed-them-gallery' ),
+                            'type'    => 'checkbox',
+                            'std'     => 0,
+                            'desc'    => __( 'Enable this if already have a duplicate post plugin installed.', 'feed-them-gallery' )
+                        ),
+                        'show_admin_bar' => array(
+                            'id'      => 'show_admin_bar',
+                            'name'    => __( 'Show Admin Menu Bar?', 'feed-them-gallery' ),
+                            'type'    => 'checkbox',
+                            'std'     => 1
+                        )
+                    )
+                )		
+            )
+        );
+
+        return apply_filters( 'ftg_registered_settings', $ftg_settings );
+    } // get_registered_settings
+
+    /**
+     * Retrieve settings tabs
+     *
+     * @since	1.4
+     * @return	array		$tabs
+     */
+    public function get_settings_tabs() {
+
+        $settings = $this->get_registered_settings();
+
+        $tabs                     = array();
+        $tabs['general']          = __( 'Attachments', 'feed-them-gallery' );
+        $tabs['styles']           = __( 'Gallery Styling', 'feed-them-gallery' );
+        $tabs['misc']             = __( 'Misc', 'feed-them-gallery' );
+
+        return apply_filters( 'ftg_settings_tabs', $tabs );
+    } // get_settings_tabs
+
+    /**
+     * Retrieve settings tabs
+     *
+     * @since	1.4
+     * @return	array		$section
+     */
+    public function get_settings_tab_sections( $tab = false ) {
+
+        $tabs     = false;
+        $sections = $this->get_registered_settings_sections();
+
+        if( $tab && ! empty( $sections[ $tab ] ) ) {
+            $tabs = $sections[ $tab ];
+        } else if ( $tab ) {
+            $tabs = false;
+        }
+
+        return $tabs;
+    } // get_settings_tab_sections
+
+    /**
+     * Get the settings sections for each tab
+     * Uses a static to avoid running the filters on every request to this function
+     *
+     * @since	1.4
+     * @return	array		Array of tabs and sections
+     */
+    public function get_registered_settings_sections() {
+
+        static $sections = false;
+
+        if ( false !== $sections ) {
+            return $sections;
+        }
+
+        $sections = array(
+            'general' => apply_filters( 'ftg_settings_sections_general', array(
+                'main'       => __( 'Renaming', 'feed-them-gallery' ),
+                'formatting' => __( 'Title Format', 'feed-them-gallery' ),
+                'options'    => __( 'Title Options', 'feed-them-gallery' )
+            ) ),
+            'styles'  => apply_filters( 'ftg_settings_sections_styles', array(
+                'main'       => __( 'Image Color & Size', 'feed-them-gallery' ),
+                'css'        => __( 'Custom CSS', 'feed-them-gallery' )
+            ) ),
+            'misc'  => apply_filters( 'ftg_settings_sections_misc', array(
+                'main'       => __( 'General', 'feed-them-gallery' )
+            ) )
+        );
+
+        $sections = apply_filters( 'ftg_settings_sections', $sections );
+
+        return $sections;
+    } // get_registered_settings_sections
+
+    /**
+     * Settings Sanitization.
+     *
+     * Adds a settings error (for the updated message)
+     * At some point this will validate input.
+     *
+     * @since	1.4
+     * @param	array	$input	The value inputted in the field.
+     * @return	string	$input	Sanitizied value.
+     */
+    public function ftg_settings_sanitize( $input = array() ) {
+
+        global $ftg_options;
+
+        if ( empty( $_POST['_wp_http_referer'] ) ) {
+            return $input;
+        }
+
+        parse_str( $_POST['_wp_http_referer'], $referrer );
+
+        $settings = $this->get_registered_settings();
+        $tab      = isset( $referrer['tab'] ) ? $referrer['tab'] : 'general';
+        $section  = isset( $referrer['section'] ) ? $referrer['section'] : 'main';
+
+        $input = $input ? $input : array();
+
+        $input = apply_filters( 'ftg_settings_' . $tab . '-' . $section . '_sanitize', $input );
+        if ( 'main' === $section )  {
+            // Check for extensions that aren't using new sections
+            $input = apply_filters( 'ftg_settings_' . $tab . '_sanitize', $input );
+
+            // Check for an override on the section for when main is empty
+            if ( ! empty( $_POST['ftg_section_override'] ) ) {
+                $section = sanitize_text_field( $_POST['ftg_section_override'] );
+            }
+        }
+
+        // Loop through each setting being saved and pass it through a sanitization filter
+        foreach ( $input as $key => $value ) {
+
+            // Get the setting type (checkbox, select, etc)
+            $type = isset( $settings[ $tab ][ $key ]['type'] ) ? $settings[ $tab ][ $key ]['type'] : false;
+
+            if ( $type ) {
+                // Field type specific filter
+                $input[ $key ] = apply_filters( 'ftg_settings_sanitize_' . $type, $value, $key );
+            }
+
+            // Specific key filter
+            $input[ $key ] = apply_filters( 'ftg_settings_sanitize_' . $key, $value );
+
+            // General filter
+            $input[ $key ] = apply_filters( 'ftg_settings_sanitize', $input[ $key ], $key );
+
+        }
+
+        // Loop through the whitelist and unset any that are empty for the tab being saved
+        $main_settings    = $section == 'main' ? $settings[ $tab ] : array(); // Check for extensions that aren't using new sections
+        $section_settings = ! empty( $settings[ $tab ][ $section ] ) ? $settings[ $tab ][ $section ] : array();
+
+        $found_settings = array_merge( $main_settings, $section_settings );
+
+        if ( ! empty( $found_settings ) ) {
+            foreach ( $found_settings as $key => $value ) {
+
+                // Settings used to have numeric keys, now they have keys that match the option ID. This ensures both methods work
+                if ( is_numeric( $key ) ) {
+                    $key = $value['id'];
+                }
+
+                if ( empty( $input[ $key ] ) && isset( $ftg_options[ $key ] ) ) {
+                    unset( $ftg_options[ $key ] );
+                }
+            }
+        }
+
+        // Merge our new settings with the existing
+        $output = array_merge( $ftg_options, $input );
+
+        add_settings_error( 'ftg-notices', '', __( 'Settings updated.', 'feed-them-gallery' ), 'updated' );
+
+        return $output;
+    } // ftg_settings_sanitize
 
     /**
      * Settings Page
@@ -99,7 +474,7 @@ class Settings_Page {
      *
      * @since   1.4.0
      */
-    public function Settings_Page()  {
+    public function display_settings_page()  {
         if ( ! current_user_can( 'manage_options' ) )	{
             wp_die(
                 '<h1>' . __( 'Cheatin&#8217; uh?', 'feed-them-gallery' ) . '</h1>' .
@@ -111,22 +486,22 @@ class Settings_Page {
         wp_enqueue_style( 'wp-color-picker' );
         wp_enqueue_script( 'wp-color-picker' );
 
-        $settings_tabs = ftg_get_settings_tabs();
+        $settings_tabs = $this->get_settings_tabs();
         $settings_tabs = empty( $settings_tabs ) ? array() : $settings_tabs;
         $active_tab    = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'general';
         $active_tab    = array_key_exists( $active_tab, $settings_tabs ) ? $active_tab : 'general';
-        $sections      = ftg_get_settings_tab_sections( $active_tab );
+        $sections      = $this->get_settings_tab_sections( $active_tab );
         $key           = 'main';
 
         if ( is_array( $sections ) ) {
             $key = key( $sections );
         }
 
-        $registered_sections = ftg_get_settings_tab_sections( $active_tab );
+        $registered_sections = $this->get_settings_tab_sections( $active_tab );
         $section             = isset( $_GET['section'] ) && ! empty( $registered_sections ) && array_key_exists( $_GET['section'], $registered_sections ) ? sanitize_text_field( $_GET['section'] ) : $key;
 
         // Unset 'main' if it's empty and default to the first non-empty if it's the chosen section
-        $all_settings = ftg_get_registered_settings();
+        $all_settings = $this->get_registered_settings();
 
         // Let's verify we have a 'main' section to show
         $has_main_settings = true;
@@ -175,7 +550,7 @@ class Settings_Page {
         <div class="wrap <?php echo 'wrap-' . $active_tab; ?>">
             <h1 class="nav-tab-wrapper">
                 <?php
-                foreach( ftg_get_settings_tabs() as $tab_id => $tab_name ) {
+                foreach( $this->get_settings_tabs() as $tab_id => $tab_name ) {
 
                     $tab_url = add_query_arg( array(
                         'post_type'        => 'ft_gallery',
@@ -271,6 +646,12 @@ class Settings_Page {
         echo ob_get_clean();
     }
 
+    /**
+     * Adds the authors note to the bottom of all FTG settings pages.
+     *
+     * @since   1.4
+     * @return  string
+     */
     public function authors_note()  {
         ob_start(); ?>
 
