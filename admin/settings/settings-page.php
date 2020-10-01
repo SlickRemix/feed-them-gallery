@@ -170,7 +170,7 @@ class Settings_Page {
                         'use_attachment_naming' => array(
                             'id'    => 'use_attachment_naming',
                             'name'  => __( 'Rename on Upload?', 'feed-them-gallery' ),
-                            'desc'  => __( 'Enable to use Attachment File and Title Renaming when uploading each image.', 'feed-them-gallery' ),
+                            'desc'  => __( 'Enable to use Attachment File and Title renaming when uploading each image.', 'feed-them-gallery' ),
                             'type'  => 'checkbox',
                             'std'   => 0,
                             'class' => 'ftg_setting_option_attachment_naming'
