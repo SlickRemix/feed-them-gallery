@@ -56,13 +56,13 @@ class Setup_Functions {
 		// Add Theme Support for post thumbs.
 		add_theme_support( 'post-thumbnails' );
 
-		if ( is_admin() ) {
-			// THIS GIVES US SOME OPTIONS FOR STYLING THE ADMIN AREA.
-			add_action( 'admin_enqueue_scripts', array( $this, 'ft_gallery_admin_css' ) );
-			// Add Feed Them Gallery Bar to Admin.
-			add_action( 'admin_init', array( $this, 'ft_gallery_settings_page_options' ) );
-		}//end if admin
-		// Feed Them Gallery Admin Bar.
+
+        // THIS GIVES US SOME OPTIONS FOR STYLING THE ADMIN AREA.
+        add_action( 'admin_enqueue_scripts', array( $this, 'ft_gallery_admin_css' ) );
+        // Add Feed Them Gallery Bar to Admin.
+        add_action( 'admin_init', array( $this, 'ft_gallery_settings_page_options' ) );
+
+        // Feed Them Gallery Admin Bar.
 		add_action( 'wp_before_admin_bar_render', array( $this, 'ft_gallery_admin_bar_menu' ), 999 );
 
 		// Settings option. Add Custom CSS to the header of Feed Them Gallery pages only.
@@ -478,7 +478,7 @@ class Setup_Functions {
 			$settings[] = $final_post_type_name;
 		}
 
-		//$this->ft_gallery_register_settings( 'ft-gallery-settings', $settings );
+		$this->ft_gallery_register_settings( 'ft-gallery-settings', $settings );
 	}
 
 	/**
