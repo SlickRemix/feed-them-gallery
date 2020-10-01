@@ -478,7 +478,7 @@ class Setup_Functions {
 			$settings[] = $final_post_type_name;
 		}
 
-		$this->ft_gallery_register_settings( 'ft-gallery-settings', $settings );
+		//$this->ft_gallery_register_settings( 'ft-gallery-settings', $settings );
 	}
 
 	/**
