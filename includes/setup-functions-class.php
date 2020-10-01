@@ -52,8 +52,10 @@ class Setup_Functions {
 	 * @since 1.0.0
 	 */
 	public function add_actions_filters() {
+        // Notices
+        add_action( 'admin_init', array( $this, 'show_notices' ) );
 
-		// Add Theme Support for post thumbs.
+        // Add Theme Support for post thumbs.
 		add_theme_support( 'post-thumbnails' );
 
         // THIS GIVES US SOME OPTIONS FOR STYLING THE ADMIN AREA.
@@ -82,6 +84,16 @@ class Setup_Functions {
 		// FTG License Page.
         add_action( 'admin_footer', array( $this, 'ftg_plugin_license' ) );
 	}
+
+    /**
+     * Displays plugin notices, including updated settings.
+     *
+     * @since   1.4
+     * @return  void
+     */
+    public function show_notices()   {
+        settings_errors( 'ftg-notices' );
+    } // show_notices
 
 	/**
 	 * My FTG Plugin License

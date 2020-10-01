@@ -146,7 +146,7 @@ class Settings_Page {
         }
 
         // Creates our settings in the options table
-        register_setting( 'ftg_settings', 'ftg_settings', array( $this, 'settings_sanitize' ) );
+        register_setting( 'ftg_settings', 'ftg_settings', array( 'sanitize_callback' => array( $this, 'settings_sanitize' ) ) );
 
     } // register_settings
 
@@ -322,8 +322,11 @@ class Settings_Page {
 
         $tabs                     = array();
         $tabs['general']          = __( 'Attachments', 'feed-them-gallery' );
+        $tabs                     = apply_filters( 'ftg_settings_tabs_after_general', $tabs );
         $tabs['styles']           = __( 'Gallery Styling', 'feed-them-gallery' );
+        $tabs                     = apply_filters( 'ftg_settings_tabs_after_styles', $tabs );
         $tabs['misc']             = __( 'Misc', 'feed-them-gallery' );
+        $tabs                     = apply_filters( 'ftg_settings_tabs_after_misc', $tabs );
 
         return apply_filters( 'ftg_settings_tabs', $tabs );
     } // get_settings_tabs
@@ -381,7 +384,7 @@ class Settings_Page {
         $sections = apply_filters( 'ftg_settings_sections', $sections );
 
         return $sections;
-    } // get_registered_settings_sections
+    } // registered_settings_sections
 
     /**
      * Settings Sanitization.
@@ -393,7 +396,7 @@ class Settings_Page {
      * @param	array	$input	The value inputted in the field.
      * @return	string	$input	Sanitizied value.
      */
-    public function ftg_settings_sanitize( $input = array() ) {
+    public function settings_sanitize( $input = array() ) {
 
         global $ftg_options;
 
@@ -462,10 +465,10 @@ class Settings_Page {
         // Merge our new settings with the existing
         $output = array_merge( $ftg_options, $input );
 
-        add_settings_error( 'ftg-notices', '', __( 'Settings updated.', 'feed-them-gallery' ), 'updated' );
+        add_settings_error( 'ftg-notices', esc_attr( 'settings_updated' ), __( 'Settings updated.', 'feed-them-gallery' ), 'updated' );
 
         return $output;
-    } // ftg_settings_sanitize
+    } // settings_sanitize
 
     /**
      * Settings Page
@@ -537,6 +540,7 @@ class Settings_Page {
         }
 
         ob_start();
+        
         ?>
         <script>
             jQuery(document).ready(function ($) {
