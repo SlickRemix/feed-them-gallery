@@ -62,7 +62,7 @@ class Feed_Them_Gallery {
 		// Galleries.
 		feed_them_gallery\Gallery::load( $gallery_options, $gallery_main_post_type );
 
-			// Load in Premium Gallery glasses if premium is loaded.
+		// Load in Premium Gallery glasses if premium is loaded.
 		if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 
 			$ftgp_current_version = defined( 'FTGP_CURRENT_VERSION' ) ? FTGP_CURRENT_VERSION : '';
@@ -96,6 +96,9 @@ class Feed_Them_Gallery {
 
 		// Shortcodes.
 		new feed_them_gallery\Shortcodes();
+
+		// Backwards compatability
+		feed_them_gallery\FTG_Backwards_Compat::load();
 
 		// Updater Init.
 		new feed_them_gallery\updater_init();
@@ -418,6 +421,9 @@ class Feed_Them_Gallery {
 
 		// Include Shortcodes.
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . '/shortcodes.php';
+
+		// Backwards compatability
+		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . '/includes/backwards-compat/ftg-backwards-compat-class.php';
 
 		// Updater Classes.
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'updater/updater-license-page.php';
