@@ -73,9 +73,8 @@ class Setup_Functions {
 		add_action( 'wp_enqueue_scripts', array( $this, 'ft_gallery_color_options_head_css_front' ) );
 
 		// Settings option. Add Custom CSS to the header of Feed Them Gallery pages only.
-		$ft_gallery_custom_css_checked_css = get_option( 'ft-gallery-options-settings-custom-css-second' );
-		if ( '1' === $ft_gallery_custom_css_checked_css ) {
-			add_action( 'wp_head', array( $this, 'ft_gallery_head_css' ) );
+		if ( ftg_get_option( 'use_custom_css' ) )   {
+            add_action( 'wp_head', array( $this, 'ft_gallery_head_css' ) );
 		}
 
 		// Widget Code to allow shortcodes.
@@ -278,13 +277,13 @@ class Setup_Functions {
 	 */
 	public function ft_gallery_color_options_head_css_front() {
 
-		$ft_gallery_text_color       = get_option( 'ft_gallery_text_color' );
-        $ft_gallery_text_size        = get_option( 'ft_gallery_text_size' );
-		$ft_gallery_decription_color = get_option( 'ft_gallery_description_color' );
-        $ft_gallery_description_size = get_option( 'ft_gallery_description_size' );
-		$ft_gallery_link_color       = get_option( 'ft_gallery_link_color' );
-		$ft_gallery_link_color_hover = get_option( 'ft_gallery_link_color_hover' );
-		$ft_gallery_post_time        = get_option( 'ft_gallery_post_time' );
+		$ft_gallery_text_color       = ftg_get_option( 'text_color' );
+        $ft_gallery_text_size        = ftg_get_option( 'text_size' );
+		$ft_gallery_decription_color = ftg_get_option( 'description_color' );
+        $ft_gallery_description_size = ftg_get_option( 'description_size' );
+		$ft_gallery_link_color       = ftg_get_option( 'link_color' );
+		$ft_gallery_link_color_hover = ftg_get_option( 'link_color_hover' );
+		$ft_gallery_post_time        = ftg_get_option( 'post_time' );
 		?>
 
 		<style type="text/css">
@@ -331,8 +330,7 @@ class Setup_Functions {
 	public function ft_gallery_admin_bar_menu() {
 		global $wp_admin_bar;
 
-		$ftg_admin_menu_bar = get_option( 'ft-gallery-admin-bar-menu' );
-		if ( ! is_super_admin() || ! is_admin_bar_showing() || 'hide-admin-bar-menu' === $ftg_admin_menu_bar ) {
+		if ( ! is_super_admin() || ! is_admin_bar_showing() || ! ftg_get_option( 'show_admin_bar' ) ) {
 			return;
 		}
 		$wp_admin_bar->add_menu(
@@ -492,7 +490,7 @@ class Setup_Functions {
 	 */
 	public function ft_gallery_head_css() {
 		?>
-		<style type="text/css"><?php echo esc_html( get_option( 'ft-gallery-settings-admin-textarea-css' ) ); ?></style>
+		<style type="text/css"><?php echo esc_html( ftg_get_option( 'custom_css' ) ); ?></style>
 										  <?php
 	}
 }//end class

@@ -1298,8 +1298,7 @@ class Display_Gallery {
 		if ( isset( $popup ) && 'yes' === $popup ) {
 
 			// it's ok if these styles & scripts load at the bottom of the page.
-			$fts_fix_magnific = get_option( 'ft_gallery_fix_magnific' ) ? get_option( 'ft_gallery_fix_magnific' ) : '';
-			if ( isset( $fts_fix_magnific ) && '1' !== $fts_fix_magnific ) {
+			if ( ftg_get_option( 'fix_magnific' ) ) {
 				wp_enqueue_style( 'ft-gallery-popup', plugins_url( 'feed-them-gallery/includes/feeds/css/magnific-popup.css' ), array(), FTG_CURRENT_VERSION );
 			}
 			if ( ! is_plugin_active( 'feed-them-premium/feed-them-premium.php' ) ) {
@@ -1632,9 +1631,7 @@ class Display_Gallery {
 				$style_end   = '';
 			}
 
-			$fts_powered_text_options_settings = get_option( 'ft-gallery-powered-text-options-settings' );
-
-			if ( '1' === $fts_powered_text_options_settings ) {
+			if ( ftg_get_option( 'show_powered_by' ) ) {
 				?>
 				<script>jQuery('body').addClass('ft-gallery-powered-by-hide');</script>
 				<?php

@@ -44,12 +44,33 @@ class Settings_Page {
 			// Adds setting page to Feed Them Gallery menu.
 			add_action( 'admin_menu', array( $this, 'add_submenu_page' ) );
 		}
+        add_action( 'ftg_settings_bottom', array( $this, 'authors_note' ) );
 	}
 
 	/**
 	 * Settings_Page constructor.
 	 */
 	public function __construct() {}
+
+    public function mappings()  {
+        $mappings = array(
+            // These are using the file_naming option array
+            'ft-gallery-use-attachment-naming'            => 'use_attachment_naming',
+            'ft_gallery_attch_name_gallery_name'          => 'attch_name_gallery_name',
+            'ft_gallery_attch_name_post_id'               => 'attch_name_post_id',
+            'ft_gallery_attch_name_date'                  => 'attch_name_date',
+            'ft_gallery_attch_name_file_name'             => 'attch_name_file_name',
+            'ft_gallery_attch_name_attch_id'              => 'attch_name_attch_id',
+            'ft_gallery_attch_title_gallery_name'         => 'attch_title_gallery_name',
+            'ft_gallery_attch_title_post_id'              => 'attch_title_post_id',
+            'ft_gallery_attch_title_date'                 => 'attch_title_date',
+            'ft_gallery_attch_title_file_name'            => 'attch_title_file_name',
+            'ft_gallery_attch_title_attch_id'             => 'attch_title_attch_id',
+            // End of file_naming option array
+            // This is an array already
+            'ft_gallery_format_attachment_titles_options' => 'format_attachment_titles_options'
+        );
+    }
 
 	/**
 	 * FT Gallery Submenu Pages
@@ -68,16 +89,222 @@ class Settings_Page {
 			'ft-gallery-settings-page',
 			array( $this, 'Settings_Page' )
 		);
+
 	}
 
-	/**
+    /**
+     * Settings Page
+     *
+     * Feed Them Gallery Settings Page
+     *
+     * @since   1.4.0
+     */
+    public function Settings_Page()  {
+        if ( ! current_user_can( 'manage_options' ) )	{
+            wp_die(
+                '<h1>' . __( 'Cheatin&#8217; uh?', 'feed-them-gallery' ) . '</h1>' .
+                '<p>'  . __( 'You do not have permission to access this page.', 'feed-them-gallery' ) . '</p>',
+                403
+            );
+        }
+
+        wp_enqueue_style( 'wp-color-picker' );
+        wp_enqueue_script( 'wp-color-picker' );
+
+        $settings_tabs = ftg_get_settings_tabs();
+        $settings_tabs = empty( $settings_tabs ) ? array() : $settings_tabs;
+        $active_tab    = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'general';
+        $active_tab    = array_key_exists( $active_tab, $settings_tabs ) ? $active_tab : 'general';
+        $sections      = ftg_get_settings_tab_sections( $active_tab );
+        $key           = 'main';
+
+        if ( is_array( $sections ) ) {
+            $key = key( $sections );
+        }
+
+        $registered_sections = ftg_get_settings_tab_sections( $active_tab );
+        $section             = isset( $_GET['section'] ) && ! empty( $registered_sections ) && array_key_exists( $_GET['section'], $registered_sections ) ? sanitize_text_field( $_GET['section'] ) : $key;
+
+        // Unset 'main' if it's empty and default to the first non-empty if it's the chosen section
+        $all_settings = ftg_get_registered_settings();
+
+        // Let's verify we have a 'main' section to show
+        $has_main_settings = true;
+        if ( empty( $all_settings[ $active_tab ]['main'] ) )	{
+            $has_main_settings = false;
+        }
+
+        // Check for old non-sectioned settings
+        if ( ! $has_main_settings )	{
+            foreach( $all_settings[ $active_tab ] as $sid => $stitle )	{
+                if ( is_string( $sid ) && is_array( $sections ) && array_key_exists( $sid, $sections ) )	{
+                    continue;
+                } else	{
+                    $has_main_settings = true;
+                    break;
+                }
+            }
+        }
+
+        $override = false;
+        if ( false === $has_main_settings ) {
+            unset( $sections['main'] );
+
+            if ( 'main' === $section ) {
+                foreach ( $sections as $section_key => $section_title ) {
+                    if ( ! empty( $all_settings[ $active_tab ][ $section_key ] ) ) {
+                        $section  = $section_key;
+                        $override = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        ob_start();
+        ?>
+        <script>
+            jQuery(document).ready(function ($) {
+                var ftg_color_picker = $('.ftg-color-picker');
+
+                if( ftg_color_picker.length ) {
+                    ftg_color_picker.wpColorPicker();
+                }
+            });
+        </script>
+        <div class="wrap <?php echo 'wrap-' . $active_tab; ?>">
+            <h1 class="nav-tab-wrapper">
+                <?php
+                foreach( ftg_get_settings_tabs() as $tab_id => $tab_name ) {
+
+                    $tab_url = add_query_arg( array(
+                        'post_type'        => 'ft_gallery',
+                        'page'             => 'ft-gallery-settings-page',
+                        'settings-updated' => false,
+                        'tab'              => $tab_id
+                    ), admin_url( 'edit.php' ) );
+
+                    // Remove the section from the tabs so we always end up at the main section
+                    $tab_url = remove_query_arg( 'section', $tab_url );
+
+                    $active = $active_tab == $tab_id ? ' nav-tab-active' : '';
+
+                    echo '<a href="' . esc_url( $tab_url ) . '" class="nav-tab' . $active . '">';
+                        echo esc_html( $tab_name );
+                    echo '</a>';
+                }
+                ?>
+            </h1>
+            <?php
+
+            $number_of_sections = is_array( $sections ) ? count( $sections ) : 0;
+            $number = 0;
+            if ( $number_of_sections > 1 ) {
+                echo '<div><ul class="subsubsub">';
+                foreach( $sections as $section_id => $section_name ) {
+                    echo '<li>';
+                    $number++;
+                    $tab_url = add_query_arg( array(
+                        'post_type'        => 'ft_gallery',
+                        'page'             => 'ft-gallery-settings-page',
+                        'settings-updated' => false,
+                        'tab'              => $active_tab,
+                        'section'          => $section_id
+                    ), admin_url( 'edit.php' ) );
+
+                    /**
+                     * Allow filtering of the section URL.
+                     *
+                     * Enables plugin authors to insert links to non-setting pages as sections.
+                     *
+                     * @since	1.1.10
+                     * @param	str		The section URL
+                     * @param	str		The section ID (array key)
+                     * @param	str		The current active tab
+                     * @return	str
+                     */
+                    $tab_url = apply_filters( 'ftg_options_page_section_url', $tab_url, $section_id, $active_tab );
+
+                    $class = '';
+                    if ( $section == $section_id ) {
+                        $class = 'current';
+                    }
+                    echo '<a class="' . $class . '" href="' . esc_url( $tab_url ) . '">' . $section_name . '</a>';
+
+                    if ( $number != $number_of_sections ) {
+                        echo ' | ';
+                    }
+                    echo '</li>';
+                }
+                echo '</ul></div>';
+            }
+            ?>
+            <div id="tab_container">
+                <form method="post" action="options.php">
+                    <table class="form-table">
+                    <?php
+
+                    settings_fields( 'ftg_settings' );
+
+                    if ( 'main' === $section ) {
+                        do_action( 'ftg_settings_tab_top', $active_tab );
+                    }
+
+                    do_action( 'ftg_settings_tab_top_' . $active_tab . '_' . $section );
+
+                    do_settings_sections( 'ftg_settings_' . $active_tab . '_' . $section );
+
+                    do_action( 'ftg_settings_tab_bottom_' . $active_tab . '_' . $section  );
+
+                    // If the main section was empty and we overrode the view with the next subsection, prepare the section for saving
+                    if ( true === $override ) {
+                        ?><input type="hidden" name="ftg_section_override" value="<?php echo $section; ?>" /><?php
+                    }
+                    ?>
+                    </table>
+                    <?php submit_button(); ?>
+                </form>
+            </div><!-- #tab_container-->
+            <?php do_action( 'ftg_settings_bottom' ); ?>
+        </div><!-- .wrap -->
+        <?php
+        echo ob_get_clean();
+    }
+
+    public function authors_note()  {
+        ob_start(); ?>
+
+        <h1 class="plugin-author-note"><?php esc_html_e( 'Plugin Authors Note', 'feed-them-gallery' ); ?></h1>
+		<div class="fts-plugin-reviews">
+			<div class="fts-plugin-reviews-rate">
+                <?php printf(
+                    __( 'Feed Them Gallery was created by 2 Brothers, Spencer and Justin Labadie. That\'s it, 2 people! We spend all our time creating and supporting our plugins. Show us some love if you like our plugin and leave a quick review for us, it will make our day! <a href="%s" target="_blank">Leave us a Review ★★★★★</a>', 'feed-them-gallery' ),
+                    'https://www.facebook.com/pg/SlickRemix/reviews/?ref=page_internal'
+                ); ?>
+                        
+			</div>
+			<div class="fts-plugin-reviews-support">
+                <?php printf(
+                    __( 'If you\'re having troubles getting setup please contact us. We will respond within 24hrs, but usually within 1-6hrs. <a href="%s" target="_blank">Create Support Ticket</a>', 'feed-them-gallery' ),
+                    'https://www.slickremix.com/support/'
+                ); ?>
+				<div class="fts-text-align-center">
+					<a class="feed-them-gallery-admin-slick-logo" href="https://www.slickremix.com" target="_blank"></a>
+				</div>
+			</div>
+		</div>
+
+        <?php echo ob_get_clean();
+    } // authors_note
+
+    /**
 	 * Settings Page
 	 *
 	 * Feed Them Gallery Settings Page
 	 *
 	 * @since 1.0.0
 	 */
-	public function Settings_Page() {
+	public function Old_Settings_Page() {
 		// Feed Them Gallery Functions Class.
 		// Enqueue JS Color JS.
 		wp_enqueue_script( 'js_color', plugins_url( '/feed-them-gallery/metabox-settings/js/jscolor/jscolor.js' ), array( 'jquery' ), FTG_CURRENT_VERSION, true );
@@ -394,6 +621,7 @@ class Settings_Page {
 						<div class="ft-gallery-attch-name-example">
 							<?php
 							$gallery_class = new Gallery();
+
 							// Output Title Example.
 							echo '<div class="ftg-filename-renaming-example"><strong><em>Example Title:</em></strong> ' . wp_kses(
 								$gallery_class->ft_gallery_format_attachment_title( 'Gallery Image Title' ),
