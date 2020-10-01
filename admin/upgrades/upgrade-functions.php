@@ -34,7 +34,7 @@ class FTG_Upgrades {
 	 *
 	 * Load up all our actions and filters.
 	 *
-	 * @since 1.0.0
+	 * @since 1.4
 	 */
 	public static function load() {
 		$instance = new self();
@@ -48,7 +48,7 @@ class FTG_Upgrades {
 	 *
 	 * Add Settings to our menu.
 	 *
-	 * @since 1.0.0
+	 * @since 1.4
 	 */
 	public function add_actions_filters() {
         // Process upgrades sent via POST/GET
@@ -139,7 +139,8 @@ class FTG_Upgrades {
 			'ft_gallery_fix_magnific',
             'ft_gallery_duplicate_post_show',
             'ft-gallery-admin-bar-menu',
-            'ft-gallery-powered-text-options-settings'
+            'ft-gallery-powered-text-options-settings',
+			'ft-gallery-timezone'
 		);
 
 		foreach( $old_options as $option )	{

@@ -64,11 +64,12 @@ class FTG_Backwards_Compat {
             'ft_gallery_post_time',
             'ft-gallery-options-settings-custom-css-second',
             'ft-gallery-settings-admin-textarea-css',
+			'ft-gallery-timezone',
+			'date_time_format',
 			'ft_gallery_fix_magnific',
             'ft_gallery_duplicate_post_show',
             'ft-gallery-admin-bar-menu',
-            'ft-gallery-powered-text-options-settings',
-			'ft-gallery-timezone'
+            'ft-gallery-powered-text-options-settings'
 		);
 
 		// Add Actions and Filters.
@@ -154,6 +155,12 @@ class FTG_Backwards_Compat {
 			case 'ft-gallery-settings-admin-textarea-css':
 				$value = ftg_get_option( 'custom_css' );
 				break;
+			case 'ft-gallery-timezone':
+				$value = ftg_get_option( 'timezone' );
+				break;
+			case 'ft-gallery-date-and-time-format':
+				$value = ftg_get_opton( 'date_time_format' );
+				break;
 			case 'ft_gallery_fix_magnific':
 			case 'ft_gallery_duplicate_post_show':
 				$key   = str_replace( 'ft_gallery_', '', $option );
@@ -164,12 +171,6 @@ class FTG_Backwards_Compat {
 				break;
 			case 'ft-gallery-powered-text-options-settings':
 				$value = ftg_get_option( 'show_powered_by' );
-				break;
-			case 'ft-gallery-timezone':
-				$value = ftg_get_option( 'timezone' );
-				break;
-			case 'ft-gallery-date-and-time-format':
-				$value = ftg_get_opton( 'date_time_format' );
 				break;
 		}
 
