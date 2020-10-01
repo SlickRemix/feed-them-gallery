@@ -548,6 +548,7 @@ class Settings_Page {
             });
         </script>
         <div class="wrap <?php echo 'wrap-' . $active_tab; ?>">
+            <h1 class="wp-heading-inline"><?php _e( 'Settings', 'feed-them-gallery' ); ?></h1>
             <h1 class="nav-tab-wrapper">
                 <?php
                 foreach( $this->get_settings_tabs() as $tab_id => $tab_name ) {
