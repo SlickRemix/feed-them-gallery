@@ -727,7 +727,7 @@ class Settings_Page {
 							?>
 							<strong><?php esc_html_e( 'Checked:', 'feed-them-gallery' ); ?></strong> 
 													  <?php
-														esc_html_e( 'You are using Attachment File and Title Renaming when uploading each image.', 'feed-them-gallery' );
+														esc_html_e( 'You are using Attachment File and Title renaming when uploading each image.', 'feed-them-gallery' );
 
 						} else {
 							?>
