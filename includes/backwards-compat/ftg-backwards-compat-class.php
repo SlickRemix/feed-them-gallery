@@ -6,7 +6,7 @@
  * @subpackage  FTG
  * @copyright   Copyright (c) 2020, Mike Howard
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since       1.4
+ * @since       1.3.4
  */
 
 namespace feed_them_gallery;
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) )
  * Backwards Compat Class
  *
  * @class    FTG_Backwards_Compat
- * @version  1.4
+ * @version  1.3.4
  * @package  FeedThemGallery
  * @category Class
  * @author   SlickRemix
@@ -37,7 +37,7 @@ class FTG_Backwards_Compat {
 	 *
 	 * Load up all our actions and filters.
 	 *
-	 * @since 1.0.0
+	 * @since 1.3.4
 	 */
 	public static function load() {
 		$instance = new self();
@@ -84,7 +84,9 @@ class FTG_Backwards_Compat {
 			'ft_gallery_language_months',
 			'ft_gallery_language_year',
 			'ft_gallery_language_years',
-			'ft_gallery_language_ago'
+			'ft_gallery_language_ago',
+            'ft-gallery-custom-date',
+            'ft-gallery-custom-time'
 		);
 
 		// Add Actions and Filters.
@@ -96,7 +98,7 @@ class FTG_Backwards_Compat {
 	 *
 	 * Add Settings to our menu.
 	 *
-	 * @since 1.0.0
+	 * @since 1.3.4
 	 */
 	public function add_actions_filters() {
 		/**
@@ -111,7 +113,7 @@ class FTG_Backwards_Compat {
 	/**
 	 * Loop through the old setting options and add filters for correct value retrieval.
 	 *
-	 * @since	1.4
+	 * @since	1.3.4
 	 */
 	public function setup_option_filters()	{
 		foreach( $this->old_options as $option )	{
@@ -122,7 +124,7 @@ class FTG_Backwards_Compat {
 	/**
 	 * Filter the values of old FTG options.
 	 *
-	 * @since	1.4
+	 * @since	1.3.4
 	 * @param	mixed	$value		The required value of the option
 	 * @param	string	$option		The option name
 	 * @param	mixed	$default	Default value if the option does not exist
@@ -201,6 +203,12 @@ class FTG_Backwards_Compat {
 				$key   = str_replace( 'ft_gallery_', '', $option );
 				$value = ftg_get_option( $key );
 				break;
+            case 'ft-gallery-custom-date':
+            case 'ft-gallery-custom-time':
+                $key   = str_replace( '-', '_', $option );
+                $key   = str_replace( 'ft_gallery_', '', $option );
+                $value = ftg_get_option( $key );
+                break;
 			default:
 				$value = $value;
 		}

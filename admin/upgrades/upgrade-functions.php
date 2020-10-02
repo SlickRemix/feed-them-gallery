@@ -6,7 +6,7 @@
  * @subpackage  Admin/Upgrades
  * @copyright   Copyright (c) 2020, Mike Howard
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since       1.4
+ * @since       1.3.4
  */
 
 // Exit if accessed directly
@@ -34,7 +34,7 @@ class FTG_Upgrades {
 	 *
 	 * Load up all our actions and filters.
 	 *
-	 * @since 1.4
+	 * @since 1.3.4
 	 */
 	public static function load() {
 		$instance = new self();
@@ -48,7 +48,7 @@ class FTG_Upgrades {
 	 *
 	 * Add Settings to our menu.
 	 *
-	 * @since 1.4
+	 * @since 1.3.4
 	 */
 	public function add_actions_filters() {
         // Process upgrades sent via POST/GET
@@ -62,7 +62,7 @@ class FTG_Upgrades {
      * Processes all FTG upgrade actions sent via POST and GET by looking for the 'ftg-upgrade-action'
      * request and running do_action() to call the function
      *
-     * @since   1.4
+     * @since   1.3.4
      * @return  void
      */
     public function process_upgrade_actions() {
@@ -79,7 +79,7 @@ class FTG_Upgrades {
     /**
      * Perform automatic database upgrades when necessary
      *
-     * @since	1.4
+     * @since	1.3.4
      * @return	void
     */
     public function do_automatic_upgrades() {
@@ -104,7 +104,7 @@ class FTG_Upgrades {
     /**
      * Upgrade routine to migrate settings to new format.
      *
-     * @since	1.4
+     * @since	1.3.4
      * @return	void
      */
     public function v14_upgrades()	{
@@ -243,6 +243,8 @@ class FTG_Upgrades {
 			'ft_gallery_language_year'                      => 'language_year',
 			'ft_gallery_language_years'                     => 'language_years',
 			'ft_gallery_language_ago'                       => 'language_ago',
+            'ft-gallery-custom-date'                        => 'custom_date',
+            'ft-gallery-custom-time'                        => 'custom_time',
             'ft_gallery_text_color'                         => 'text_color',
             'ft_gallery_text_size'                          => 'text_size',
             'ft_gallery_description_color'                  => 'description_color',

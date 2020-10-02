@@ -156,7 +156,7 @@ class Settings_Page {
     /**
      * Retrieve the array of plugin settings.
      *
-     * @since	1.4
+     * @since	1.3.4
      * @return	array    Array of plugin settings to register
      */
     public function get_registered_settings() {
@@ -227,12 +227,37 @@ class Settings_Page {
 							'std'     => 'America/Los_Angeles'
 						),
 						'date_time_format' => array(
-							'id'      => 'date_time_format',
-							'name'    => __( 'Image Date Format', 'feed-them-gallery' ),
-							'type'    => 'select',
-							'options' => ftg_get_date_format_setting_options(),
-							'std'     => 'l, F jS, Y \a\t g:ia'
-						)
+							'id'            => 'date_time_format',
+							'name'          => __( 'Image Date Format', 'feed-them-gallery' ),
+							'type'          => 'select',
+							'options'       => ftg_get_date_format_setting_options(),
+							'std'           => 'l, F jS, Y \a\t g:ia',
+                            'field_class'   => 'ftg_date_time_format'
+						),
+                        'custom_date' => array(
+                            'id'            => 'custom_date',
+							'name'          => __( 'Custom Date', 'feed-them-gallery' ),
+							'type'          => 'text',
+							'std'           => '',
+                            'placeholder'   => __( 'Date', 'feed-them-gallery' )
+                        ),
+                        'custom_time' => array(
+                            'id'            => 'custom_time',
+							'name'          => __( 'Custom Time', 'feed-them-gallery' ),
+							'type'          => 'text',
+							'std'           => '',
+                            'placeholder'   => __( 'Time', 'feed-them-gallery' )
+                        ),
+                        'custom_date_time_desc' => array(
+                            'id'            => 'custom_date_time_desc',
+                            'type'          => 'descriptive_text',
+							'desc'          => sprintf(
+                                __( 'This will override the date and time above', 'feed-them-gallery' ) . '<br>' .
+                                '<a href="%s" target="_blank">%s.</a>',
+                                'https://codex.wordpress.org/Formatting_Date_and_Time',
+                                __( 'Options for custom date and time formatting', 'feed-them-gallery' )
+                            )
+                        )
 					),
 					'color_size' => array(
                         'text_color' => array(
@@ -339,7 +364,7 @@ class Settings_Page {
     /**
      * Retrieve settings tabs
      *
-     * @since	1.4
+     * @since	1.3.4
      * @return	array		$tabs
      */
     public function get_settings_tabs() {
@@ -360,7 +385,7 @@ class Settings_Page {
     /**
      * Retrieve settings tabs
      *
-     * @since	1.4
+     * @since	1.3.4
      * @return	array		$section
      */
     public function get_settings_tab_sections( $tab = false ) {
@@ -381,7 +406,7 @@ class Settings_Page {
      * Get the settings sections for each tab
      * Uses a static to avoid running the filters on every request to this function
      *
-     * @since	1.4
+     * @since	1.3.4
      * @return	array		Array of tabs and sections
      */
     public function get_registered_settings_sections() {
@@ -419,7 +444,7 @@ class Settings_Page {
      * Adds a settings error (for the updated message)
      * At some point this will validate input.
      *
-     * @since	1.4
+     * @since	1.3.4
      * @param	array	$input	The value inputted in the field.
      * @return	string	$input	Sanitizied value.
      */
@@ -502,7 +527,7 @@ class Settings_Page {
      *
      * Feed Them Gallery Settings Page
      *
-     * @since   1.4.0
+     * @since   1.3.4
      */
     public function display_settings_page()  {
         if ( ! current_user_can( 'manage_options' ) )	{
@@ -681,7 +706,7 @@ class Settings_Page {
 	/**
 	 * Adds the translation fields to the image date setting field.
 	 *
-	 * @since	1.4
+	 * @since	1.3.4
 	 * @param	string	$html	HTML output
 	 * @param	array	$args	Array of arguments passed to setting
 	 * @return	string	HTML output
@@ -689,16 +714,18 @@ class Settings_Page {
 	public function date_translate_fields( $html, $args )	{
 		if ( 'date_time_format' == $args['id'] )	{
 			ob_start();
+
+            $style = 'one-day-ago' != ftg_get_option( 'date_time_format' ) ? ' style="display: none;"' : '';
 			?>
 
-			<tr class="custom_time_ago_wrap" style="display: none;">
+			<tr class="custom_time_ago_wrap"<?php echo $style; ?>">
 				<th scope="row"><?php _e( 'Translations for 1 day ago', 'feed-them-gallery' ); ?></th>
 				<td>&nbsp;</td>
 			</tr>
 
 			<?php
 			foreach( $this->get_translation_fields() as $field => $value ) : ?>
-				<tr class="custom_time_ago_wrap" style="display: none;">
+				<tr class="custom_time_ago_wrap"<?php echo $style; ?>">
 					<th scope="row"><?php echo str_replace( 'language_', '', esc_html( $field ) ); ?></th>
 					<td>
 					<?php ftg_text_callback( array(
@@ -719,10 +746,53 @@ class Settings_Page {
 		return $html;
 	} // date_translate_fields
 
+    /**
+	 * Adds the custom date/time fields to the image date setting field.
+	 *
+	 * @since	1.3.4
+	 * @param	string	$html	HTML output
+	 * @param	array	$args	Array of arguments passed to setting
+	 * @return	string	HTML output
+	 */
+	public function custom_date_time_fields( $html, $args )	{
+		if ( 'date_time_format' == $args['id'] )	{
+			ob_start();
+
+            $style = 'fts-custom-date' != ftg_get_option( 'date_time_format' ) ? ' style="display: none;"' : '';
+			?>
+
+			<tr class="custom_time_ago_wrap"<?php echo $style; ?>">
+				<th scope="row"><?php _e( 'Translations for 1 day ago', 'feed-them-gallery' ); ?></th>
+				<td>&nbsp;</td>
+			</tr>
+
+			<?php
+			foreach( $this->get_translation_fields() as $field => $value ) : ?>
+				<tr class="custom_time_ago_wrap"<?php echo $style; ?>">
+					<th scope="row"><?php echo str_replace( 'language_', '', esc_html( $field ) ); ?></th>
+					<td>
+					<?php ftg_text_callback( array(
+						'id'          => $field,
+						'std'         => $value,
+                        'readonly'    => 'false',
+                        'field_class' => '',
+                        'desc'        => ''
+					) ); ?>
+					</td>
+				</tr>
+
+			<?php endforeach;
+
+			$html .= ob_get_clean();
+		}
+
+		return $html;
+	} // custom_date_time_fields
+
 	/**
 	 * Retrieve the translation fields.
 	 *
-	 * @since	1.4
+	 * @since	1.3.4
 	 * @return	array	Array of fields and defaults
 	 */
 	public function get_translation_fields()	{
@@ -750,7 +820,7 @@ class Settings_Page {
     /**
      * Adds the authors note to the bottom of all FTG settings pages.
      *
-     * @since   1.4
+     * @since   1.3.4
      * @return  string
      */
     public function authors_note()  {

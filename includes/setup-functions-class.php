@@ -61,6 +61,9 @@ class Setup_Functions {
         // THIS GIVES US SOME OPTIONS FOR STYLING THE ADMIN AREA.
         add_action( 'admin_enqueue_scripts', array( $this, 'ft_gallery_admin_css' ) );
 
+        // Admin Scripts
+        add_action( 'admin_enqueue_scripts', array( $this, 'ft_gallery_admin_js' ) );
+
         // Add Feed Them Gallery Bar to Admin.
         add_action( 'admin_init', array( $this, 'ft_gallery_settings_page_options' ) );
 
@@ -88,7 +91,7 @@ class Setup_Functions {
     /**
      * Displays plugin notices, including updated settings.
      *
-     * @since   1.4
+     * @since   1.3.4
      * @return  void
      */
     public function show_notices()   {
@@ -229,10 +232,30 @@ class Setup_Functions {
 	 *
 	 * @since 1.0.0
 	 */
-	public function ft_gallery_admin_css() {
+	public function ft_gallery_admin_css( $hook ) {
 		wp_register_style( 'ft_gallery_admin', plugins_url( 'feed-them-gallery/admin/css/admin.css' ), array(), FTG_CURRENT_VERSION );
 		wp_enqueue_style( 'ft_gallery_admin' );
+
+        // Settings scripts
+        if ( 'ft_gallery_page_ft-gallery-settings-page' == $hook )  {
+            
+        }
 	}
+
+    /**
+	 * FT Gallery Admin JS
+	 *
+	 * Add JS to the WordPress Admin (backend)
+	 *
+	 * @since 1.3.4
+	 */
+	public function ft_gallery_admin_js( $hook ) {
+        // Settings scripts
+        if ( 'ft_gallery_page_ft-gallery-settings-page' == $hook )  {
+            wp_register_script( 'ft_gallery_admin', plugins_url( 'feed-them-gallery/admin/js/settings.js' ), array( 'jquery' ), FTG_CURRENT_VERSION );
+            wp_enqueue_script( 'ft_gallery_admin' );
+        }
+	} // ft_gallery_admin_js
 
 	/**
 	 * FT Gallery Reorder Admin Sub Menus

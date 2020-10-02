@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) )
  *
  * Looks to see if the specified setting exists, returns default if not
  *
- * @since	1.4
+ * @since	1.3.4
  * @return	mixed
  */
 function ftg_get_option( $key = '', $default = false ) {
@@ -37,7 +37,7 @@ function ftg_get_option( $key = '', $default = false ) {
  * Warning: Passing in an empty, false or null string value will remove
  *          the key from the ftg_options array.
  *
- * @since	1.4
+ * @since	1.3.4
  * @param	string            $key    The Key to update
  * @param	string|bool|int   $value  The value to set the key to
  * @return	bool              True if updated, false if not.
@@ -136,7 +136,7 @@ function ftg_get_settings() {
 /**
  * Sanitize text fields
  *
- * @since	1.4
+ * @since	1.3.4
  * @param	string		$input	The field value
  * @return	string		$input	Sanitizied value
  */
@@ -148,7 +148,7 @@ add_filter( 'ftg_settings_sanitize_text', 'ftg_sanitize_text_field' );
 /**
  * Sanitize HTML Class Names
  *
- * @since	1.4
+ * @since	1.3.4
  * @param	string|array	$class	HTML Class Name(s)
  * @return	string			$class
  */
@@ -549,7 +549,7 @@ function ftg_color_select_callback( $args ) {
  *
  * Renders color picker fields.
  *
- * @since	1.4
+ * @since	1.3.4
  * @param	array	$args	Arguments passed by the setting
  * @return	void
  */
@@ -685,7 +685,7 @@ function ftg_hook_callback( $args ) {
 /**
  * Adds the tooltip after the setting field.
  *
- * @since	1.4
+ * @since	1.3.4
  * @param	string		$html	HTML output
  * @param	array		$args	Array containing tooltip title and description
  * @return	string		Filtered HTML output
@@ -705,7 +705,7 @@ add_filter( 'ftg_after_setting_output', 'ftg_add_setting_tooltip', 10, 2 );
  *
  * Keys are used as internal identifiers. Alphanumeric characters, dashes, underscores, stops, colons and slashes are allowed
  *
- * @since 	1.4
+ * @since 	1.3.4
  * @param	string		$key	String key
  * @return	string		Sanitized key
  */
@@ -716,7 +716,7 @@ function ftg_sanitize_key( $key ) {
 	/**
 	 * Filter a sanitized key string.
 	 *
-	 * @since  1.4
+	 * @since  1.3.4
 	 * @param  string  $key     Sanitized key.
 	 * @param  string  $raw_key The key prior to sanitization.
 	 */
@@ -726,7 +726,7 @@ function ftg_sanitize_key( $key ) {
 /**
  * File & Title Renaming Callback
  *
- * @since	1.4
+ * @since	1.3.4
  * @param	array         $args	Arguments passed by the setting
  * @return	void
  */
@@ -769,7 +769,7 @@ function ftg_file_naming_callback( $args ) {
 /**
  * Attachment Title Formatting Callback
  *
- * @since	1.4
+ * @since	1.3.4
  * @param	array         $args	Arguments passed by the setting
  * @return	void
  */
@@ -876,7 +876,7 @@ function ftg_attachment_titles_callback( $args ) {
 /**
  * Get file name options.
  *
- * @since   1.4
+ * @since   1.3.4
  * @return  array   Array of file name options
  */
 function ftg_get_file_name_setting_options()    {
@@ -915,7 +915,7 @@ function ftg_get_file_name_setting_options()    {
 /**
  * Get timezone options.
  *
- * @since	1.4
+ * @since	1.3.4
  * @return	array	Array of timezone options
  */
 function ftg_get_timezone_setting_options()	{
@@ -1018,7 +1018,7 @@ function ftg_get_timezone_setting_options()	{
 /**
  * Get date format options.
  *
- * @since	1.4
+ * @since	1.3.4
  * @return	array	Array of date format options
  */
 function ftg_get_date_format_setting_options()	{
