@@ -52,42 +52,51 @@ class Setup_Functions {
 	 * @since 1.0.0
 	 */
 	public function add_actions_filters() {
+        // Notices
+        add_action( 'admin_init', array( $this, 'show_notices' ) );
 
-		// Add Theme Support for post thumbs.
+        // Add Theme Support for post thumbs.
 		add_theme_support( 'post-thumbnails' );
 
-		if ( is_admin() ) {
-			// THIS GIVES US SOME OPTIONS FOR STYLING THE ADMIN AREA.
-			add_action( 'admin_enqueue_scripts', array( $this, 'ft_gallery_admin_css' ) );
-			// Add Feed Them Gallery Bar to Admin.
-			add_action( 'admin_init', array( $this, 'ft_gallery_settings_page_options' ) );
-		}//end if admin
-		// Feed Them Gallery Admin Bar.
+        // THIS GIVES US SOME OPTIONS FOR STYLING THE ADMIN AREA.
+        add_action( 'admin_enqueue_scripts', array( $this, 'ft_gallery_admin_css' ) );
+
+        // Admin Scripts
+        add_action( 'admin_enqueue_scripts', array( $this, 'ft_gallery_admin_js' ) );
+
+        // Add Feed Them Gallery Bar to Admin.
+        add_action( 'admin_init', array( $this, 'ft_gallery_settings_page_options' ) );
+
+        // Feed Them Gallery Admin Bar.
 		add_action( 'wp_before_admin_bar_render', array( $this, 'ft_gallery_admin_bar_menu' ), 999 );
 
 		// Settings option. Add Custom CSS to the header of Feed Them Gallery pages only.
-		$ft_gallery_include_custom_css_checked_css = get_option( 'ft-gallery-color-options-settings-custom-css' );
-		if ( '1' === $ft_gallery_include_custom_css_checked_css ) {
-			add_action( 'wp_enqueue_scripts', array( $this, 'ft_gallery_color_options_head_css' ) );
-		}
+		add_action( 'wp_enqueue_scripts', array( $this, 'ft_gallery_color_options_head_css' ) );
+
 		add_action( 'wp_enqueue_scripts', array( $this, 'ft_gallery_color_options_head_css_front' ) );
 
 		// Settings option. Add Custom CSS to the header of Feed Them Gallery pages only.
-		$ft_gallery_custom_css_checked_css = get_option( 'ft-gallery-options-settings-custom-css-second' );
-		if ( '1' === $ft_gallery_custom_css_checked_css ) {
-			add_action( 'wp_head', array( $this, 'ft_gallery_head_css' ) );
-		}
+        add_action( 'wp_head', array( $this, 'ft_gallery_head_css' ) );
 
 		// Widget Code to allow shortcodes.
 		add_filter( 'widget_text', 'do_shortcode' );
 
 		// Re-order Sub-Menu Items.
 		// add_action( 'admin_menu', array( $this, 'ft_gallery_reorder_admin_sub_menus' ) );
+
 		// FTG License Page.
-		if ( isset( $_GET['page'] ) && 'ft-gallery-license-page' === $_GET['page'] ) {
-			add_action( 'admin_footer', array( $this, 'ftg_plugin_license' ) );
-		}
+        add_action( 'admin_footer', array( $this, 'ftg_plugin_license' ) );
 	}
+
+    /**
+     * Displays plugin notices, including updated settings.
+     *
+     * @since   1.3.4
+     * @return  void
+     */
+    public function show_notices()   {
+        settings_errors( 'ftg-notices' );
+    } // show_notices
 
 	/**
 	 * My FTG Plugin License
@@ -97,7 +106,12 @@ class Setup_Functions {
 	 * @since 1.0.3
 	 */
 	public function ftg_plugin_license() {
-		wp_enqueue_script( 'jquery' ); ?>
+        if ( ! isset( $_GET['page'] ) || 'ft-gallery-license-page' === $_GET['page'] ) {
+            return;
+        }
+
+		wp_enqueue_script( 'jquery' );
+        ?>
 		<style>.ftg-license-master-form th {
 				background: #f9f9f9;
 				padding: 14px;
@@ -218,10 +232,30 @@ class Setup_Functions {
 	 *
 	 * @since 1.0.0
 	 */
-	public function ft_gallery_admin_css() {
+	public function ft_gallery_admin_css( $hook ) {
 		wp_register_style( 'ft_gallery_admin', plugins_url( 'feed-them-gallery/admin/css/admin.css' ), array(), FTG_CURRENT_VERSION );
 		wp_enqueue_style( 'ft_gallery_admin' );
+
+        // Settings scripts
+        if ( 'ft_gallery_page_ft-gallery-settings-page' == $hook )  {
+            
+        }
 	}
+
+    /**
+	 * FT Gallery Admin JS
+	 *
+	 * Add JS to the WordPress Admin (backend)
+	 *
+	 * @since 1.3.4
+	 */
+	public function ft_gallery_admin_js( $hook ) {
+        // Settings scripts
+        if ( 'ft_gallery_page_ft-gallery-settings-page' == $hook )  {
+            wp_register_script( 'ft_gallery_admin', plugins_url( 'feed-them-gallery/admin/js/settings.js' ), array( 'jquery' ), FTG_CURRENT_VERSION );
+            wp_enqueue_script( 'ft_gallery_admin' );
+        }
+	} // ft_gallery_admin_js
 
 	/**
 	 * FT Gallery Reorder Admin Sub Menus
@@ -264,6 +298,9 @@ class Setup_Functions {
 	 * @since 1.0.0
 	 */
 	public function ft_gallery_color_options_head_css() {
+        if ( '1' !== get_option( 'ft-gallery-color-options-settings-custom-css' ) )   {
+            return;
+        }
 		?>
 		<style type="text/css"><?php echo esc_html( get_option( 'ft-gallery-color-options-main-wrapper-css-input' ) ); ?></style>
 		<?php
@@ -278,13 +315,13 @@ class Setup_Functions {
 	 */
 	public function ft_gallery_color_options_head_css_front() {
 
-		$ft_gallery_text_color       = get_option( 'ft_gallery_text_color' );
-        $ft_gallery_text_size        = get_option( 'ft_gallery_text_size' );
-		$ft_gallery_decription_color = get_option( 'ft_gallery_description_color' );
-        $ft_gallery_description_size = get_option( 'ft_gallery_description_size' );
-		$ft_gallery_link_color       = get_option( 'ft_gallery_link_color' );
-		$ft_gallery_link_color_hover = get_option( 'ft_gallery_link_color_hover' );
-		$ft_gallery_post_time        = get_option( 'ft_gallery_post_time' );
+		$ft_gallery_text_color       = ftg_get_option( 'text_color' );
+        $ft_gallery_text_size        = ftg_get_option( 'text_size' );
+		$ft_gallery_decription_color = ftg_get_option( 'description_color' );
+        $ft_gallery_description_size = ftg_get_option( 'description_size' );
+		$ft_gallery_link_color       = ftg_get_option( 'link_color' );
+		$ft_gallery_link_color_hover = ftg_get_option( 'link_color_hover' );
+		$ft_gallery_post_time        = ftg_get_option( 'post_time' );
 		?>
 
 		<style type="text/css">
@@ -331,8 +368,7 @@ class Setup_Functions {
 	public function ft_gallery_admin_bar_menu() {
 		global $wp_admin_bar;
 
-		$ftg_admin_menu_bar = get_option( 'ft-gallery-admin-bar-menu' );
-		if ( ! is_super_admin() || ! is_admin_bar_showing() || 'hide-admin-bar-menu' === $ftg_admin_menu_bar ) {
+		if ( ! is_super_admin() || ! is_admin_bar_showing() || ! ftg_get_option( 'show_admin_bar' ) ) {
 			return;
 		}
 		$wp_admin_bar->add_menu(
@@ -491,8 +527,12 @@ class Setup_Functions {
 	 * @since 1.0.0
 	 */
 	public function ft_gallery_head_css() {
+        if ( ! ftg_get_option( 'use_custom_css' ) ) {
+            return;
+        }
+
 		?>
-		<style type="text/css"><?php echo esc_html( get_option( 'ft-gallery-settings-admin-textarea-css' ) ); ?></style>
-										  <?php
-	}
+		<style type="text/css"><?php echo esc_html( ftg_get_option( 'custom_css' ) ); ?></style>
+		<?php
+	} // ft_gallery_head_css
 }//end class

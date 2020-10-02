@@ -180,7 +180,7 @@ class Gallery {
 		// Add the image name to the media library so we can get a clean version when showing thumbnail on the page for the first time!
 		add_filter( 'image_size_names_choose', array( $this, 'ft_gallery_custom_thumb_sizes' ) );
 
-		if ( '' === get_option( 'ft_gallery_duplicate_post_show' ) ) {
+		if ( ! ftg_get_option( 'duplicate_post_show' ) ) {
 
 			add_action( 'admin_action_ft_gallery_duplicate_post_as_draft', array( $this, 'ft_gallery_duplicate_post_as_draft' ) );
 			add_filter( 'page_row_actions', array( $this, 'ft_gallery_duplicate_post_link' ), 10, 2 );
@@ -2171,7 +2171,7 @@ class Gallery {
 		wp_update_attachment_metadata( $attach_id, $attach_data );
 
 		// Use File & Title renaming
-		if ( '1' == get_option( 'ft-gallery-use-attachment-naming' ) ) {
+		if ( ftg_get_option( 'use_attachment_naming' ) ) {
 			$file_name = preg_replace( '/\.[^.]+$/', '', basename( $status['url'] ) );
 			$this->ft_gallery_rename_attachment( $post_id, $attach_id, $file_name );
 			$this->ft_gallery_generate_new_attachment_name( $post_id, $attach_id, $file_name );
@@ -2225,30 +2225,31 @@ class Gallery {
 	 * @since 1.0.0
 	 */
 	public function ft_gallery_generate_new_attachment_name( $gallery_id, $attachment_ID, $file_name ) {
-		$final_title = '';
+		$final_title   = '';
+        $title_options = ftg_get_option( 'file_naming' );
 
 		// Include Gallery Title
-		if ( '1' === get_option( 'ft_gallery_attch_title_gallery_name' ) ) {
+		if ( ! empty( $title_options['attch_title_gallery_name'] ) ) {
 			$final_title .= get_the_title( $gallery_id ) . ' ';
 		}
 		// Include Gallery ID
-		if ( ! empty( $gallery_id ) && '1' === get_option( 'ft_gallery_attch_title_post_id' ) ) {
+		if ( ! empty( $gallery_id ) && ! empty( $title_options['attch_title_post_id'] ) ) {
 			$final_title .= $gallery_id . ' ';
 		}
 		// include Date Uploaded
-		if ( isset( $_POST['postID'] ) && '1' === get_option( 'ft_gallery_attch_title_date' ) ) {
+		if ( isset( $_POST['postID'] ) && ! empty( $title_options['attch_title_date'] ) ) {
 			$final_title .= date_i18n( 'F jS, Y' ) . ' ';
 		}
 		// Include File Name
-		if ( '1' === get_option( 'ft_gallery_attch_title_file_name' ) ) {
+		if ( ! empty( $title_options['attch_title_file_name'] ) ) {
 			$final_title .= $file_name . ' ';
 		}
 		// Include Attch ID
-		if ( '1' === get_option( 'ft_gallery_attch_title_attch_id' ) ) {
+		if ( ! empty( $title_options['attch_title_attch_id'] ) ) {
 			$final_title .= $attachment_ID . ' ';
 		}
 
-		if ( '1' !== get_option( 'ft_gallery_attch_title_gallery_name' ) && '1' !== get_option( 'ft_gallery_attch_title_post_id' ) && '1' !== get_option( 'ft_gallery_attch_title_date' ) && '1' !== get_option( 'ft_gallery_attch_title_attch_id' ) ) {
+		if ( empty( $title_options['attch_title_gallery_name'] ) && empty( $title_options['attch_title_post_id'] ) && empty( $title_options['attch_title_date'] ) && empty( $title_options['attch_title_attch_id'] ) ) {
 			$final_title .= $file_name . ' ';
 		}
 
@@ -2270,25 +2271,26 @@ class Gallery {
 		$path = pathinfo( $file );
 
 		$final_filename = '';
+        $file_options   = ftg_get_option( 'file_naming' );
 
 		// Include Gallery Title
-		if ( '1' === get_option( 'ft_gallery_attch_name_gallery_name' ) ) {
+		if ( ! empty( $file_options['attch_name_gallery_name'] ) ) {
 			$final_filename .= get_the_title( $gallery_id ) . '-';
 		}
 		// Include Gallery ID
-		if ( ! empty( $gallery_id ) && '1' === get_option( 'ft_gallery_attch_name_post_id' ) ) {
+		if ( ! empty( $file_options['attch_name_post_id'] ) ) {
 			$final_filename .= $gallery_id . '-';
 		}
 		// include Date Uploaded
-		if ( isset( $_POST['postID'] ) && '1' === get_option( 'ft_gallery_attch_name_date' ) ) {
+		if ( isset( $_POST['postID'] ) && ! empty( $file_options['attch_name_date'] ) ) {
 			$final_filename .= date_i18n( 'F jS, Y' ) . '-';
 		}
 		// Include File Name
-		if ( '1' === get_option( 'ft_gallery_attch_name_file_name' ) ) {
+		if ( ! empty( $file_options['attch_name_file_name'] ) ) {
 			$final_filename .= $file_name . ' ';
 		}
 		// Include Attch ID
-		if ( '1' === get_option( 'ft_gallery_attch_name_attch_id' ) ) {
+		if ( ! empty( $file_options['attch_name_attch_id'] ) ) {
 			$final_filename .= $attachment_ID . ' ';
 		}
 
@@ -2401,8 +2403,8 @@ class Gallery {
 	 */
 	public function ft_gallery_format_attachment_title( $title, $attachment_id = null, $update_post = null ) {
 
-		$options     = get_option( 'ft_gallery_format_attachment_titles_options' );
-		$cap_options = isset( $options['ft_gallery_cap_options'] ) ? $options['ft_gallery_cap_options'] : 'dont_alter';
+		$options     = ftg_get_option( 'attachment_titles' );
+		$cap_options = isset( $options['cap_options'] ) ? $options['cap_options'] : 'dont_alter';
 
 		if ( ! empty( $attachment_id ) ) {
 			$uploaded_post_id = get_post( $attachment_id );
@@ -2411,19 +2413,19 @@ class Gallery {
 
 		/* Update post. */
 		$char_array = array();
-		if ( isset( $options['ft_gallery_fat_hyphen'] ) && $options['ft_gallery_fat_hyphen'] ) {
+		if ( ! empty( $options['ft_gallery_fat_hyphen'] ) ) {
 			$char_array[] = '-';
 		}
-		if ( isset( $options['ft_gallery_fat_underscore'] ) && $options['ft_gallery_fat_underscore'] ) {
+		if ( ! empty( $options['ft_gallery_fat_underscore'] ) ) {
 			$char_array[] = '_';
 		}
-		if ( isset( $options['ft_gallery_fat_period'] ) && $options['ft_gallery_fat_period'] ) {
+		if ( ! empty( $options['ft_gallery_fat_period'] ) ) {
 			$char_array[] = '.';
 		}
-		if ( isset( $options['ft_gallery_fat_tilde'] ) && $options['ft_gallery_fat_tilde'] ) {
+		if ( ! empty( $options['ft_gallery_fat_tilde'] ) ) {
 			$char_array[] = '~';
 		}
-		if ( isset( $options['ft_gallery_fat_plus'] ) && $options['ft_gallery_fat_plus'] ) {
+		if ( ! empty( $options['ft_gallery_fat_plus'] ) ) {
 			$char_array[] = '+';
 		}
 
@@ -2460,7 +2462,7 @@ class Gallery {
 		}
 
 		// add formatted title to the alt meta field
-		if ( isset( $options['ft_gallery_fat_alt'] ) && $options['ft_gallery_fat_alt'] ) {
+		if ( ! empty( $options['fat_alt'] ) ) {
 			update_post_meta( $attachment_id, '_wp_attachment_image_alt', sanitize_text_field( $title ) );
 		}
 
@@ -2471,12 +2473,12 @@ class Gallery {
 		);
 
 		// add formatted title to the description meta field
-		if ( isset( $options['ft_gallery_fat_description'] ) && $options['ft_gallery_fat_description'] ) {
+		if ( ! empty( $options['fat_description'] ) ) {
 			$uploaded_post['post_content'] = sanitize_text_field( $title );
 		}
 
 		// add formatted title to the caption meta field
-		if ( isset( $options['ft_gallery_fat_caption'] ) && $options['ft_gallery_fat_caption'] ) {
+		if ( ! empty( $options['fat_caption'] ) ) {
 			$uploaded_post['post_excerpt'] = sanitize_text_field( $title );
 		}
 
