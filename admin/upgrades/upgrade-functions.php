@@ -228,6 +228,21 @@ class FTG_Upgrades {
          * Migrate the gallery style and sizing settings.
          */
         $style_options = array(
+            'ft_gallery_language_second'                    => 'language_second',
+			'ft_gallery_language_seconds'                   => 'language_seconds',
+			'ft_gallery_language_minute'                    => 'language_minute',
+			'ft_gallery_language_minutes'                   => 'language_minutes',
+			'ft_gallery_language_hour'                      => 'language_hour',
+			'ft_gallery_language_hours'                     => 'language_hours',
+			'ft_gallery_language_day'                       => 'language_day',
+			'ft_gallery_language_days'                      => 'language_days',
+			'ft_gallery_language_week'                      => 'language_week',
+			'ft_gallery_language_weeks'                     => 'language_weeks',
+			'ft_gallery_language_month'                     => 'language_month',
+			'ft_gallery_language_months'                    => 'language_months',
+			'ft_gallery_language_year'                      => 'language_year',
+			'ft_gallery_language_years'                     => 'language_years',
+			'ft_gallery_language_ago'                       => 'language_ago',
             'ft_gallery_text_color'                         => 'text_color',
             'ft_gallery_text_size'                          => 'text_size',
             'ft_gallery_description_color'                  => 'description_color',
