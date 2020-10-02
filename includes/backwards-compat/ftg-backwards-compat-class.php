@@ -129,10 +129,6 @@ class FTG_Backwards_Compat {
 	 * @return	mixed	The required value of the option
 	 */
 	public function filter_option_values( $value, $option, $default )	{
-		if ( ! in_array( $option, $this->old_options ) )	{
-			return $value;
-		}
-
 		switch( $option )	{
 			case 'ft-gallery-use-attachment-naming':
 				$value = ftg_get_option( 'use_attachment_naming' );
@@ -205,6 +201,8 @@ class FTG_Backwards_Compat {
 				$key   = str_replace( 'ft_gallery_', '', $option );
 				$value = ftg_get_option( $key );
 				break;
+			default:
+				$value = $value;
 		}
 
 		return $value;
