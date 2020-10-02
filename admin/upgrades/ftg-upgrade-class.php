@@ -163,12 +163,16 @@ class FTG_Upgrades {
 			remove_filter( "pre_option_{$option}", array( 'FTG_Backwards_Compat', 'filter_option_values' ), 10, 3 );
 		}
 
+        // Attachment naming
+        $current                              = get_option( 'ft-gallery-use-attachment-naming' );
+        $ftg_options['use_attachment_naming'] = $current;
+        delete_option( 'ft-gallery-use-attachment-naming' );
+
         /**
          * Loop through file name options and migrate.
          */
         $file_naming_options = array(
             // These are using the file_naming option array
-            'ft-gallery-use-attachment-naming'            => 'use_attachment_naming',
             'ft_gallery_attch_name_gallery_name'          => 'attch_name_gallery_name',
             'ft_gallery_attch_name_post_id'               => 'attch_name_post_id',
             'ft_gallery_attch_name_date'                  => 'attch_name_date',
@@ -203,23 +207,21 @@ class FTG_Upgrades {
         foreach( $misc_options as $old_option => $new_option )    {
             $current                    = ! empty( $title_options[ $old_option ] ) ? $title_options[ $old_option ] : 0;
             $ftg_options[ $new_option ] = $current;
-            unset( $title_options[ $old_option ] );
         }
 
         // The rest of the title options
         $old_title_options = array(
-            'ft_gallery_fat_hyphen'      => 'fat_hyphen',
-            'ft_gallery_fat_underscore'  => 'fat_underscore',
-            'ft_gallery_fat_period'      => 'fat_period',
-            'ft_gallery_fat_tilde'       => 'fat_tilde',
-            'ft_gallery_fat_plus'        => 'fat_plus',
-            'ft_gallery_cap_options'     => 'cap_options'
+            'ft_gallery_fat_hyphen'            => 'fat_hyphen',
+            'ft_gallery_fat_underscore'        => 'fat_underscore',
+            'ft_gallery_fat_period'            => 'fat_period',
+            'ft_gallery_fat_tilde'             => 'fat_tilde',
+            'ft_gallery_fat_plus'              => 'fat_plus',
+            'ft_gallery_cap_options'           => 'cap_options'
         );
 
         foreach( $old_title_options as $old_option => $new_option )  {
             $current                    = ! empty( $title_options[ $old_option ] ) ? $title_options[ $old_option ] : 0;
             $ftg_options[ $new_option ] = $current;
-            unset( $title_options[ $old_option ] );
         }
 
         delete_option( 'ft_gallery_format_attachment_titles_options' );
@@ -281,6 +283,25 @@ class FTG_Upgrades {
             }
 
             $ftg_options[ $new_option ] = $current;
+            delete_option( $old_option );
+        }
+
+        /**
+         * Migrate WooCommerce settings.
+         */
+        $woo_options = array(
+            'ft_gallery_enable_right_click'        => 'woo_enable_right_click',
+            'ft_gallery_attch_prod_to_gallery_cat' => 'woo_attch_prod_to_gallery_cat',
+            'ft_gallery_woo_add_to_cart'           => 'woo_add_to_cart'
+        );
+
+        foreach( $woo_options as $old_option => $new_option )   {
+            $current     = get_option( $old_option );
+            if ( 'ft_gallery_woo_add_to_cart' != $old_option )  {
+                $current = 'true' == $current ? 1 : 0;
+            }
+            $ftg_options[ $new_option ] = $current;
+            delete_option( $old_option );
         }
 
         update_option( 'ftg_settings', $ftg_options );

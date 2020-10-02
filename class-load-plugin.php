@@ -101,7 +101,7 @@ class Feed_Them_Gallery {
 		feed_them_gallery\FTG_Backwards_Compat::load();
 
         // Upgrades
-        //feed_them_gallery\FTG_Upgrades::load();
+        feed_them_gallery\FTG_Upgrades::load();
 
 		// Updater Init.
 		new feed_them_gallery\updater_init();
