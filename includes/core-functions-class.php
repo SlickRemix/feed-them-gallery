@@ -128,6 +128,12 @@ class Core_Functions {
 				'demo_url'     => 'https://feedthemgallery.com/',
 				'purchase_url' => 'https://www.slickremix.com/downloads/feed-them-gallery/',
 			),
+			'feed_them_gallery_clients_manager' => array(
+				'title'        => 'Feed Them Gallery Clients Manager',
+				'plugin_url'   => 'feed-them-gallery-premium/feed-them-gallery-clients-manager.php',
+				'demo_url'     => 'https://feedthemgallery.com/',
+				'purchase_url' => 'https://www.slickremix.com/downloads/feed-them-gallery/',
+			)
 		);
 
 		return $required_premium_plugins;

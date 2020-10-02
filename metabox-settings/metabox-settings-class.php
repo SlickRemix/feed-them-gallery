@@ -686,15 +686,58 @@ class Metabox_Settings {
 					switch ( $option['option_type'] ) {
 						// Input.
 						case 'input':
-							$output .= '<input ' . ( isset( $section_required_prem_plugin ) && 'active' !== $section_required_prem_plugin ? 'disabled ' : '' ) . 'type="' . $option['type'] . '" name="' . $option_name . '" id="' . $option_id . '" class="feed-them-gallery-admin-input ' . ( isset( $option['class'] ) ? $option['class'] : '' ) . '" placeholder="' . ( isset( $option['placeholder'] ) ? $option['placeholder'] : '' ) . '" value="' . $final_value . '"' . ( isset( $option['autocomplete'] ) ? ' autocomplete="' . $option['autocomplete'] . '"' : '' ) . ' />';
+                            $disabled = isset( $section_required_prem_plugin ) && 'active' !== $section_required_prem_plugin ? ' disabled' : '';
+
+							$output .= sprintf(
+                                '<input type="%s" name="%s" id="%s" class="feed-them-gallery-admin-input%s" placeholder="%s" value="%s" %s/>',
+                                $option['type'],
+                                $option_name,
+                                $option_id,
+                                isset( $option['class'] ) ? ' ' . $option['class'] : '',
+                                isset( $option['placeholder'] ) ? $option['placeholder'] : '',
+                                $final_value,
+                                isset( $option['autocomplete'] ) ? ' autocomplete="' . ' ' . $option['autocomplete'] : '',
+                                $disabled
+                            );
 							break;
 
 						// Select.
 						case 'select':
-							$output .= '<select ' . ( isset( $section_required_prem_plugin ) && 'active' !== $section_required_prem_plugin ? 'disabled ' : '' ) . 'name="' . $option_name . '" id="' . $option_id . '"  class="feed-them-gallery-admin-input">';
-							$i       = 0;
+						case 'select_multi':
+							$disabled = '';
+							$multiple = '';
+							if ( isset( $section_required_prem_plugin ) && 'active' !== $section_required_prem_plugin )	{
+								$disabled = ' disabled';
+							}
+							if ( 'select_multi' == $option['option_type'] )	{
+								$multiple    = ' multiple';
+                                $option_name = $option_name . '[]';
+							}
+							$output .= sprintf(
+								'<select %s name="%s" id="%s" class="feed-them-gallery-admin-input"%s>',
+								$disabled,
+								$option_name,
+								$option_id,
+								$multiple
+							);
+							$i        = 0;
+
 							foreach ( $option['options'] as $select_option ) {
-								$output .= '<option value="' . $select_option['value'] . '" ' . ( ! empty( $final_value ) && $final_value === $select_option['value'] || empty( $final_value ) && 0 === $i ? 'selected="selected"' : '' ) . '>' . $select_option['label'] . '</option>';
+                                $selected = '';
+
+                                if ( 'select_multi' == $option['option_type'] )  {
+                                    $final_value = ! is_array( $final_value ) ? array( $final_value ) : $final_value;
+                                    $selected    = in_array( $select_option['value'], $final_value ) ? ' selected="selected"' : '';
+                                } elseif ( ! empty( $final_value ) && $final_value === $select_option['value'] || empty( $final_value ) && 0 === $i ) {
+                                    $selected = ' selected="selected"';
+                                }
+
+								$output .= sprintf(
+                                    '<option value="%s"%s>%s</option>',
+                                    $select_option['value'],
+                                    $selected,
+                                    $select_option['label']
+                                );
 								$i++;
 							}
 							$output .= '</select>';
@@ -702,7 +745,15 @@ class Metabox_Settings {
 
 						// Checkbox.
 						case 'checkbox':
-							$output .= '<input ' . ( isset( $section_required_prem_plugin ) && 'active' !== $section_required_prem_plugin ? 'disabled ' : '' ) . 'type="checkbox" name="' . $option_name . '" id="' . $option_id . '" ' . ( ! empty( $final_value ) && 'true' === $final_value ? ' checked="checked"' : '' ) . '/>';
+                            $disabled = isset( $section_required_prem_plugin ) && 'active' !== $section_required_prem_plugin ? ' disabled' : '';
+
+							$output .= sprintf(
+                                '<input type="checkbox" name="%s" id="%s"%s%s/>',
+                                $option_name,
+                                $option_id,
+                                checked( 'true', $final_value, false ),
+                                $disabled
+                            );
 							break;
 
 						/*
@@ -773,6 +824,7 @@ class Metabox_Settings {
 					'name'  => array(),
 					'class' => array(),
 					'id'    => array(),
+                    'multiple' => array(),
 				),
 				'option' => array(
 					'value'    => array(),
