@@ -9,6 +9,8 @@
  * @since       1.3.4
  */
 
+namespace feed_them_gallery;
+
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) )
 	exit;
@@ -22,8 +24,6 @@ if ( ! defined( 'ABSPATH' ) )
  * @category Class
  * @author   SlickRemix
  */
-
-namespace feed_them_gallery;
 
 /**
  * Class Settings_Page
@@ -86,8 +86,8 @@ class FTG_Upgrades {
         $did_upgrade = false;
         $ftg_version = preg_replace( '/[^0-9.].*/', '', get_option( 'ftg_version', '1.0' ) );
 
-        if ( version_compare( $ftg_version, '1.4', '<' ) ) {
-            $this->v14_upgrades();
+        if ( version_compare( $ftg_version, '1.3.4', '<' ) ) {
+            $this->v134_upgrades();
         }
 
         if ( version_compare( $ftg_version, FTG_CURRENT_VERSION, '<' ) )	{
@@ -107,7 +107,7 @@ class FTG_Upgrades {
      * @since	1.3.4
      * @return	void
      */
-    public function v14_upgrades()	{
+    public function v134_upgrades()	{
         $ftg_options = array();
 
 		/**
@@ -284,6 +284,6 @@ class FTG_Upgrades {
         }
 
         update_option( 'ftg_settings', $ftg_options );
-    } // v14_upgrades
+    } // v134_upgrades
 
 } // FTG_Upgrades

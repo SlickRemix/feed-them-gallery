@@ -100,6 +100,9 @@ class Feed_Them_Gallery {
 		// Backwards compatability
 		feed_them_gallery\FTG_Backwards_Compat::load();
 
+        // Upgrades
+        //feed_them_gallery\FTG_Upgrades::load();
+
 		// Updater Init.
 		new feed_them_gallery\updater_init();
 
@@ -424,6 +427,9 @@ class Feed_Them_Gallery {
 
 		// Backwards compatability
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . '/includes/backwards-compat/ftg-backwards-compat-class.php';
+
+        // Upgraders
+		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . '/admin/upgrades/ftg-upgrade-class.php';
 
 		// Updater Classes.
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'updater/updater-license-page.php';
