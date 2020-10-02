@@ -919,7 +919,7 @@ function ftg_get_file_name_setting_options()    {
  * @return	array	Array of timezone options
  */
 function ftg_get_timezone_setting_options()	{
-	date_default_timezone_set( ftg_get_option( 'timezone' ) );
+	date_default_timezone_set( ftg_get_option( 'timezone', 'America/Los_Angeles' ) );
 
 	$timezones = array(
 		'Pacific/Midway'                 => __( '(GMT-11:00) Midway Island, Samoa', 'feed-them-social' ),

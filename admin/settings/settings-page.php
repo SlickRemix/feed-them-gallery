@@ -702,8 +702,11 @@ class Settings_Page {
 					<th scope="row"><?php echo str_replace( 'language_', '', esc_html( $field ) ); ?></th>
 					<td>
 					<?php ftg_text_callback( array(
-						'id'  => $field,
-						'std' => $value
+						'id'          => $field,
+						'std'         => $value,
+                        'readonly'    => 'false',
+                        'field_class' => '',
+                        'desc'        => ''
 					) ); ?>
 					</td>
 				</tr>
