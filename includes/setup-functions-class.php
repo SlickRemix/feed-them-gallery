@@ -415,7 +415,7 @@ class Setup_Functions {
 				'href'   => admin_url( 'edit.php?post_type=ft_gallery&page=ft-gallery-system-info-submenu-page' ),
 			)
 		);
-		if ( ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+		if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 			// Plugin License.
 			$wp_admin_bar->add_menu(
 				array(
@@ -490,7 +490,7 @@ class Setup_Functions {
 		);
 
 		// If Woocommerce is active add options to save.
-		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 			// Woocommerce Options.
 			$settings[] = 'ft_gallery_attch_prod_to_gallery_cat';
 			$settings[] = 'ft_gallery_woo_add_to_cart';

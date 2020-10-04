@@ -120,7 +120,7 @@ class Gallery {
 		}
 
 		// If Premium add Functionality!
-		if ( ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+		if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 			$this->zip_gallery_class = new Zip_Gallery();
 		}
 	}
@@ -553,7 +553,7 @@ class Gallery {
 				$new['gallery_thumb']     = '';
 				$new['gallery_shortcode'] = esc_html__( 'Gallery Shortcode', 'feed-them-gallery' );
 
-				if ( ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+				if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 					$text = esc_html__( 'Gallery ZIP', 'feed-them-gallery' );
 				} else {
 					$text = '';
@@ -632,7 +632,7 @@ class Gallery {
 
 			case 'gallery_zip':
 				// Add Premium Coloumns!
-				if ( ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+				if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 					$newest_zip = get_post_meta( $post_id, 'ft_gallery_newest_zip_id', true );
 
 					if ( $newest_zip ) {
@@ -802,7 +802,7 @@ class Gallery {
 	 */
 	public function ft_gallery_edit_page_popup( $gallery_id ) {
 		?>
-		<div class="ft-gallery-popup-form <?php echo $premium_active = ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ? 'ftg-premium-active' : 'ftg-premium-not-active'; ?>" style="display:none">
+		<div class="ft-gallery-popup-form <?php echo $premium_active = is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ? 'ftg-premium-active' : 'ftg-premium-not-active'; ?>" style="display:none">
 
 			<label><?php esc_html_e( 'Title of image', 'feed-them-gallery' ); ?></label>
 			<input value="" class="fts-gallery-title"/>
@@ -951,7 +951,7 @@ class Gallery {
 
 		$this->metabox_settings_class->display_metabox_content( $this->ft_gallery_metabox_tabs_list(), $params );
 
-		if ( ! ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 			?>
 			<script>
 				jQuery('#ftg_sorting_options, #ftg_free_download_size').attr('disabled', 'disabled');
@@ -1042,7 +1042,7 @@ class Gallery {
 				}
 
 				// check to see if the auto create option has been checked on the woocommerce tab and if so we add a class to the uploaderSection wrapper.
-				if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) && isset( $_GET['post'] ) ) {
+				if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && isset( $_GET['post'] ) ) {
 
 					$display_gallery = new Display_Gallery();
 					$option          = $display_gallery->ft_gallery_get_option_or_get_postmeta( $_GET['post'] );
@@ -1265,7 +1265,7 @@ class Gallery {
 			if ( isset( $image_list[0] ) ) {
 				?>
 				<div class="ft-gallery-options-buttons-wrap">
-					<?php if ( ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) { ?>
+					<?php if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
 						<div class="gallery-edit-button-wrap">
 							<button type="button" class="button"
 									id="fts-gallery-checkAll"><?php esc_html_e( 'Select All', 'feed-them-gallery' ); ?></button>
@@ -1274,7 +1274,7 @@ class Gallery {
 					<div class="gallery-edit-button-wrap">
 						<button
 							<?php
-							if ( ! ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+							if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 								esc_html_e( 'disabled', 'feed-them-gallery' );
 							}
 							?>
@@ -1316,7 +1316,7 @@ class Gallery {
 					'</a>'
 				);
 
-				if ( ! ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+				if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 					$gallery_class->ft_gallery_tab_premium_msg();
 				}
 				?>
@@ -1335,7 +1335,7 @@ class Gallery {
 					'<a href="#woocommerce" class="ftg-woo-tab" >',
 					'</a>'
 				);
-				if ( ! ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+				if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 					$gallery_class->ft_gallery_tab_premium_msg();
 				}
 				?>
@@ -1349,7 +1349,7 @@ class Gallery {
 					'<a href="#woocommerce" class="ftg-woo-tab" >',
 					'</a>'
 				);
-				if ( ! ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+				if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 					$gallery_class->ft_gallery_tab_premium_msg();
 				}
 				?>
@@ -1413,7 +1413,7 @@ class Gallery {
 						$next_img = isset( $image_list[ $key + 1 ] ) ? $image_list[ $key + 1 ] : $image_list[0];
 						$prev_img = isset( $image_list[ $key - 1 ] ) ? $image_list[ $key - 1 ] : $image_list[ count( $image_list ) - 1 ];
 
-						if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+						if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 
 							// Check custom post meta for woo product field
 							$image_post_meta = get_post_meta( $image['id'], 'ft_gallery_woo_prod', true );
@@ -1445,7 +1445,7 @@ class Gallery {
 							// used for testing purposes to style or fix loader stuff
 							// $meta_box .= '<div class="ftg-loading-overlay"><div class="ftg-loading-overlay-loader"></div></div>';
 							// Zip to WooCommerce
-							if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+							if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 
 								// $gallery_class->ft_gallery_get_attachment_info($object->ID);
 								?>
@@ -1485,7 +1485,7 @@ class Gallery {
 							<?php
 
 							// $meta_box .= '</a>';
-							if ( ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+							if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 								?>
 								<div class="ft-gallery-select-thumbn"><label class="ft-gallery-myCheckbox"><input type="checkbox" class=“ft-gallery-img-checkbox” rel="<?php echo esc_attr( $image['id'] ); ?>" name="image-<?php echo esc_attr( $image['id'] ); ?>" id="image-<?php echo esc_attr( $image['id'] ); ?>"/><span></span></label></div>
 								<?php
@@ -1495,7 +1495,7 @@ class Gallery {
 							<div class="ft-gallery-delete-thumb-btn"><a title="Delete Image Completely" class="ft-gallery-force-delete-img-ajax" data-id="<?php echo esc_attr( $image['id'] ); ?>" data-nonce="<?php echo esc_html( wp_create_nonce( 'ft_gallery_delete_image_nonce' ) ); ?>" href="javascript:;"></a></div> <div class="clear"></div>
 							<?php
 
-							if ( ! empty( $image_post_meta ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+							if ( ! empty( $image_post_meta ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 
 								// If Image already has product meta check the product still exists
 								$product_exist = $gallery_to_woo->ft_gallery_create_woo_prod_exists_check( $image_post_meta );
@@ -1721,12 +1721,12 @@ class Gallery {
 	public function tab_zips_content( $params ) {
 		$gallery_class = $params['this'];
 		// If Premium add Functionality
-		if ( ! ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 			echo '<div class="ftg-section">' . $gallery_class->ft_gallery_tab_premium_msg() . '</div>';
 
 		}
 		// If Premium add Functionality
-		if ( ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+		if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 			// Happens in JS file
 			$this->core_functions_class->ft_gallery_tab_notice_html();
 		}
@@ -1736,7 +1736,7 @@ class Gallery {
 			<h3><?php _e( 'Gallery Digital Zip History List', 'feed-them-gallery' ); ?></h3>
 			<?php
 			// If Premium add Functionality
-			if ( ! ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+			if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 				?>
 
 				<ul id="ft-gallery-zip-list" class="ftg-free-list">
@@ -1762,7 +1762,7 @@ class Gallery {
 			}
 
 			// If Premium add Functionality
-			if ( ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+			if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 				// Happens in JS file
 				echo $gallery_class->zip_gallery_class->ft_gallery_list_zip_files( $gallery_class->parent_post_id );
 			}
@@ -1782,7 +1782,7 @@ class Gallery {
 	 */
 	public function tab_woocommerce_content( $params ) {
 		$gallery_class = $params['this'];
-		if ( ! ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 			?>
 
 			<div class="ftg-section">
@@ -1802,7 +1802,7 @@ class Gallery {
 			<div class="feed-them-gallery-admin-input-wrap ftg-global-model-product-wrap">
 				<div class="feed-them-gallery-admin-input-label"><?php esc_html_e( 'Global Model Product', 'feed-them-gallery' ); ?></div>
 				<?php
-				if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+				if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 					$gallery_to_woo_class = new Gallery_to_Woocommerce();
 					echo $gallery_to_woo_class->ft_gallery_image_to_woo_model_prod_select( $gallery_class->parent_post_id, 'global' );
 				} else {
@@ -1829,7 +1829,7 @@ class Gallery {
 				 style="border: none; padding-bottom:0px;">
 				<div class="feed-them-gallery-admin-input-label"><?php esc_html_e( 'Use Smart Image Orientation', 'feed-them-gallery' ); ?></div>
 				<?php
-				if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+				if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 					?>
 					<div class="ft_gallery_smart_image_orient_prod_holder"></div>
 					<?php
@@ -1864,7 +1864,7 @@ class Gallery {
 				<div class="ftg-landscape-option-wrapper">
 					<div class="feed-them-gallery-admin-input-label"><?php esc_html_e( 'Landscape Image Model Product', 'feed-them-gallery' ); ?></div>
 					<?php
-					if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+					if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 						$gallery_to_woo_class = new Gallery_to_Woocommerce();
 						echo $gallery_to_woo_class->ft_gallery_image_to_woo_model_prod_select( $gallery_class->parent_post_id, 'landscape' );
 					} else {
@@ -1877,7 +1877,7 @@ class Gallery {
 				<div class="ftg-square-option-wrapper">
 					<div class="feed-them-gallery-admin-input-label"><?php esc_html_e( 'Square Image Model Product', 'feed-them-gallery' ); ?></div>
 					<?php
-					if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+					if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 						$gallery_to_woo_class = new Gallery_to_Woocommerce();
 						echo $gallery_to_woo_class->ft_gallery_image_to_woo_model_prod_select( $gallery_class->parent_post_id, 'square' );
 					} else {
@@ -1889,7 +1889,7 @@ class Gallery {
 				<div class="ftg-portrait-option-wrapper">
 					<div class="feed-them-gallery-admin-input-label"><?php esc_html_e( 'Portrait Image Model Product', 'feed-them-gallery' ); ?></div>
 					<?php
-					if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+					if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 						$gallery_to_woo_class = new Gallery_to_Woocommerce();
 						echo $gallery_to_woo_class->ft_gallery_image_to_woo_model_prod_select( $gallery_class->parent_post_id, 'portrait' );
 					} else {
@@ -1904,7 +1904,7 @@ class Gallery {
 			<div class="feed-them-gallery-admin-input-wrap ftg-zip-option-wrapper">
 				<div class="feed-them-gallery-admin-input-label"><?php esc_html_e( 'ZIP Model Product', 'feed-them-gallery' ); ?></div>
 				<?php
-				if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+				if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 					echo $gallery_to_woo_class->ft_gallery_zip_to_woo_model_prod_select( $gallery_class->parent_post_id );
 				} else {
 					echo $ftg_prem_not_active;
@@ -1950,7 +1950,7 @@ class Gallery {
 				?>
 			</div>
 		</div>
-		<?php if ( ! ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) { ?>
+		<?php if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
 			<script>
 				jQuery('#ftg-tab-content5 input, #ftg-tab-content5 select').attr('disabled', 'disabled');
 				jQuery('#ftg-tab-content5 input').val('Premium Required');
@@ -1969,7 +1969,7 @@ class Gallery {
 	 */
 	public function tab_watermark_content( $params ) {
 		$gallery_class = $params['this'];
-		if ( ! ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 			?>
 			<div class="ftg-section">
 				<?php $gallery_class->ft_gallery_tab_premium_msg(); ?>
@@ -1980,7 +1980,7 @@ class Gallery {
 
 		$this->support_message();
 
-		if ( ! ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) { ?>
+		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
 			<script>
 				jQuery('#ftg-tab-content7 input, #ftg-tab-content7 select').attr('disabled', 'disabled');
 				jQuery('#ftg-tab-content7 input').val('Premium Required');
@@ -1999,7 +1999,7 @@ class Gallery {
 	 */
 	public function tab_pagination_content( $params ) {
 		$gallery_class = $params['this'];
-		if ( ! ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 			?>
 			<div class="ftg-section">
 				<?php $gallery_class->ft_gallery_tab_premium_msg(); ?>
@@ -2010,7 +2010,7 @@ class Gallery {
 
 		$this->support_message();
 
-		if ( ! ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) { ?>
+		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
 			<script>
 				jQuery('#ftg-tab-content8 input, #ftg-tab-content8 select').attr('disabled', 'disabled');
 				jQuery('#ftg-tab-content8 input').val('Premium Required');
@@ -2029,7 +2029,7 @@ class Gallery {
 	 */
 	public function tab_tags_content( $params ) {
 		$gallery_class = $params['this'];
-		if ( ! ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 			?>
 			<div class="ftg-section">
 				<?php $gallery_class->ft_gallery_tab_premium_msg(); ?>
@@ -2040,7 +2040,7 @@ class Gallery {
 
 		$this->support_message();
 
-		if ( ! ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) { ?>
+		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
 			<script>
 				jQuery('#ftg-tab-content9 input, #ftg-tab-content9 select').attr('disabled', 'disabled');
 				jQuery('#ftg-tab-content9 input').val('Premium Required');
@@ -2060,7 +2060,7 @@ class Gallery {
 	 */
 	public function tab_clients_content( $params ) {
 		$gallery_class = $params['this'];
-		if ( ! ft_gallery_premium_plugin_is_active( 'feed_them_gallery_clients_manager' ) ) {
+		if ( ! is_plugin_active( 'feed-them-gallery-clients-manager/feed-them-gallery-clients-manager.php' ) ) {
 			?>
 			<div class="ftg-section">
 				<?php $gallery_class->ft_gallery_tab_clients_manager_msg(); ?>
@@ -2782,7 +2782,7 @@ class Gallery {
 		//      wp_update_post( $a );
 		//  }
 
-		if ( ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+		if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 			include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'includes/watermark/save.php';
 		}
 		// end premium

@@ -940,7 +940,7 @@ class Metabox_Settings {
 		update_post_meta( $post_id, $current_info['post_type'] . '_settings_options', $array_to_save );
 
 		// REFACTOR NEEDED.
-		if ( ft_gallery_premium_plugin_is_active( 'feed_them_gallery_premium' ) ) {
+		if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 			include FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR . 'includes/watermark/save.php';
 		}
 

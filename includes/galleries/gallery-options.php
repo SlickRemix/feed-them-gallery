@@ -2317,6 +2317,6 @@ class Gallery_Options {
             'cont_func'            => 'tab_clients_content',
         );
 
-		return $this->all_options['clients'];
+		return $this->all_options['tags'];
 	}
 }
