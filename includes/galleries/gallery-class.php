@@ -1957,7 +1957,7 @@ class Gallery {
 				jQuery('#ftg-tab-content5 select option').text('Premium Required');
 			</script>
 			<?php
-}
+		}
 	}
 
 	/**
@@ -1977,30 +1977,17 @@ class Gallery {
 			<?php
 		}
 		echo $gallery_class->metabox_settings_class->settings_html_form( $gallery_class->saved_settings_array['watermark'], null, $gallery_class->parent_post_id );
-		?>
-		<div class="clear"></div>
 
-		<div class="ft-gallery-note ft-gallery-note-footer">
-			<?php
+		$this->support_message();
 
-			// echo '<pre>';
-			// print_r( $gallery_class->metabox_settings_class->get_saved_settings_array( $gallery_class->parent_post_id ) );
-			// echo '</pre>';
-			echo sprintf(
-				esc_html__( 'Please %1$screate a ticket%2$s if you are experiencing trouble and one of our team members will be happy to assist you.', 'feed-them-gallery' ),
-				'<a href="' . esc_url( 'https://www.slickremix.com/my-account/#tab-support' ) . '" target="_blank">',
-				'</a>'
-			);
-			?>
-		</div>
-		<?php if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
+		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
 			<script>
 				jQuery('#ftg-tab-content7 input, #ftg-tab-content7 select').attr('disabled', 'disabled');
 				jQuery('#ftg-tab-content7 input').val('Premium Required');
 				jQuery('#ftg-tab-content7 select option').text('Premium Required');
 			</script>
 			<?php
-}
+		}
 	}
 
 	/**
@@ -2020,27 +2007,17 @@ class Gallery {
 			<?php
 		}
 		echo $gallery_class->metabox_settings_class->settings_html_form( $gallery_class->saved_settings_array['pagination'], null, $gallery_class->parent_post_id );
-		?>
 
-		<div class="clear"></div>
+		$this->support_message();
 
-		<div class="ft-gallery-note ft-gallery-note-footer">
-			<?php
-			echo sprintf(
-				esc_html__( 'Please %1$screate a ticket%2$s if you are experiencing trouble and one of our team members will be happy to assist you.', 'feed-them-gallery' ),
-				'<a href="' . esc_url( 'https://www.slickremix.com/my-account/#tab-support' ) . '" target="_blank">',
-				'</a>'
-			);
-			?>
-		</div>
-		<?php if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
+		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
 			<script>
 				jQuery('#ftg-tab-content8 input, #ftg-tab-content8 select').attr('disabled', 'disabled');
 				jQuery('#ftg-tab-content8 input').val('Premium Required');
 				jQuery('#ftg-tab-content8 select option').text('Premium Required');
 			</script>
 			<?php
-}
+		}
 	}
 
 	/**
@@ -2060,27 +2037,17 @@ class Gallery {
 			<?php
 		}
 		echo $gallery_class->metabox_settings_class->settings_html_form( $gallery_class->saved_settings_array['tags'], null, $gallery_class->parent_post_id );
-		?>
 
-		<div class="clear"></div>
+		$this->support_message();
 
-		<div class="ft-gallery-note ft-gallery-note-footer">
-			<?php
-			echo sprintf(
-				esc_html__( 'Please %1$screate a ticket%2$s if you are experiencing trouble and one of our team members will be happy to assist you.', 'feed-them-gallery' ),
-				'<a href="' . esc_url( 'https://www.slickremix.com/my-account/#tab-support' ) . '" target="_blank">',
-				'</a>'
-			);
-			?>
-		</div>
-		<?php if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
+		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
 			<script>
 				jQuery('#ftg-tab-content9 input, #ftg-tab-content9 select').attr('disabled', 'disabled');
 				jQuery('#ftg-tab-content9 input').val('Premium Required');
 				jQuery('#ftg-tab-content9 select option').text('Premium Required');
 			</script>
 			<?php
-}
+		}
 	}
 
 
@@ -2101,8 +2068,18 @@ class Gallery {
 			<?php
 		}
 		echo $gallery_class->metabox_settings_class->settings_html_form( $gallery_class->saved_settings_array['clients'], null, $gallery_class->parent_post_id );
-		?>
 
+		$this->support_message();
+	} // tab_clients_content
+
+	/**
+	 * Displays the create a ticket message.
+	 *
+	 * @since	1.3.5
+	 * @return	void
+	 */
+	public function support_message()	{
+		?>
 		<div class="clear"></div>
 
 		<div class="ft-gallery-note ft-gallery-note-footer">
@@ -2114,15 +2091,8 @@ class Gallery {
 			);
 			?>
 		</div>
-		<?php if ( ! is_plugin_active( 'feed-them-gallery-clients-manager/feed-them-gallery-clients-manager.php' ) ) { ?>
-			<script>
-				jQuery('#ftg-tab-content10 input, #ftg-tab-content10 select').attr('disabled', 'disabled');
-				jQuery('#ftg-tab-content10 input').val('Clients Manager Required');
-				jQuery('#ftg-tab-content10 select option').text('Clients Manager Required');
-			</script>
-			<?php
-}
-	}
+		<?php
+	} // support_message
 
 	/**
 	 * FT Gallery Uploader Action

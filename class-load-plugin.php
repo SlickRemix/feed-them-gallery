@@ -363,6 +363,9 @@ class Feed_Them_Gallery {
 		// Core Functions Class.
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/core-functions-class.php';
 
+		// Misc functions
+		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/misc-functions.php';
+
 		// Gallery Options.
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/galleries/gallery-options.php';
 

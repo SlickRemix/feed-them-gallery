@@ -606,7 +606,7 @@ class Metabox_Settings {
 		// Get Old Settings Array if set.
 		$old_settings = true == $this->is_page ? $old_settings_page : $old_settings_post;
 
-		$prem_required_plugins = $this->core_functions_class->ft_gallery_required_plugins();
+		$prem_required_plugins = ft_gallery_premium_plugins();
 
 		$section_required_prem_plugin = ! isset( $section_info['required_prem_plugin'] ) || isset( $section_info['required_prem_plugin'] ) && is_plugin_active( $prem_required_plugins[ $section_info['required_prem_plugin'] ]['plugin_url'] ) ? 'active' : '';
 
@@ -686,7 +686,11 @@ class Metabox_Settings {
 					switch ( $option['option_type'] ) {
 						// Input.
 						case 'input':
-                            $disabled = isset( $section_required_prem_plugin ) && 'active' !== $section_required_prem_plugin ? ' disabled' : '';
+							$disabled = ! empty( $option['disabled'] ) ? true : false;
+
+							if ( ! $disabled )	{
+								$disabled = isset( $section_required_prem_plugin ) && 'active' !== $section_required_prem_plugin ? true : false;
+							}
 
 							$output .= sprintf(
                                 '<input type="%s" name="%s" id="%s" class="feed-them-gallery-admin-input%s" placeholder="%s" value="%s" %s/>',
@@ -697,17 +701,18 @@ class Metabox_Settings {
                                 isset( $option['placeholder'] ) ? $option['placeholder'] : '',
                                 $final_value,
                                 isset( $option['autocomplete'] ) ? ' autocomplete="' . ' ' . $option['autocomplete'] : '',
-                                $disabled
+                                $disabled ? ' disabled="disabled"' : ''
                             );
 							break;
 
 						// Select.
 						case 'select':
 						case 'select_multi':
-							$disabled = '';
 							$multiple = '';
-							if ( isset( $section_required_prem_plugin ) && 'active' !== $section_required_prem_plugin )	{
-								$disabled = ' disabled';
+							$disabled = ! empty( $option['disabled'] ) ? true : false;
+
+							if ( ! $disabled )	{
+								$disabled = isset( $section_required_prem_plugin ) && 'active' !== $section_required_prem_plugin ? true : false;
 							}
 							if ( 'select_multi' == $option['option_type'] )	{
 								$multiple    = ' multiple';
@@ -715,7 +720,7 @@ class Metabox_Settings {
 							}
 							$output .= sprintf(
 								'<select %s name="%s" id="%s" class="feed-them-gallery-admin-input"%s>',
-								$disabled,
+								$disabled ? ' disabled="disabled"' : '',
 								$option_name,
 								$option_id,
 								$multiple
