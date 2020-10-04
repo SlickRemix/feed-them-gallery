@@ -693,7 +693,7 @@ class Metabox_Settings {
 							}
 
 							$output .= sprintf(
-                                '<input type="%s" name="%s" id="%s" class="feed-them-gallery-admin-input%s" placeholder="%s" value="%s" %s/>',
+                                '<input type="%s" name="%s" id="%s" class="feed-them-gallery-admin-input%s" placeholder="%s" value="%s"%s%s/>',
                                 $option['type'],
                                 $option_name,
                                 $option_id,
@@ -816,24 +816,25 @@ class Metabox_Settings {
 			$output,
 			array(
 				'a'      => array(
-					'href'  => array(),
-					'title' => array(),
-					'class' => array(),
+					'href'     => array(),
+					'title'    => array(),
+					'class'    => array()
 				),
 				'div'    => array(
-					'class' => array(),
-					'id'    => array(),
-					'style' => array(),
+					'class'    => array(),
+					'id'       => array(),
+					'style'    => array()
 				),
 				'select' => array(
-					'name'  => array(),
-					'class' => array(),
-					'id'    => array(),
+					'name'     => array(),
+					'class'    => array(),
+					'id'       => array(),
                     'multiple' => array(),
+					'disabled' => array()
 				),
 				'option' => array(
 					'value'    => array(),
-					'selected' => array(),
+					'selected' => array()
 				),
 				'input'  => array(
 					'value'       => array(),
@@ -843,6 +844,7 @@ class Metabox_Settings {
 					'placeholder' => array(),
 					'name'        => array(),
 					'checked'     => array(),
+					'disabled'    => array()
 				),
 				'h3'     => array(
 					'class' => array(),

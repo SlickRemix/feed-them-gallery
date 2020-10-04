@@ -2311,10 +2311,31 @@ class Gallery_Options {
 	public function clients_options()	{
 		$this->all_options['clients'] = array(
 			'required_prem_plugin' => 'feed_them_gallery_clients_manager',
+			'section_attr_key'     => 'facebook_',
+			'section_title'        => esc_html__( 'Client Options', 'feed-them-gallery' ),
+			'section_wrap_class'   => 'ftg-section-options',
+			// Form Info
+			'form_wrap_classes'    => 'fb-page-shortcode-form',
+			'form_wrap_id'         => 'fts-fb-page-form',
             'menu_li_class'        => 'tab9',
             'menu_a_text'          => esc_html__( 'Clients', 'feed-them-gallery' ),
             'cont_wrap_id'         => 'ftg-tab-content10',
             'cont_func'            => 'tab_clients_content',
+			'main_options'         => array(
+
+				// ******************************************
+				// Gallery Clients Options
+				// ******************************************
+				array(
+					'option_type'   => 'input',
+					'label'         => esc_html__( 'Gallery Clients', 'feed-them-gallery' ),
+					'type'          => 'text',
+					'id'            => 'ft-gallery-show-clients',
+					'name'          => 'ft_gallery_show_clients',
+					'default_value' => __( 'Clients Manager Required', 'feed-them-gallery' ),
+					'disabled'      => true
+				)
+			)
         );
 
 		return $this->all_options['tags'];

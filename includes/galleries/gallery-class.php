@@ -190,41 +190,37 @@ class Gallery {
 		}
 	}
 
-
 	/**
-	 * FT Gallery Tab Notice HTML
+	 * FT Gallery Tab Requires Extension Notice HTML
 	 *
 	 * Creates notice html for return
 	 *
-	 * @since 1.0.0
+	 * @param	string	$plugin	The plugin needed
+	 * @since 	1.0.0
 	 */
-	public function ft_gallery_tab_premium_msg() {
-		echo sprintf(
-			esc_html__( '%1$sPlease purchase, install and activate %2$sFeed Them Gallery Premium%3$s for these additional awesome features!%4$s', 'feed-them-gallery' ),
-			'<div class="ft-gallery-premium-mesg">',
-			'<a href="' . esc_url( 'https://www.slickremix.com/downloads/feed-them-gallery/' ) . '" target="_blank">',
-			'</a>',
-			'</div>'
-		);
-	}
+	public function requires_extension( $plugin ) {
+		$plugins  = ft_gallery_premium_plugins();
+		$slug     = "feed_them_gallery_{$plugin}";
+		$plugin   = isset( $plugins[ $slug ] ) ? $plugins[ $slug ] : $plugins['feed_them_gallery_premium'];
+		$title    = $plugin['title'];
+		$purchase = $plugin['purchase_url'];
 
+		ob_start();
 
-	/**
-	 * FT Gallery Tab Notice HTML
-	 *
-	 * Creates notice html for return
-	 *
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_tab_clients_manager_msg() {
-		echo sprintf(
-			esc_html__( '%1$sPlease purchase, install and activate %2$sFeed Them Gallery Clients Manager%3$s for these additional awesome features!%4$s', 'feed-them-gallery' ),
-			'<div class="ft-gallery-premium-mesg">',
-			'<a href="' . esc_url( 'https://www.slickremix.com/downloads/feed-them-gallery-clients-manager/' ) . '" target="_blank">',
-			'</a>',
-			'</div>'
-		);
-	}
+		?>
+		<div class="ft-gallery-premium-mesg">
+			<?php
+			printf(
+				__( 'Please purchase, install and activate <a href="%s" target"_blank">%s</a> for these additional awesome features!', 'feed-them-gallery' ),
+				esc_url( $purchase ),
+				$title
+			);
+		?>
+		</div>
+		<?php
+
+		echo ob_get_clean();
+	} // requires_extension
 
 	/**
 	 * FT Gallery Custom Thumb Sizes
@@ -1317,7 +1313,7 @@ class Gallery {
 				);
 
 				if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
-					$gallery_class->ft_gallery_tab_premium_msg();
+					$gallery_class->requires_extension( 'premium' );
 				}
 				?>
 			</div>
@@ -1336,7 +1332,7 @@ class Gallery {
 					'</a>'
 				);
 				if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
-					$gallery_class->ft_gallery_tab_premium_msg();
+					$gallery_class->requires_extension( 'premium' );
 				}
 				?>
 			</div>
@@ -1350,7 +1346,7 @@ class Gallery {
 					'</a>'
 				);
 				if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
-					$gallery_class->ft_gallery_tab_premium_msg();
+					$gallery_class->requires_extension( 'premium' );
 				}
 				?>
 			</div>
@@ -1722,7 +1718,7 @@ class Gallery {
 		$gallery_class = $params['this'];
 		// If Premium add Functionality
 		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
-			echo '<div class="ftg-section">' . $gallery_class->ft_gallery_tab_premium_msg() . '</div>';
+			echo '<div class="ftg-section">' . $gallery_class->requires_extension( 'premium' ) . '</div>';
 
 		}
 		// If Premium add Functionality
@@ -1786,7 +1782,7 @@ class Gallery {
 			?>
 
 			<div class="ftg-section">
-				<?php $gallery_class->ft_gallery_tab_premium_msg(); ?>
+				<?php $gallery_class->requires_extension( 'premium' ); ?>
 			</div>
 		<?php } ?>
 
@@ -1972,7 +1968,7 @@ class Gallery {
 		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 			?>
 			<div class="ftg-section">
-				<?php $gallery_class->ft_gallery_tab_premium_msg(); ?>
+				<?php $gallery_class->requires_extension( 'premium' ); ?>
 			</div>
 			<?php
 		}
@@ -2002,7 +1998,7 @@ class Gallery {
 		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 			?>
 			<div class="ftg-section">
-				<?php $gallery_class->ft_gallery_tab_premium_msg(); ?>
+				<?php $gallery_class->requires_extension( 'premium' ); ?>
 			</div>
 			<?php
 		}
@@ -2032,7 +2028,7 @@ class Gallery {
 		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 			?>
 			<div class="ftg-section">
-				<?php $gallery_class->ft_gallery_tab_premium_msg(); ?>
+				<?php $gallery_class->requires_extension( 'premium' ); ?>
 			</div>
 			<?php
 		}
@@ -2060,14 +2056,20 @@ class Gallery {
 	 */
 	public function tab_clients_content( $params ) {
 		$gallery_class = $params['this'];
+
 		if ( ! is_plugin_active( 'feed-them-gallery-clients-manager/feed-them-gallery-clients-manager.php' ) ) {
 			?>
 			<div class="ftg-section">
-				<?php $gallery_class->ft_gallery_tab_clients_manager_msg(); ?>
+				<?php $gallery_class->requires_extension( 'clients_manager' ); ?>
 			</div>
 			<?php
 		}
-		echo $gallery_class->metabox_settings_class->settings_html_form( $gallery_class->saved_settings_array['clients'], null, $gallery_class->parent_post_id );
+
+		echo $gallery_class->metabox_settings_class->settings_html_form(
+			$gallery_class->saved_settings_array['clients'],
+			null,
+			$gallery_class->parent_post_id
+		);
 
 		$this->support_message();
 	} // tab_clients_content
