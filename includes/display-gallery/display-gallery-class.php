@@ -138,7 +138,7 @@ class Display_Gallery {
 			wp_enqueue_script( 'add-to-cart-ajax_ajax', plugins_url() . '/feed-them-gallery/includes/feeds/js/add-to-cart-ajax.js', array( 'jquery' ), FTG_CURRENT_VERSION, true );
 		}
 		$php_info = array(
-			'enable_right_click' => null !== get_option( 'ft_gallery_enable_right_click' ) ? get_option( 'ft_gallery_enable_right_click' ) : '',
+			'enable_right_click' => ftg_get_option( 'woo_enable_right_click', '' ),
 		);
 		wp_localize_script( 'ft-front-end-js', 'ftgPremiumOption', $php_info );
 	}
@@ -154,66 +154,21 @@ class Display_Gallery {
 	 */
 	public function ft_gallery_ago( $timestamp ) {
 		// not setting isset'ing anything because you have to save the settings page to even enable this feature.
-		$fts_language_second = get_option( 'ft_gallery_language_second' );
-		if ( empty( $fts_language_second ) ) {
-			$fts_language_second = 'second';
-		}
-		$fts_language_seconds = get_option( 'ft_gallery_language_seconds' );
-		if ( empty( $fts_language_seconds ) ) {
-			$fts_language_seconds = 'seconds';
-		}
-		$fts_language_minute = get_option( 'ft_gallery_language_minute' );
-		if ( empty( $fts_language_minute ) ) {
-			$fts_language_minute = 'minute';
-		}
-		$fts_language_minutes = get_option( 'ft_gallery_language_minutes' );
-		if ( empty( $fts_language_minutes ) ) {
-			$fts_language_minutes = 'minutes';
-		}
-		$fts_language_hour = get_option( 'ft_gallery_language_hour' );
-		if ( empty( $fts_language_hour ) ) {
-			$fts_language_hour = 'hour';
-		}
-		$fts_language_hours = get_option( 'ft_gallery_language_hours' );
-		if ( empty( $fts_language_hours ) ) {
-			$fts_language_hours = 'hours';
-		}
-		$fts_language_day = get_option( 'ft_gallery_language_day' );
-		if ( empty( $fts_language_day ) ) {
-			$fts_language_day = 'day';
-		}
-		$fts_language_days = get_option( 'ft_gallery_language_days' );
-		if ( empty( $fts_language_days ) ) {
-			$fts_language_days = 'days';
-		}
-		$fts_language_week = get_option( 'ft_gallery_language_week' );
-		if ( empty( $fts_language_week ) ) {
-			$fts_language_week = 'week';
-		}
-		$fts_language_weeks = get_option( 'ft_gallery_language_weeks' );
-		if ( empty( $fts_language_weeks ) ) {
-			$fts_language_weeks = 'weeks';
-		}
-		$fts_language_month = get_option( 'ft_gallery_language_month' );
-		if ( empty( $fts_language_month ) ) {
-			$fts_language_month = 'month';
-		}
-		$fts_language_months = get_option( 'ft_gallery_language_months' );
-		if ( empty( $fts_language_months ) ) {
-			$fts_language_months = 'months';
-		}
-		$fts_language_year = get_option( 'ft_gallery_language_year' );
-		if ( empty( $fts_language_year ) ) {
-			$fts_language_year = 'year';
-		}
-		$fts_language_years = get_option( 'ft_gallery_language_years' );
-		if ( empty( $fts_language_years ) ) {
-			$fts_language_years = 'years';
-		}
-		$fts_language_ago = get_option( 'ft_gallery_language_ago' );
-		if ( empty( $fts_language_ago ) ) {
-			$fts_language_ago = 'ago';
-		}
+		$fts_language_second  = ftg_get_option( 'language_second' );
+		$fts_language_seconds = ftg_get_option( 'language_seconds' );
+		$fts_language_minute  = ftg_get_option( 'language_minute' );
+		$fts_language_minutes = ftg_get_option( 'language_minutes' );
+		$fts_language_hour    = ftg_get_option( 'language_hour' );
+		$fts_language_hours   = ftg_get_option( 'language_hours' );
+		$fts_language_day     = ftg_get_option( 'language_day' );
+		$fts_language_days    = ftg_get_option( 'language_days' );
+		$fts_language_week    = ftg_get_option( 'language_week' );
+		$fts_language_weeks   = ftg_get_option( 'language_weeks' );
+		$fts_language_month   = ftg_get_option( 'language_month' );
+		$fts_language_months  = ftg_get_option( 'language_months' );
+		$fts_language_year    = ftg_get_option( 'language_year' );
+		$fts_language_years   = ftg_get_option( 'language_years' );
+		$fts_language_ago     = ftg_get_option( 'language_ago' );
 
 		$periods        = array( $fts_language_second, $fts_language_minute, $fts_language_hour, $fts_language_day, $fts_language_week, $fts_language_month, $fts_language_year, 'decade' );
 		$periods_plural = array( $fts_language_seconds, $fts_language_minutes, $fts_language_hours, $fts_language_days, $fts_language_weeks, $fts_language_months, $fts_language_years, 'decades' );
@@ -281,10 +236,10 @@ class Display_Gallery {
 	 * @since 1.0.0
 	 */
 	public function ft_gallery_custom_date( $created_time ) {
-		$fts_custom_date   = get_option( 'ft-gallery-custom-date' );
-		$fts_custom_time   = get_option( 'ft-gallery-custom-time' );
-		$custom_date_check = get_option( 'ft-gallery-date-and-time-format' );
-		$fts_timezone      = get_option( 'ft-gallery-timezone' );
+		$fts_custom_date   = ftg_get_option( 'custom_date' );
+		$fts_custom_time   = ftg_get_option( 'custom_time' );
+		$custom_date_check = ftg_get_option( 'date_time_format' );
+		$fts_timezone      = ftg_get_option( 'timezone' );
 
 		if ( '' === $fts_custom_date && '' === $fts_custom_time ) {
 			$custom_date_format = $custom_date_check;
@@ -1298,8 +1253,7 @@ class Display_Gallery {
 		if ( isset( $popup ) && 'yes' === $popup ) {
 
 			// it's ok if these styles & scripts load at the bottom of the page.
-			$fts_fix_magnific = get_option( 'ft_gallery_fix_magnific' ) ? get_option( 'ft_gallery_fix_magnific' ) : '';
-			if ( isset( $fts_fix_magnific ) && '1' !== $fts_fix_magnific ) {
+			if ( ftg_get_option( 'fix_magnific' ) ) {
 				wp_enqueue_style( 'ft-gallery-popup', plugins_url( 'feed-them-gallery/includes/feeds/css/magnific-popup.css' ), array(), FTG_CURRENT_VERSION );
 			}
 			if ( ! is_plugin_active( 'feed-them-premium/feed-them-premium.php' ) ) {
@@ -1632,9 +1586,7 @@ class Display_Gallery {
 				$style_end   = '';
 			}
 
-			$fts_powered_text_options_settings = get_option( 'ft-gallery-powered-text-options-settings' );
-
-			if ( '1' === $fts_powered_text_options_settings ) {
+			if ( ftg_get_option( 'show_powered_by' ) ) {
 				?>
 				<script>jQuery('body').addClass('ft-gallery-powered-by-hide');</script>
 				<?php
@@ -1667,7 +1619,7 @@ class Display_Gallery {
 				if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 					$gallery_to_woo       = new Gallery_to_Woocommerce();
 					$siteurl              = get_option( 'siteurl' );
-					$purchase_link        = get_option( 'ft_gallery_woo_add_to_cart' );
+					$purchase_link        = ftg_get_option( 'woo_add_to_cart' );
 					$purchase_link_option = isset( $purchase_link['ft_gallery_woo_options'] ) ? $purchase_link['ft_gallery_woo_options'] : '';
 				}
 

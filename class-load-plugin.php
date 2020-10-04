@@ -20,6 +20,7 @@ class Feed_Them_Gallery {
 	 * @since 1.0.0
 	 */
 	public static function load_plugin() {
+        global $ftg_options;
 
 		$plugin_loaded = new self();
 
@@ -34,6 +35,8 @@ class Feed_Them_Gallery {
 
 		// Include the files.
 		self::includes();
+
+        $ftg_options = ftg_get_settings();
 
 		// Add Actions and Filters.
 		$plugin_loaded->add_actions_filters();
@@ -59,7 +62,7 @@ class Feed_Them_Gallery {
 		// Galleries.
 		feed_them_gallery\Gallery::load( $gallery_options, $gallery_main_post_type );
 
-			// Load in Premium Gallery glasses if premium is loaded.
+		// Load in Premium Gallery glasses if premium is loaded.
 		if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 
 			$ftgp_current_version = defined( 'FTGP_CURRENT_VERSION' ) ? FTGP_CURRENT_VERSION : '';
@@ -93,6 +96,12 @@ class Feed_Them_Gallery {
 
 		// Shortcodes.
 		new feed_them_gallery\Shortcodes();
+
+		// Backwards compatability
+		feed_them_gallery\FTG_Backwards_Compat::load();
+
+        // Upgrades
+        feed_them_gallery\FTG_Upgrades::load();
 
 		// Updater Init.
 		new feed_them_gallery\updater_init();
@@ -287,12 +296,14 @@ class Feed_Them_Gallery {
 	 * Run this on activation
 	 *
 	 * Set a transient so that we know we've just activated the plugin
+     * Add a version option to the DB.
 	 *
 	 * @since 1.0.0
 	 */
 	public function ftg_activate() {
 		set_transient( 'ftgallery_activated', 1 );
-	}
+        update_option( 'ftg_version', FEED_THEM_GALLERY_VERSION );
+	} // ftg_activate
 
 
 	/**
@@ -353,9 +364,10 @@ class Feed_Them_Gallery {
 	private static function includes() {
 
 		// Admin Pages.
+        include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'admin/settings/settings-page.php';
+        include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'admin/settings/settings-functions.php';
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'admin/system-info.php';
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'metabox-settings/metabox-settings-class.php';
-		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'admin/settings-page.php';
 
 		// Setup Functions Class.
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/setup-functions-class.php';
@@ -415,6 +427,12 @@ class Feed_Them_Gallery {
 
 		// Include Shortcodes.
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . '/shortcodes.php';
+
+		// Backwards compatability
+		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . '/includes/backwards-compat/ftg-backwards-compat-class.php';
+
+        // Upgraders
+		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . '/admin/upgrades/ftg-upgrade-class.php';
 
 		// Updater Classes.
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'updater/updater-license-page.php';

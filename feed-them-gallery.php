@@ -28,7 +28,7 @@
  */
 
 // Doing this to ensure any js or css changes are reloaded properly. Added to enqued css and js files throughout.
-define( 'FTG_CURRENT_VERSION', '1.3.3' );
+define( 'FTG_CURRENT_VERSION', '1.3.4' );
 
 // Require file for plugin loading.
 require_once __DIR__ . '/class-load-plugin.php';
