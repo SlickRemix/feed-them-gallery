@@ -50,6 +50,9 @@ class Settings_Page {
 		// Additional date format fields
 		add_filter( 'ftg_after_setting_output', array( $this, 'date_translate_fields' ), 10, 2 );
 
+		// Add renaming informational text
+		add_action( 'ftg_settings_tab_top_general_main', array( $this, 'attach_rename_note' ) );
+
         // Add authors note
         add_action( 'ftg_settings_bottom', array( $this, 'authors_note' ) );
 	}
@@ -775,7 +778,7 @@ class Settings_Page {
 
 			<?php
 			foreach( $this->get_translation_fields() as $field => $value ) : ?>
-				<tr class="custom_time_ago_wrap"<?php echo $style; ?>">
+				<tr class="custom_time_ago_wrap<?php echo $style; ?>">
 					<th scope="row"><?php echo str_replace( 'language_', '', esc_html( $field ) ); ?></th>
 					<td>
 					<?php ftg_text_callback( array(
@@ -823,6 +826,25 @@ class Settings_Page {
 
 		return $fields;
 	} // get_translation_fields
+
+	/**
+	 * Adds the renaming notes to the top of the Attachments Renaming/Titles sections.
+	 *
+	 * @since	1.3.4
+	 * @return	void
+	 */
+	public function attach_rename_note()	{
+		ob_start(); ?>
+			<div class="clear"></div>
+			<p>
+			<?php
+				_e( 'Use attachment renaming when importing/uploading attachments. This will overwrite original Filename.', 'feed-them-gallery' ); ?>
+			<br>
+			<?php
+				_e( '<strong>Below are examples of what the attachment filenames and titles will look like after uploading</strong>: (Click "Save All Changes" to view Examples)', 'feed-them-gallery' ); ?>
+			</p>
+		<?php echo ob_get_clean();
+	} // attach_rename_note
 
     /**
      * Adds the authors note to the bottom of all FTG settings pages.
