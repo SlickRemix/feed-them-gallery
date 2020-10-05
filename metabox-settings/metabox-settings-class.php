@@ -226,6 +226,24 @@ class Metabox_Settings {
 			// Enqueue Metabox JS.
 			wp_enqueue_script( 'slick-metabox-js' );
 
+			// Register Select2 JS/CSS
+			wp_register_style(
+				'select2',
+				plugins_url( 'feed-them-gallery/assets/vendors/select2/css/select2.min.css' ),
+				array(),
+				FTG_CURRENT_VERSION
+			);
+
+			wp_register_script(
+				'select2',
+				plugins_url( 'feed-them-gallery/assets/vendors/select2/js/select2.min.js' ),
+				array(),
+				FTG_CURRENT_VERSION
+			);
+
+			wp_enqueue_style( 'select2' );
+			wp_enqueue_script( 'select2' );
+
 			// Register Metabox Tabs JS.
 			wp_register_script( 'slick-metabox-tabs', plugins_url( 'feed-them-gallery/metabox-settings/js/metabox-tabs.js' ), array(), FTG_CURRENT_VERSION, true );
 
@@ -722,10 +740,11 @@ class Metabox_Settings {
                                 $option_name = $option_name . '[]';
 							}
 							$output .= sprintf(
-								'<select %s name="%s" id="%s" class="feed-them-gallery-admin-input"%s>',
+								'<select %s name="%s" id="%s" class="feed-them-gallery-admin-input%s"%s>',
 								$disabled ? ' disabled="disabled"' : '',
 								$option_name,
 								$option_id,
+								isset( $option['class'] ) ? ' ' . $option['class'] : '',
 								$multiple
 							);
 							$i        = 0;
