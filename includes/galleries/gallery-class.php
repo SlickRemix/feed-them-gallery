@@ -2062,14 +2062,12 @@ class Gallery {
 
         if ( ! empty( $gallery_class->saved_settings_array[ $tab ]['required_prem_plugin'] ) )  {
             $plugin = $gallery_class->saved_settings_array[ $tab ]['required_prem_plugin'];
+            ?>
+            <div class="ftg-section">
+                <?php $gallery_class->requires_extension( $plugin ); ?>
+            </div>
+            <?php
         }
-        ?>
-
-        <div class="ftg-section">
-            <?php $gallery_class->requires_extension( $plugin ); ?>
-        </div>
-
-        <?php
 
         echo $gallery_class->metabox_settings_class->settings_html_form(
 			$gallery_class->saved_settings_array[ $tab ],
