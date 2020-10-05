@@ -203,7 +203,12 @@ class Gallery {
 	 */
 	public function requires_extension( $plugin ) {
 		$plugins  = ft_gallery_premium_plugins();
-		$plugin   = isset( $plugins[ $plugin ] ) ? $plugins[ $plugin ] : $plugins['feed_them_gallery_premium'];
+		$plugin   = isset( $plugins[ $plugin ] ) ? $plugins[ $plugin ] : false;
+
+        if ( ! $plugin )    {
+            return;
+        }
+
 		$title    = $plugin['title'];
 		$purchase = $plugin['purchase_url'];
 
@@ -860,73 +865,73 @@ class Gallery {
 				'post' => array( 'images', 'layout', 'colors', 'zips', 'woocommerce', 'watermark', 'pagination', 'tags', 'clients' ),
 			),
 			// Tabs List! The cont_func item is relative the the Function name for that tabs content. The array Keys for each tab are also relative to classes and ID on wraps of display_metabox_content function.
-			'tabs_list' => array(
+			'tabs_list' => apply_filters( 'ftg_metabox_tabs_list', array(
 				// Images Tab!
-				'images'      => array(
+				'images'      => apply_filters( 'ftg_metabox_tab_images', array(
 					'menu_li_class'      => 'tab1',
 					'menu_a_text'        => esc_html__( 'Images', 'feed-them-gallery' ),
 					'menu_a_class'       => 'account-tab-highlight',
 					'menu_aria_expanded' => 'true',
 					'cont_wrap_id'       => 'ftg-tab-content1',
 					'cont_func'          => 'tab_upload_content',
-				),
+				) ),
 				// Layout Tab!
-				'layout'      => array(
+				'layout'      => apply_filters( 'ftg_metabox_tab_layout', array(
 					'menu_li_class' => 'tab2',
 					'menu_a_text'   => esc_html__( 'Layout', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content2',
 					'cont_func'     => 'tab_layout_content',
-				),
+				) ),
 				// Colors Tab!
-				'colors'      => array(
+				'colors'      => apply_filters( 'ftg_metabox_tab_colors', array(
 					'menu_li_class' => 'tab3',
 					'menu_a_text'   => esc_html__( 'Colors', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content3',
 					'cont_func'     => 'tab_colors_content',
-				),
+				) ),
 				// Zips Tab!
-				'zips'        => array(
+				'zips'        => apply_filters( 'ftg_metabox_tab_zips', array(
 					'menu_li_class' => 'tab4',
 					'menu_a_text'   => esc_html__( 'Zips', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content6',
 					'cont_func'     => 'tab_zips_content',
-				),
+				) ),
 				// WooCommerce Tab!
-				'woocommerce' => array(
+				'woocommerce' => apply_filters( 'ftg_metabox_tab_woocmmerce', array(
 					'menu_li_class' => 'tab5',
 					'menu_a_text'   => esc_html__( 'WooCommerce', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content5',
 					'cont_func'     => 'tab_woocommerce_content',
-				),
+				) ),
 				// Watermark Tab!
-				'watermark'   => array(
+				'watermark'   => apply_filters( 'ftg_metabox_tab_watermark', array(
 					'menu_li_class' => 'tab6',
 					'menu_a_text'   => esc_html__( 'Watermark', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content7',
 					'cont_func'     => 'tab_watermark_content',
-				),
+				) ),
 				// Pagination Tab!
-				'pagination'  => array(
+				'pagination'  => apply_filters( 'ftg_metabox_tab_pagination', array(
 					'menu_li_class' => 'tab7',
 					'menu_a_text'   => esc_html__( 'Pagination', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content8',
 					'cont_func'     => 'tab_pagination_content',
-				),
+				) ),
 				// Tags Tab!
-				'tags'        => array(
+				'tags'        => apply_filters( 'ftg_metabox_tab_tags', array(
 					'menu_li_class' => 'tab8',
 					'menu_a_text'   => esc_html__( 'Tags', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content9',
 					'cont_func'     => 'tab_tags_content',
-				),
-				// Tags Tab!
-				'clients'     => array(
+				) ),
+				// Clients Tab!
+				'clients'     => apply_filters( 'ftg_metabox_tab_clients', array(
 					'menu_li_class' => 'tab9',
 					'menu_a_text'   => esc_html__( 'Clients', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content10',
 					'cont_func'     => 'tab_premium_extension_required',
-				),
-			),
+				) ),
+			) ),
 		);
 
 		return $metabox_tabs_list;
@@ -1315,7 +1320,7 @@ class Gallery {
 				);
 
 				if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
-					$gallery_class->requires_extension( 'premium' );
+					$gallery_class->requires_extension( 'feed_them_gallery_premium' );
 				}
 				?>
 			</div>
@@ -1334,7 +1339,7 @@ class Gallery {
 					'</a>'
 				);
 				if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
-					$gallery_class->requires_extension( 'premium' );
+					$gallery_class->requires_extension( 'feed_them_gallery_premium' );
 				}
 				?>
 			</div>
@@ -1348,7 +1353,7 @@ class Gallery {
 					'</a>'
 				);
 				if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
-					$gallery_class->requires_extension( 'premium' );
+					$gallery_class->requires_extension( 'feed_them_gallery_premium' );
 				}
 				?>
 			</div>
@@ -1720,7 +1725,7 @@ class Gallery {
 		$gallery_class = $params['this'];
 		// If Premium add Functionality
 		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
-			echo '<div class="ftg-section">' . $gallery_class->requires_extension( 'premium' ) . '</div>';
+			echo '<div class="ftg-section">' . $gallery_class->requires_extension( 'feed_them_gallery_premium' ) . '</div>';
 
 		}
 		// If Premium add Functionality
@@ -1784,7 +1789,7 @@ class Gallery {
 			?>
 
 			<div class="ftg-section">
-				<?php $gallery_class->requires_extension( 'premium' ); ?>
+				<?php $gallery_class->requires_extension( 'feed_them_gallery_premium' ); ?>
 			</div>
 		<?php } ?>
 
@@ -1970,7 +1975,7 @@ class Gallery {
 		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 			?>
 			<div class="ftg-section">
-				<?php $gallery_class->requires_extension( 'premium' ); ?>
+				<?php $gallery_class->requires_extension( 'feed_them_gallery_premium' ); ?>
 			</div>
 			<?php
 		}
@@ -1998,7 +2003,7 @@ class Gallery {
 		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 			?>
 			<div class="ftg-section">
-				<?php $gallery_class->requires_extension( 'premium' ); ?>
+				<?php $gallery_class->requires_extension( 'feed_them_gallery_premium' ); ?>
 			</div>
 			<?php
 		}
@@ -2027,7 +2032,7 @@ class Gallery {
 		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 			?>
 			<div class="ftg-section">
-				<?php $gallery_class->requires_extension( 'premium' ); ?>
+				<?php $gallery_class->requires_extension( 'feed_them_gallery_premium' ); ?>
 			</div>
 			<?php
 		}
@@ -2053,7 +2058,7 @@ class Gallery {
      */
     public function tab_premium_extension_required( $params, $tab )   {
         $gallery_class = $params['this'];
-        $plugin        = 'feed_them_gallery_premium';
+        $plugin        = '';
 
         if ( ! empty( $gallery_class->saved_settings_array[ $tab ]['required_prem_plugin'] ) )  {
             $plugin = $gallery_class->saved_settings_array[ $tab ]['required_prem_plugin'];
@@ -2067,7 +2072,7 @@ class Gallery {
         <?php
 
         echo $gallery_class->metabox_settings_class->settings_html_form(
-			$gallery_class->saved_settings_array['clients'],
+			$gallery_class->saved_settings_array[ $tab ],
 			null,
 			$gallery_class->parent_post_id
 		);
