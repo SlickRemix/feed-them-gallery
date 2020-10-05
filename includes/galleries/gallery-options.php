@@ -2320,7 +2320,7 @@ class Gallery_Options {
             'menu_li_class'        => 'tab9',
             'menu_a_text'          => esc_html__( 'Clients', 'feed-them-gallery' ),
             'cont_wrap_id'         => 'ftg-tab-content10',
-            'cont_func'            => 'tab_clients_content',
+            'cont_func'            => 'premium_extension_required',
 			'main_options'         => array(
 
 				// ******************************************

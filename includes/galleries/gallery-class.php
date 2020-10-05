@@ -188,6 +188,9 @@ class Gallery {
 			add_action( 'post_submitbox_start', array( $this, 'ft_gallery_duplicate_post_add_duplicate_post_button' ) );
 
 		}
+
+        // Add support message to tabs
+        add_action( 'ft_gallery_after_metabox_settings_tab_fields', array( $this, 'support_message' ), 900, 2 );
 	}
 
 	/**
@@ -200,8 +203,7 @@ class Gallery {
 	 */
 	public function requires_extension( $plugin ) {
 		$plugins  = ft_gallery_premium_plugins();
-		$slug     = "feed_them_gallery_{$plugin}";
-		$plugin   = isset( $plugins[ $slug ] ) ? $plugins[ $slug ] : $plugins['feed_them_gallery_premium'];
+		$plugin   = isset( $plugins[ $plugin ] ) ? $plugins[ $plugin ] : $plugins['feed_them_gallery_premium'];
 		$title    = $plugin['title'];
 		$purchase = $plugin['purchase_url'];
 
@@ -922,7 +924,7 @@ class Gallery {
 					'menu_li_class' => 'tab9',
 					'menu_a_text'   => esc_html__( 'Clients', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content10',
-					'cont_func'     => 'tab_clients_content',
+					'cont_func'     => 'tab_premium_extension_required',
 				),
 			),
 		);
@@ -1974,8 +1976,6 @@ class Gallery {
 		}
 		echo $gallery_class->metabox_settings_class->settings_html_form( $gallery_class->saved_settings_array['watermark'], null, $gallery_class->parent_post_id );
 
-		$this->support_message();
-
 		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
 			<script>
 				jQuery('#ftg-tab-content7 input, #ftg-tab-content7 select').attr('disabled', 'disabled');
@@ -2004,7 +2004,6 @@ class Gallery {
 		}
 		echo $gallery_class->metabox_settings_class->settings_html_form( $gallery_class->saved_settings_array['pagination'], null, $gallery_class->parent_post_id );
 
-		$this->support_message();
 
 		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
 			<script>
@@ -2034,8 +2033,6 @@ class Gallery {
 		}
 		echo $gallery_class->metabox_settings_class->settings_html_form( $gallery_class->saved_settings_array['tags'], null, $gallery_class->parent_post_id );
 
-		$this->support_message();
-
 		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
 			<script>
 				jQuery('#ftg-tab-content9 input, #ftg-tab-content9 select').attr('disabled', 'disabled');
@@ -2046,41 +2043,50 @@ class Gallery {
 		}
 	}
 
+    /**
+     * Premium plugin required tab content.
+     *
+     * @since   1.3.5
+     * @param   array   $params Array of tab option params
+     * @param   string  $tab    Current tab
+     * @return  void
+     */
+    public function tab_premium_extension_required( $params, $tab )   {
+        $gallery_class = $params['this'];
+        $plugin        = 'feed_them_gallery_premium';
 
-	/**
-	 * Tab Clients Content
-	 *
-	 * Outputs Clients tab content for metabox.
-	 *
-	 * @since 1.0.0
-	 */
-	public function tab_clients_content( $params ) {
-		$gallery_class = $params['this'];
+        if ( ! empty( $gallery_class->saved_settings_array[ $tab ]['required_prem_plugin'] ) )  {
+            $plugin = $gallery_class->saved_settings_array[ $tab ]['required_prem_plugin'];
+        }
+        ?>
 
-		if ( ! is_plugin_active( 'feed-them-gallery-clients-manager/feed-them-gallery-clients-manager.php' ) ) {
-			?>
-			<div class="ftg-section">
-				<?php $gallery_class->requires_extension( 'clients_manager' ); ?>
-			</div>
-			<?php
-		}
+        <div class="ftg-section">
+            <?php $gallery_class->requires_extension( $plugin ); ?>
+        </div>
 
-		echo $gallery_class->metabox_settings_class->settings_html_form(
+        <?php
+
+        echo $gallery_class->metabox_settings_class->settings_html_form(
 			$gallery_class->saved_settings_array['clients'],
 			null,
 			$gallery_class->parent_post_id
 		);
 
-		$this->support_message();
-	} // tab_clients_content
+    } // tab_premium_extension_required
 
 	/**
 	 * Displays the create a ticket message.
 	 *
 	 * @since	1.3.5
+     * @param   array   $params Array of tab option params
+     * @param   string  $tab    Current tab
 	 * @return	void
 	 */
-	public function support_message()	{
+	public function support_message( $params, $tab )	{
+        $gallery_class = $params['this'];
+        if ( empty( $gallery_class->saved_settings_array[ $tab ]['required_prem_plugin'] ) )    {
+            return;
+        }
 		?>
 		<div class="clear"></div>
 
