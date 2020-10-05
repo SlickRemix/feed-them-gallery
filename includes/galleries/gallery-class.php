@@ -2413,19 +2413,19 @@ class Gallery {
 
 		/* Update post. */
 		$char_array = array();
-		if ( ! empty( $options['ft_gallery_fat_hyphen'] ) ) {
+		if ( ! empty( $options['fat_hyphen'] ) ) {
 			$char_array[] = '-';
 		}
-		if ( ! empty( $options['ft_gallery_fat_underscore'] ) ) {
+		if ( ! empty( $options['fat_underscore'] ) ) {
 			$char_array[] = '_';
 		}
-		if ( ! empty( $options['ft_gallery_fat_period'] ) ) {
+		if ( ! empty( $options['fat_period'] ) ) {
 			$char_array[] = '.';
 		}
-		if ( ! empty( $options['ft_gallery_fat_tilde'] ) ) {
+		if ( ! empty( $options['fat_tilde'] ) ) {
 			$char_array[] = '~';
 		}
-		if ( ! empty( $options['ft_gallery_fat_plus'] ) ) {
+		if ( ! empty( $options['fat_plus'] ) ) {
 			$char_array[] = '+';
 		}
 

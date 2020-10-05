@@ -731,8 +731,12 @@ function ftg_sanitize_key( $key ) {
  * @return	void
  */
 function ftg_file_naming_callback( $args ) {
+	global $name_example, $title_example;
+
     $naming_options = ftg_get_file_name_setting_options();
     $ftg_option     = ftg_get_option( $args['id'] );
+	$name_example   = array();
+	$title_example  = array();
     ob_start();
 
     ?>
@@ -747,6 +751,14 @@ function ftg_file_naming_callback( $args ) {
             <tr>
                 <th scope="row"><?php echo esc_html( $label ); ?></th>
                 <?php foreach( $options as $option => $example ) : ?>
+					<?php
+						if ( strpos( $option, 'attch_name_' ) !== false )	{
+							$name_example[] = $example;
+						}
+						if ( strpos( $option, 'attch_title_' ) !== false )	{
+							$title_example[] = $example;
+						}
+					?>
                     <td>
                         <?php printf(
                             '<input type="checkbox" name="%s" value="1"%s /> <code>%s</code>',

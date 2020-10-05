@@ -53,6 +53,12 @@ class Settings_Page {
 		// Add renaming informational text
 		add_action( 'ftg_settings_tab_top_general_main', array( $this, 'attach_rename_note' ) );
 
+		// Add file name and title examples
+		add_action( 'ftg_settings_tab_bottom_general_main', array( $this, 'file_title_examples' ) );
+
+		// Add title format examples
+		add_action( 'ftg_settings_tab_bottom_general_formatting', array( $this, 'title_format_example' ) );
+
         // Add authors note
         add_action( 'ftg_settings_bottom', array( $this, 'authors_note' ) );
 	}
@@ -735,7 +741,7 @@ class Settings_Page {
 
 			<?php
 			foreach( $this->get_translation_fields() as $field => $value ) : ?>
-				<tr class="custom_time_ago_wrap"<?php echo $style; ?>">
+				<tr class="custom_time_ago_wrap"<?php echo $style; ?>>
 					<th scope="row"><?php echo str_replace( 'language_', '', esc_html( $field ) ); ?></th>
 					<td>
 					<?php ftg_text_callback( array(
@@ -778,7 +784,7 @@ class Settings_Page {
 
 			<?php
 			foreach( $this->get_translation_fields() as $field => $value ) : ?>
-				<tr class="custom_time_ago_wrap<?php echo $style; ?>">
+				<tr class="custom_time_ago_wrap"<?php echo $style; ?>>
 					<th scope="row"><?php echo str_replace( 'language_', '', esc_html( $field ) ); ?></th>
 					<td>
 					<?php ftg_text_callback( array(
@@ -845,6 +851,48 @@ class Settings_Page {
 			</p>
 		<?php echo ob_get_clean();
 	} // attach_rename_note
+
+	/**
+	 * Outputs the file name and title examples.
+	 *
+	 * @since	1.3.4
+	 * @return	void
+	 */
+	public function file_title_examples()	{
+		global $name_example, $title_example;
+
+		ob_start(); ?>
+		<table class="form-table">
+			<tr>
+				<th scope="row"><?php _e( 'Example Filename:', 'feed-them-gallery' ); ?></th>
+				<td><code><em><?php echo implode( '-', $name_example ); ?>.jpg</em></code></td>
+			</tr>
+			<tr>
+				<th scope="row"><?php _e( 'Example Title:', 'feed-them-gallery' ); ?></th>
+				<td><code><em><?php echo implode( ' ', $title_example ); ?></em></code></td>
+			</tr>
+		</table>
+		<?php echo ob_get_clean();
+	} // file_title_examples
+
+	/**
+	 * Outputs the title format example.
+	 *
+	 * @since	1.3.4
+	 * @return	void
+	 */
+	public function title_format_example()	{
+		$gallery = new Gallery();
+
+		ob_start(); ?>
+		<table class="form-table">
+			<tr>
+				<th scope="row"><?php _e( 'Example Title:', 'feed-them-gallery' ); ?></th>
+				<td><code><em><?php echo $gallery->ft_gallery_format_attachment_title( 'Gallery Image Title' ); ?></em></code></td>
+			</tr>
+		</table>
+		<?php echo ob_get_clean();
+	} // title_format_example
 
     /**
      * Adds the authors note to the bottom of all FTG settings pages.
