@@ -558,7 +558,9 @@ class Metabox_Settings {
 										">
 														<?php
 														// call_user_func(array(feed_them_gallery()->gallery, $tab_item['cont_func']), $params).
-														call_user_func( array( $this->current_this, $tab_item['cont_func'] ), $params, $tab_key );
+                                                        $callback = isset( $tab_item['callback'] ) ? $tab_item['callback'] : array( $this->current_this, $tab_item['cont_func'] );
+
+														call_user_func( $callback, $params, $tab_key );
                                                         do_action( 'ft_gallery_after_metabox_settings_tab_fields', $params, $tab_key );
 														?>
 													</div> <!-- #tab-content -->
