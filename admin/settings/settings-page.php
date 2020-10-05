@@ -728,7 +728,7 @@ class Settings_Page {
             $style = 'one-day-ago' != ftg_get_option( 'date_time_format' ) ? ' style="display: none;"' : '';
 			?>
 
-			<tr class="custom_time_ago_wrap"<?php echo $style; ?>">
+			<tr class="custom_time_ago_wrap"<?php echo $style; ?>>
 				<th scope="row"><?php _e( 'Translations for 1 day ago', 'feed-them-gallery' ); ?></th>
 				<td>&nbsp;</td>
 			</tr>
