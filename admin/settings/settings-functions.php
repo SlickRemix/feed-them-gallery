@@ -877,6 +877,10 @@ function ftg_attachment_titles_callback( $args ) {
                 ); ?> <label><?php _e( "Don't Alter", 'feed-them-gallery' ); ?></label>
             </td>
         </tr>
+        <tr>
+            <td><span style="font-size: small; font-style: italic;"><?php _e( 'For image title only. The filename will still contain a hyphen.', 'feed-them-gallery' ); ?></span></td>
+            <td><span style="font-size: small; font-style: italic;"><?php _e( 'Works on an individual words. If the title contains no spaces after formatting, only the first letter will be capitalized.', 'feed-them-gallery' ); ?></span></span></td>
+        </tr>
     </table>
 
     <?php

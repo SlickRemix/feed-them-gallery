@@ -53,11 +53,15 @@ class Settings_Page {
 		// Add renaming informational text
 		add_action( 'ftg_settings_tab_top_general_main', array( $this, 'attach_rename_note' ) );
 
+        // Add title options informational text
+		add_action( 'ftg_settings_tab_bottom_general_options', array( $this, 'title_options_note' ) );
+
 		// Add file name and title examples
 		add_action( 'ftg_settings_tab_bottom_general_main', array( $this, 'file_title_examples' ) );
 
 		// Add title format examples
 		add_action( 'ftg_settings_tab_bottom_general_formatting', array( $this, 'title_format_example' ) );
+        add_action( 'ftg_settings_tab_bottom_general_options', array( $this, 'title_format_example' ) );
 
         // Add authors note
         add_action( 'ftg_settings_bottom', array( $this, 'authors_note' ) );
@@ -851,6 +855,24 @@ class Settings_Page {
 			</p>
 		<?php echo ob_get_clean();
 	} // attach_rename_note
+
+    /**
+	 * Adds the notes to the bottom of the Title Options sections.
+	 *
+	 * @since	1.3.4
+	 * @return	void
+	 */
+	public function title_options_note()	{
+		ob_start(); ?>
+			<div class="clear"></div>
+			<p>
+			<?php
+				_e( '<strong>Below is an example of what the attachment titles will look like after uploading</strong>: (Click "Save All Changes" to view Examples)', 'feed-them-gallery' ); ?>
+            <br>
+            <span style="font-color: #666; font-style: italic;"><?php _e( 'Note: Title will come from filename of uploaded attachment. You may still set a custom name for each photo after uploaded.', 'feed-them-gallery' ); ?></span>
+			</p>
+		<?php echo ob_get_clean();
+	} // title_options_note
 
 	/**
 	 * Outputs the file name and title examples.
