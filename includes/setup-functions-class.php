@@ -106,7 +106,7 @@ class Setup_Functions {
 	 * @since 1.0.3
 	 */
 	public function ftg_plugin_license() {
-        if ( ! isset( $_GET['page'] ) || 'ft-gallery-license-page' === $_GET['page'] ) {
+        if ( ! isset( $_GET['page'] ) || 'ft-gallery-license-page' !== $_GET['page'] ) {
             return;
         }
 
