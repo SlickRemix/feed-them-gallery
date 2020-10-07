@@ -731,8 +731,12 @@ function ftg_sanitize_key( $key ) {
  * @return	void
  */
 function ftg_file_naming_callback( $args ) {
+	global $name_example, $title_example;
+
     $naming_options = ftg_get_file_name_setting_options();
     $ftg_option     = ftg_get_option( $args['id'] );
+	$name_example   = array();
+	$title_example  = array();
     ob_start();
 
     ?>
@@ -747,6 +751,14 @@ function ftg_file_naming_callback( $args ) {
             <tr>
                 <th scope="row"><?php echo esc_html( $label ); ?></th>
                 <?php foreach( $options as $option => $example ) : ?>
+					<?php
+						if ( strpos( $option, 'attch_name_' ) !== false )	{
+							$name_example[] = $example;
+						}
+						if ( strpos( $option, 'attch_title_' ) !== false )	{
+							$title_example[] = $example;
+						}
+					?>
                     <td>
                         <?php printf(
                             '<input type="checkbox" name="%s" value="1"%s /> <code>%s</code>',
@@ -864,6 +876,10 @@ function ftg_attachment_titles_callback( $args ) {
                     checked( $cap_selected, 'dont_alter', false )
                 ); ?> <label><?php _e( "Don't Alter", 'feed-them-gallery' ); ?></label>
             </td>
+        </tr>
+        <tr>
+            <td><span style="font-size: small; font-style: italic;"><?php _e( 'For image title only. The filename will still contain a hyphen.', 'feed-them-gallery' ); ?></span></td>
+            <td><span style="font-size: small; font-style: italic;"><?php _e( 'Works on an individual words. If the title contains no spaces after formatting, only the first letter will be capitalized.', 'feed-them-gallery' ); ?></span></span></td>
         </tr>
     </table>
 
