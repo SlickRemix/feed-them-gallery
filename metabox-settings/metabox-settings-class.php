@@ -772,6 +772,11 @@ class Metabox_Settings {
                             
 							break;
 
+						// Clients drop down list
+						case 'client_drop':
+							$output .= apply_filters( 'ftg_client_drop_metabox_field', '', $option, $current_post_id );
+							break;
+
 						// Checkbox.
 						case 'checkbox':
                             $disabled = isset( $section_required_prem_plugin ) && 'active' !== $section_required_prem_plugin ? ' disabled' : '';
@@ -839,10 +844,11 @@ class Metabox_Settings {
 			$output,
 			array(
 				'a'      => array(
-					'href'     => array(),
-					'title'    => array(),
-					'class'    => array(),
-                    'id'       => array()
+					'href'         => array(),
+					'title'        => array(),
+					'class'        => array(),
+                    'id'           => array(),
+					'data-user-id' => array()
 				),
 				'div'    => array(
 					'class'    => array(),
@@ -887,7 +893,15 @@ class Metabox_Settings {
                     'action' => array(),
                     'method' => array(),
                     'id'     => array()
-                )
+                ),
+				'table'  => array(
+					'class' => array()
+				),
+				'tr'     => array(),
+				'th'     => array(),
+				'td'     => array(
+					'class' => array()
+				)
 			)
 		);
 	}
