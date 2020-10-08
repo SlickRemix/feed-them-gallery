@@ -44,7 +44,6 @@ class Shortcode_Button {
 		$instance = new self();
 
 		// Initiate Shortcode_media_button.
-		$instance->ft_gallery_shortcode_media_button();
 		$instance->add_actions_filters();
 	}
 
@@ -64,7 +63,7 @@ class Shortcode_Button {
 	 */
 	public function add_actions_filters() {
 		add_action( 'wp_ajax_ft_gallery_editor_get_galleries', array( $this, 'ft_gallery_editor_get_galleries' ) );
-		add_filter( 'media_buttons_context', array( $this, 'ft_gallery_shortcode_media_button' ) );
+		add_action( 'media_buttons', array( $this, 'shortcode_media_button' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'ft_gallery_shortcode_get_all_options' ) );
 		add_action( 'print_media_templates', array( $this, 'ft_gallery_print_media_templates' ) );
 	}
@@ -119,21 +118,21 @@ class Shortcode_Button {
 	 *
 	 * @return string $buttons Amended media buttons context HTML.
 	 */
-	public function ft_gallery_shortcode_media_button() {
+	public function shortcode_media_button() {
 
 		// Create the media button.
-		$button = '<a id="ft-media-modal-button" href="javascript:;" class="button feed-them-gallery-choose-gallery" data-action="gallery" title="' . esc_attr__( 'Add Gallery', 'feed-them-gallery' ) . '" >
-            <span class="ft-media-icon"></span> ' .
-			__( 'Add FT Gallery', 'feed-them-gallery' ) .
-			'</a>
-            ';
+		$button = sprintf(
+			'<a id="ft-media-modal-button" href="javascript:;" class="button feed-them-gallery-choose-gallery" data-action="gallery" title="%s"><span class="ft-media-icon"></span> %s</a>',
+			esc_attr__( 'Add Gallery', 'feed-them-gallery' ),
+			__( 'Add FT Gallery', 'feed-them-gallery' )
+		);
+
 		// Filter the button.
 		$button = apply_filters( 'ft_gallery_media_button', $button );
 
 		// Append the button.
-		return $button;
-
-	}
+		echo $button;
+	} // shortcode_media_button
 
 	/**
 	 * FT Gallery Get Galleries
