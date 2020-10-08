@@ -682,9 +682,10 @@ class Metabox_Settings {
 
 				// Set Option ID. Use Prefix?
 				// $option_id = isset( $this->option_prefix ) ? $this->option_prefix . $option['id'] : $option['id'];.
-				$option_id = $option['id'];
+				$option_id     = isset( $option['id'] ) ? $option['id'] : '';
+                $default_value = isset( $option['default_value'] ) ? $option['default_value'] : '';
 
-				$final_value = isset( $old_settings[ $option_name ] ) && ! empty( $old_settings[ $option_name ] ) ? $old_settings[ $option_name ] : $option['default_value'];
+				$final_value = isset( $old_settings[ $option_name ] ) && ! empty( $old_settings[ $option_name ] ) ? $old_settings[ $option_name ] : $default_value;
 
 				$default_option_types = array( 'input', 'select', 'checkbox' );
 				$option_type          = $option['option_type'];
@@ -768,6 +769,7 @@ class Metabox_Settings {
 								$i++;
 							}
 							$output .= '</select>';
+                            
 							break;
 
 						// Checkbox.
@@ -808,13 +810,11 @@ class Metabox_Settings {
 						<span class="description">' . $option['desc'] . '</span>';
 						break;
 						*/
-
 					}
 				}
 
 				$output .= '<div class="clear"></div>';
 				$output .= '</div><!--/feed-them-gallery-admin-input-wrap-->';
-
 				$output .= isset( $option['outer_wrap_class'] ) || isset( $option['outer_wrap_display'] ) ? '</div>' : '';
 
 				// Sub option output END?
@@ -833,6 +833,7 @@ class Metabox_Settings {
 		}
 
 		$output .= '</div> <!--/Section Wrap Class END -->';
+        $output = apply_filters( 'ftg_cm_after_metabox_settings_field', $output, $option_type, $option_name );
 
 		return wp_kses(
 			$output,
@@ -840,7 +841,8 @@ class Metabox_Settings {
 				'a'      => array(
 					'href'     => array(),
 					'title'    => array(),
-					'class'    => array()
+					'class'    => array(),
+                    'id'       => array()
 				),
 				'div'    => array(
 					'class'    => array(),
@@ -871,10 +873,21 @@ class Metabox_Settings {
 				'h3'     => array(
 					'class' => array(),
 				),
+                'p'      => array(
+                    'class'    => array(),
+					'id'       => array(),
+					'style'    => array()
+                ),
 				'br'     => array(),
 				'em'     => array(),
 				'strong' => array(),
 				'small'  => array(),
+                'form'   => array(
+                    'name'   => array(),
+                    'action' => array(),
+                    'method' => array(),
+                    'id'     => array()
+                )
 			)
 		);
 	}
