@@ -45,14 +45,7 @@ class updater_init {
         );
 
         //List of Plugins! Used for License check and Plugin License page.
-        $this->prem_plugins_list = array(
-            'feed_them_gallery_premium' => array(
-                'title' => 'Feed Them Gallery Premium',
-                'plugin_url' => 'feed-them-gallery-premium/feed-them-gallery-premium.php',
-                'demo_url' => 'https://feedthemgallery.com/',
-                'purchase_url' => 'https://www.slickremix.com/downloads/feed-them-gallery/',
-            ),
-        );
+        $this->prem_plugins_list = ft_gallery_premium_plugins();
 
         //Create License Page for main plugin.
         new updater_license_page($this->updater_options_info, $this->prem_plugins_list);
