@@ -95,6 +95,25 @@ class Setup_Functions {
      * @return  void
      */
     public function show_notices()   {
+        $notices = array(
+			'updated' => array(),
+			'error'   => array(),
+		);
+
+        $notices = apply_filters( 'ftg_admin_notices', $notices );
+
+        if ( count( $notices['updated'] ) > 0 ) {
+			foreach( $notices['updated'] as $notice => $message ) {
+				add_settings_error( 'ftg-notices', $notice, $message, 'updated' );
+			}
+		}
+
+		if ( count( $notices['error'] ) > 0 ) {
+			foreach( $notices['error'] as $notice => $message ) {
+				add_settings_error( 'ftg-notices', $notice, $message, 'error' );
+			}
+		}
+
         settings_errors( 'ftg-notices' );
     } // show_notices
 
