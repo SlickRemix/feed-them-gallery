@@ -553,7 +553,9 @@ class Gallery {
 			if ( 'title' === $key ) {
 				$new[ $key ] = $value;
 				// put the tags column before it.
+                $new = apply_filters( "ft_gallery_custom_edit_columns_before_gallery_thumb", $new );
 				$new['gallery_thumb']     = '';
+                $new = apply_filters( "ft_gallery_custom_edit_columns_before_gallery_shortcode", $new );
 				$new['gallery_shortcode'] = esc_html__( 'Gallery Shortcode', 'feed-them-gallery' );
 
 				if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
@@ -562,14 +564,16 @@ class Gallery {
 					$text = '';
 				}
 
+                $new = apply_filters( "ft_gallery_custom_edit_columns_before_gallery_zip", $new );
 				$new['gallery_zip'] = $text;
 
 			} else {
+                $new = apply_filters( "ft_gallery_custom_edit_columns_before_{$key}", $new );
 				$new[ $key ] = $value;
 			}
 		}
 
-		return $new;
+		return apply_filters( 'ft_gallery_custom_edit_columns', $new, $columns );
 	}
 
 	/**
