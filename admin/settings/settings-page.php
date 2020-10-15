@@ -364,7 +364,14 @@ class Settings_Page {
 							'name'    => __( 'Show Powered by Text?', 'feed-them-gallery' ),
 							'type'    => 'checkbox',
 							'std'     => 0,
-							'desc'    => __( 'If enabled, powered by text will appear in the popup. Awesome! Thanks so much for sharing', 'feed-them-gallery' )
+							'desc'    => __( 'If enabled, powered by text will appear in the popup. Awesome! Thanks so much for sharing.', 'feed-them-gallery' )
+						),
+                        'remove_on_uninstall' => array(
+							'id'      => 'remove_on_uninstall',
+							'name'    => __( 'Remove Data on Uninstall?', 'feed-them-gallery' ),
+							'type'    => 'checkbox',
+							'std'     => 0,
+							'desc'    => __( 'Check this box if you would like Feed Them Gallery and its extensions to completely remove all of its data when the plugin is deleted.', 'feed-them-gallery' )
 						)
                     )
                 )		
