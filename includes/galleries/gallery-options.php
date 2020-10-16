@@ -2338,6 +2338,6 @@ class Gallery_Options {
 			)
         );
 
-		return $this->all_options['tags'];
+		return $this->all_options['clients'];
 	}
 }
