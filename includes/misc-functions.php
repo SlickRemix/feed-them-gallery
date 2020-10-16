@@ -4,7 +4,7 @@
  *
  * @package     FTG
  * @subpackage  Functions/Miscellaneous
- * @copyright   Copyright (c) 2021, Mike Howard
+ * @copyright   Copyright (c) 2020, SlickRemix
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.3.4
  */
