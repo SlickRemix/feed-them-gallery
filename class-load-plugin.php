@@ -347,6 +347,11 @@ class Feed_Them_Gallery {
 			define( 'FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR', plugin_dir_path( __FILE__ ) );
 		}
 
+        // Plugin Directory Path.
+		if ( ! defined( 'FEED_THEM_GALLERY_PLUGIN_FOLDER_URL' ) ) {
+			define( 'FEED_THEM_GALLERY_PLUGIN_FOLDER_URL', plugin_dir_url( __FILE__ ) );
+		}
+
 		// Premium Plugin Directoy Path.
 		if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && ! defined( 'FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR' ) ) {
 			define( 'FEED_THEM_GALLERY_PREMIUM_PLUGIN_FOLDER_DIR', WP_PLUGIN_DIR . '/feed-them-gallery-premium/feed-them-gallery-premium.php' );
@@ -374,6 +379,9 @@ class Feed_Them_Gallery {
 
 		// Core Functions Class.
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/core-functions-class.php';
+
+        // Template functions
+        include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/template-functions.php';
 
 		// Misc functions
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/misc-functions.php';
