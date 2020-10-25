@@ -545,8 +545,9 @@ class Metabox_Settings {
 						$this->metabox_tabs_menu( $current_info, $tabs_list ),
 						array(
 							'a'      => array(
-								'href'  => array(),
-								'title' => array(),
+								'href'   => array(),
+								'title'  => array(),
+                                'target' => array(),
 							),
 							'br'     => array(),
 							'em'     => array(),
@@ -848,7 +849,8 @@ class Metabox_Settings {
 					'title'        => array(),
 					'class'        => array(),
                     'id'           => array(),
-					'data-user-id' => array()
+					'data-user-id' => array(),
+                    'target'       => array()
 				),
 				'div'    => array(
 					'class'    => array(),
