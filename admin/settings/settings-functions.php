@@ -489,8 +489,8 @@ function ftg_select_callback( $args ) {
 
 	$class = ftg_sanitize_html_class( $args['field_class'] );
 
-	if ( isset( $args['chosen'] ) ) {
-		$class .= ' ftg_select_chosen';
+	if ( isset( $args['select2'] ) ) {
+		$class .= ' ftg-select2';
 	}
 
 	$html = '<select id="ftg_settings[' . ftg_sanitize_key( $args['id'] ) . ']" name="ftg_settings[' . esc_attr( $args['id'] ) . ']' . $name_array . '" class="' . $class . '"' . $multiple . ' data-placeholder="' . esc_html( $placeholder ) . '" />';
