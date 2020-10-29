@@ -119,19 +119,24 @@ class Shortcode_Button {
 	 * @return string $buttons Amended media buttons context HTML.
 	 */
 	public function shortcode_media_button() {
+		global $pagenow;
 
-		// Create the media button.
-		$button = sprintf(
-			'<a id="ft-media-modal-button" href="javascript:;" class="button feed-them-gallery-choose-gallery" data-action="gallery" title="%s"><span class="ft-media-icon"></span> %s</a>',
-			esc_attr__( 'Add Gallery', 'feed-them-gallery' ),
-			__( 'Add FT Gallery', 'feed-them-gallery' )
-		);
+		$allowed_pages = array( 'post.php', 'post-new.php' );
 
-		// Filter the button.
-		$button = apply_filters( 'ft_gallery_media_button', $button );
+		if ( ! empty( $pagenow ) && in_array( $pagenow, $allowed_pages ) )	{
+			// Create the media button.
+			$button = sprintf(
+				'<a id="ft-media-modal-button" href="javascript:;" class="button feed-them-gallery-choose-gallery" data-action="gallery" title="%s"><span class="ft-media-icon"></span> %s</a>',
+				esc_attr__( 'Add Gallery', 'feed-them-gallery' ),
+				__( 'Add FT Gallery', 'feed-them-gallery' )
+			);
 
-		// Append the button.
-		echo $button;
+			// Filter the button.
+			$button = apply_filters( 'ft_gallery_media_button', $button );
+
+			// Append the button.
+			echo $button;
+		}
 	} // shortcode_media_button
 
 	/**
