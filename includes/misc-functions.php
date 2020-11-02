@@ -29,7 +29,7 @@ function ft_gallery_premium_plugins()	{
 		),
 		'feed_them_gallery_clients_manager' => array(
 			'title'        => 'Feed Them Gallery Clients Manager',
-			'plugin_url'   => 'feed-them-gallery-premium/feed-them-gallery-clients-manager.php',
+			'plugin_url'   => 'feed-them-gallery-clients-manager/feed-them-gallery-clients-manager.php',
 			'demo_url'     => 'https://feedthemgallery.com/',
 			'purchase_url' => 'https://www.slickremix.com/downloads/feed-them-gallery/',
 		)
