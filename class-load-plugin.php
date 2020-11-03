@@ -129,7 +129,7 @@ class Feed_Them_Gallery {
 	public function add_actions_filters() {
 		register_activation_hook( __FILE__, array( $this, 'ftg_activate' ) );
 
-		add_action( 'plugins_loaded', array( self::$instance, 'load_textdomain' ) );
+		add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 
 		add_action( 'admin_notices', array( $this, 'ft_gallery_display_install_notice' ) );
 		add_action( 'admin_notices', array( $this, 'ft_gallery_display_update_notice' ) );
