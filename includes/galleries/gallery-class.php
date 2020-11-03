@@ -1064,7 +1064,7 @@ class Gallery {
 					<div id="plupload-upload-ui" class="hide-if-no-js drag-drop">
 						<div id="drag-drop-area">
 							<div class="drag-drop-inside">
-								<p class="drag-drop-info"><?php esc_attr_e( 'Drop images here' ); ?></p>
+								<p class="drag-drop-info"><?php esc_attr_e( 'Drop images here', 'feed-them-gallery' ); ?></p>
 								<p><?php echo esc_html__( 'or', 'feed-them-gallery' ); ?></p>
 								<div class="drag-drop-buttons">
 									<input id="<?php echo esc_attr( $id ); ?>plupload-browse-button"
@@ -1299,14 +1299,14 @@ class Gallery {
 					<div class="gallery-edit-button-wrap">
 						<button disabled type="button"
 								class="ft-gallery-zip-gallery ft_gallery_download_button_icon button button-primary button-larg"
-								onclick="ft_gallery_create_zip('<?php esc_html_e( $object->ID ); ?>', 'no', 'yes', 'no')"><?php esc_html_e( 'Create Digital Gallery Product', 'feed-them-gallery' ); ?></button>
+								onclick="ft_gallery_create_zip('<?php echo esc_html( $object->ID ); ?>', 'no', 'yes', 'no')"><?php esc_html_e( 'Create Digital Gallery Product', 'feed-them-gallery' ); ?></button>
 						<a class="gallery-edit-button-question-two" href="javascript:;"
 						   rel="gallery-edit-question-digital-gallery-product">?</a>
 					</div>
 					<div class="gallery-edit-button-wrap">
 						<button type="button" disabled="disabled"
 								class="ft-gallery-create-woo ft_gallery_download_button_icon button button-primary button-larg"
-								onclick="ft_gallery_image_to_woo('<?php esc_html_e( $gallery_class->parent_post_id ); ?>')"><?php esc_html_e( 'Create individual Image Product(s)', 'feed-them-gallery' ); ?></button>
+								onclick="ft_gallery_image_to_woo('<?php echo esc_html( $gallery_class->parent_post_id ); ?>')"><?php esc_html_e( 'Create individual Image Product(s)', 'feed-them-gallery' ); ?></button>
 						<a class="gallery-edit-button-question-three" href="javascript:;"
 						   rel="gallery-edit-question-individual-image-product">?</a>
 					</div>
@@ -1333,7 +1333,7 @@ class Gallery {
 			?>
 			<div class="gallery-edit-question-message gallery-edit-question-digital-gallery-product"
 				 style="display: none;">
-				<h3><?php _e( 'Create Digital Gallery Zip and Turn into a Product' ); ?></h3>
+				<h3><?php _e( 'Create Digital Gallery Zip and Turn into a Product', 'feed-them-gallery' ); ?></h3>
 				<?php
 				echo sprintf(
 					esc_html__( 'This button will create a zip on the %1$sZIPs tab%2$s of all the full size images in this gallery and then create a WooCommerce Product out of that ZIP. You must have a "ZIP Model Product" selected on the %3$sWoocommerce tab%4$s for this to work.', 'feed-them-gallery' ),
@@ -1349,7 +1349,7 @@ class Gallery {
 			</div>
 			<div class="gallery-edit-question-message gallery-edit-question-individual-image-product"
 				 style="display: none;">
-				<h3><?php esc_html_e( 'Create Products from Individual Images' ); ?></h3>
+				<h3><?php esc_html_e( 'Create Products from Individual Images', 'feed-them-gallery' ); ?></h3>
 				<?php
 				echo sprintf(
 					esc_html__( 'This button will create a WooCommerce Product for each of the images selected below. 1 image creates 1 WooCommerce product. You must have either the "Global Model Product" or "Smart Image Orientation Model Product" selected on the %1$sWoocommerce tab%2$s for this to work. You must click the Select All button or click any of the images in your gallery below before you click the Create Individual Image Products(s) button.', 'feed-them-gallery' ),
@@ -1750,17 +1750,17 @@ class Gallery {
 					<li class="ft-gallery-zip zip-list-item-24527">
 						<div class="ft-gallery-file-name">
 							<a href="javascript:;"
-							   title="Download"><?php esc_html_e( 'Example-Gallery-Name' ); ?></a>
+							   title="Download"><?php esc_html_e( 'Example-Gallery-Name', 'feed-them-gallery' ); ?></a>
 						</div>
-						<div class="ft-gallery-file-time"><?php esc_html_e( 'October 14, 2020 - 2:45pm' ); ?></div>
+						<div class="ft-gallery-file-time"><?php esc_html_e( 'October 14, 2020 - 2:45pm', 'feed-them-gallery' ); ?></div>
 						<div class="ft-gallery-file-delete">
-							<a class="ft_gallery_delete_zip_button"><?php esc_html_e( 'Delete' ); ?></a>
+							<a class="ft_gallery_delete_zip_button"><?php esc_html_e( 'Delete', 'feed-them-gallery' ); ?></a>
 						</div>
 						<div class="ft-gallery-file-delete ft-gallery-file-zip-to-woo">
-							<a class="ft_gallery_create_woo_prod_button"><?php esc_html_e( 'Create product' ); ?></a>
+							<a class="ft_gallery_create_woo_prod_button"><?php esc_html_e( 'Create product', 'feed-them-gallery' ); ?></a>
 						</div>
 						<div class="ft-gallery-file-view">
-							<a class="ft_gallery_view_zip_button"><?php esc_html_e( 'View Contents' ); ?></a>
+							<a class="ft_gallery_view_zip_button"><?php esc_html_e( 'View Contents', 'feed-them-gallery' ); ?></a>
 						</div>
 						<ol class="zipcontents_list"></ol>
 					</li>

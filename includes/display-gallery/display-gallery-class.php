@@ -274,7 +274,7 @@ class Display_Gallery {
 	 * @since 1.0.0
 	 */
 	public function ft_gallery_trim_words( $text, $num_words = 45, $more ) {
-		! empty( $num_words ) && 0 !== $num_words ? $more : __( '...' );
+		! empty( $num_words ) && 0 !== $num_words ? $more : '...';
 		$text = nl2br( $text );
 		$text = strip_shortcodes( $text );
 		// Add tags that you don't want stripped.
@@ -725,8 +725,8 @@ class Display_Gallery {
 				'current'   => max( 1, get_query_var( $pagination_query_var ) ),
 				'mid_size'  => 3,
 				'end_size'  => 3,
-				'prev_text' => __( '&#10094;' ),
-				'next_text' => __( '&#10095;' ),
+				'prev_text' => '&#10094;',
+				'next_text' => '&#10095;',
 				'total'     => ceil( esc_html( $total_pagination_count ) / esc_html( $per_page ) ), // 3 items per page
 			)
 		);

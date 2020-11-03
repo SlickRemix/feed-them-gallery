@@ -152,7 +152,7 @@ class FTGallery_Create_Image {
 
 			// If an editor cannot be found, the user needs to have GD or Imagick installed.
 			if ( is_wp_error( $editor ) ) {
-				return new WP_Error( 'ft-gallery-error-no-editor', __( 'No image editor could be selected. Please verify with your webhost that you have either the GD or Imagick image library compiled with your PHP install on your server.', 'ft-gallery' ) );
+				return new WP_Error( 'ft-gallery-error-no-editor', __( 'No image editor could be selected. Please verify with your webhost that you have either the GD or Imagick image library compiled with your PHP install on your server.', 'feed-them-gallery' ) );
 			}
 
 			// Set the image editor quality.
@@ -257,7 +257,7 @@ class FTGallery_Create_Image {
 
 		// Return an error if no URL is present.
 		if ( empty( $url ) ) {
-			return new WP_Error( 'ft-gallery-error-no-url', __( 'No image URL specified for cropping.', 'ft-gallery' ) );
+			return new WP_Error( 'ft-gallery-error-no-url', __( 'No image URL specified for cropping.', 'feed-them-gallery' ) );
 		}
 
 		// Get the image file path.
@@ -277,7 +277,7 @@ class FTGallery_Create_Image {
 
 		// Attempt to stream and import the image if it does not exist based on URL provided.
 		if ( ! file_exists( $file_path ) ) {
-			return new WP_Error( 'ft-gallery-error-no-file', __( 'No file could be found for the image URL specified.', 'ft-gallery' ) );
+			return new WP_Error( 'ft-gallery-error-no-file', __( 'No file could be found for the image URL specified.', 'feed-them-gallery' ) );
 		}
 
 		// Get original image size.
@@ -285,7 +285,7 @@ class FTGallery_Create_Image {
 
 		// If no size data obtained, return an error.
 		if ( ! $size ) {
-			return new WP_Error( 'ft-gallery-error-no-size', __( 'The dimensions of the original image could not be retrieved for cropping.', 'ft-gallery' ) );
+			return new WP_Error( 'ft-gallery-error-no-size', __( 'The dimensions of the original image could not be retrieved for cropping.', 'feed-them-gallery' ) );
 		}
 
 		// Set original width and height.
@@ -297,7 +297,7 @@ class FTGallery_Create_Image {
 		} elseif ( $height && ! $width ) {
 			$width = floor( $orig_width * ( $height / $orig_height ) );
 		} elseif ( ! $width && ! $height ) {
-			return new WP_Error( 'ft-gallery-error-no-size', __( 'The dimensions of the original image could not be retrieved for cropping.', 'ft-gallery' ) );
+			return new WP_Error( 'ft-gallery-error-no-size', __( 'The dimensions of the original image could not be retrieved for cropping.', 'feed-them-gallery' ) );
 		}
 
 		// Allow for different retina image sizes.

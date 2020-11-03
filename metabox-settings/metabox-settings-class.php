@@ -217,8 +217,8 @@ class Metabox_Settings {
 				'dgd_strings',
 				array(
 					'panel' => array(
-						'title'  => __( 'Upload Images for Feed Them Gallery' ),
-						'button' => __( 'Save and Close Popup' ),
+						'title'  => __( 'Upload Images for Feed Them Gallery', 'feed-them-gallery' ),
+						'button' => __( 'Save and Close Popup', 'feed-them-gallery' ),
 					),
 				)
 			);
@@ -253,8 +253,8 @@ class Metabox_Settings {
 				'ftg_mb_tabs',
 				array(
 					'submit_msgs' => array(
-						'saving_msg'  => __( 'Saving Options' ),
-						'success_msg' => __( 'Settings Saved Successfully' ),
+						'saving_msg'  => __( 'Saving Options', 'feed-them-gallery' ),
+						'success_msg' => __( 'Settings Saved Successfully', 'feed-them-gallery' ),
 					),
 				)
 			);

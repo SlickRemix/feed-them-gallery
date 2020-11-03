@@ -117,7 +117,7 @@ class updater_license_page {
                 <?php _e($plugin_name, 'feed-them-gallery'); ?>
             </th>
             <td>
-                <input id="<?php echo $this->setting_option_name ?>[<?php echo $key ?>][license_key]" name="<?php echo $this->setting_option_name ?>[<?php echo $key ?>][license_key]" type="text" placeholder="<?php _e('Enter your license key', 'feed-them-gallery'); ?>" class="regular-text" value="<?php esc_attr_e($license); ?>"/>
+                <input id="<?php echo $this->setting_option_name ?>[<?php echo $key ?>][license_key]" name="<?php echo $this->setting_option_name ?>[<?php echo $key ?>][license_key]" type="text" placeholder="<?php _e('Enter your license key', 'feed-them-gallery'); ?>" class="regular-text" value="<?php echo esc_attr($license); ?>"/>
                 <label class="description" for="<?php echo $this->setting_option_name ?>[<?php echo $key ?>][license_key]"><?php if ($status !== false && $status == 'valid') { ?>
 
                         <?php wp_nonce_field('license_page_nonce', 'license_page_nonce'); ?>

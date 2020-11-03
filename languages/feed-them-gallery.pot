@@ -1,452 +1,1000 @@
-#, fuzzy
+# Copyright (C) 2020 SlickRemix
+# This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"Project-Id-Version: Feed Them Gallery\n"
-"POT-Creation-Date: 2020-06-01 17:11-0400\n"
-"PO-Revision-Date: 2020-06-01 17:09-0400\n"
-"Last-Translator: SlickRemix <info@slickremix.com>\n"
-"Language-Team: SlickRemix <info@slickremix.com>\n"
+"Project-Id-Version: Feed Them Gallery 1.3.3\n"
+"Report-Msgid-Bugs-To: https://slickremix.com/\n"
+"POT-Creation-Date: 2020-11-03 22:08:18+00:00\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.11\n"
-"X-Poedit-Basepath: ..\n"
-"X-Poedit-WPHeader: feed-them-gallery.php\n"
+"PO-Revision-Date: 2020-MO-DA HO:MI+ZONE\n"
+"Last-Translator: WP-Translations (http://wp-translations.org/)\n"
+"Language-Team: WP-Translations <wpt@wp-translations.org>\n"
+"X-Generator: grunt-wp-i18n 0.5.4\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
+"attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Country: United States\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-Basepath: ../\n"
 "X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-Bookmarks: \n"
+"X-Textdomain-Support: yes\n"
 
-#: admin/settings-page.php:65 admin/settings-page.php:66
-#: includes/setup-functions-class.php:368
+#: includes/galleries/gallery-options.php:221
+msgid "1"
+msgstr ""
+
+#: includes/galleries/gallery-options.php:225
+#: includes/galleries/gallery-options.php:269
+msgid "2"
+msgstr ""
+
+#: includes/galleries/gallery-options.php:229
+#: includes/galleries/gallery-options.php:273
+msgid "3"
+msgstr ""
+
+#: includes/galleries/gallery-options.php:233
+#: includes/galleries/gallery-options.php:277
+msgid "4"
+msgstr ""
+
+#: includes/galleries/gallery-options.php:237
+#: includes/galleries/gallery-options.php:281
+msgid "5"
+msgstr ""
+
+#: includes/galleries/gallery-options.php:241
+msgid "6"
+msgstr ""
+
+#: includes/galleries/gallery-options.php:245
+msgid "7"
+msgstr ""
+
+#: includes/galleries/gallery-options.php:249
+msgid "8"
+msgstr ""
+
+#: admin/settings/settings-functions.php:452
+msgid "The callback function used for the %s setting is missing."
+msgstr ""
+
+#: admin/settings/settings-functions.php:651
+msgid "Upload File"
+msgstr ""
+
+#: admin/settings/settings-functions.php:705
+msgid ""
+"Your license key expired on %s. Please <a href=\"%s\" target=\"_blank\" "
+"title=\"Renew your license key\">renew your license key</a>."
+msgstr ""
+
+#: admin/settings/settings-functions.php:718
+msgid ""
+"Your license key has been disabled. Please <a href=\"%s\" "
+"target=\"_blank\">contact support</a> for more information."
+msgstr ""
+
+#: admin/settings/settings-functions.php:730
+msgid ""
+"Invalid license. Please <a href=\"%s\" target=\"_blank\" title=\"Visit "
+"account page\">visit your account page</a> and verify it."
+msgstr ""
+
+#: admin/settings/settings-functions.php:743
+msgid ""
+"Your %s is not active for this URL. Please <a href=\"%s\" target=\"_blank\" "
+"title=\"Visit account page\">visit your account page</a> to manage your "
+"license key URLs."
+msgstr ""
+
+#: admin/settings/settings-functions.php:755
+#: updater/updater-license-page.php:411
+msgid "This appears to be an invalid license key for %s."
+msgstr ""
+
+#: admin/settings/settings-functions.php:764
+msgid ""
+"Your license key has reached its activation limit. <a href=\"%s\">View "
+"possible upgrades</a> now."
+msgstr ""
+
+#: admin/settings/settings-functions.php:773
+msgid ""
+"The key you entered belongs to a bundle, please use the product specific "
+"license key."
+msgstr ""
+
+#: admin/settings/settings-functions.php:781
+msgid "unknown_error"
+msgstr ""
+
+#: admin/settings/settings-functions.php:782
+msgid ""
+"There was an error with this license key: %s. Please <a href=\"%s\">contact "
+"our support team</a>."
+msgstr ""
+
+#: admin/settings/settings-functions.php:803
+msgid "License key never expires."
+msgstr ""
+
+#: admin/settings/settings-functions.php:810
+msgid ""
+"Your license key expires soon! It expires on %s. <a href=\"%s\" "
+"target=\"_blank\" title=\"Renew license\">Renew your license key</a>."
+msgstr ""
+
+#: admin/settings/settings-functions.php:820
+msgid "Your license key expires on %s."
+msgstr ""
+
+#: admin/settings/settings-functions.php:838
+msgid "To receive updates, please enter your valid %s license key."
+msgstr ""
+
+#: admin/settings/settings-functions.php:851
+#: updater/updater-license-page.php:124
+msgid "Deactivate License"
+msgstr ""
+
+#: admin/settings/settings-functions.php:889
+msgid ""
+"<a class=\"ftg-no-license-button-purchase-btn\" href=\"%s\" "
+"target=\"_blank\">Demo</a>"
+msgstr ""
+
+#: admin/settings/settings-functions.php:894
+msgid ""
+"<a class=\"ftg-no-license-button-demo-btn\" href=\"%s\" "
+"target=\"_blank\">Buy Extension</a>"
+msgstr ""
+
+#: admin/settings/settings-functions.php:899
+#: updater/updater-license-page.php:120 updater/updater-license-page.php:268
+msgid "Enter your license key"
+msgstr ""
+
+#: admin/settings/settings-functions.php:902
+msgid "To receive update notifications, please enter your valid license key."
+msgstr ""
+
+#: admin/settings/settings-functions.php:986
+msgid "Filename"
+msgstr ""
+
+#: admin/settings/settings-functions.php:987
+#: includes/galleries/gallery-options.php:143
+msgid "Title"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1036
+msgid "Remove Characters"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1037
+msgid "Capitalization Method"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1045
+msgid "Hyphen (-)"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1052
+msgid "Capitalize All Words"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1061
+msgid "Underscore (_)"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1068
+msgid "Capitalize First Word Only"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1077
+msgid "Period (.)"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1084
+msgid "All Words Lower Case"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1093
+msgid "Tilde (~)"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1100
+msgid "All Words Upper Case"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1109
+msgid "Plus (+)"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1116
+msgid "Don't Alter"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1120
+msgid "For image title only. The filename will still contain a hyphen."
+msgstr ""
+
+#: admin/settings/settings-functions.php:1121
+msgid ""
+"Works on an individual words. If the title contains no spaces after "
+"formatting, only the first letter will be capitalized."
+msgstr ""
+
+#: admin/settings/settings-functions.php:1145
+msgid "Include Gallery Name"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1147
+msgid "This Gallery Name"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1149
+msgid "Include Gallery ID"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1153
+msgid "Include Date"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1157
+msgid "Include File Name"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1159
+msgid "My Image Name"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1161
+msgid "Include Attachment ID"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1180
+msgid "(GMT-11:00) Midway Island, Samoa"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1181
+msgid "(GMT-10:00) Hawaii-Aleutian"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1182
+msgid "(GMT-10:00) Hawaii"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1183
+msgid "(GMT-09:30) Marquesas Islands"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1184
+#: admin/settings/settings-functions.php:1186
+msgid "(GMT-09:00) Gambier Islands"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1185
+msgid "(GMT-09:00) Alaska"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1187
+msgid "((GMT-08:00) Tijuana, Baja California"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1188
+msgid "(GMT-08:00) Pitcairn Islands"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1189
+msgid "(GMT-08:00) Pacific Time (US & Canada)"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1190
+msgid "(GMT-07:00) Mountain Time (US & Canada)"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1191
+msgid "(GMT-07:00) Chihuahua, La Paz, Mazatlan"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1192
+msgid "(GMT-07:00) Arizona"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1193
+msgid "(GMT-06:00) Saskatchewan"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1194
+msgid "(GMT-06:00) Guadalajara, Mexico City"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1195
+msgid "(GMT-06:00) Easter Island"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1196
+msgid "(GMT-06:00) Central Time (US & Canada)"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1197
+msgid "(GMT-05:00) Eastern Time (US & Canada)"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1198
+msgid "(GMT-05:00) Cuba"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1199
+msgid "(GMT-05:00) Bogota, Lima, Quito, Rio Branco"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1200
+msgid "(GMT-04:30) Caracas"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1201
+msgid "(GMT-04:00) Santiago"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1202
+msgid "(GMT-04:00) La Paz"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1203
+msgid "(GMT-04:00) Faukland Islands"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1204
+msgid "(GMT-04:00) Atlantic Time (Goose Bay)"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1205
+msgid "(GMT-04:00) Atlantic Time (Canada)"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1206
+msgid "(GMT-03:30) Newfoundland"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1207
+msgid "(GMT-03:00) UTC-3"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1208
+msgid "(GMT-03:00) Montevideo"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1209
+msgid "(GMT-03:00) Miquelon, St. Pierre"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1210
+msgid "(GMT-03:00) Greenland"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1211
+msgid "(GMT-03:00) Buenos Aires"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1212
+msgid "(GMT-03:00) Brasilia"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1213
+msgid "(GMT-02:00) Mid-Atlantic"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1214
+msgid "(GMT-01:00) Cape Verde Is."
+msgstr ""
+
+#: admin/settings/settings-functions.php:1215
+msgid "(GMT-01:00) Azores"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1216
+msgid "(GMT) Greenwich Mean Time : Belfast"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1217
+msgid "(GMT) Greenwich Mean Time : Dublin"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1218
+msgid "GMT) Greenwich Mean Time : Lisbon"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1219
+msgid "(GMT) Greenwich Mean Time : London"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1220
+msgid "(GMT) Monrovia, Reykjavik"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1221
+msgid "(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1222
+msgid "(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1223
+msgid "(GMT+01:00) West Central Africa"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1224
+msgid "(GMT+01:00) Windhoek"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1225
+msgid "GMT+02:00) Beirut"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1226
+msgid "(GMT+02:00) Cairo"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1227
+msgid "(GMT+02:00) Gaza"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1228
+msgid "(GMT+02:00) Harare, Pretoria"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1229
+msgid "(GMT+02:00) Jerusalem"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1230
+msgid "(GMT+02:00) Minsk"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1231
+msgid "(GMT+02:00) Syria"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1232
+msgid "(GMT+03:00) Moscow, St. Petersburg, Volgograd"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1233
+msgid "(GMT+03:00) Nairobi"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1234
+msgid "(GMT+03:30) Tehran"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1235
+msgid "(GMT+04:00) Abu Dhabi, Muscat"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1236
+msgid "(GMT+04:00) Yerevan"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1237
+msgid "(GMT+04:30) Kabul"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1238
+msgid "(GMT+05:00) Ekaterinburg"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1239
+msgid "(GMT+05:00) Tashkent"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1240
+msgid "(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1241
+msgid "(GMT+05:45) Kathmandu"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1242
+msgid "(GMT+06:00) Astana, Dhaka"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1243
+msgid "(GMT+06:00) Novosibirsk"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1244
+msgid "(GMT+06:30) Yangon (Rangoon)"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1245
+msgid "GMT+07:00) Bangkok, Hanoi, Jakarta"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1246
+msgid "(GMT+07:00) Krasnoyarsk"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1247
+msgid "GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1248
+msgid "(GMT+08:00) Irkutsk, Ulaan Bataar"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1249
+msgid "(GMT+08:00) Perth"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1250
+msgid "(GMT+08:45) Eucla"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1251
+msgid "(GMT+09:00) Osaka, Sapporo, Tokyo"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1252
+msgid "(GMT+09:00) Seoul"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1253
+msgid "(GMT+09:00) Yakutsk"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1254
+msgid "(GMT+09:30) Darwin"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1255
+msgid "(GMT+10:00) Brisbane"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1256
+msgid "(GMT+10:00) Sydney"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1257
+msgid "(GMT+10:00) Vladivostok"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1258
+msgid "(GMT+10:30) Lord Howe Island"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1259
+msgid "(GMT+11:00) Solomon Is., New Caledonia"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1260
+msgid "(GMT+11:00) Magadan"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1261
+msgid "(GMT+11:30) Norfolk Island"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1262
+msgid "(GMT+12:00) Anadyr, Kamchatka"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1263
+msgid "(GMT+12:00) Auckland, Wellington"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1264
+msgid "(GMT+12:00) Fiji, Kamchatka, Marshall Is."
+msgstr ""
+
+#: admin/settings/settings-functions.php:1265
+msgid "GMT+12:45) Chatham Islands"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1266
+msgid "(GMT+13:00) Nuku'alofa"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1267
+msgid "(GMT+14:00) Kiritimati"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1293
+msgid "1 day ago"
+msgstr ""
+
+#: admin/settings/settings-functions.php:1294
+msgid "Use Custom Date and Time Option Below"
+msgstr ""
+
+#: admin/settings/settings-page.php:89 admin/settings/settings-page.php:90
+#: admin/settings/settings-page.php:670 includes/setup-functions-class.php:418
 msgid "Settings"
 msgstr ""
 
-#: admin/settings-page.php:91
-msgid "Setup Documentation"
+#: admin/settings/settings-page.php:191
+msgid "Rename on Upload?"
 msgstr ""
 
-#: admin/settings-page.php:108
-msgid "Attachment File & Title Renaming [on upload]"
+#: admin/settings/settings-page.php:192
+msgid "Enable to use Attachment File and Title renaming when uploading each image."
 msgstr ""
 
-#: admin/settings-page.php:111
+#: admin/settings/settings-page.php:199
+msgid "File & Title Renaming"
+msgstr ""
+
+#: admin/settings/settings-page.php:206
+msgid "Format Attachment Titles"
+msgstr ""
+
+#: admin/settings/settings-page.php:213
+msgid "Title as Alt Text"
+msgstr ""
+
+#: admin/settings/settings-page.php:216
+msgid ""
+"If enabled, the attachment title will be added to the 'Alternative Text' "
+"field"
+msgstr ""
+
+#: admin/settings/settings-page.php:220
+msgid "Title as Caption"
+msgstr ""
+
+#: admin/settings/settings-page.php:223
+msgid "If enabled, the attachment title will be added to the 'Caption' field"
+msgstr ""
+
+#: admin/settings/settings-page.php:227
+msgid "Title as Description"
+msgstr ""
+
+#: admin/settings/settings-page.php:230
+msgid "If enabled, the attachment title will be added to the 'Description' field"
+msgstr ""
+
+#: admin/settings/settings-page.php:240
+msgid "TimeZone"
+msgstr ""
+
+#: admin/settings/settings-page.php:247
+msgid "Image Date Format"
+msgstr ""
+
+#: admin/settings/settings-page.php:255
+msgid "Custom Date"
+msgstr ""
+
+#: admin/settings/settings-page.php:258
+msgid "Date"
+msgstr ""
+
+#: admin/settings/settings-page.php:262
+msgid "Custom Time"
+msgstr ""
+
+#: admin/settings/settings-page.php:265
+msgid "Time"
+msgstr ""
+
+#: admin/settings/settings-page.php:271
+msgid "This will override the date and time above"
+msgstr ""
+
+#: admin/settings/settings-page.php:274
+msgid "Options for custom date and time formatting"
+msgstr ""
+
+#: admin/settings/settings-page.php:281
+msgid "Title Text Color"
+msgstr ""
+
+#: admin/settings/settings-page.php:283 admin/settings/settings-page.php:296
+msgid "#222"
+msgstr ""
+
+#: admin/settings/settings-page.php:287
+msgid "Title Text Size"
+msgstr ""
+
+#: admin/settings/settings-page.php:294
+msgid "Description Text Color"
+msgstr ""
+
+#: admin/settings/settings-page.php:300
+msgid "Description Text Size"
+msgstr ""
+
+#: admin/settings/settings-page.php:307
+msgid "Link Text Color"
+msgstr ""
+
+#: admin/settings/settings-page.php:309 admin/settings/settings-page.php:322
+#: includes/galleries/gallery-options.php:968
+#: includes/galleries/gallery-options.php:980
+#: includes/galleries/gallery-options.php:992
+#: includes/galleries/gallery-options.php:1005
+#: includes/galleries/gallery-options.php:1017
+#: includes/galleries/gallery-options.php:1029
+#: includes/galleries/gallery-options.php:1245
+#: includes/galleries/gallery-options.php:1264
+#: includes/galleries/gallery-options.php:1283
+#: includes/galleries/gallery-options.php:1805
+#: includes/galleries/gallery-options.php:1816
+#: includes/galleries/gallery-options.php:1828
+#: includes/galleries/gallery-options.php:1884
+#: includes/galleries/gallery-options.php:2002
+#: includes/galleries/gallery-options.php:2049
+#: includes/galleries/gallery-options.php:2096
+#: includes/galleries/gallery-options.php:2191
+#: includes/galleries/gallery-options.php:2238
+#: includes/galleries/gallery-options.php:2285
+msgid "#ddd"
+msgstr ""
+
+#: admin/settings/settings-page.php:313
+msgid "Link Hover Text Size"
+msgstr ""
+
+#: admin/settings/settings-page.php:320
+msgid "Date Text Color"
+msgstr ""
+
+#: admin/settings/settings-page.php:328
+msgid "Use Custom CSS?"
+msgstr ""
+
+#: admin/settings/settings-page.php:331
+msgid "If enabled, CSS you enter below will be loaded and used"
+msgstr ""
+
+#: admin/settings/settings-page.php:335
+msgid "Custom CSS?"
+msgstr ""
+
+#: admin/settings/settings-page.php:337
+msgid "Add your custom CSS code into the textarea"
+msgstr ""
+
+#: admin/settings/settings-page.php:347
+msgid "Disable Magnific Popup CSS?"
+msgstr ""
+
+#: admin/settings/settings-page.php:350
+msgid "Enable this if your theme is already loading the style sheet for the popup."
+msgstr ""
+
+#: admin/settings/settings-page.php:354
+msgid "Disable Duplicate Gallery?"
+msgstr ""
+
+#: admin/settings/settings-page.php:357
+msgid "Enable this if already have a duplicate post plugin installed."
+msgstr ""
+
+#: admin/settings/settings-page.php:361
+msgid "Show Admin Menu Bar?"
+msgstr ""
+
+#: admin/settings/settings-page.php:367
+msgid "Show Powered by Text?"
+msgstr ""
+
+#: admin/settings/settings-page.php:370
+msgid ""
+"If enabled, powered by text will appear in the popup. Awesome! Thanks so "
+"much for sharing."
+msgstr ""
+
+#: admin/settings/settings-page.php:374
+msgid "Remove Data on Uninstall?"
+msgstr ""
+
+#: admin/settings/settings-page.php:377
+msgid ""
+"Check this box if you would like Feed Them Gallery and its extensions to "
+"completely remove all of its data when the plugin is deleted."
+msgstr ""
+
+#: admin/settings/settings-page.php:406
+#: includes/class-ftg-license-handler.php:170
+msgid "%1$s"
+msgstr ""
+
+#: admin/settings/settings-page.php:426
+msgid "Attachments"
+msgstr ""
+
+#: admin/settings/settings-page.php:428
+msgid "Gallery Styling"
+msgstr ""
+
+#: admin/settings/settings-page.php:430
+msgid "Misc"
+msgstr ""
+
+#: admin/settings/settings-page.php:434
+msgid "Extensions"
+msgstr ""
+
+#: admin/settings/settings-page.php:438
+msgid "Licenses"
+msgstr ""
+
+#: admin/settings/settings-page.php:481
+msgid "Renaming"
+msgstr ""
+
+#: admin/settings/settings-page.php:482
+msgid "Title Format"
+msgstr ""
+
+#: admin/settings/settings-page.php:483
+#: includes/shortcode-button/shortcode-button.php:407
+msgid "Title Options"
+msgstr ""
+
+#: admin/settings/settings-page.php:486
+msgid "Image Date Options"
+msgstr ""
+
+#: admin/settings/settings-page.php:487
+msgid "Image Color & Size"
+msgstr ""
+
+#: admin/settings/settings-page.php:488
+msgid "Custom CSS"
+msgstr ""
+
+#: admin/settings/settings-page.php:491
+msgid "General"
+msgstr ""
+
+#: admin/settings/settings-page.php:494
+msgid "Main"
+msgstr ""
+
+#: admin/settings/settings-page.php:583
+msgid "Settings updated."
+msgstr ""
+
+#: admin/settings/settings-page.php:598
+msgid "Cheatin&#8217; uh?"
+msgstr ""
+
+#: admin/settings/settings-page.php:599
+msgid "You do not have permission to access this page."
+msgstr ""
+
+#: admin/settings/settings-page.php:785 admin/settings/settings-page.php:828
+msgid "Translations for 1 day ago"
+msgstr ""
+
+#: admin/settings/settings-page.php:863
+msgid "second"
+msgstr ""
+
+#: admin/settings/settings-page.php:864
+msgid "seconds"
+msgstr ""
+
+#: admin/settings/settings-page.php:865
+msgid "minute"
+msgstr ""
+
+#: admin/settings/settings-page.php:866
+msgid "minutes"
+msgstr ""
+
+#: admin/settings/settings-page.php:867
+msgid "hour"
+msgstr ""
+
+#: admin/settings/settings-page.php:868
+msgid "hours"
+msgstr ""
+
+#: admin/settings/settings-page.php:869
+msgid "day"
+msgstr ""
+
+#: admin/settings/settings-page.php:870
+msgid "days"
+msgstr ""
+
+#: admin/settings/settings-page.php:871
+msgid "week"
+msgstr ""
+
+#: admin/settings/settings-page.php:872
+msgid "weeks"
+msgstr ""
+
+#: admin/settings/settings-page.php:873
+msgid "month"
+msgstr ""
+
+#: admin/settings/settings-page.php:874
+msgid "months"
+msgstr ""
+
+#: admin/settings/settings-page.php:875
+msgid "year"
+msgstr ""
+
+#: admin/settings/settings-page.php:876
+msgid "years"
+msgstr ""
+
+#: admin/settings/settings-page.php:877
+msgid "ago"
+msgstr ""
+
+#: admin/settings/settings-page.php:894
 msgid ""
 "Use attachment renaming when importing/uploading attachments. This will "
 "overwrite original Filename."
 msgstr ""
 
-#: admin/settings-page.php:113
+#: admin/settings/settings-page.php:897
 msgid ""
-"Below are examples of what the attachment filenames and Titles will look "
-"like after uploading:"
+"<strong>Below are examples of what the attachment filenames and titles will "
+"look like after uploading</strong>: (Click \"Save All Changes\" to view "
+"Examples)"
 msgstr ""
 
-#: admin/settings-page.php:113
-msgid "(Click \"Save All Changes\" to view Examples)"
-msgstr ""
-
-#: admin/settings-page.php:119
-msgid "Checked:"
-msgstr ""
-
-#: admin/settings-page.php:121
+#: admin/settings/settings-page.php:913
 msgid ""
-"You are using Attachment File and Title Renaming when uploading each image."
+"<strong>Below is an example of what the attachment titles will look like "
+"after uploading</strong>: (Click \"Save All Changes\" to view Examples)"
 msgstr ""
 
-#: admin/settings-page.php:125
-msgid "Not Checked:"
-msgstr ""
-
-#: admin/settings-page.php:127
+#: admin/settings/settings-page.php:915
 msgid ""
-"You are using the Original filename for Attachment names and Titles that is "
-"uploaded with each file."
+"Note: Title will come from filename of uploaded attachment. You may still "
+"set a custom name for each photo after uploaded."
 msgstr ""
 
-#: admin/settings-page.php:134
-msgid "Filename"
+#: admin/settings/settings-page.php:932
+msgid "Example Filename:"
 msgstr ""
 
-#: admin/settings-page.php:136 admin/settings-page.php:191
-msgid "Include Gallery Name"
+#: admin/settings/settings-page.php:936 admin/settings/settings-page.php:955
+msgid "Example Title:"
 msgstr ""
 
-#: admin/settings-page.php:139 admin/settings-page.php:194
-msgid "Include Gallery ID Number"
-msgstr ""
-
-#: admin/settings-page.php:142 admin/settings-page.php:197
-msgid "Include Date"
-msgstr ""
-
-#: admin/settings-page.php:145 admin/settings-page.php:200
-msgid "Include File Name"
-msgstr ""
-
-#: admin/settings-page.php:148 admin/settings-page.php:203
-msgid "Include Attachment ID"
-msgstr ""
-
-#: admin/settings-page.php:189 admin/settings-page.php:437
-#: includes/galleries/gallery-options.php:140
-msgid "Title"
-msgstr ""
-
-#: admin/settings-page.php:254
-msgid "Format Attachment Titles"
-msgstr ""
-
-#: admin/settings-page.php:259
-msgid "Remove Characters"
-msgstr ""
-
-#: admin/settings-page.php:266
-msgid "Hyphen"
-msgstr ""
-
-#: admin/settings-page.php:274
-msgid "Underscore"
-msgstr ""
-
-#: admin/settings-page.php:282
-msgid "Period"
-msgstr ""
-
-#: admin/settings-page.php:290
-msgid "Tilde"
-msgstr ""
-
-#: admin/settings-page.php:298
-msgid "Plus"
-msgstr ""
-
-#: admin/settings-page.php:301
-msgid ""
-"This is only for the image title the image file will still contain a hyphen "
-"- in the file name."
-msgstr ""
-
-#: admin/settings-page.php:307
-msgid "Capitalization Method"
-msgstr ""
-
-#: admin/settings-page.php:314
-msgid "Capitalize All Words"
-msgstr ""
-
-#: admin/settings-page.php:322
-msgid "Capitalize First Word Only"
-msgstr ""
-
-#: admin/settings-page.php:330
-msgid "All Words Lower Case"
-msgstr ""
-
-#: admin/settings-page.php:338
-msgid "All Words Upper Case"
-msgstr ""
-
-#: admin/settings-page.php:346
-msgid "Don't Alter (title text isn't modified in any way)"
-msgstr ""
-
-#: admin/settings-page.php:349
-msgid ""
-"Capitalization works on individual words separated by spaces. If the title "
-"contains NO spaces after formatting then only the first letter will be "
-"capitalized."
-msgstr ""
-
-#: admin/settings-page.php:355
-msgid "Misc. Options"
-msgstr ""
-
-#: admin/settings-page.php:362
-msgid "Add Title to 'Alternative Text' Field?"
-msgstr ""
-
-#: admin/settings-page.php:371
-msgid "Add Title to 'Caption' Field?"
-msgstr ""
-
-#: admin/settings-page.php:379
-msgid "Add Title to 'Description' Field?"
-msgstr ""
-
-#: admin/settings-page.php:411
-msgid "Custom CSS Option"
-msgstr ""
-
-#: admin/settings-page.php:417 admin/settings-page.php:1002
-msgid "Checked: "
-msgstr ""
-
-#: admin/settings-page.php:419
-msgid "Custom CSS option is being used now."
-msgstr ""
-
-#: admin/settings-page.php:422 admin/settings-page.php:1006
-msgid "Not Checked: "
-msgstr ""
-
-#: admin/settings-page.php:424
-msgid "You are using the default CSS."
-msgstr ""
-
-#: admin/settings-page.php:429
-msgid "Show"
-msgstr ""
-
-#: admin/settings-page.php:429
-msgid "Hide"
-msgstr ""
-
-#: admin/settings-page.php:429
-msgid "custom CSS"
-msgstr ""
-
-#: admin/settings-page.php:431
-msgid "<p>Add Your Custom CSS Code below.</p>"
-msgstr ""
-
-#: admin/settings-page.php:435
-msgid "Gallery Image Color & Size Options"
-msgstr ""
-
-#: admin/settings-page.php:441
-msgid "Title Size"
-msgstr ""
-
-#: admin/settings-page.php:445 includes/galleries/gallery-options.php:144
-msgid "Description"
-msgstr ""
-
-#: admin/settings-page.php:449
-msgid "Description Size"
-msgstr ""
-
-#: admin/settings-page.php:453
-msgid "Link"
-msgstr ""
-
-#: admin/settings-page.php:458
-msgid "Link Hover"
-msgstr ""
-
-#: admin/settings-page.php:462 admin/settings-page.php:673
-msgid "Date"
-msgstr ""
-
-#: admin/settings-page.php:471
-msgid "Date Options for Images"
-msgstr ""
-
-#: admin/settings-page.php:487
-msgid "Image Date Format"
-msgstr ""
-
-#: admin/settings-page.php:568
-msgid "1 day ago"
-msgstr ""
-
-#: admin/settings-page.php:574
-msgid "Use Custom Date and Time Option Below"
-msgstr ""
-
-#: admin/settings-page.php:598
-msgid "Translate words for 1 day ago option."
-msgstr ""
-
-#: admin/settings-page.php:599
-msgid "second"
-msgstr ""
-
-#: admin/settings-page.php:602
-msgid "seconds"
-msgstr ""
-
-#: admin/settings-page.php:605
-msgid "minute"
-msgstr ""
-
-#: admin/settings-page.php:608
-msgid "minutes"
-msgstr ""
-
-#: admin/settings-page.php:611
-msgid "hour"
-msgstr ""
-
-#: admin/settings-page.php:614
-msgid "hours"
-msgstr ""
-
-#: admin/settings-page.php:617
-msgid "day"
-msgstr ""
-
-#: admin/settings-page.php:620
-msgid "days"
-msgstr ""
-
-#: admin/settings-page.php:623
-msgid "week"
-msgstr ""
-
-#: admin/settings-page.php:626
-msgid "weeks"
-msgstr ""
-
-#: admin/settings-page.php:629
-msgid "month"
-msgstr ""
-
-#: admin/settings-page.php:632
-msgid "months"
-msgstr ""
-
-#: admin/settings-page.php:635
-msgid "year"
-msgstr ""
-
-#: admin/settings-page.php:638
-msgid "years"
-msgstr ""
-
-#: admin/settings-page.php:641
-msgid "ago"
-msgstr ""
-
-#: admin/settings-page.php:664
-msgid "Custom Date and Time"
-msgstr ""
-
-#: admin/settings-page.php:674
-msgid "Time"
-msgstr ""
-
-#: admin/settings-page.php:676
-msgid "This will override the date and time format above."
-msgstr ""
-
-#: admin/settings-page.php:677
-msgid "Options for custom date and time formatting."
-msgstr ""
-
-#: admin/settings-page.php:681
-msgid "TimeZone"
-msgstr ""
-
-#: admin/settings-page.php:962
-msgid "Disable Magnific Popup CSS"
-msgstr ""
-
-#: admin/settings-page.php:964
-msgid ""
-"Check this if your theme is already loading the style sheet for the popup."
-msgstr ""
-
-#: admin/settings-page.php:969
-msgid "Disable Duplicate Gallery Option"
-msgstr ""
-
-#: admin/settings-page.php:971
-msgid "Check this if you already have a duplicate post plugin installed."
-msgstr ""
-
-#: admin/settings-page.php:976
-msgid "Admin Menu Bar Option"
-msgstr ""
-
-#: admin/settings-page.php:977
-msgid "Menu Bar"
-msgstr ""
-
-#: admin/settings-page.php:984
-msgid "Show Admin Bar Menu"
-msgstr ""
-
-#: admin/settings-page.php:990
-msgid "Hide Admin Bar Menu"
-msgstr ""
-
-#: admin/settings-page.php:996
-msgid "Powered by Text"
-msgstr ""
-
-#: admin/settings-page.php:1002
-msgid "You are not showing the Powered by Logo in the popup."
-msgstr ""
-
-#: admin/settings-page.php:1006
-msgid ""
-"The Powered by text will appear in the popup. Awesome! Thanks so much for "
-"sharing."
-msgstr ""
-
-#: admin/settings-page.php:1015 includes/galleries/gallery-options.php:1051
-msgid "Woocommerce Options"
-msgstr ""
-
-#: admin/settings-page.php:1020 includes/galleries/gallery-options.php:1409
-msgid "Disable Right Click"
-msgstr ""
-
-#: admin/settings-page.php:1022
-msgid "This will disable the right click option on all pages of your website."
-msgstr ""
-
-#: admin/settings-page.php:1026
-msgid "Product Creation"
-msgstr ""
-
-#: admin/settings-page.php:1028
-msgid "Attach Product to a Category named after Gallery"
-msgstr ""
-
-#: admin/settings-page.php:1033
-msgid "Add to Cart Button Functionality"
-msgstr ""
-
-#: admin/settings-page.php:1037
-msgid "(Default)"
-msgstr ""
-
-#: admin/settings-page.php:1037
-msgid "Take Customers to product page. (Doesn't add product to cart)"
-msgstr ""
-
-#: admin/settings-page.php:1040
-msgid "Take user directly to checkout. Useful for variable products."
-msgstr ""
-
-#: admin/settings-page.php:1043
-msgid ""
-"Add product to cart. (Adds product to cart but doesn't take them to "
-"checkout.) This will not work if your product has required variations."
-msgstr ""
-
-#: admin/settings-page.php:1046
-msgid ""
-"Add product to cart and take user directly to checkout. This will not work "
-"if your product has required variations."
-msgstr ""
-
-#: admin/settings-page.php:1065
-msgid "Save All Changes"
-msgstr ""
-
-#: admin/settings-page.php:1073
+#: admin/settings/settings-page.php:971
 msgid "Plugin Authors Note"
 msgstr ""
 
+#: admin/settings/settings-page.php:975
+msgid ""
+"Feed Them Gallery was created by 2 Brothers, Spencer and Justin Labadie. "
+"That's it, 2 people! We spend all our time creating and supporting our "
+"plugins. Show us some love if you like our plugin and leave a quick review "
+"for us, it will make our day! <a href=\"%s\" target=\"_blank\">Leave us a "
+"Review ★★★★★</a>"
+msgstr ""
+
+#: admin/settings/settings-page.php:982
+msgid ""
+"If you're having troubles getting setup please contact us. We will respond "
+"within 24hrs, but usually within 1-6hrs. <a href=\"%s\" "
+"target=\"_blank\">Create Support Ticket</a>"
+msgstr ""
+
 #: admin/system-info.php:65 admin/system-info.php:66 admin/system-info.php:86
-#: includes/setup-functions-class.php:378
+#: includes/setup-functions-class.php:428
 msgid "System Info"
 msgstr ""
 
@@ -472,111 +1020,151 @@ msgid ""
 "(Mac)."
 msgstr ""
 
-#: class-load-plugin.php:255
-#, php-format
+#: class-load-plugin.php:267
 msgid ""
 "%1$sThanks for updating Feed Them Social. We have deleted the cache in our "
 "plugin so you can view any changes we have made.%2$s"
 msgstr ""
 
-#: class-load-plugin.php:275
-#, php-format
+#: class-load-plugin.php:287
 msgid ""
 "%1$sThanks for installing Feed Them Gallery. To get started please view our "
 "%2$sSettings%3$s page.%4$s"
 msgstr ""
 
-#: class-load-plugin.php:443
-#, php-format
+#: class-load-plugin.php:475
 msgid ""
 "%1$sWarning:%2$s Your php version is %3$s. You need to be running at least "
-"5.3 or greater to use this plugin. Please upgrade the php by contacting your "
-"host provider. Some host providers will allow you to change this yourself in "
-"the hosting control panel too.%4$sIf you are hosting with BlueHost or "
-"Godaddy and the php version above is saying you are running 5.2.17 but you "
-"are really running something higher please %5$sclick here for the fix%6$s. "
-"If you cannot get it to work using the method described in the link please "
-"contact your host provider and explain the problem so they can fix it.%7$s"
+"5.3 or greater to use this plugin. Please upgrade the php by contacting "
+"your host provider. Some host providers will allow you to change this "
+"yourself in the hosting control panel too.%4$sIf you are hosting with "
+"BlueHost or Godaddy and the php version above is saying you are running "
+"5.2.17 but you are really running something higher please %5$sclick here "
+"for the fix%6$s. If you cannot get it to work using the method described in "
+"the link please contact your host provider and explain the problem so they "
+"can fix it.%7$s"
 msgstr ""
 
-#: class-load-plugin.php:467
-#, php-format
+#: class-load-plugin.php:499
 msgid "%1$sSettings%2$s | %3$sSupport%4$s"
 msgstr ""
 
-#: class-load-plugin.php:490
-#, php-format
+#: class-load-plugin.php:522
 msgid "%1$sRate Plugin%2$s"
 msgstr ""
 
-#: class-load-plugin.php:627
+#: class-load-plugin.php:659
 msgid "Sure, I'd love to"
 msgstr ""
 
-#: class-load-plugin.php:628
+#: class-load-plugin.php:660
 msgid "I've already given a review"
 msgstr ""
 
-#: class-load-plugin.php:629
+#: class-load-plugin.php:661
 msgid "Ask me later"
 msgstr ""
 
-#: class-load-plugin.php:630
+#: class-load-plugin.php:662
 msgid "Not working, I need support"
 msgstr ""
 
-#: class-load-plugin.php:631
+#: class-load-plugin.php:663
 msgid "No thanks"
 msgstr ""
 
-#: includes/display-gallery/display-gallery-class.php:323
-msgid "..."
+#: includes/EDD_SL_Plugin_Updater.php:201 updater/updater-check-class.php:259
+msgid "There is a new version of %1$s available. %2$sView version %3$s details%4$s."
 msgstr ""
 
-#: includes/display-gallery/display-gallery-class.php:493
+#: includes/EDD_SL_Plugin_Updater.php:209 updater/updater-check-class.php:267
+msgid ""
+"There is a new version of %1$s available. %2$sView version %3$s details%4$s "
+"or %5$supdate now%6$s."
+msgstr ""
+
+#: includes/EDD_SL_Plugin_Updater.php:396 updater/updater-check-class.php:425
+msgid "You do not have permission to install plugin updates"
+msgstr ""
+
+#: includes/EDD_SL_Plugin_Updater.php:396
+#: includes/class-ftg-license-handler.php:337
+#: updater/updater-check-class.php:425
+msgid "Error"
+msgstr ""
+
+#: includes/class-ftg-license-handler.php:203
+msgid ""
+"If you need more licenses or your key has expired, please go to the <a "
+"href=\"%s\" target=\"_blank\">MY ACCOUNT</a> page on our website to upgrade "
+"or renew your license."
+msgstr ""
+
+#: includes/class-ftg-license-handler.php:207
+msgid "To get started follow the instructions below."
+msgstr ""
+
+#: includes/class-ftg-license-handler.php:211
+msgid ""
+"Install the zip file of the plugin you should have received after purchase "
+"on the <a href=\"%s\">plugins page</a> and leave the free version active "
+"too."
+msgstr ""
+
+#: includes/class-ftg-license-handler.php:214
+msgid ""
+"Now Enter your License Key and Click the <strong>Save Changes "
+"button</strong>"
+msgstr ""
+
+#: includes/class-ftg-license-handler.php:337
+msgid "Nonce verification failed"
+msgstr ""
+
+#: includes/class-ftg-license-handler.php:472
+msgid ""
+"You have invalid or expired license keys for Feed Them Gallery. Please go "
+"to the <a href=\"%s\">Licenses page</a> to correct this issue."
+msgstr ""
+
+#: includes/class-ftg-license-handler.php:510
+msgid "Enter a valid license key for automatic updates."
+msgstr ""
+
+#: includes/display-gallery/display-gallery-class.php:447
 msgid "error"
 msgstr ""
 
-#: includes/display-gallery/display-gallery-class.php:499
+#: includes/display-gallery/display-gallery-class.php:453
 msgid "success"
 msgstr ""
 
-#: includes/display-gallery/display-gallery-class.php:523
+#: includes/display-gallery/display-gallery-class.php:477
 msgid "Update success"
 msgstr ""
 
-#: includes/display-gallery/display-gallery-class.php:771
-msgid "&#10094;"
-msgstr ""
-
-#: includes/display-gallery/display-gallery-class.php:772
-msgid "&#10095;"
-msgstr ""
-
-#: includes/display-gallery/display-gallery-class.php:1551
-#, php-format
+#: includes/display-gallery/display-gallery-class.php:1505
 msgid "To also view %4$s tagged with %3$s %1$sclick here%2$s."
 msgstr ""
 
-#: includes/display-gallery/display-gallery-class.php:1564
-#, php-format
+#: includes/display-gallery/display-gallery-class.php:1519
 msgid ""
-"No Image tags found. To view the Gallery tag of %3$s instead %1$sclick here"
-"%2$s."
+"No Image tags found. To view the Gallery tag of %3$s instead %1$sclick "
+"here%2$s."
 msgstr ""
 
-#: includes/display-gallery/display-gallery-class.php:2101
-#: includes/display-gallery/display-gallery-class.php:2387
+#: includes/display-gallery/display-gallery-class.php:2051
+#: includes/display-gallery/display-gallery-class.php:2338
 msgid "Use link to share image"
 msgstr ""
 
-#: includes/display-gallery/display-gallery-class.php:2102
-#: includes/display-gallery/display-gallery-class.php:2388
+#: includes/display-gallery/display-gallery-class.php:2052
+#: includes/display-gallery/display-gallery-class.php:2339
 msgid "Copied to Clipboard"
 msgstr ""
 
-#: includes/display-gallery/display-gallery-class.php:2577
-#: includes/display-gallery/display-gallery-class.php:2631
+#: includes/display-gallery/display-gallery-class.php:2529
+#: includes/display-gallery/display-gallery-class.php:2586
 msgid "Load More"
 msgstr ""
 
@@ -597,347 +1185,341 @@ msgstr ""
 
 #: includes/galleries/create-image.php:288
 #: includes/galleries/create-image.php:300
-msgid ""
-"The dimensions of the original image could not be retrieved for cropping."
+msgid "The dimensions of the original image could not be retrieved for cropping."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:211
-#, php-format
+#: includes/galleries/gallery-class.php:221
 msgid ""
-"%1$sPlease purchase, install and activate %2$sFeed Them Gallery Premium%3$s "
-"for these additional awesome features!%4$s"
+"Please purchase, install and activate <a href=\"%s\" "
+"target\"_blank\">%s</a> for these additional awesome features!"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:232
+#: includes/galleries/gallery-class.php:245
 msgid "Feed Them Gallery Thumb"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:317
+#: includes/galleries/gallery-class.php:331
 msgid "oops something isn't right."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:320
+#: includes/galleries/gallery-class.php:334
 msgid "No Images attached to this post."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:347
+#: includes/galleries/gallery-class.php:361
 msgid "This ID does not exist anymore"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
-#: includes/galleries/gallery-class.php:384
-#: includes/setup-functions-class.php:341
 msgid "Feed Them Gallery"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:386
-#: includes/galleries/gallery-class.php:387
+#: includes/galleries/gallery-class.php:400
+#: includes/galleries/gallery-class.php:401
 msgid "Galleries"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:388
+#: includes/galleries/gallery-class.php:402
 msgid "Gallery"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:389
-#: includes/shortcode-button/shortcode-button.php:125
+#: includes/galleries/gallery-class.php:403
+#: includes/shortcode-button/shortcode-button.php:130
 msgid "Add Gallery"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:390
+#: includes/galleries/gallery-class.php:404
 msgid "Add New Gallery"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:391
-#: includes/galleries/gallery-class.php:673
+#: includes/galleries/gallery-class.php:405
+#: includes/galleries/gallery-class.php:691
 msgid "Edit Gallery"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:392
+#: includes/galleries/gallery-class.php:406
 msgid "New Gallery"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:393
+#: includes/galleries/gallery-class.php:407
 msgid "View Gallery"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:394
+#: includes/galleries/gallery-class.php:408
 msgid "Search Galleries"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:395
+#: includes/galleries/gallery-class.php:409
 msgid "No Galleries Found"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:396
+#: includes/galleries/gallery-class.php:410
 msgid "No Galleries Found In Trash"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:435
-#: includes/galleries/gallery-class.php:445
+#: includes/galleries/gallery-class.php:449
+#: includes/galleries/gallery-class.php:459
 msgid "Categories"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:436
+#: includes/galleries/gallery-class.php:450
 msgid "Category"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:437
+#: includes/galleries/gallery-class.php:451
 msgid "Search Categories"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:438
+#: includes/galleries/gallery-class.php:452
 msgid "All Categories"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:439
+#: includes/galleries/gallery-class.php:453
 msgid "Parent Category"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:440
+#: includes/galleries/gallery-class.php:454
 msgid "Parent Category:"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:441
+#: includes/galleries/gallery-class.php:455
 msgid "Edit Category"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:442
+#: includes/galleries/gallery-class.php:456
 msgid "Update Category"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:443
+#: includes/galleries/gallery-class.php:457
 msgid "Add New Category"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:444
+#: includes/galleries/gallery-class.php:458
 msgid "New Category Name"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:506
-#: includes/galleries/gallery-class.php:509
+#: includes/galleries/gallery-class.php:520
+#: includes/galleries/gallery-class.php:523
 msgid "Gallery updated."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:507
+#: includes/galleries/gallery-class.php:521
 msgid "Custom field updated."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:508
+#: includes/galleries/gallery-class.php:522
 msgid "Custom field deleted."
 msgstr ""
 
+#: includes/galleries/gallery-class.php:525
 #. translators: %s: date and time of the revision
-#: includes/galleries/gallery-class.php:511
-#, php-format
 msgid "Response restored to revision from %s"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:512
+#: includes/galleries/gallery-class.php:526
 msgid "Gallery created."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:513
+#: includes/galleries/gallery-class.php:527
 msgid "Gallery saved."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:514
+#: includes/galleries/gallery-class.php:528
 msgid "Gallery submitted."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:515
+#: includes/galleries/gallery-class.php:529
 msgid "Gallery scheduled for:"
 msgstr ""
 
-#. translators: Publish box date format, see http://php.net/date
-#. date_i18n( ( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
-#: includes/galleries/gallery-class.php:518
+#: includes/galleries/gallery-class.php:532
+#. translators: Publish box date format, see http:php.net/date
 msgid "Gallery draft updated."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:543
+#: includes/galleries/gallery-class.php:559
+#: includes/galleries/gallery-class.php:779
 msgid "Gallery Shortcode"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:546
+#: includes/galleries/gallery-class.php:562
 msgid "Gallery ZIP"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:606
-#: includes/galleries/gallery-class.php:858
+#: includes/galleries/gallery-class.php:624
+#: includes/galleries/gallery-class.php:876
 msgid "Images"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:637
-#: includes/galleries/gallery-class.php:640
+#: includes/galleries/gallery-class.php:655
+#: includes/galleries/gallery-class.php:658
 msgid "No ZIP created."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:664
+#: includes/galleries/gallery-class.php:682
 msgid "Save Gallery"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:667
+#: includes/galleries/gallery-class.php:685
 msgid "Update Gallery"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:670
+#: includes/galleries/gallery-class.php:688
 msgid "Save Gallery Draft"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:758
+#: includes/galleries/gallery-class.php:776
 msgid "Feed Them Gallery Settings"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:761
-msgid "Feed Them Gallery Shortcode"
-msgstr ""
-
-#: includes/galleries/gallery-class.php:796
+#: includes/galleries/gallery-class.php:814
 msgid "Title of image"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:798
+#: includes/galleries/gallery-class.php:816
 msgid "Alt text for image"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:800
+#: includes/galleries/gallery-class.php:818
 msgid "Description of image"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:810
+#: includes/galleries/gallery-class.php:828
 msgid "Add New Tags"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:814
+#: includes/galleries/gallery-class.php:832
 msgid "Add "
 msgstr ""
 
-#: includes/galleries/gallery-class.php:817
+#: includes/galleries/gallery-class.php:835
 msgid "Separate tags with commas"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:820
+#: includes/galleries/gallery-class.php:838
 msgid "No Tags found for this Image."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:829
+#: includes/galleries/gallery-class.php:847
 msgid "Save"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:867
+#: includes/galleries/gallery-class.php:885
 msgid "Layout"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:874
+#: includes/galleries/gallery-class.php:892
 msgid "Colors"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:881
+#: includes/galleries/gallery-class.php:899
 msgid "Zips"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:888
+#: includes/galleries/gallery-class.php:906
 msgid "WooCommerce"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:895
+#: includes/galleries/gallery-class.php:913
 msgid "Watermark"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:902
-#: includes/galleries/gallery-options.php:1687
+#: includes/galleries/gallery-class.php:920
+#: includes/galleries/gallery-options.php:1690
 msgid "Pagination"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:909
+#: includes/galleries/gallery-class.php:927
 msgid "Tags"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1042
+#: includes/galleries/gallery-class.php:934
+#: includes/galleries/gallery-options.php:2321
+msgid "Clients"
+msgstr ""
+
+#: includes/galleries/gallery-class.php:1067
 msgid "Drop images here"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1043
+#: includes/galleries/gallery-class.php:1068
 msgid "or"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1047
+#: includes/galleries/gallery-class.php:1072
 msgid "Select Images"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1056
-#: includes/galleries/gallery-class.php:1066
+#: includes/galleries/gallery-class.php:1081
+#: includes/galleries/gallery-class.php:1091
 msgid "Media Library"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1079
+#: includes/galleries/gallery-class.php:1104
 msgid "Maximum upload file size"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1121
+#: includes/galleries/gallery-class.php:1146
 msgid " Images"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1159
+#: includes/galleries/gallery-class.php:1184
 msgid "50 Images"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1160
+#: includes/galleries/gallery-class.php:1185
 msgid "100 Images"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1161
+#: includes/galleries/gallery-class.php:1186
 msgid "500 Images"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1162
+#: includes/galleries/gallery-class.php:1187
 msgid "All Images (This may load slow if you have more than 500 images)"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1179
+#: includes/galleries/gallery-class.php:1204
 msgid "Showing"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1253
+#: includes/galleries/gallery-class.php:1278
 msgid "Select All"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1260
+#: includes/galleries/gallery-class.php:1285
 msgid "disabled"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1265
+#: includes/galleries/gallery-class.php:1290
 msgid "Zip Gallery & Download"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1277
+#: includes/galleries/gallery-class.php:1302
 msgid "Create Digital Gallery Product"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1284
+#: includes/galleries/gallery-class.php:1309
 msgid "Create individual Image Product(s)"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1293
+#: includes/galleries/gallery-class.php:1318
 msgid "Zip Gallery and Download"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1296
-#, php-format
+#: includes/galleries/gallery-class.php:1321
 msgid ""
-"This button will create a zip of all the full size images in this gallery on "
-"the %1$sZIPs tab%2$s and then download a zip onto your computer. If you "
-"would like to just download a ZIP you have already made and NOT create a new "
-"ZIP of the gallery you may do so from the %1$sZIPs tab%2$s."
+"This button will create a zip of all the full size images in this gallery "
+"on the %1$sZIPs tab%2$s and then download a zip onto your computer. If you "
+"would like to just download a ZIP you have already made and NOT create a "
+"new ZIP of the gallery you may do so from the %1$sZIPs tab%2$s."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1311
+#: includes/galleries/gallery-class.php:1336
 msgid "Create Digital Gallery Zip and Turn into a Product"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1314
-#, php-format
+#: includes/galleries/gallery-class.php:1339
 msgid ""
 "This button will create a zip on the %1$sZIPs tab%2$s of all the full size "
 "images in this gallery and then create a WooCommerce Product out of that "
@@ -945,92 +1527,89 @@ msgid ""
 "tab%4$s for this to work."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1327
+#: includes/galleries/gallery-class.php:1352
 msgid "Create Products from Individual Images"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1330
-#, php-format
+#: includes/galleries/gallery-class.php:1355
 msgid ""
 "This button will create a WooCommerce Product for each of the images "
 "selected below. 1 image creates 1 WooCommerce product. You must have either "
 "the \"Global Model Product\" or \"Smart Image Orientation Model Product\" "
-"selected on the %1$sWoocommerce tab%2$s for this to work. You must click the "
-"Select All button or click any of the images in your gallery below before "
-"you click the Create Individual Image Products(s) button."
+"selected on the %1$sWoocommerce tab%2$s for this to work. You must click "
+"the Select All button or click any of the images in your gallery below "
+"before you click the Create Individual Image Products(s) button."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1439
+#: includes/galleries/gallery-class.php:1464
 msgid "Edit product"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1493
+#: includes/galleries/gallery-class.php:1518
 msgid "Uploaded:"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1564
+#: includes/galleries/gallery-class.php:1589
 msgid "View Quick Setup Video"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1567
+#: includes/galleries/gallery-class.php:1592
 msgid "Close Video"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1586
+#: includes/galleries/gallery-class.php:1611
 msgid "Quick Guide to Getting Started"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1590
-#, php-format
+#: includes/galleries/gallery-class.php:1615
 msgid ""
 "Please look over the options on the %1$sSettings%2$s page before creating "
 "your first gallery.%3$s1. Enter a title for your gallery at the top of the "
-"page in the \"Enter title here\" input. %4$s2. Add images to the gallery and "
-"sort them in the order you want. %4$s3. Publish the gallery by clicking the "
-"blue \"Publish\" button. %4$s4. Now you can edit your images title, "
+"page in the \"Enter title here\" input. %4$s2. Add images to the gallery "
+"and sort them in the order you want. %4$s3. Publish the gallery by clicking "
+"the blue \"Publish\" button. %4$s4. Now you can edit your images title, "
 "description and more. %5$sView our %6$sImage Gallery Demos%7$s or %8$sFull "
 "documentation%9$s for more details."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1619
+#: includes/galleries/gallery-class.php:1644
 msgid "Allowed Files"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1660
-#: includes/galleries/gallery-class.php:1687
-#, php-format
+#: includes/galleries/gallery-class.php:1685
+#: includes/galleries/gallery-class.php:1712
 msgid "Additional Global options available on the %1$sSettings Page%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1718
+#: includes/galleries/gallery-class.php:1743
 msgid "Gallery Digital Zip History List"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1728
+#: includes/galleries/gallery-class.php:1753
 msgid "Example-Gallery-Name"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1730
+#: includes/galleries/gallery-class.php:1755
 msgid "October 14, 2020 - 2:45pm"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1732
+#: includes/galleries/gallery-class.php:1757
 msgid "Delete"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1735
+#: includes/galleries/gallery-class.php:1760
 msgid "Create product"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1738
+#: includes/galleries/gallery-class.php:1763
 msgid "View Contents"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1785
+#: includes/galleries/gallery-class.php:1810
 msgid "Global Model Product"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1797
+#: includes/galleries/gallery-class.php:1822
 msgid ""
 "The selected WooCommerce product will be duplicated when creating products "
 "for each image in this gallery. 1 image will produce 1 WooCommerce product. "
@@ -1039,457 +1618,397 @@ msgid ""
 "the \"Smart Image Orientation\" options below."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1801
-#: includes/galleries/gallery-class.php:1839
-#, php-format
+#: includes/galleries/gallery-class.php:1826
+#: includes/galleries/gallery-class.php:1864
 msgid "Learn how to create a %1$sVariable product%2$s in WooCommerce."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1812
+#: includes/galleries/gallery-class.php:1837
 msgid "Use Smart Image Orientation"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1823
+#: includes/galleries/gallery-class.php:1848
 msgid ""
-"Checking this option will automatically determine the images orientation and "
-"match it to the appropriate Model Product (Landscape, Square or Portrait) "
-"when creating a WooCommerce product for each image. Check this option and "
-"then choose a \"Smart Image Orientation Model Product\" below. This will "
-"override the \"Global Model Product\" option for this Gallery."
+"Checking this option will automatically determine the images orientation "
+"and match it to the appropriate Model Product (Landscape, Square or "
+"Portrait) when creating a WooCommerce product for each image. Check this "
+"option and then choose a \"Smart Image Orientation Model Product\" below. "
+"This will override the \"Global Model Product\" option for this Gallery."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1830
+#: includes/galleries/gallery-class.php:1855
 msgid "Smart Image Orientation Model Products"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1833
+#: includes/galleries/gallery-class.php:1858
 msgid ""
 "The selected WooCommerce product will be duplicated when creating products "
-"for Landscape Images (Greater width than height), Square Images (Equal width "
-"and height), and Portrait Images (Width less than height). 1 image will "
-"produce 1 WooCommerce product. You must have the \"Use Smart Image "
+"for Landscape Images (Greater width than height), Square Images (Equal "
+"width and height), and Portrait Images (Width less than height). 1 image "
+"will produce 1 WooCommerce product. You must have the \"Use Smart Image "
 "Orientation\" checked above for this option to work properly and you must "
 "choose a Model Product for the 3 selections below."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1847
+#: includes/galleries/gallery-class.php:1872
 msgid "Landscape Image Model Product"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1860
+#: includes/galleries/gallery-class.php:1885
 msgid "Square Image Model Product"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1872
+#: includes/galleries/gallery-class.php:1897
 msgid "Portrait Image Model Product"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1887
+#: includes/galleries/gallery-class.php:1912
 msgid "ZIP Model Product"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1898
+#: includes/galleries/gallery-class.php:1923
 msgid ""
-"Select a Product that will be duplicated when creating a WooCommerce product "
-"for Gallery Digital ZIP. (Turns all images in Gallery into a ZIP for a "
-"Simple Virtual/Downloadable WooCommerce product.)"
+"Select a Product that will be duplicated when creating a WooCommerce "
+"product for Gallery Digital ZIP. (Turns all images in Gallery into a ZIP "
+"for a Simple Virtual/Downloadable WooCommerce product.)"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1904
-#, php-format
+#: includes/galleries/gallery-class.php:1929
 msgid "Learn how to create a %1$sSimple product%2$s in WooCommerce."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1913
-#, php-format
+#: includes/galleries/gallery-class.php:1938
 msgid ""
 "NOTE: A Zip Model Product must have the options %1$sVirtual%2$s AND "
 "%3$sDownloadable%4$s checked to appear in ZIP Model Product select option "
-"above. No Download link is needed in product though as it will be auto-"
-"filled in when Feed Them Gallery creates a new ZIP product based on the "
-"ZIP's location."
+"above. No Download link is needed in product though as it will be "
+"auto-filled in when Feed Them Gallery creates a new ZIP product based on "
+"the ZIP's location."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1928
-#, php-format
-msgid ""
-"Additional Global WooCommerce options available on the %1$sSettings Page%2$s"
+#: includes/galleries/gallery-class.php:1953
+msgid "Additional Global WooCommerce options available on the %1$sSettings Page%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:1972
-#: includes/galleries/gallery-class.php:2012
-#: includes/galleries/gallery-class.php:2052
-#, php-format
+#: includes/galleries/gallery-class.php:2103
 msgid ""
 "Please %1$screate a ticket%2$s if you are experiencing trouble and one of "
 "our team members will be happy to assist you."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:2264
-msgid ""
-"Save or Publish this Gallery to be able to copy this Gallery's Shortcode."
+#: includes/galleries/gallery-class.php:2310
+msgid "Save or Publish this Gallery to be able to copy this Gallery's Shortcode."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:2271
+#: includes/galleries/gallery-class.php:2317
 msgid "Copy and Paste this shortcode to any page, post or widget."
 msgstr ""
 
-#: includes/galleries/gallery-class.php:2453
+#: includes/galleries/gallery-class.php:2499
 msgid "No Gallery to duplicate has been supplied!"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:2545
-msgid "Gallery duplication failed, could not find original Gallery: "
-msgstr ""
-
-#: includes/galleries/gallery-class.php:2623
-#: includes/galleries/gallery-class.php:2656
-#: includes/galleries/gallery-class.php:2688
+#: includes/galleries/gallery-class.php:2669
+#: includes/galleries/gallery-class.php:2702
+#: includes/galleries/gallery-class.php:2734
 msgid "Choose an option"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:2638
-#: includes/galleries/gallery-class.php:2671
-#: includes/galleries/gallery-class.php:2703
+#: includes/galleries/gallery-class.php:2684
+#: includes/galleries/gallery-class.php:2717
+#: includes/galleries/gallery-class.php:2749
 msgid "full"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:2795
+#: includes/galleries/gallery-class.php:2841
 msgid "Duplicate"
 msgstr ""
 
-#: includes/galleries/gallery-class.php:2817
+#: includes/galleries/gallery-class.php:2863
 msgid "Duplicate Gallery"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:96
-#, php-format
+#: includes/galleries/gallery-options.php:99
 msgid "Choose the gallery type%1$s View all Gallery %2$sDemos%3$s"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:108
+#: includes/galleries/gallery-options.php:111
 msgid "Responsive Image Gallery "
 msgstr ""
 
-#: includes/galleries/gallery-options.php:112
+#: includes/galleries/gallery-options.php:115
 msgid "Image Gallery Collage (Masonry)"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:116
+#: includes/galleries/gallery-options.php:119
 msgid "Image Post"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:120
+#: includes/galleries/gallery-options.php:123
 msgid "Image Post in Grid (Masonry)"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:129
+#: includes/galleries/gallery-options.php:132
 msgid "Show Photo Caption"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:136
+#: includes/galleries/gallery-options.php:139
 msgid "Title and Description"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:148
+#: includes/galleries/gallery-options.php:147
+msgid "Description"
+msgstr ""
+
+#: includes/galleries/gallery-options.php:151
 msgid "None"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:158
+#: includes/galleries/gallery-options.php:161
 msgid "Photo Caption Placement"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:165
+#: includes/galleries/gallery-options.php:168
 msgid "Caption Above Photo"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:169
+#: includes/galleries/gallery-options.php:172
 msgid "Caption Below Photo"
-msgstr ""
-
-#: includes/galleries/gallery-options.php:206
-#: includes/galleries/gallery-options.php:254
-msgid "Number of Columns"
 msgstr ""
 
 #: includes/galleries/gallery-options.php:209
 #: includes/galleries/gallery-options.php:257
-#, php-format
+msgid "Number of Columns"
+msgstr ""
+
+#: includes/galleries/gallery-options.php:212
+#: includes/galleries/gallery-options.php:260
 msgid ""
 "%1$sNOTE:%2$s Using the Columns option will make this gallery fully "
 "responsive and it will adapt in size to your containers width. Choose the "
 "Number of Columns and Space between each image below."
 msgstr ""
 
-#: includes/galleries/gallery-options.php:218
-msgid "1"
-msgstr ""
-
-#: includes/galleries/gallery-options.php:222
-#: includes/galleries/gallery-options.php:266
-msgid "2"
-msgstr ""
-
-#: includes/galleries/gallery-options.php:226
-#: includes/galleries/gallery-options.php:270
-msgid "3"
-msgstr ""
-
-#: includes/galleries/gallery-options.php:230
-#: includes/galleries/gallery-options.php:274
-msgid "4"
-msgstr ""
-
-#: includes/galleries/gallery-options.php:234
-#: includes/galleries/gallery-options.php:278
-msgid "5"
-msgstr ""
-
-#: includes/galleries/gallery-options.php:238
-msgid "6"
-msgstr ""
-
-#: includes/galleries/gallery-options.php:242
-msgid "7"
-msgstr ""
-
-#: includes/galleries/gallery-options.php:246
-msgid "8"
-msgstr ""
-
-#: includes/galleries/gallery-options.php:286
-#: includes/galleries/gallery-options.php:376
+#: includes/galleries/gallery-options.php:289
+#: includes/galleries/gallery-options.php:379
 msgid "Space between Images"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:293
+#: includes/galleries/gallery-options.php:296
 msgid "1px"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:297
+#: includes/galleries/gallery-options.php:300
 msgid "2px"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:301
+#: includes/galleries/gallery-options.php:304
 msgid "3px"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:305
+#: includes/galleries/gallery-options.php:308
 msgid "4px"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:309
-#: includes/galleries/gallery-options.php:2103
-#: includes/galleries/gallery-options.php:2292
+#: includes/galleries/gallery-options.php:312
+#: includes/galleries/gallery-options.php:2106
+#: includes/galleries/gallery-options.php:2295
 msgid "5px"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:313
-#: includes/galleries/gallery-options.php:1666
+#: includes/galleries/gallery-options.php:316
+#: includes/galleries/gallery-options.php:1669
 msgid "10px"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:317
+#: includes/galleries/gallery-options.php:320
 msgid "15px"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:321
+#: includes/galleries/gallery-options.php:324
 msgid "20px"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:331
-#, php-format
+#: includes/galleries/gallery-options.php:334
 msgid ""
 "Force Columns%1$s Yes, will force image columns. No, will allow the images "
 "to be resposive for smaller devices%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:341
-#: includes/galleries/gallery-options.php:435
-#: includes/galleries/gallery-options.php:460
-#: includes/galleries/gallery-options.php:602
-#: includes/galleries/gallery-options.php:675
-#: includes/galleries/gallery-options.php:787
-#: includes/galleries/gallery-options.php:840
-#: includes/galleries/gallery-options.php:1077
-#: includes/galleries/gallery-options.php:1115
-#: includes/galleries/gallery-options.php:1141
-#: includes/galleries/gallery-options.php:1416
-#: includes/galleries/gallery-options.php:1436
-#: includes/galleries/gallery-options.php:1595
-#: includes/galleries/gallery-options.php:1724
-#: includes/galleries/gallery-options.php:1848
-#: includes/galleries/gallery-options.php:1935
-#: includes/galleries/gallery-options.php:2120
-#: includes/shortcode-button/shortcode-button.php:410
-#: includes/shortcode-button/shortcode-button.php:424
+#: includes/galleries/gallery-options.php:344
+#: includes/galleries/gallery-options.php:438
+#: includes/galleries/gallery-options.php:463
+#: includes/galleries/gallery-options.php:605
+#: includes/galleries/gallery-options.php:678
+#: includes/galleries/gallery-options.php:790
+#: includes/galleries/gallery-options.php:843
+#: includes/galleries/gallery-options.php:1080
+#: includes/galleries/gallery-options.php:1118
+#: includes/galleries/gallery-options.php:1144
+#: includes/galleries/gallery-options.php:1419
+#: includes/galleries/gallery-options.php:1439
+#: includes/galleries/gallery-options.php:1598
+#: includes/galleries/gallery-options.php:1727
+#: includes/galleries/gallery-options.php:1851
+#: includes/galleries/gallery-options.php:1938
+#: includes/galleries/gallery-options.php:2123
+#: includes/shortcode-button/shortcode-button.php:414
+#: includes/shortcode-button/shortcode-button.php:428
 msgid "No"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:345
-#: includes/galleries/gallery-options.php:431
-#: includes/galleries/gallery-options.php:456
-#: includes/galleries/gallery-options.php:598
-#: includes/galleries/gallery-options.php:679
-#: includes/galleries/gallery-options.php:783
-#: includes/galleries/gallery-options.php:844
-#: includes/galleries/gallery-options.php:1073
-#: includes/galleries/gallery-options.php:1119
-#: includes/galleries/gallery-options.php:1145
-#: includes/galleries/gallery-options.php:1420
-#: includes/galleries/gallery-options.php:1440
-#: includes/galleries/gallery-options.php:1599
-#: includes/galleries/gallery-options.php:1728
-#: includes/galleries/gallery-options.php:1844
-#: includes/galleries/gallery-options.php:1939
+#: includes/galleries/gallery-options.php:348
+#: includes/galleries/gallery-options.php:434
+#: includes/galleries/gallery-options.php:459
+#: includes/galleries/gallery-options.php:601
+#: includes/galleries/gallery-options.php:682
+#: includes/galleries/gallery-options.php:786
+#: includes/galleries/gallery-options.php:847
+#: includes/galleries/gallery-options.php:1076
+#: includes/galleries/gallery-options.php:1122
+#: includes/galleries/gallery-options.php:1148
+#: includes/galleries/gallery-options.php:1423
+#: includes/galleries/gallery-options.php:1443
+#: includes/galleries/gallery-options.php:1602
+#: includes/galleries/gallery-options.php:1731
+#: includes/galleries/gallery-options.php:1847
+#: includes/galleries/gallery-options.php:1942
 msgid "Yes"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:380
-#: includes/galleries/gallery-options.php:744
-#: includes/galleries/gallery-options.php:758
+#: includes/galleries/gallery-options.php:383
+#: includes/galleries/gallery-options.php:747
+#: includes/galleries/gallery-options.php:761
 msgid "for example"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:390
-#, php-format
+#: includes/galleries/gallery-options.php:393
 msgid "User Name%1$s Company or user who took this photo%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:405
-#, php-format
+#: includes/galleries/gallery-options.php:408
 msgid "User Custom Link%1$s Custom about page or social media page link%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:421
-#, php-format
-msgid ""
-"Show Share Options%1$s Appears in the bottom left corner and in popup%2$s"
+#: includes/galleries/gallery-options.php:424
+msgid "Show Share Options%1$s Appears in the bottom left corner and in popup%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:446
-#, php-format
+#: includes/galleries/gallery-options.php:449
 msgid "Show Date%1$s Date image was uploaded%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:507
-#: includes/galleries/gallery-options.php:617
-#, php-format
+#: includes/galleries/gallery-options.php:510
+#: includes/galleries/gallery-options.php:620
 msgid ""
 "%1$sNOTE:%2$s If for some reason the image size you choose does not appear "
 "on the front end you may need to regenerate your images. This free plugin "
 "called %3$sRegenerate Thumbnails%4$s does an amazing job of that."
 msgstr ""
 
-#: includes/galleries/gallery-options.php:513
+#: includes/galleries/gallery-options.php:516
 msgid "Image Size on Page"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:526
+#: includes/galleries/gallery-options.php:529
 msgid "Max-width for Images"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:536
+#: includes/galleries/gallery-options.php:539
 msgid "Gallery Max-width"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:549
-#, php-format
+#: includes/galleries/gallery-options.php:552
 msgid ""
 "Gallery Height%1$s Set the height to have a scrolling feed. Only works for "
 "Responsive Image Gallery and the Image Post option.%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:564
-#, php-format
+#: includes/galleries/gallery-options.php:567
 msgid "Gallery Margin%1$s To center feed type auto%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:577
+#: includes/galleries/gallery-options.php:580
 msgid "Gallery Padding"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:589
-#: includes/galleries/gallery-options.php:1217
+#: includes/galleries/gallery-options.php:592
+#: includes/galleries/gallery-options.php:1220
 msgid "Popup"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:591
+#: includes/galleries/gallery-options.php:594
 msgid "Display Photos in Popup"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:623
+#: includes/galleries/gallery-options.php:626
 msgid "Image Size in Popup"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:635
+#: includes/galleries/gallery-options.php:638
 msgid "Popup Options"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:642
+#: includes/galleries/gallery-options.php:645
 msgid "Default"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:646
+#: includes/galleries/gallery-options.php:649
 msgid "Full Width & Info below Photo"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:650
+#: includes/galleries/gallery-options.php:653
 msgid "Full Width, Photo Only"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:661
+#: includes/galleries/gallery-options.php:664
 msgid "Load More Images"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:665
-#, php-format
+#: includes/galleries/gallery-options.php:668
 msgid ""
-"Load More Button%1$s Load More unavailable while using the Pagination option."
-"%2$s"
+"Load More Button%1$s Load More unavailable while using the Pagination "
+"option.%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:692
-#: includes/galleries/gallery-options.php:1738
+#: includes/galleries/gallery-options.php:695
+#: includes/galleries/gallery-options.php:1741
 msgid "# of Photos Visible"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:708
+#: includes/galleries/gallery-options.php:711
 msgid "Load More Style"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:714
-#, php-format
+#: includes/galleries/gallery-options.php:717
 msgid ""
-"%1$sNOTE:%2$s The Button option will show a \"Load More Posts\" button under "
-"your feed. The AutoScroll option will load more posts when you reach the "
-"bottom of the feed. AutoScroll ONLY works if you've filled in a Fixed Height "
-"for your feed."
+"%1$sNOTE:%2$s The Button option will show a \"Load More Posts\" button "
+"under your feed. The AutoScroll option will load more posts when you reach "
+"the bottom of the feed. AutoScroll ONLY works if you've filled in a Fixed "
+"Height for your feed."
 msgstr ""
 
-#: includes/galleries/gallery-options.php:721
+#: includes/galleries/gallery-options.php:724
 msgid "Button"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:725
+#: includes/galleries/gallery-options.php:728
 msgid "AutoScroll"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:737
-#, php-format
+#: includes/galleries/gallery-options.php:740
 msgid "Load more Button Width%1$s Leave blank for auto width%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:754
+#: includes/galleries/gallery-options.php:757
 msgid "Load more Button Margin"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:770
+#: includes/galleries/gallery-options.php:773
 msgid "Show Image Count"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:776
-#, php-format
+#: includes/galleries/gallery-options.php:779
 msgid ""
 "%1$sNOTE:%2$s This will display the number of images you have in your "
 "gallery, and will appear centered at the bottom of your image feed. For "
@@ -1497,341 +2016,312 @@ msgid ""
 "already and 50 being the total number of images in the gallery."
 msgstr ""
 
-#: includes/galleries/gallery-options.php:802
+#: includes/galleries/gallery-options.php:805
 msgid "Order of Images"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:804
+#: includes/galleries/gallery-options.php:807
 msgid "Choose the order of Images"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:811
+#: includes/galleries/gallery-options.php:814
 msgid "Sort by date"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:815
+#: includes/galleries/gallery-options.php:818
 msgid "The order you manually sorted images"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:819
+#: includes/galleries/gallery-options.php:822
 msgid "Sort alphabetically (A-Z)"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:827
+#: includes/galleries/gallery-options.php:830
 msgid "Display Options"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:830
-#, php-format
+#: includes/galleries/gallery-options.php:833
 msgid ""
 "Display Options%1$s Display a select option for this gallery so your users "
 "can select the sort order. Does not work with Loadmore button, only works "
 "with Pagination.%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:852
+#: includes/galleries/gallery-options.php:855
 msgid "Position of Select Option"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:859
-#: includes/galleries/gallery-options.php:1755
+#: includes/galleries/gallery-options.php:862
+#: includes/galleries/gallery-options.php:1758
 msgid "Top"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:863
-#: includes/galleries/gallery-options.php:1759
+#: includes/galleries/gallery-options.php:866
+#: includes/galleries/gallery-options.php:1762
 msgid "Bottom"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:867
-#: includes/galleries/gallery-options.php:1763
+#: includes/galleries/gallery-options.php:870
+#: includes/galleries/gallery-options.php:1766
 msgid "Top and Bottom"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:878
+#: includes/galleries/gallery-options.php:881
 msgid "Align Select Option"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:885
-#: includes/galleries/gallery-options.php:1782
-#: includes/galleries/gallery-options.php:1863
-#: includes/galleries/gallery-options.php:2011
-#: includes/galleries/gallery-options.php:2200
-#: includes/shortcode-button/shortcode-button.php:425
+#: includes/galleries/gallery-options.php:888
+#: includes/galleries/gallery-options.php:1785
+#: includes/galleries/gallery-options.php:1866
+#: includes/galleries/gallery-options.php:2014
+#: includes/galleries/gallery-options.php:2203
+#: includes/shortcode-button/shortcode-button.php:429
 msgid "Left"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:889
-#: includes/galleries/gallery-options.php:1786
-#: includes/galleries/gallery-options.php:1867
-#: includes/galleries/gallery-options.php:2015
-#: includes/galleries/gallery-options.php:2204
-#: includes/shortcode-button/shortcode-button.php:427
+#: includes/galleries/gallery-options.php:892
+#: includes/galleries/gallery-options.php:1789
+#: includes/galleries/gallery-options.php:1870
+#: includes/galleries/gallery-options.php:2018
+#: includes/galleries/gallery-options.php:2207
+#: includes/shortcode-button/shortcode-button.php:431
 msgid "Right"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:900
+#: includes/galleries/gallery-options.php:903
 msgid "Free Image Download"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:904
-#, php-format
+#: includes/galleries/gallery-options.php:907
 msgid ""
-"%1$sNOTE:%2$s To turn this option on simply choose an image size. A download "
-"icon will appear under the image to the right and in the popup. If for some "
-"reason the image size you choose does not appear on the front end you may "
-"need to regenerate your images. This free plugin called %3$sRegenerate "
-"Thumbnails%4$s does an amazing job of that."
+"%1$sNOTE:%2$s To turn this option on simply choose an image size. A "
+"download icon will appear under the image to the right and in the popup. If "
+"for some reason the image size you choose does not appear on the front end "
+"you may need to regenerate your images. This free plugin called "
+"%3$sRegenerate Thumbnails%4$s does an amazing job of that."
 msgstr ""
 
-#: includes/galleries/gallery-options.php:910
+#: includes/galleries/gallery-options.php:913
 msgid "Choose the size"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:922
+#: includes/galleries/gallery-options.php:925
 msgid "Free Download Text"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:949
+#: includes/galleries/gallery-options.php:952
 msgid "Feed Color Options"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:959
-#: includes/galleries/gallery-options.php:996
+#: includes/galleries/gallery-options.php:962
+#: includes/galleries/gallery-options.php:999
 msgid "Background Color"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:965
-#: includes/galleries/gallery-options.php:977
-#: includes/galleries/gallery-options.php:989
-#: includes/galleries/gallery-options.php:1002
-#: includes/galleries/gallery-options.php:1014
-#: includes/galleries/gallery-options.php:1026
-#: includes/galleries/gallery-options.php:1242
-#: includes/galleries/gallery-options.php:1261
-#: includes/galleries/gallery-options.php:1280
-#: includes/galleries/gallery-options.php:1802
-#: includes/galleries/gallery-options.php:1813
-#: includes/galleries/gallery-options.php:1825
-#: includes/galleries/gallery-options.php:1881
-#: includes/galleries/gallery-options.php:1999
-#: includes/galleries/gallery-options.php:2046
-#: includes/galleries/gallery-options.php:2093
-#: includes/galleries/gallery-options.php:2188
-#: includes/galleries/gallery-options.php:2235
-#: includes/galleries/gallery-options.php:2282
-msgid "#ddd"
-msgstr ""
-
-#: includes/galleries/gallery-options.php:971
+#: includes/galleries/gallery-options.php:974
 msgid "Grid Posts Background Color"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:983
+#: includes/galleries/gallery-options.php:986
 msgid "Border Bottom Color"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:994
+#: includes/galleries/gallery-options.php:997
 msgid "Loadmore Button"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1008
+#: includes/galleries/gallery-options.php:1011
 msgid "Text Color"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1020
+#: includes/galleries/gallery-options.php:1023
 msgid "Image Count Text Color"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1063
-#, php-format
+#: includes/galleries/gallery-options.php:1054
+msgid "Woocommerce Options"
+msgstr ""
+
+#: includes/galleries/gallery-options.php:1066
 msgid ""
 "Show Cart Icon%1$s Appears on the page and popup. Only appears in popup for "
 "the Responsive Image Gallery.%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1088
-#, php-format
+#: includes/galleries/gallery-options.php:1091
 msgid ""
 "Cart Icon Purchase Link text%1$s The default word is Purchase or add a "
 "single space to show the Cart Icon only.%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1095
+#: includes/galleries/gallery-options.php:1098
 msgid "Purchase"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1105
-#, php-format
+#: includes/galleries/gallery-options.php:1108
 msgid ""
 "Hide Add to Cart Button%1$s This will hide the add to cart button and any "
 "variations on the page and popup so you can direct users to your default "
 "shop product.%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1131
-#, php-format
+#: includes/galleries/gallery-options.php:1134
 msgid ""
 "Show Cart Icon Over Image%1$s Only works for Responsive Image Galleries. "
 "This will show a cart icon over top of the image.%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1157
-#, php-format
+#: includes/galleries/gallery-options.php:1160
 msgid ""
-"Position the Cart Icon Over Image%1$sChoose the positioning of the Cart Icon "
-"over images.%2$s"
+"Position the Cart Icon Over Image%1$sChoose the positioning of the Cart "
+"Icon over images.%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1167
-#: includes/galleries/gallery-options.php:1636
+#: includes/galleries/gallery-options.php:1170
+#: includes/galleries/gallery-options.php:1639
 msgid "Top Left"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1171
-#: includes/galleries/gallery-options.php:1640
+#: includes/galleries/gallery-options.php:1174
+#: includes/galleries/gallery-options.php:1643
 msgid "Top Center"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1175
-#: includes/galleries/gallery-options.php:1632
+#: includes/galleries/gallery-options.php:1178
+#: includes/galleries/gallery-options.php:1635
 msgid "Top Right"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1179
+#: includes/galleries/gallery-options.php:1182
 msgid "Middle Right"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1183
-#: includes/galleries/gallery-options.php:1644
+#: includes/galleries/gallery-options.php:1186
+#: includes/galleries/gallery-options.php:1647
 msgid "Bottom Right"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1187
-#: includes/galleries/gallery-options.php:1652
+#: includes/galleries/gallery-options.php:1190
+#: includes/galleries/gallery-options.php:1655
 msgid "Bottom Center"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1191
-#: includes/galleries/gallery-options.php:1648
+#: includes/galleries/gallery-options.php:1194
+#: includes/galleries/gallery-options.php:1651
 msgid "Bottom Left"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1195
+#: includes/galleries/gallery-options.php:1198
 msgid "Middle Left"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1207
-#, php-format
+#: includes/galleries/gallery-options.php:1210
 msgid ""
 "Popup or Add to Cart link%1$s Choose to open the popup or take the user to "
 "your product or cart. Add to cart link options are on the Settings page of "
 "our plugin.%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1221
+#: includes/galleries/gallery-options.php:1224
 msgid "Add to Cart Link"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1233
-#, php-format
+#: includes/galleries/gallery-options.php:1236
 msgid ""
-"Cart Icon Background Color%1$sBackground Color for is only for the Cart Icon "
-"over responsive gallery image.%2$s"
+"Cart Icon Background Color%1$sBackground Color for is only for the Cart "
+"Icon over responsive gallery image.%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1252
-#, php-format
+#: includes/galleries/gallery-options.php:1255
 msgid ""
 "Cart Icon Color%1$sColor is only for the Cart Icon over responsive gallery "
 "image.%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1271
-#, php-format
+#: includes/galleries/gallery-options.php:1274
 msgid ""
 "Cart Icon Hover Color%1$sHover Color is only for the Cart Icon over "
 "responsive gallery image.%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1285
+#: includes/galleries/gallery-options.php:1288
 msgid "Product Creation Options"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1289
-#, php-format
+#: includes/galleries/gallery-options.php:1292
 msgid ""
 "Auto Create a product for each image uploaded.%1$s You must have a \"Global "
 "Model Product\" or \"Smart Image Orientation Model Product\" selected below "
 "for this option to work.%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1393
+#: includes/galleries/gallery-options.php:1396
 msgid "Watermark Options"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1404
-#, php-format
+#: includes/galleries/gallery-options.php:1407
 msgid ""
 "%1$sNOTE:%2$s This option will disable the right click option on desktop "
 "computers so people cannot look at the source code. This is not fail safe "
-"but for the vast majority this is enough to deter people from trying to find "
-"the image source."
+"but for the vast majority this is enough to deter people from trying to "
+"find the image source."
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1429
+#: includes/galleries/gallery-options.php:1412
+msgid "Disable Right Click"
+msgstr ""
+
+#: includes/galleries/gallery-options.php:1432
 msgid "Use Options Below"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1451
-#, php-format
+#: includes/galleries/gallery-options.php:1454
 msgid ""
 "%1$sNOTE:%2$s Upload the exact image size you want to display, we will not "
 "rescale the image in anyway."
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1455
+#: includes/galleries/gallery-options.php:1458
 msgid "Watermark Image"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1460
+#: includes/galleries/gallery-options.php:1463
 msgid "Upload or Choose Watermark"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1498
+#: includes/galleries/gallery-options.php:1501
 msgid "Watermark Type"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1505
+#: includes/galleries/gallery-options.php:1508
 msgid "Watermark Overlay Image (Does not Imprint logo on Image)"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1509
+#: includes/galleries/gallery-options.php:1512
 msgid "Watermark Image (Imprint logo on the selected image sizes)"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1519
+#: includes/galleries/gallery-options.php:1522
 msgid "Overlay Options"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1526
+#: includes/galleries/gallery-options.php:1529
 msgid "Select an Option"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1530
+#: includes/galleries/gallery-options.php:1533
 msgid "Watermark in popup only"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1534
+#: includes/galleries/gallery-options.php:1537
 msgid "Watermark for image on page only"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1538
+#: includes/galleries/gallery-options.php:1541
 msgid "Watermark for image on page and popup"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1550
-#, php-format
+#: includes/galleries/gallery-options.php:1553
 msgid ""
 "%1$sIMPORTANT:%2$s This option will permanently mark your chosen image size "
 "once you click the publish button or update button. Set the opacity of your "
@@ -1839,300 +2329,304 @@ msgid ""
 "suggest using a png for the best clarity and not a gif."
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1556
+#: includes/galleries/gallery-options.php:1559
 msgid "Image Sizes"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1586
-#, php-format
+#: includes/galleries/gallery-options.php:1589
 msgid "Duplicate Full Image%1$s before watermarking"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1608
+#: includes/galleries/gallery-options.php:1611
 msgid "Image Opacity"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1614
+#: includes/galleries/gallery-options.php:1617
 msgid ".5 for example"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1621
+#: includes/galleries/gallery-options.php:1624
 msgid "Watermark Position"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1628
+#: includes/galleries/gallery-options.php:1631
 msgid "Centered"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1660
+#: includes/galleries/gallery-options.php:1663
 msgid "Watermark Margin"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1711
+#: includes/galleries/gallery-options.php:1714
 msgid "Display Pagination"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1714
-#, php-format
+#: includes/galleries/gallery-options.php:1717
 msgid ""
 "Display Pagination%1$s Pagination unavailable while using the Load More "
 "option.%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1748
+#: includes/galleries/gallery-options.php:1751
 msgid "Position of Pagination"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1775
+#: includes/galleries/gallery-options.php:1778
 msgid "Align Pagination"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1796
+#: includes/galleries/gallery-options.php:1799
 msgid "Button Color"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1807
+#: includes/galleries/gallery-options.php:1810
 msgid "Active Button"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1819
+#: includes/galleries/gallery-options.php:1822
 msgid "Numbers Color"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1830
+#: includes/galleries/gallery-options.php:1833
 msgid "Image Count Options"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1834
-#, php-format
+#: includes/galleries/gallery-options.php:1837
 msgid "Display Image Count%1$s For Example: Showing 1-50 of 800 Images.%2$s"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1856
+#: includes/galleries/gallery-options.php:1859
 msgid "Align Image Count"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1875
+#: includes/galleries/gallery-options.php:1878
 msgid "Image count Text Color"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1904
+#: includes/galleries/gallery-options.php:1907
 msgid "Image Tags"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1928
+#: includes/galleries/gallery-options.php:1931
 msgid "Show Image Tags"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1947
-#: includes/galleries/gallery-options.php:2136
+#: includes/galleries/gallery-options.php:1950
+#: includes/galleries/gallery-options.php:2139
 msgid "Tags Separator"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1954
-#: includes/galleries/gallery-options.php:2143
+#: includes/galleries/gallery-options.php:1957
+#: includes/galleries/gallery-options.php:2146
 msgid "Comma - ie* One, Two, Three"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1958
-#: includes/galleries/gallery-options.php:2147
+#: includes/galleries/gallery-options.php:1961
+#: includes/galleries/gallery-options.php:2150
 msgid "Period - ie* One &#46; Two &#46; Three"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1962
-#: includes/galleries/gallery-options.php:2151
+#: includes/galleries/gallery-options.php:1965
+#: includes/galleries/gallery-options.php:2154
 msgid "Bullet - ie* One &bull; Two &bull; Three"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1966
-#: includes/galleries/gallery-options.php:2155
+#: includes/galleries/gallery-options.php:1969
+#: includes/galleries/gallery-options.php:2158
 msgid "Pipe - ie* One | Two | Three"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1970
-#: includes/galleries/gallery-options.php:2159
+#: includes/galleries/gallery-options.php:1973
+#: includes/galleries/gallery-options.php:2162
 msgid "Space - ie* One Two Three"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1974
-#: includes/galleries/gallery-options.php:2163
+#: includes/galleries/gallery-options.php:1977
+#: includes/galleries/gallery-options.php:2166
 msgid "Dash - ie* One - Two - Three"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1982
-#: includes/galleries/gallery-options.php:2171
+#: includes/galleries/gallery-options.php:1985
+#: includes/galleries/gallery-options.php:2174
 msgid "Link Font Size"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1987
-#: includes/galleries/gallery-options.php:2082
-#: includes/galleries/gallery-options.php:2176
-#: includes/galleries/gallery-options.php:2271
+#: includes/galleries/gallery-options.php:1990
+#: includes/galleries/gallery-options.php:2085
+#: includes/galleries/gallery-options.php:2179
+#: includes/galleries/gallery-options.php:2274
 msgid "12px"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:1993
-#: includes/galleries/gallery-options.php:2182
+#: includes/galleries/gallery-options.php:1996
+#: includes/galleries/gallery-options.php:2185
 msgid "Link Color"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:2004
-#: includes/galleries/gallery-options.php:2193
+#: includes/galleries/gallery-options.php:2007
+#: includes/galleries/gallery-options.php:2196
 msgid "Align"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:2019
-#: includes/galleries/gallery-options.php:2208
-#: includes/shortcode-button/shortcode-button.php:426
+#: includes/galleries/gallery-options.php:2022
+#: includes/galleries/gallery-options.php:2211
+#: includes/shortcode-button/shortcode-button.php:430
 msgid "Center"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:2038
+#: includes/galleries/gallery-options.php:2041
 msgid "Image Tags Background Wrap"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:2040
-#: includes/galleries/gallery-options.php:2229
+#: includes/galleries/gallery-options.php:2043
+#: includes/galleries/gallery-options.php:2232
 msgid "Color"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:2053
-#: includes/galleries/gallery-options.php:2242
+#: includes/galleries/gallery-options.php:2056
+#: includes/galleries/gallery-options.php:2245
 msgid "Padding"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:2058
-#: includes/galleries/gallery-options.php:2247
+#: includes/galleries/gallery-options.php:2061
+#: includes/galleries/gallery-options.php:2250
 msgid "18px"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:2064
+#: includes/galleries/gallery-options.php:2067
 msgid "Customize the word, Tags:"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:2066
+#: includes/galleries/gallery-options.php:2069
 msgid "Change Tags Text"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:2071
+#: includes/galleries/gallery-options.php:2074
 msgid "Tags:"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:2077
-#: includes/galleries/gallery-options.php:2266
+#: includes/galleries/gallery-options.php:2080
+#: includes/galleries/gallery-options.php:2269
 msgid "Font Size"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:2087
-#: includes/galleries/gallery-options.php:2276
+#: includes/galleries/gallery-options.php:2090
+#: includes/galleries/gallery-options.php:2279
 msgid "Font Color"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:2098
-#: includes/galleries/gallery-options.php:2287
+#: includes/galleries/gallery-options.php:2101
+#: includes/galleries/gallery-options.php:2290
 msgid " Margin Right"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:2111
+#: includes/galleries/gallery-options.php:2114
 msgid "Gallery Tags"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:2113
+#: includes/galleries/gallery-options.php:2116
 msgid "Show Gallery Tags"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:2124
+#: includes/galleries/gallery-options.php:2127
 msgid "Above Images"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:2128
+#: includes/galleries/gallery-options.php:2131
 msgid "Below Images"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:2227
+#: includes/galleries/gallery-options.php:2230
 msgid "Gallery Tags Background Wrap"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:2253
+#: includes/galleries/gallery-options.php:2256
 msgid "Customize the phrase, Gallery Tags:"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:2255
+#: includes/galleries/gallery-options.php:2258
 msgid "Change Tags: Text"
 msgstr ""
 
-#: includes/galleries/gallery-options.php:2260
+#: includes/galleries/gallery-options.php:2263
 msgid "Gallery Tags:"
 msgstr ""
 
-#: includes/setup-functions-class.php:350
+#: includes/galleries/gallery-options.php:2315
+msgid "Client Options"
+msgstr ""
+
+#: includes/galleries/gallery-options.php:2331
+msgid "Gallery Clients"
+msgstr ""
+
+#: includes/galleries/gallery-options.php:2335
+msgid "Clients Manager Required"
+msgstr ""
+
+#: includes/setup-functions-class.php:400
 msgid "Galleries "
 msgstr ""
 
-#: includes/setup-functions-class.php:359
+#: includes/setup-functions-class.php:409
 msgid "Add Gallery "
 msgstr ""
 
-#: includes/setup-functions-class.php:388 updater/updater-license-page.php:158
+#: includes/setup-functions-class.php:438 updater/updater-license-page.php:158
 msgid "Plugin License"
 msgstr ""
 
+#: includes/shortcode-button/shortcode-button.php:95
 #: includes/shortcode-button/shortcode-button.php:96
-#: includes/shortcode-button/shortcode-button.php:97
-#: includes/shortcode-button/shortcode-button.php:108
+#: includes/shortcode-button/shortcode-button.php:107
 msgid "Insert"
 msgstr ""
 
-#: includes/shortcode-button/shortcode-button.php:107
+#: includes/shortcode-button/shortcode-button.php:106
 msgid "Insert Gallery"
 msgstr ""
 
-#: includes/shortcode-button/shortcode-button.php:127
+#: includes/shortcode-button/shortcode-button.php:131
 msgid "Add FT Gallery"
 msgstr ""
 
-#: includes/shortcode-button/shortcode-button.php:347
-#: includes/shortcode-button/shortcode-button.php:348
+#: includes/shortcode-button/shortcode-button.php:351
+#: includes/shortcode-button/shortcode-button.php:352
 msgid "Search"
 msgstr ""
 
-#: includes/shortcode-button/shortcode-button.php:397
+#: includes/shortcode-button/shortcode-button.php:401
 msgid "Helpful Tips"
 msgstr ""
 
-#: includes/shortcode-button/shortcode-button.php:398
+#: includes/shortcode-button/shortcode-button.php:402
 msgid "Choosing Your Gallery"
 msgstr ""
 
-#: includes/shortcode-button/shortcode-button.php:399
+#: includes/shortcode-button/shortcode-button.php:403
 msgid ""
 "Simply click on one of the boxes to the left or you can Ctrl(PC) / cmd(MAC) "
 "and click to select multiple Galleries.  The \"Insert\" button will be "
 "activated once you have selected a gallery."
 msgstr ""
 
-#: includes/shortcode-button/shortcode-button.php:400
+#: includes/shortcode-button/shortcode-button.php:404
 msgid "Insert Your Gallery"
 msgstr ""
 
-#: includes/shortcode-button/shortcode-button.php:401
+#: includes/shortcode-button/shortcode-button.php:405
 msgid "To insert your gallery, click on the \"Insert\" button below."
 msgstr ""
 
-#: includes/shortcode-button/shortcode-button.php:403
-msgid "Title Options"
-msgstr ""
-
-#: includes/shortcode-button/shortcode-button.php:404
-msgid ""
-"Add the Gallery Title before each shortcode and Align the Title if you like."
-msgstr ""
-
 #: includes/shortcode-button/shortcode-button.php:408
+msgid "Add the Gallery Title before each shortcode and Align the Title if you like."
+msgstr ""
+
+#: includes/shortcode-button/shortcode-button.php:412
 msgid "Display Title"
 msgstr ""
 
-#: includes/shortcode-button/shortcode-button.php:422
+#: includes/shortcode-button/shortcode-button.php:426
 msgid "Align Title"
 msgstr ""
 
@@ -2144,91 +2638,46 @@ msgstr ""
 msgid "Save and Close Popup"
 msgstr ""
 
-#: metabox-settings/metabox-settings-class.php:238
+#: metabox-settings/metabox-settings-class.php:256
 msgid "Saving Options"
 msgstr ""
 
-#: metabox-settings/metabox-settings-class.php:239
+#: metabox-settings/metabox-settings-class.php:257
 msgid "Settings Saved Successfully"
 msgstr ""
 
-#: metabox-settings/metabox-settings-class.php:267
+#: metabox-settings/metabox-settings-class.php:285
 msgid "Update"
 msgstr ""
 
-#: metabox-settings/metabox-settings-class.php:268
+#: metabox-settings/metabox-settings-class.php:286
 msgid "Publish"
 msgstr ""
 
-#: metabox-settings/metabox-settings-class.php:269
+#: metabox-settings/metabox-settings-class.php:287
 msgid "Publishing..."
 msgstr ""
 
-#: metabox-settings/metabox-settings-class.php:270
+#: metabox-settings/metabox-settings-class.php:288
 msgid "Updating..."
 msgstr ""
 
-#: metabox-settings/metabox-settings-class.php:271
+#: metabox-settings/metabox-settings-class.php:289
 msgid "To top"
 msgstr ""
 
-#: metabox-settings/metabox-settings-class.php:273
+#: metabox-settings/metabox-settings-class.php:291
 msgid ""
 "The Image(s) are done uploading. Please click the Publish or Update button "
 "now to edit your image(s)."
 msgstr ""
 
-#: metabox-settings/metabox-settings-class.php:384
+#: metabox-settings/metabox-settings-class.php:402
 msgid "No Settings Saved."
 msgstr ""
 
 #: shortcodes.php:62
 msgid "No Galleries in this Album. Please attach Galleries to use this feature"
-msgstr ""
-
-#: updater/updater-check-class.php:70
-msgid ""
-" needs a valid License Key! <a href=\"edit.php?post_type=ft_gallery&page=ft-"
-"gallery-license-page\">Click here to add one</a> or you won't recieve "
-"updates. - <a href=\"https://www.slickremix.com/my-account/\" target=\"_blank"
-"\">You can get License Key Here.</a>"
-msgstr ""
-
-#: updater/updater-check-class.php:85
-msgid ""
-" - Your License Key is not active, expired, or is invalid. <a href=\"edit."
-"php?post_type=ft_gallery&page=ft-gallery-license-page\">Click here to add "
-"one</a> or you won't recieve updates. - <a href=\"https://www.slickremix.com/"
-"my-account/\" target=\"_blank\">You can get License Key Here.</a>"
-msgstr ""
-
-#: updater/updater-check-class.php:259
-#, php-format
-msgid ""
-"There is a new version of %1$s available. %2$sView version %3$s details%4$s."
-msgstr ""
-
-#: updater/updater-check-class.php:267
-#, php-format
-msgid ""
-"There is a new version of %1$s available. %2$sView version %3$s details%4$s "
-"or %5$supdate now%6$s."
-msgstr ""
-
-#: updater/updater-check-class.php:425
-msgid "You do not have permission to install plugin updates"
-msgstr ""
-
-#: updater/updater-check-class.php:425
-msgid "Error"
-msgstr ""
-
-#: updater/updater-license-page.php:120 updater/updater-license-page.php:268
-msgid "Enter your license key"
-msgstr ""
-
-#: updater/updater-license-page.php:124
-msgid "Deactivate License"
 msgstr ""
 
 #: updater/updater-license-page.php:126
@@ -2240,7 +2689,6 @@ msgid "To receive updates notifications, please enter your valid license key."
 msgstr ""
 
 #: updater/updater-license-page.php:140 updater/updater-license-page.php:297
-#, php-format
 msgid "%1$sUpgrade License%2$s"
 msgstr ""
 
@@ -2249,7 +2697,6 @@ msgid "Plugin License Options"
 msgstr ""
 
 #: updater/updater-license-page.php:172
-#, php-format
 msgid ""
 "If you need more licenses or your key has expired, please go to the %1$sMY "
 "ACCOUNT%2$s page on our website to upgrade or renew your license.%3$sTo get "
@@ -2257,7 +2704,6 @@ msgid ""
 msgstr ""
 
 #: updater/updater-license-page.php:182
-#, php-format
 msgid ""
 "Install the zip file of the plugin you should have received after purchase "
 "on the %1$splugins page%2$s and leave the free version active too."
@@ -2268,12 +2714,10 @@ msgid "Now Enter your License Key and Click the %1$Save Changes button%2$s"
 msgstr ""
 
 #: updater/updater-license-page.php:257
-#, php-format
 msgid "%1$sDemo%2$s"
 msgstr ""
 
 #: updater/updater-license-page.php:262
-#, php-format
 msgid "%1$sBuy Extension%2$s"
 msgstr ""
 
@@ -2283,7 +2727,6 @@ msgid "An error occurred, please try again."
 msgstr ""
 
 #: updater/updater-license-page.php:388
-#, php-format
 msgid "Your license key expired on %s."
 msgstr ""
 
@@ -2299,16 +2742,10 @@ msgstr ""
 msgid "Your license is not active for this URL."
 msgstr ""
 
-#: updater/updater-license-page.php:411
-#, php-format
-msgid "This appears to be an invalid license key for %s."
-msgstr ""
-
 #: updater/updater-license-page.php:416
 msgid "Your license key has reached its activation limit."
 msgstr ""
 
-#. Plugin URI of the plugin/theme
 #. Author URI of the plugin/theme
 msgid "https://www.slickremix.com/"
 msgstr ""
@@ -2318,8 +2755,8 @@ msgid ""
 "Create Beautiful Responsive Galleries in Minutes. Choose the number of "
 "columns, loadmore button, popup and more! Sell your Galleries or individual "
 "Images with WooCommerce, watermark them, zip galleries, create Albums, "
-"create Tags for Images and Galleries, search Galleries and Images with tags, "
-"and pagination in our premium version."
+"create Tags for Images and Galleries, search Galleries and Images with "
+"tags, and pagination in our premium version."
 msgstr ""
 
 #. Author of the plugin/theme
