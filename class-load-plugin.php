@@ -384,7 +384,7 @@ class Feed_Them_Gallery {
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/core-functions-class.php';
 
         // License handler
-        require_once FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/class-ftg-license-handler.php';
+        //require_once FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/class-ftg-license-handler.php';
 
         // Template functions
         include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/template-functions.php';
