@@ -30,6 +30,10 @@
 // Doing this to ensure any js or css changes are reloaded properly. Added to enqued css and js files throughout.
 define( 'FTG_CURRENT_VERSION', '1.3.4' );
 
+if ( ! defined( 'FTG_PLUGIN_FILE' ) )	{
+	define( 'FTG_PLUGIN_FILE', __FILE__ );
+}
+
 // Require file for plugin loading.
 require_once __DIR__ . '/class-load-plugin.php';
 

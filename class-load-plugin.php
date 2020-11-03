@@ -128,6 +128,9 @@ class Feed_Them_Gallery {
 	 */
 	public function add_actions_filters() {
 		register_activation_hook( __FILE__, array( $this, 'ftg_activate' ) );
+
+		add_action( 'plugins_loaded', array( self::$instance, 'load_textdomain' ) );
+
 		add_action( 'admin_notices', array( $this, 'ft_gallery_display_install_notice' ) );
 		add_action( 'admin_notices', array( $this, 'ft_gallery_display_update_notice' ) );
 		add_action( 'upgrader_process_complete', array( $this, 'ft_gallery_upgrade_completed', 10, 2 ) );
@@ -380,6 +383,9 @@ class Feed_Them_Gallery {
 		// Core Functions Class.
 		include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/core-functions-class.php';
 
+        // License handler
+        require_once FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/class-ftg-license-handler.php';
+
         // Template functions
         include FEED_THEM_GALLERY_PLUGIN_FOLDER_DIR . 'includes/template-functions.php';
 
@@ -455,10 +461,7 @@ class Feed_Them_Gallery {
 	 *
 	 * @since 1.0.0
 	 */
-	public function ft_gallery_action_init() {
-		// Localization.
-		load_plugin_textdomain( 'feed-them-gallery', false,  basename( dirname( __FILE__ ) ) . '/languages' );
-	}
+	public function ft_gallery_action_init() {}
 
 	/**
 	 * FT Gallery Required php Check
@@ -667,6 +670,26 @@ class Feed_Them_Gallery {
 			}
 		}
 	}
+
+	/**
+	 * Load the text domain for translations.
+	 *
+	 * @access	private
+	 * @since	1.0
+	 * @return	void
+	 */
+	public function load_textdomain()	{
+        // Set filter for plugin's languages directory.
+		$ftg_lang_dir  = dirname( plugin_basename( FTG_PLUGIN_FILE ) ) . '/languages/';
+		$ftg_lang_dir  = apply_filters( 'ftg_languages_directory', $kbs_lang_dir );
+
+		// Traditional WordPress plugin locale filter.
+        $locale = is_admin() && function_exists( 'get_user_locale' ) ? get_user_locale() : get_locale();
+        $locale = apply_filters( 'plugin_locale', $locale, 'feed-them-gallery' );
+
+        load_textdomain( 'feed-them-gallery', WP_LANG_DIR . '/feed-them-gallery/feed-them-gallery-' . $locale . '.mo' );
+        load_plugin_textdomain( 'feed-them-gallery', false, $ftg_lang_dir );
+	} // load_textdomain
 
 	/**
 	 * FT Gallery System Version
