@@ -254,11 +254,6 @@ class Setup_Functions {
 	public function ft_gallery_admin_css( $hook ) {
 		wp_register_style( 'ft_gallery_admin', plugins_url( 'feed-them-gallery/admin/css/admin.css' ), array(), FTG_CURRENT_VERSION );
 		wp_enqueue_style( 'ft_gallery_admin' );
-
-        // Settings scripts
-        if ( 'ft_gallery_page_ft-gallery-settings-page' == $hook )  {
-            
-        }
 	}
 
     /**
