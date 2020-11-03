@@ -681,7 +681,7 @@ class Feed_Them_Gallery {
 	public function load_textdomain()	{
         // Set filter for plugin's languages directory.
 		$ftg_lang_dir  = dirname( plugin_basename( FTG_PLUGIN_FILE ) ) . '/languages/';
-		$ftg_lang_dir  = apply_filters( 'ftg_languages_directory', $kbs_lang_dir );
+		$ftg_lang_dir  = apply_filters( 'ftg_languages_directory', $ftg_lang_dir );
 
 		// Traditional WordPress plugin locale filter.
         $locale = is_admin() && function_exists( 'get_user_locale' ) ? get_user_locale() : get_locale();
