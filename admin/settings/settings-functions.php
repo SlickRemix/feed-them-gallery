@@ -4,7 +4,7 @@
  *
  * @package     Feed them Gallery
  * @subpackage  Admin/Settings
- * @copyright   Copyright (c) 2020, Mike Howard
+ * @copyright   Copyright (c) 2020, SlickRemix
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.0
  */
@@ -489,8 +489,8 @@ function ftg_select_callback( $args ) {
 
 	$class = ftg_sanitize_html_class( $args['field_class'] );
 
-	if ( isset( $args['chosen'] ) ) {
-		$class .= ' ftg_select_chosen';
+	if ( isset( $args['select2'] ) ) {
+		$class .= ' ftg-select2';
 	}
 
 	$html = '<select id="ftg_settings[' . ftg_sanitize_key( $args['id'] ) . ']" name="ftg_settings[' . esc_attr( $args['id'] ) . ']' . $name_array . '" class="' . $class . '"' . $multiple . ' data-placeholder="' . esc_html( $placeholder ) . '" />';
@@ -668,6 +668,245 @@ function ftg_descriptive_text_callback( $args ) {
 
 	echo apply_filters( 'ftg_after_setting_output', $html, $args );
 } // ftg_descriptive_text_callback
+
+/**
+ * Registers the license field callback for Software Licensing
+ *
+ * @since	1.0
+ * @param	array	$args	Arguments passed by the setting
+ * @global	$ftg_options	Array of all the FTG options
+ * @return void
+ */
+if ( ! function_exists( 'ftg_license_key_callback' ) ) {
+	function ftg_license_key_callback( $args )	{
+
+		$ftg_option = ftg_get_option( $args['id'] );
+
+		$messages = array();
+		$license  = get_option( $args['options']['is_valid_license_option'] );
+
+		if ( $ftg_option )	{
+			$value = $ftg_option;
+		} else	{
+			$value = isset( $args['std'] ) ? $args['std'] : '';
+		}
+
+		if ( ! empty( $license ) && is_object( $license ) )	{
+
+			// activate_license 'invalid' on anything other than valid, so if there was an error capture it
+			if ( false === $license->success ) {
+
+				switch( $license->error ) {
+
+					case 'expired' :
+
+						$class = 'expired';
+						$messages[] = sprintf(
+							__( 'Your license key expired on %s. Please <a href="%s" target="_blank" title="Renew your license key">renew your license key</a>.', 'feed-them-gallery' ),
+							date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) ),
+							'https://slickremix.com/checkout/?edd_license_key=' . $value
+						);
+
+						$license_status = 'license-' . $class . '-notice';
+
+						break;
+
+					case 'revoked' :
+
+						$class = 'error';
+						$messages[] = sprintf(
+							__( 'Your license key has been disabled. Please <a href="%s" target="_blank">contact support</a> for more information.', 'feed-them-gallery' ),
+							'https://slickremix.com/support'
+						);
+
+						$license_status = 'license-' . $class . '-notice';
+
+						break;
+
+					case 'missing' :
+
+						$class = 'error';
+						$messages[] = sprintf(
+							__( 'Invalid license. Please <a href="%s" target="_blank" title="Visit account page">visit your account page</a> and verify it.', 'feed-them-gallery' ),
+							'https://slickremix.com/your-account'
+						);
+
+						$license_status = 'license-' . $class . '-notice';
+
+						break;
+
+					case 'invalid' :
+					case 'site_inactive' :
+
+						$class = 'error';
+						$messages[] = sprintf(
+							__( 'Your %s is not active for this URL. Please <a href="%s" target="_blank" title="Visit account page">visit your account page</a> to manage your license key URLs.', 'feed-them-gallery' ),
+							$args['name'],
+							'https://slickremix.com/your-account'
+						);
+
+						$license_status = 'license-' . $class . '-notice';
+
+						break;
+
+					case 'item_name_mismatch' :
+
+						$class = 'error';
+						$messages[] = sprintf( __( 'This appears to be an invalid license key for %s.', 'feed-them-gallery' ), $args['name'] );
+
+						$license_status = 'license-' . $class . '-notice';
+
+						break;
+
+					case 'no_activations_left':
+
+						$class = 'error';
+						$messages[] = sprintf( __( 'Your license key has reached its activation limit. <a href="%s">View possible upgrades</a> now.', 'feed-them-gallery' ), 'https://slickremix.com/your-account/' );
+
+						$license_status = 'license-' . $class . '-notice';
+
+						break;
+
+					case 'license_not_activable':
+
+						$class = 'error';
+						$messages[] = __( 'The key you entered belongs to a bundle, please use the product specific license key.', 'feed-them-gallery' );
+
+						$license_status = 'license-' . $class . '-notice';
+						break;
+
+					default :
+
+						$class = 'error';
+						$error = ! empty(  $license->error ) ?  $license->error : __( 'unknown_error', 'feed-them-gallery' );
+						$messages[] = sprintf( __( 'There was an error with this license key: %s. Please <a href="%s">contact our support team</a>.', 'feed-them-gallery' ), $error, 'https://slickremix.com/support' );
+
+						$license_status = 'license-' . $class . '-notice';
+						break;
+
+				}
+
+			} else {
+
+				switch( $license->license ) {
+
+					case 'valid' :
+					default:
+
+						$class = 'valid';
+
+						$now        = current_time( 'timestamp' );
+						$expiration = strtotime( $license->expires, current_time( 'timestamp' ) );
+
+						if( 'lifetime' === $license->expires ) {
+
+							$messages[] = __( 'License key never expires.', 'feed-them-gallery' );
+
+							$license_status = 'license-lifetime-notice';
+
+						} elseif( $expiration > $now && $expiration - $now < ( DAY_IN_SECONDS * 30 ) ) {
+
+							$messages[] = sprintf(
+								__( 'Your license key expires soon! It expires on %s. <a href="%s" target="_blank" title="Renew license">Renew your license key</a>.', 'feed-them-gallery' ),
+								date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) ),
+								'https://slickremix.com/checkout/?edd_license_key=' . $value
+							);
+
+							$license_status = 'license-expires-soon-notice';
+
+						} else {
+
+							$messages[] = sprintf(
+								__( 'Your license key expires on %s.', 'feed-them-gallery' ),
+								date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) )
+							);
+
+							$license_status = 'license-expiration-date-notice';
+
+						}
+
+						break;
+
+				}
+
+			}
+
+		} else	{
+			$class = 'empty';
+
+			$messages[] = sprintf(
+				__( 'To receive updates, please enter your valid %s license key.', 'feed-them-gallery' ),
+				$args['name']
+			);
+
+			$license_status = null;
+		}
+
+		$class .= ' ' . ftg_sanitize_html_class( $args['field_class'] );
+
+		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
+		$html = '<input type="text" class="' . sanitize_html_class( $size ) . '-text" id="ftg_settings[' . ftg_sanitize_key( $args['id'] ) . ']" name="ftg_settings[' . ftg_sanitize_key( $args['id'] ) . ']" value="' . esc_attr( $value ) . '"/>';
+
+		if ( ( is_object( $license ) && 'valid' == $license->license ) || 'valid' == $license ) {
+			$html .= '<input type="submit" class="button-secondary" name="' . $args['id'] . '_deactivate" value="' . __( 'Deactivate License',  'feed-them-gallery' ) . '"/>';
+		}
+
+		$html .= '<label for="ftg_settings[' . ftg_sanitize_key( $args['id'] ) . ']"> '  . wp_kses_post( $args['desc'] ) . '</label>';
+
+		if ( ! empty( $messages ) ) {
+			foreach( $messages as $message ) {
+
+				$html .= '<div class="ftg-license-data ftg-license-' . $class . ' ' . $license_status . '">';
+					$html .= '<p>' . $message . '</p>';
+				$html .= '</div>';
+
+			}
+		}
+
+		wp_nonce_field( ftg_sanitize_key( $args['id'] ) . '-nonce', ftg_sanitize_key( $args['id'] ) . '-nonce' );
+
+		echo $html;
+	}
+
+} // ftg_license_key_callback
+
+/**
+ * Registers the premium plugin field callback.
+ *
+ * @since	1.3.4
+ * @param	array	$args	Arguments passed by the setting
+ * @global	$ftg_options	Array of all the FTG options
+ * @return void
+ */
+if ( ! function_exists( 'ftg_premium_plugin_callback' ) ) {
+	function ftg_premium_plugin_callback( $args )	{
+        $data = $args['data'];
+        ob_start(); ?>
+
+        <div class="ftg-no-license-overlay">
+            <div class="ftg-no-license-button-wrap">
+                <?php printf(
+                    __('<a class="ftg-no-license-button-purchase-btn" href="%s" target="_blank">Demo</a>', 'feed-them-gallery'),
+                    esc_url( $data['demo_url'] )
+                ); ?>
+
+                <?php printf(
+                    __('<a class="ftg-no-license-button-demo-btn" href="%s" target="_blank">Buy Extension</a>', 'feed-them-gallery'),
+                    esc_url( $data['purchase_url'] )
+                );  ?>
+            </div>
+        </div>
+        <input id="no_license_key" name="no_license_key" type="text" placeholder="<?php _e( 'Enter your license key', 'feed-them-gallery' ); ?>" class="regular-text" value="">
+        <label class="description" for="no_license_key">
+            <div class="ftg-license-data ftg-license-error license-error-notice">
+                <p><?php _e( 'To receive update notifications, please enter your valid license key.', 'feed-them-gallery' ); ?></p>
+            </div>
+        </label>
+
+        <?php echo ob_get_clean();
+		
+	}
+} // ftg_premium_plugin_callback
 
 /**
  * Hook Callback
@@ -903,23 +1142,23 @@ function ftg_get_file_name_setting_options()    {
      * Arrays are option ID => example text
      */
     $naming_options = array(
-        __( 'Include Gallery Name', 'feed-the-gallery' ) => array(
+        __( 'Include Gallery Name', 'feed-them-gallery' ) => array(
             'attch_name_gallery_name'  => 'this-gallery-name',
             'attch_title_gallery_name' => __( 'This Gallery Name', 'feed-them-gallery' )
         ),
-        __( 'Include Gallery ID', 'feed-the-gallery' ) => array(
+        __( 'Include Gallery ID', 'feed-them-gallery' ) => array(
             'attch_name_post_id'       => '20311',
             'attch_title_post_id'      => '20311'
         ),
-        __( 'Include Date', 'feed-the-gallery' ) => array(
+        __( 'Include Date', 'feed-them-gallery' ) => array(
             'attch_name_date'          => '08-11-17',
             'attch_title_date'         => '08-11-17'
         ),
-        __( 'Include File Name', 'feed-the-gallery' ) => array(
+        __( 'Include File Name', 'feed-them-gallery' ) => array(
             'attch_name_file_name'     => 'my-image-name',
             'attch_title_file_name'    => __( 'My Image Name', 'feed-them-gallery' )
         ),
-        __( 'Include Attachment ID', 'feed-the-gallery' ) => array(
+        __( 'Include Attachment ID', 'feed-them-gallery' ) => array(
             'attch_name_attch_id'      => '1234',
             'attch_title_attch_id'     => '1234'
         )
@@ -938,94 +1177,94 @@ function ftg_get_timezone_setting_options()	{
 	date_default_timezone_set( ftg_get_option( 'timezone', 'America/Los_Angeles' ) );
 
 	$timezones = array(
-		'Pacific/Midway'                 => __( '(GMT-11:00) Midway Island, Samoa', 'feed-them-social' ),
-		'America/Adak'                   => __( '(GMT-10:00) Hawaii-Aleutian', 'feed-them-social' ),
-		'Etc/GMT+10'                     => __( '(GMT-10:00) Hawaii', 'feed-them-social' ),
-		'Pacific/Marquesas'              => __( '(GMT-09:30) Marquesas Islands', 'feed-them-social' ),
-		'Pacific/Gambier'                => __( '(GMT-09:00) Gambier Islands', 'feed-them-social' ),
-		'America/Anchorage'              => __( '(GMT-09:00) Alaska', 'feed-them-social' ),
-		'America/Anchorage'              => __( '(GMT-09:00) Gambier Islands', 'feed-them-social' ),
-		'America/Ensenada'               => __( '((GMT-08:00) Tijuana, Baja California', 'feed-them-social' ),
-		'Etc/GMT+8'                      => __( '(GMT-08:00) Pitcairn Islands', 'feed-them-social' ),
-		'America/Los_Angeles'            => __( '(GMT-08:00) Pacific Time (US & Canada)', 'feed-them-social' ),
-		'America/Denver'                 => __( '(GMT-07:00) Mountain Time (US & Canada)', 'feed-them-social' ),
-		'America/Chihuahua'              => __( '(GMT-07:00) Chihuahua, La Paz, Mazatlan', 'feed-them-social' ),
-		'America/Dawson_Creek'           => __( '(GMT-07:00) Arizona', 'feed-them-social' ),
-		'America/Belize'                 => __( '(GMT-06:00) Saskatchewan', 'feed-them-social' ),
-		'America/Cancun'                 => __( '(GMT-06:00) Guadalajara, Mexico City', 'feed-them-social' ),
-		'Chile/EasterIsland'             => __( '(GMT-06:00) Easter Island', 'feed-them-social' ),
-		'America/Chicago'                => __( '(GMT-06:00) Central Time (US & Canada)', 'feed-them-social' ),
-		'America/New_York'               => __( '(GMT-05:00) Eastern Time (US & Canada)', 'feed-them-social' ),
-		'America/Havana'                 => __( '(GMT-05:00) Cuba', 'feed-them-social' ),
-		'America/Bogota'                 => __( '(GMT-05:00) Bogota, Lima, Quito, Rio Branco', 'feed-them-social' ),
-		'America/Caracas'                => __( '(GMT-04:30) Caracas', 'feed-them-social' ),
-		'America/Santiago'               => __( '(GMT-04:00) Santiago', 'feed-them-social' ),
-		'America/La_Paz'                 => __( '(GMT-04:00) La Paz', 'feed-them-social' ),
-		'Atlantic/Stanley'               => __( '(GMT-04:00) Faukland Islands', 'feed-them-social' ),
-		'America/Goose_Bay'              => __( '(GMT-04:00) Atlantic Time (Goose Bay)', 'feed-them-social' ),
-		'America/Glace_Bay'              => __( '(GMT-04:00) Atlantic Time (Canada)', 'feed-them-social' ),
-		'America/St_Johns'               => __( '(GMT-03:30) Newfoundland', 'feed-them-social' ),
-		'America/Araguaina'              => __( '(GMT-03:00) UTC-3', 'feed-them-social' ),
-		'America/Montevideo'             => __( '(GMT-03:00) Montevideo', 'feed-them-social' ),
-		'America/Miquelon'               => __( '(GMT-03:00) Miquelon, St. Pierre', 'feed-them-social' ),
-		'America/Godthab'                => __( '(GMT-03:00) Greenland', 'feed-them-social' ),
-		'America/Argentina/Buenos_Aires' => __( '(GMT-03:00) Buenos Aires', 'feed-them-social' ),
-		'America/Sao_Paulo'              => __( '(GMT-03:00) Brasilia', 'feed-them-social' ),
-		'AAmerica/Noronha'               => __( '(GMT-02:00) Mid-Atlantic', 'feed-them-social' ),
-		'Atlantic/Cape_Verde'            => __( '(GMT-01:00) Cape Verde Is.', 'feed-them-social' ),
-		'Atlantic/Azores'                => __( '(GMT-01:00) Azores', 'feed-them-social' ),
-		'Europe/Belfast'                 => __( '(GMT) Greenwich Mean Time : Belfast', 'feed-them-social' ),
-		'Europe/Dublin'                  => __( '(GMT) Greenwich Mean Time : Dublin', 'feed-them-social' ),
-		'Europe/Lisbon'                  => __( 'GMT) Greenwich Mean Time : Lisbon', 'feed-them-social' ),
-		'Europe/London'                  => __( '(GMT) Greenwich Mean Time : London', 'feed-them-social' ),
-		'Africa/Abidjan'                 => __( '(GMT) Monrovia, Reykjavik', 'feed-them-social' ),
-		'Europe/Amsterdam'               => __( '(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna', 'feed-them-social' ),
-		'Europe/Belgrade'                => __( '(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague', 'feed-them-social' ),
-		'Africa/Algiers'                 => __( '(GMT+01:00) West Central Africa', 'feed-them-social' ),
-		'Africa/Windhoek'                => __( '(GMT+01:00) Windhoek', 'feed-them-social' ),
-		'Asia/Beirut'                    => __( 'GMT+02:00) Beirut', 'feed-them-social' ),
-		'Africa/Cairo'                   => __( '(GMT+02:00) Cairo', 'feed-them-social' ),
-		'Asia/Gaza'                      => __( '(GMT+02:00) Gaza', 'feed-them-social' ),
-		'Africa/Blantyre'                => __( '(GMT+02:00) Harare, Pretoria', 'feed-them-social' ),
-		'Asia/Jerusalem'                 => __( '(GMT+02:00) Jerusalem', 'feed-them-social' ),
-		'Europe/Minsk'                   => __( '(GMT+02:00) Minsk', 'feed-them-social' ),
-		'Asia/Damascus'                  => __( '(GMT+02:00) Syria', 'feed-them-social' ),
-		'Europe/Moscow'                  => __( '(GMT+03:00) Moscow, St. Petersburg, Volgograd', 'feed-them-social' ),
-		'Africa/Addis_Ababa'             => __( '(GMT+03:00) Nairobi', 'feed-them-social' ),
-		'Asia/Tehran'                    => __( '(GMT+03:30) Tehran', 'feed-them-social' ),
-		'Asia/Dubai'                     => __( '(GMT+04:00) Abu Dhabi, Muscat', 'feed-them-social' ),
-		'Asia/Yerevan'                   => __( '(GMT+04:00) Yerevan', 'feed-them-social' ),
-		'Asia/Kabul'                     => __( '(GMT+04:30) Kabul', 'feed-them-social' ),
-		'Asia/Yekaterinburg'             => __( '(GMT+05:00) Ekaterinburg', 'feed-them-social' ),
-		'Asia/Tashkent'                  => __( '(GMT+05:00) Tashkent', 'feed-them-social' ),
-		'Asia/Kolkata'                   => __( '(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi', 'feed-them-social' ),
-		'Asia/Katmandu'                  => __( '(GMT+05:45) Kathmandu', 'feed-them-social' ),
-		'Asia/Dhaka'                     => __( '(GMT+06:00) Astana, Dhaka', 'feed-them-social' ),
-		'Asia/Novosibirsk'               => __( '(GMT+06:00) Novosibirsk', 'feed-them-social' ),
-		'Asia/Rangoon'                   => __( '(GMT+06:30) Yangon (Rangoon)', 'feed-them-social' ),
-		'Asia/Bangkok'                   => __( 'GMT+07:00) Bangkok, Hanoi, Jakarta', 'feed-them-social' ),
-		'Asia/Krasnoyarsk'               => __( '(GMT+07:00) Krasnoyarsk', 'feed-them-social' ),
-		'Asia/Hong_Kong'                 => __( 'GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi', 'feed-them-social' ),
-		'Asia/Irkutsk'                   => __( '(GMT+08:00) Irkutsk, Ulaan Bataar', 'feed-them-social' ),
-		'Australia/Perth'                => __( '(GMT+08:00) Perth', 'feed-them-social' ),
-		'Australia/Eucla'                => __( '(GMT+08:45) Eucla', 'feed-them-social' ),
-		'Asia/Tokyo'                     => __( '(GMT+09:00) Osaka, Sapporo, Tokyo', 'feed-them-social' ),
-		'Asia/Seoul'                     => __( '(GMT+09:00) Seoul', 'feed-them-social' ),
-		'Asia/Yakutsk'                   => __( '(GMT+09:00) Yakutsk', 'feed-them-social' ),
-		'Australia/Darwin'               => __( '(GMT+09:30) Darwin', 'feed-them-social' ),
-		'Australia/Brisbane'             => __( '(GMT+10:00) Brisbane', 'feed-them-social' ),
-		'Australia/Hobart'               => __( '(GMT+10:00) Sydney', 'feed-them-social' ),
-		'Asia/Vladivostok'               => __( '(GMT+10:00) Vladivostok', 'feed-them-social' ),
-		'Australia/Lord_Howe'            => __( '(GMT+10:30) Lord Howe Island', 'feed-them-social' ),
-		'Etc/GMT-11'                     => __( '(GMT+11:00) Solomon Is., New Caledonia', 'feed-them-social' ),
-		'Asia/Magadan'                   => __( '(GMT+11:00) Magadan', 'feed-them-social' ),
-		'Pacific/Norfolk'                => __( '(GMT+11:30) Norfolk Island', 'feed-them-social' ),
-		'Asia/Anadyr'                    => __( '(GMT+12:00) Anadyr, Kamchatka', 'feed-them-social' ),
-		'Pacific/Auckland'               => __( '(GMT+12:00) Auckland, Wellington', 'feed-them-social' ),
-		'Etc/GMT-12'                     => __( '(GMT+12:00) Fiji, Kamchatka, Marshall Is.', 'feed-them-social' ),
-		'Pacific/Chatham'                => __( 'GMT+12:45) Chatham Islands', 'feed-them-social' ),
-		'Pacific/Tongatapu'              => __( '(GMT+13:00) Nuku\'alofa', 'feed-them-social' ),
-		'Pacific/Kiritimati'             => __( '(GMT+14:00) Kiritimati', 'feed-them-social' )
+		'Pacific/Midway'                 => __( '(GMT-11:00) Midway Island, Samoa', 'feed-them-gallery' ),
+		'America/Adak'                   => __( '(GMT-10:00) Hawaii-Aleutian', 'feed-them-gallery' ),
+		'Etc/GMT+10'                     => __( '(GMT-10:00) Hawaii', 'feed-them-gallery' ),
+		'Pacific/Marquesas'              => __( '(GMT-09:30) Marquesas Islands', 'feed-them-gallery' ),
+		'Pacific/Gambier'                => __( '(GMT-09:00) Gambier Islands', 'feed-them-gallery' ),
+		'America/Anchorage'              => __( '(GMT-09:00) Alaska', 'feed-them-gallery' ),
+		'America/Anchorage'              => __( '(GMT-09:00) Gambier Islands', 'feed-them-gallery' ),
+		'America/Ensenada'               => __( '((GMT-08:00) Tijuana, Baja California', 'feed-them-gallery' ),
+		'Etc/GMT+8'                      => __( '(GMT-08:00) Pitcairn Islands', 'feed-them-gallery' ),
+		'America/Los_Angeles'            => __( '(GMT-08:00) Pacific Time (US & Canada)', 'feed-them-gallery' ),
+		'America/Denver'                 => __( '(GMT-07:00) Mountain Time (US & Canada)', 'feed-them-gallery' ),
+		'America/Chihuahua'              => __( '(GMT-07:00) Chihuahua, La Paz, Mazatlan', 'feed-them-gallery' ),
+		'America/Dawson_Creek'           => __( '(GMT-07:00) Arizona', 'feed-them-gallery' ),
+		'America/Belize'                 => __( '(GMT-06:00) Saskatchewan', 'feed-them-gallery' ),
+		'America/Cancun'                 => __( '(GMT-06:00) Guadalajara, Mexico City', 'feed-them-gallery' ),
+		'Chile/EasterIsland'             => __( '(GMT-06:00) Easter Island', 'feed-them-gallery' ),
+		'America/Chicago'                => __( '(GMT-06:00) Central Time (US & Canada)', 'feed-them-gallery' ),
+		'America/New_York'               => __( '(GMT-05:00) Eastern Time (US & Canada)', 'feed-them-gallery' ),
+		'America/Havana'                 => __( '(GMT-05:00) Cuba', 'feed-them-gallery' ),
+		'America/Bogota'                 => __( '(GMT-05:00) Bogota, Lima, Quito, Rio Branco', 'feed-them-gallery' ),
+		'America/Caracas'                => __( '(GMT-04:30) Caracas', 'feed-them-gallery' ),
+		'America/Santiago'               => __( '(GMT-04:00) Santiago', 'feed-them-gallery' ),
+		'America/La_Paz'                 => __( '(GMT-04:00) La Paz', 'feed-them-gallery' ),
+		'Atlantic/Stanley'               => __( '(GMT-04:00) Faukland Islands', 'feed-them-gallery' ),
+		'America/Goose_Bay'              => __( '(GMT-04:00) Atlantic Time (Goose Bay)', 'feed-them-gallery' ),
+		'America/Glace_Bay'              => __( '(GMT-04:00) Atlantic Time (Canada)', 'feed-them-gallery' ),
+		'America/St_Johns'               => __( '(GMT-03:30) Newfoundland', 'feed-them-gallery' ),
+		'America/Araguaina'              => __( '(GMT-03:00) UTC-3', 'feed-them-gallery' ),
+		'America/Montevideo'             => __( '(GMT-03:00) Montevideo', 'feed-them-gallery' ),
+		'America/Miquelon'               => __( '(GMT-03:00) Miquelon, St. Pierre', 'feed-them-gallery' ),
+		'America/Godthab'                => __( '(GMT-03:00) Greenland', 'feed-them-gallery' ),
+		'America/Argentina/Buenos_Aires' => __( '(GMT-03:00) Buenos Aires', 'feed-them-gallery' ),
+		'America/Sao_Paulo'              => __( '(GMT-03:00) Brasilia', 'feed-them-gallery' ),
+		'AAmerica/Noronha'               => __( '(GMT-02:00) Mid-Atlantic', 'feed-them-gallery' ),
+		'Atlantic/Cape_Verde'            => __( '(GMT-01:00) Cape Verde Is.', 'feed-them-gallery' ),
+		'Atlantic/Azores'                => __( '(GMT-01:00) Azores', 'feed-them-gallery' ),
+		'Europe/Belfast'                 => __( '(GMT) Greenwich Mean Time : Belfast', 'feed-them-gallery' ),
+		'Europe/Dublin'                  => __( '(GMT) Greenwich Mean Time : Dublin', 'feed-them-gallery' ),
+		'Europe/Lisbon'                  => __( 'GMT) Greenwich Mean Time : Lisbon', 'feed-them-gallery' ),
+		'Europe/London'                  => __( '(GMT) Greenwich Mean Time : London', 'feed-them-gallery' ),
+		'Africa/Abidjan'                 => __( '(GMT) Monrovia, Reykjavik', 'feed-them-gallery' ),
+		'Europe/Amsterdam'               => __( '(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna', 'feed-them-gallery' ),
+		'Europe/Belgrade'                => __( '(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague', 'feed-them-gallery' ),
+		'Africa/Algiers'                 => __( '(GMT+01:00) West Central Africa', 'feed-them-gallery' ),
+		'Africa/Windhoek'                => __( '(GMT+01:00) Windhoek', 'feed-them-gallery' ),
+		'Asia/Beirut'                    => __( 'GMT+02:00) Beirut', 'feed-them-gallery' ),
+		'Africa/Cairo'                   => __( '(GMT+02:00) Cairo', 'feed-them-gallery' ),
+		'Asia/Gaza'                      => __( '(GMT+02:00) Gaza', 'feed-them-gallery' ),
+		'Africa/Blantyre'                => __( '(GMT+02:00) Harare, Pretoria', 'feed-them-gallery' ),
+		'Asia/Jerusalem'                 => __( '(GMT+02:00) Jerusalem', 'feed-them-gallery' ),
+		'Europe/Minsk'                   => __( '(GMT+02:00) Minsk', 'feed-them-gallery' ),
+		'Asia/Damascus'                  => __( '(GMT+02:00) Syria', 'feed-them-gallery' ),
+		'Europe/Moscow'                  => __( '(GMT+03:00) Moscow, St. Petersburg, Volgograd', 'feed-them-gallery' ),
+		'Africa/Addis_Ababa'             => __( '(GMT+03:00) Nairobi', 'feed-them-gallery' ),
+		'Asia/Tehran'                    => __( '(GMT+03:30) Tehran', 'feed-them-gallery' ),
+		'Asia/Dubai'                     => __( '(GMT+04:00) Abu Dhabi, Muscat', 'feed-them-gallery' ),
+		'Asia/Yerevan'                   => __( '(GMT+04:00) Yerevan', 'feed-them-gallery' ),
+		'Asia/Kabul'                     => __( '(GMT+04:30) Kabul', 'feed-them-gallery' ),
+		'Asia/Yekaterinburg'             => __( '(GMT+05:00) Ekaterinburg', 'feed-them-gallery' ),
+		'Asia/Tashkent'                  => __( '(GMT+05:00) Tashkent', 'feed-them-gallery' ),
+		'Asia/Kolkata'                   => __( '(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi', 'feed-them-gallery' ),
+		'Asia/Katmandu'                  => __( '(GMT+05:45) Kathmandu', 'feed-them-gallery' ),
+		'Asia/Dhaka'                     => __( '(GMT+06:00) Astana, Dhaka', 'feed-them-gallery' ),
+		'Asia/Novosibirsk'               => __( '(GMT+06:00) Novosibirsk', 'feed-them-gallery' ),
+		'Asia/Rangoon'                   => __( '(GMT+06:30) Yangon (Rangoon)', 'feed-them-gallery' ),
+		'Asia/Bangkok'                   => __( 'GMT+07:00) Bangkok, Hanoi, Jakarta', 'feed-them-gallery' ),
+		'Asia/Krasnoyarsk'               => __( '(GMT+07:00) Krasnoyarsk', 'feed-them-gallery' ),
+		'Asia/Hong_Kong'                 => __( 'GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi', 'feed-them-gallery' ),
+		'Asia/Irkutsk'                   => __( '(GMT+08:00) Irkutsk, Ulaan Bataar', 'feed-them-gallery' ),
+		'Australia/Perth'                => __( '(GMT+08:00) Perth', 'feed-them-gallery' ),
+		'Australia/Eucla'                => __( '(GMT+08:45) Eucla', 'feed-them-gallery' ),
+		'Asia/Tokyo'                     => __( '(GMT+09:00) Osaka, Sapporo, Tokyo', 'feed-them-gallery' ),
+		'Asia/Seoul'                     => __( '(GMT+09:00) Seoul', 'feed-them-gallery' ),
+		'Asia/Yakutsk'                   => __( '(GMT+09:00) Yakutsk', 'feed-them-gallery' ),
+		'Australia/Darwin'               => __( '(GMT+09:30) Darwin', 'feed-them-gallery' ),
+		'Australia/Brisbane'             => __( '(GMT+10:00) Brisbane', 'feed-them-gallery' ),
+		'Australia/Hobart'               => __( '(GMT+10:00) Sydney', 'feed-them-gallery' ),
+		'Asia/Vladivostok'               => __( '(GMT+10:00) Vladivostok', 'feed-them-gallery' ),
+		'Australia/Lord_Howe'            => __( '(GMT+10:30) Lord Howe Island', 'feed-them-gallery' ),
+		'Etc/GMT-11'                     => __( '(GMT+11:00) Solomon Is., New Caledonia', 'feed-them-gallery' ),
+		'Asia/Magadan'                   => __( '(GMT+11:00) Magadan', 'feed-them-gallery' ),
+		'Pacific/Norfolk'                => __( '(GMT+11:30) Norfolk Island', 'feed-them-gallery' ),
+		'Asia/Anadyr'                    => __( '(GMT+12:00) Anadyr, Kamchatka', 'feed-them-gallery' ),
+		'Pacific/Auckland'               => __( '(GMT+12:00) Auckland, Wellington', 'feed-them-gallery' ),
+		'Etc/GMT-12'                     => __( '(GMT+12:00) Fiji, Kamchatka, Marshall Is.', 'feed-them-gallery' ),
+		'Pacific/Chatham'                => __( 'GMT+12:45) Chatham Islands', 'feed-them-gallery' ),
+		'Pacific/Tongatapu'              => __( '(GMT+13:00) Nuku\'alofa', 'feed-them-gallery' ),
+		'Pacific/Kiritimati'             => __( '(GMT+14:00) Kiritimati', 'feed-them-gallery' )
 	);
 
 	return $timezones;

@@ -29,7 +29,7 @@ class Settings_Page {
 		$instance = new self();
 
 		// Add Actions and Filters.
-		$instance->add_actions_filters();
+		$instance->hooks();
 	}
 
 	/**
@@ -39,13 +39,16 @@ class Settings_Page {
 	 *
 	 * @since 1.0.0
 	 */
-	public function add_actions_filters() {
+	public function hooks() {
 
         // Add the settings menu page
         add_action( 'admin_menu', array( $this, 'add_submenu_page' ) );
 
         // Register Settings
         add_action( 'admin_init', array( $this, 'register_settings' ) );
+
+        // Premium extension license upsells
+        //add_filter( 'ftg_settings_licenses', array( $this, 'premium_extension_license_fields' ), 100 );
 
 		// Additional date format fields
 		add_filter( 'ftg_after_setting_output', array( $this, 'date_translate_fields' ), 10, 2 );
@@ -65,7 +68,7 @@ class Settings_Page {
 
         // Add authors note
         add_action( 'ftg_settings_bottom', array( $this, 'authors_note' ) );
-	}
+	} // hooks
 
 	/**
 	 * Settings_Page constructor.
@@ -364,15 +367,50 @@ class Settings_Page {
 							'name'    => __( 'Show Powered by Text?', 'feed-them-gallery' ),
 							'type'    => 'checkbox',
 							'std'     => 0,
-							'desc'    => __( 'If enabled, powered by text will appear in the popup. Awesome! Thanks so much for sharing', 'feed-them-gallery' )
+							'desc'    => __( 'If enabled, powered by text will appear in the popup. Awesome! Thanks so much for sharing.', 'feed-them-gallery' )
+						),
+                        'remove_on_uninstall' => array(
+							'id'      => 'remove_on_uninstall',
+							'name'    => __( 'Remove Data on Uninstall?', 'feed-them-gallery' ),
+							'type'    => 'checkbox',
+							'std'     => 0,
+							'desc'    => __( 'Check this box if you would like Feed Them Gallery and its extensions to completely remove all of its data when the plugin is deleted.', 'feed-them-gallery' )
 						)
                     )
                 )		
+            ),
+            /** License Settings */
+            'licenses' => apply_filters( 'ftg_settings_licenses',
+                array()
             )
         );
 
         return apply_filters( 'ftg_registered_settings', $ftg_settings );
     } // get_registered_settings
+
+    /**
+     * Adds premium plugins not yet installed to settings.
+     *
+     * @since   1.0
+     * @param   array   $settings   Array of license settings
+     * @return  array   Array of license settings
+     */
+    public function premium_extension_license_fields( $settings )   {
+        $plugins          = ft_gallery_premium_plugins();
+        $plugins          = apply_filters( 'ftg_unlicensed_plugins_settings', $plugins );
+        $license_settings = array();
+
+        foreach( $plugins as $plugin => $data ) {
+            $license_settings[] = array(
+                'id'   => "{$plugin}_license_upsell",
+                'name' => sprintf( __( '%1$s', 'feed-them-gallery' ), $data['title'] ),
+                'type' => 'premium_plugin',
+                'data' => $data
+            );
+        }
+
+		return array_merge( $settings, $license_settings );
+    } // premium_extension_license_fields
 
     /**
      * Retrieve settings tabs
@@ -394,6 +432,10 @@ class Settings_Page {
 
         if ( ! empty( $settings['extensions'] ) ) {
             $tabs['extensions'] = __( 'Extensions', 'feed-them-gallery' );
+        }
+
+        if ( ! empty( $settings['licenses'] ) ) {
+            $tabs['licenses'] = __( 'Licenses', 'feed-them-gallery' );
         }
 
         return apply_filters( 'ftg_settings_tabs', $tabs );
@@ -450,7 +492,8 @@ class Settings_Page {
             ) ),
             'extensions' => apply_filters( 'ftg_settings_sections_extensions', array(
                 'main'       => __( 'Main', 'feed-them-gallery' )
-            ) )
+            ) ),
+            'licenses'   => apply_filters( 'ftg_settings_sections_licenses', array() )
         );
 
         $sections = apply_filters( 'ftg_settings_sections', $sections );

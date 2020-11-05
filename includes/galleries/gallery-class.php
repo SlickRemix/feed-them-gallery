@@ -188,43 +188,46 @@ class Gallery {
 			add_action( 'post_submitbox_start', array( $this, 'ft_gallery_duplicate_post_add_duplicate_post_button' ) );
 
 		}
+
+        // Add support message to tabs
+        add_action( 'ft_gallery_after_metabox_settings_tab_fields', array( $this, 'support_message' ), 900, 2 );
 	}
 
-
 	/**
-	 * FT Gallery Tab Notice HTML
+	 * FT Gallery Tab Requires Extension Notice HTML
 	 *
 	 * Creates notice html for return
 	 *
-	 * @since 1.0.0
+	 * @param	string	$plugin	The plugin needed
+	 * @since 	1.0.0
 	 */
-	public function ft_gallery_tab_premium_msg() {
-		echo sprintf(
-			esc_html__( '%1$sPlease purchase, install and activate %2$sFeed Them Gallery Premium%3$s for these additional awesome features!%4$s', 'feed-them-gallery' ),
-			'<div class="ft-gallery-premium-mesg">',
-			'<a href="' . esc_url( 'https://www.slickremix.com/downloads/feed-them-gallery/' ) . '" target="_blank">',
-			'</a>',
-			'</div>'
-		);
-	}
+	public function requires_extension( $plugin ) {
+		$plugins  = ft_gallery_premium_plugins();
+		$plugin   = isset( $plugins[ $plugin ] ) ? $plugins[ $plugin ] : false;
 
+        if ( ! $plugin )    {
+            return;
+        }
 
-	/**
-	 * FT Gallery Tab Notice HTML
-	 *
-	 * Creates notice html for return
-	 *
-	 * @since 1.0.0
-	 */
-	public function ft_gallery_tab_clients_manager_msg() {
-		echo sprintf(
-			esc_html__( '%1$sPlease purchase, install and activate %2$sFeed Them Gallery Clients Manager%3$s for these additional awesome features!%4$s', 'feed-them-gallery' ),
-			'<div class="ft-gallery-premium-mesg">',
-			'<a href="' . esc_url( 'https://www.slickremix.com/downloads/feed-them-gallery-clients-manager/' ) . '" target="_blank">',
-			'</a>',
-			'</div>'
-		);
-	}
+		$title    = $plugin['title'];
+		$purchase = $plugin['purchase_url'];
+
+		ob_start();
+
+		?>
+		<div class="ft-gallery-premium-mesg">
+			<?php
+			printf(
+				__( 'Please purchase, install and activate <a href="%s" target"_blank">%s</a> for these additional awesome features!', 'feed-them-gallery' ),
+				esc_url( $purchase ),
+				$title
+			);
+		?>
+		</div>
+		<?php
+
+		echo ob_get_clean();
+	} // requires_extension
 
 	/**
 	 * FT Gallery Custom Thumb Sizes
@@ -550,7 +553,9 @@ class Gallery {
 			if ( 'title' === $key ) {
 				$new[ $key ] = $value;
 				// put the tags column before it.
+                $new = apply_filters( "ft_gallery_custom_edit_columns_before_gallery_thumb", $new );
 				$new['gallery_thumb']     = '';
+                $new = apply_filters( "ft_gallery_custom_edit_columns_before_gallery_shortcode", $new );
 				$new['gallery_shortcode'] = esc_html__( 'Gallery Shortcode', 'feed-them-gallery' );
 
 				if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
@@ -559,14 +564,16 @@ class Gallery {
 					$text = '';
 				}
 
+                $new = apply_filters( "ft_gallery_custom_edit_columns_before_gallery_zip", $new );
 				$new['gallery_zip'] = $text;
 
 			} else {
+                $new = apply_filters( "ft_gallery_custom_edit_columns_before_{$key}", $new );
 				$new[ $key ] = $value;
 			}
 		}
 
-		return $new;
+		return apply_filters( 'ft_gallery_custom_edit_columns', $new, $columns );
 	}
 
 	/**
@@ -862,73 +869,73 @@ class Gallery {
 				'post' => array( 'images', 'layout', 'colors', 'zips', 'woocommerce', 'watermark', 'pagination', 'tags', 'clients' ),
 			),
 			// Tabs List! The cont_func item is relative the the Function name for that tabs content. The array Keys for each tab are also relative to classes and ID on wraps of display_metabox_content function.
-			'tabs_list' => array(
+			'tabs_list' => apply_filters( 'ftg_metabox_tabs_list', array(
 				// Images Tab!
-				'images'      => array(
+				'images'      => apply_filters( 'ftg_metabox_tab_images', array(
 					'menu_li_class'      => 'tab1',
 					'menu_a_text'        => esc_html__( 'Images', 'feed-them-gallery' ),
 					'menu_a_class'       => 'account-tab-highlight',
 					'menu_aria_expanded' => 'true',
 					'cont_wrap_id'       => 'ftg-tab-content1',
 					'cont_func'          => 'tab_upload_content',
-				),
+				) ),
 				// Layout Tab!
-				'layout'      => array(
+				'layout'      => apply_filters( 'ftg_metabox_tab_layout', array(
 					'menu_li_class' => 'tab2',
 					'menu_a_text'   => esc_html__( 'Layout', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content2',
 					'cont_func'     => 'tab_layout_content',
-				),
+				) ),
 				// Colors Tab!
-				'colors'      => array(
+				'colors'      => apply_filters( 'ftg_metabox_tab_colors', array(
 					'menu_li_class' => 'tab3',
 					'menu_a_text'   => esc_html__( 'Colors', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content3',
 					'cont_func'     => 'tab_colors_content',
-				),
+				) ),
 				// Zips Tab!
-				'zips'        => array(
+				'zips'        => apply_filters( 'ftg_metabox_tab_zips', array(
 					'menu_li_class' => 'tab4',
 					'menu_a_text'   => esc_html__( 'Zips', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content6',
 					'cont_func'     => 'tab_zips_content',
-				),
+				) ),
 				// WooCommerce Tab!
-				'woocommerce' => array(
+				'woocommerce' => apply_filters( 'ftg_metabox_tab_woocmmerce', array(
 					'menu_li_class' => 'tab5',
 					'menu_a_text'   => esc_html__( 'WooCommerce', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content5',
 					'cont_func'     => 'tab_woocommerce_content',
-				),
+				) ),
 				// Watermark Tab!
-				'watermark'   => array(
+				'watermark'   => apply_filters( 'ftg_metabox_tab_watermark', array(
 					'menu_li_class' => 'tab6',
 					'menu_a_text'   => esc_html__( 'Watermark', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content7',
 					'cont_func'     => 'tab_watermark_content',
-				),
+				) ),
 				// Pagination Tab!
-				'pagination'  => array(
+				'pagination'  => apply_filters( 'ftg_metabox_tab_pagination', array(
 					'menu_li_class' => 'tab7',
 					'menu_a_text'   => esc_html__( 'Pagination', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content8',
 					'cont_func'     => 'tab_pagination_content',
-				),
+				) ),
 				// Tags Tab!
-				'tags'        => array(
+				'tags'        => apply_filters( 'ftg_metabox_tab_tags', array(
 					'menu_li_class' => 'tab8',
 					'menu_a_text'   => esc_html__( 'Tags', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content9',
 					'cont_func'     => 'tab_tags_content',
-				),
-				// Tags Tab!
-				'clients'     => array(
+				) ),
+				// Clients Tab!
+				'clients'     => apply_filters( 'ftg_metabox_tab_clients', array(
 					'menu_li_class' => 'tab9',
 					'menu_a_text'   => esc_html__( 'Clients', 'feed-them-gallery' ),
 					'cont_wrap_id'  => 'ftg-tab-content10',
-					'cont_func'     => 'tab_clients_content',
-				),
-			),
+					'cont_func'     => 'tab_premium_extension_required',
+				) ),
+			) ),
 		);
 
 		return $metabox_tabs_list;
@@ -1057,7 +1064,7 @@ class Gallery {
 					<div id="plupload-upload-ui" class="hide-if-no-js drag-drop">
 						<div id="drag-drop-area">
 							<div class="drag-drop-inside">
-								<p class="drag-drop-info"><?php esc_attr_e( 'Drop images here' ); ?></p>
+								<p class="drag-drop-info"><?php esc_attr_e( 'Drop images here', 'feed-them-gallery' ); ?></p>
 								<p><?php echo esc_html__( 'or', 'feed-them-gallery' ); ?></p>
 								<div class="drag-drop-buttons">
 									<input id="<?php echo esc_attr( $id ); ?>plupload-browse-button"
@@ -1292,14 +1299,14 @@ class Gallery {
 					<div class="gallery-edit-button-wrap">
 						<button disabled type="button"
 								class="ft-gallery-zip-gallery ft_gallery_download_button_icon button button-primary button-larg"
-								onclick="ft_gallery_create_zip('<?php esc_html_e( $object->ID ); ?>', 'no', 'yes', 'no')"><?php esc_html_e( 'Create Digital Gallery Product', 'feed-them-gallery' ); ?></button>
+								onclick="ft_gallery_create_zip('<?php echo esc_html( $object->ID ); ?>', 'no', 'yes', 'no')"><?php esc_html_e( 'Create Digital Gallery Product', 'feed-them-gallery' ); ?></button>
 						<a class="gallery-edit-button-question-two" href="javascript:;"
 						   rel="gallery-edit-question-digital-gallery-product">?</a>
 					</div>
 					<div class="gallery-edit-button-wrap">
 						<button type="button" disabled="disabled"
 								class="ft-gallery-create-woo ft_gallery_download_button_icon button button-primary button-larg"
-								onclick="ft_gallery_image_to_woo('<?php esc_html_e( $gallery_class->parent_post_id ); ?>')"><?php esc_html_e( 'Create individual Image Product(s)', 'feed-them-gallery' ); ?></button>
+								onclick="ft_gallery_image_to_woo('<?php echo esc_html( $gallery_class->parent_post_id ); ?>')"><?php esc_html_e( 'Create individual Image Product(s)', 'feed-them-gallery' ); ?></button>
 						<a class="gallery-edit-button-question-three" href="javascript:;"
 						   rel="gallery-edit-question-individual-image-product">?</a>
 					</div>
@@ -1317,7 +1324,7 @@ class Gallery {
 				);
 
 				if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
-					$gallery_class->ft_gallery_tab_premium_msg();
+					$gallery_class->requires_extension( 'feed_them_gallery_premium' );
 				}
 				?>
 			</div>
@@ -1326,7 +1333,7 @@ class Gallery {
 			?>
 			<div class="gallery-edit-question-message gallery-edit-question-digital-gallery-product"
 				 style="display: none;">
-				<h3><?php _e( 'Create Digital Gallery Zip and Turn into a Product' ); ?></h3>
+				<h3><?php _e( 'Create Digital Gallery Zip and Turn into a Product', 'feed-them-gallery' ); ?></h3>
 				<?php
 				echo sprintf(
 					esc_html__( 'This button will create a zip on the %1$sZIPs tab%2$s of all the full size images in this gallery and then create a WooCommerce Product out of that ZIP. You must have a "ZIP Model Product" selected on the %3$sWoocommerce tab%4$s for this to work.', 'feed-them-gallery' ),
@@ -1336,13 +1343,13 @@ class Gallery {
 					'</a>'
 				);
 				if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
-					$gallery_class->ft_gallery_tab_premium_msg();
+					$gallery_class->requires_extension( 'feed_them_gallery_premium' );
 				}
 				?>
 			</div>
 			<div class="gallery-edit-question-message gallery-edit-question-individual-image-product"
 				 style="display: none;">
-				<h3><?php esc_html_e( 'Create Products from Individual Images' ); ?></h3>
+				<h3><?php esc_html_e( 'Create Products from Individual Images', 'feed-them-gallery' ); ?></h3>
 				<?php
 				echo sprintf(
 					esc_html__( 'This button will create a WooCommerce Product for each of the images selected below. 1 image creates 1 WooCommerce product. You must have either the "Global Model Product" or "Smart Image Orientation Model Product" selected on the %1$sWoocommerce tab%2$s for this to work. You must click the Select All button or click any of the images in your gallery below before you click the Create Individual Image Products(s) button.', 'feed-them-gallery' ),
@@ -1350,7 +1357,7 @@ class Gallery {
 					'</a>'
 				);
 				if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
-					$gallery_class->ft_gallery_tab_premium_msg();
+					$gallery_class->requires_extension( 'feed_them_gallery_premium' );
 				}
 				?>
 			</div>
@@ -1722,7 +1729,7 @@ class Gallery {
 		$gallery_class = $params['this'];
 		// If Premium add Functionality
 		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
-			echo '<div class="ftg-section">' . $gallery_class->ft_gallery_tab_premium_msg() . '</div>';
+			echo '<div class="ftg-section">' . $gallery_class->requires_extension( 'feed_them_gallery_premium' ) . '</div>';
 
 		}
 		// If Premium add Functionality
@@ -1743,17 +1750,17 @@ class Gallery {
 					<li class="ft-gallery-zip zip-list-item-24527">
 						<div class="ft-gallery-file-name">
 							<a href="javascript:;"
-							   title="Download"><?php esc_html_e( 'Example-Gallery-Name' ); ?></a>
+							   title="Download"><?php esc_html_e( 'Example-Gallery-Name', 'feed-them-gallery' ); ?></a>
 						</div>
-						<div class="ft-gallery-file-time"><?php esc_html_e( 'October 14, 2020 - 2:45pm' ); ?></div>
+						<div class="ft-gallery-file-time"><?php esc_html_e( 'October 14, 2020 - 2:45pm', 'feed-them-gallery' ); ?></div>
 						<div class="ft-gallery-file-delete">
-							<a class="ft_gallery_delete_zip_button"><?php esc_html_e( 'Delete' ); ?></a>
+							<a class="ft_gallery_delete_zip_button"><?php esc_html_e( 'Delete', 'feed-them-gallery' ); ?></a>
 						</div>
 						<div class="ft-gallery-file-delete ft-gallery-file-zip-to-woo">
-							<a class="ft_gallery_create_woo_prod_button"><?php esc_html_e( 'Create product' ); ?></a>
+							<a class="ft_gallery_create_woo_prod_button"><?php esc_html_e( 'Create product', 'feed-them-gallery' ); ?></a>
 						</div>
 						<div class="ft-gallery-file-view">
-							<a class="ft_gallery_view_zip_button"><?php esc_html_e( 'View Contents' ); ?></a>
+							<a class="ft_gallery_view_zip_button"><?php esc_html_e( 'View Contents', 'feed-them-gallery' ); ?></a>
 						</div>
 						<ol class="zipcontents_list"></ol>
 					</li>
@@ -1786,7 +1793,7 @@ class Gallery {
 			?>
 
 			<div class="ftg-section">
-				<?php $gallery_class->ft_gallery_tab_premium_msg(); ?>
+				<?php $gallery_class->requires_extension( 'feed_them_gallery_premium' ); ?>
 			</div>
 		<?php } ?>
 
@@ -1957,7 +1964,7 @@ class Gallery {
 				jQuery('#ftg-tab-content5 select option').text('Premium Required');
 			</script>
 			<?php
-}
+		}
 	}
 
 	/**
@@ -1972,35 +1979,20 @@ class Gallery {
 		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 			?>
 			<div class="ftg-section">
-				<?php $gallery_class->ft_gallery_tab_premium_msg(); ?>
+				<?php $gallery_class->requires_extension( 'feed_them_gallery_premium' ); ?>
 			</div>
 			<?php
 		}
 		echo $gallery_class->metabox_settings_class->settings_html_form( $gallery_class->saved_settings_array['watermark'], null, $gallery_class->parent_post_id );
-		?>
-		<div class="clear"></div>
 
-		<div class="ft-gallery-note ft-gallery-note-footer">
-			<?php
-
-			// echo '<pre>';
-			// print_r( $gallery_class->metabox_settings_class->get_saved_settings_array( $gallery_class->parent_post_id ) );
-			// echo '</pre>';
-			echo sprintf(
-				esc_html__( 'Please %1$screate a ticket%2$s if you are experiencing trouble and one of our team members will be happy to assist you.', 'feed-them-gallery' ),
-				'<a href="' . esc_url( 'https://www.slickremix.com/my-account/#tab-support' ) . '" target="_blank">',
-				'</a>'
-			);
-			?>
-		</div>
-		<?php if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
+		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
 			<script>
 				jQuery('#ftg-tab-content7 input, #ftg-tab-content7 select').attr('disabled', 'disabled');
 				jQuery('#ftg-tab-content7 input').val('Premium Required');
 				jQuery('#ftg-tab-content7 select option').text('Premium Required');
 			</script>
 			<?php
-}
+		}
 	}
 
 	/**
@@ -2015,32 +2007,21 @@ class Gallery {
 		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 			?>
 			<div class="ftg-section">
-				<?php $gallery_class->ft_gallery_tab_premium_msg(); ?>
+				<?php $gallery_class->requires_extension( 'feed_them_gallery_premium' ); ?>
 			</div>
 			<?php
 		}
 		echo $gallery_class->metabox_settings_class->settings_html_form( $gallery_class->saved_settings_array['pagination'], null, $gallery_class->parent_post_id );
-		?>
 
-		<div class="clear"></div>
 
-		<div class="ft-gallery-note ft-gallery-note-footer">
-			<?php
-			echo sprintf(
-				esc_html__( 'Please %1$screate a ticket%2$s if you are experiencing trouble and one of our team members will be happy to assist you.', 'feed-them-gallery' ),
-				'<a href="' . esc_url( 'https://www.slickremix.com/my-account/#tab-support' ) . '" target="_blank">',
-				'</a>'
-			);
-			?>
-		</div>
-		<?php if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
+		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
 			<script>
 				jQuery('#ftg-tab-content8 input, #ftg-tab-content8 select').attr('disabled', 'disabled');
 				jQuery('#ftg-tab-content8 input').val('Premium Required');
 				jQuery('#ftg-tab-content8 select option').text('Premium Required');
 			</script>
 			<?php
-}
+		}
 	}
 
 	/**
@@ -2055,54 +2036,65 @@ class Gallery {
 		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 			?>
 			<div class="ftg-section">
-				<?php $gallery_class->ft_gallery_tab_premium_msg(); ?>
+				<?php $gallery_class->requires_extension( 'feed_them_gallery_premium' ); ?>
 			</div>
 			<?php
 		}
 		echo $gallery_class->metabox_settings_class->settings_html_form( $gallery_class->saved_settings_array['tags'], null, $gallery_class->parent_post_id );
-		?>
 
-		<div class="clear"></div>
-
-		<div class="ft-gallery-note ft-gallery-note-footer">
-			<?php
-			echo sprintf(
-				esc_html__( 'Please %1$screate a ticket%2$s if you are experiencing trouble and one of our team members will be happy to assist you.', 'feed-them-gallery' ),
-				'<a href="' . esc_url( 'https://www.slickremix.com/my-account/#tab-support' ) . '" target="_blank">',
-				'</a>'
-			);
-			?>
-		</div>
-		<?php if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
+		if ( ! is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) { ?>
 			<script>
 				jQuery('#ftg-tab-content9 input, #ftg-tab-content9 select').attr('disabled', 'disabled');
 				jQuery('#ftg-tab-content9 input').val('Premium Required');
 				jQuery('#ftg-tab-content9 select option').text('Premium Required');
 			</script>
 			<?php
-}
+		}
 	}
 
+    /**
+     * Premium plugin required tab content.
+     *
+     * @since   1.3.5
+     * @param   array   $params Array of tab option params
+     * @param   string  $tab    Current tab
+     * @return  void
+     */
+    public function tab_premium_extension_required( $params, $tab )   {
+        $gallery_class = $params['this'];
+        $plugin        = '';
+
+        if ( ! empty( $gallery_class->saved_settings_array[ $tab ]['required_prem_plugin'] ) )  {
+            $plugin = $gallery_class->saved_settings_array[ $tab ]['required_prem_plugin'];
+            ?>
+            <div class="ftg-section">
+                <?php $gallery_class->requires_extension( $plugin ); ?>
+            </div>
+            <?php
+        }
+
+        echo $gallery_class->metabox_settings_class->settings_html_form(
+			$gallery_class->saved_settings_array[ $tab ],
+			null,
+			$gallery_class->parent_post_id
+		);
+
+    } // tab_premium_extension_required
 
 	/**
-	 * Tab Clients Content
+	 * Displays the create a ticket message.
 	 *
-	 * Outputs Clients tab content for metabox.
-	 *
-	 * @since 1.0.0
+	 * @since	1.3.5
+     * @param   array   $params Array of tab option params
+     * @param   string  $tab    Current tab
+	 * @return	void
 	 */
-	public function tab_clients_content( $params ) {
-		$gallery_class = $params['this'];
-		if ( ! is_plugin_active( 'feed-them-gallery-clients-manager/feed-them-gallery-clients-manager.php' ) ) {
-			?>
-			<div class="ftg-section">
-				<?php $gallery_class->ft_gallery_tab_clients_manager_msg(); ?>
-			</div>
-			<?php
-		}
-		echo $gallery_class->metabox_settings_class->settings_html_form( $gallery_class->saved_settings_array['clients'], null, $gallery_class->parent_post_id );
+	public function support_message( $params, $tab )	{
+        $gallery_class = $params['this'];
+        if ( empty( $gallery_class->saved_settings_array[ $tab ]['required_prem_plugin'] ) )    {
+            return;
+        }
 		?>
-
 		<div class="clear"></div>
 
 		<div class="ft-gallery-note ft-gallery-note-footer">
@@ -2114,15 +2106,8 @@ class Gallery {
 			);
 			?>
 		</div>
-		<?php if ( ! is_plugin_active( 'feed-them-gallery-clients-manager/feed-them-gallery-clients-manager.php' ) ) { ?>
-			<script>
-				jQuery('#ftg-tab-content10 input, #ftg-tab-content10 select').attr('disabled', 'disabled');
-				jQuery('#ftg-tab-content10 input').val('Clients Manager Required');
-				jQuery('#ftg-tab-content10 select option').text('Clients Manager Required');
-			</script>
-			<?php
-}
-	}
+		<?php
+	} // support_message
 
 	/**
 	 * FT Gallery Uploader Action

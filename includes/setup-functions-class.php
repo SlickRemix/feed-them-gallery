@@ -95,6 +95,25 @@ class Setup_Functions {
      * @return  void
      */
     public function show_notices()   {
+        $notices = array(
+			'updated' => array(),
+			'error'   => array(),
+		);
+
+        $notices = apply_filters( 'ftg_admin_notices', $notices );
+
+        if ( count( $notices['updated'] ) > 0 ) {
+			foreach( $notices['updated'] as $notice => $message ) {
+				add_settings_error( 'ftg-notices', $notice, $message, 'updated' );
+			}
+		}
+
+		if ( count( $notices['error'] ) > 0 ) {
+			foreach( $notices['error'] as $notice => $message ) {
+				add_settings_error( 'ftg-notices', $notice, $message, 'error' );
+			}
+		}
+
         settings_errors( 'ftg-notices' );
     } // show_notices
 
@@ -235,11 +254,6 @@ class Setup_Functions {
 	public function ft_gallery_admin_css( $hook ) {
 		wp_register_style( 'ft_gallery_admin', plugins_url( 'feed-them-gallery/admin/css/admin.css' ), array(), FTG_CURRENT_VERSION );
 		wp_enqueue_style( 'ft_gallery_admin' );
-
-        // Settings scripts
-        if ( 'ft_gallery_page_ft-gallery-settings-page' == $hook )  {
-            
-        }
 	}
 
     /**
@@ -374,7 +388,7 @@ class Setup_Functions {
 		$wp_admin_bar->add_menu(
 			array(
 				'id'    => 'ft_gallery_admin_bar',
-				'title' => esc_html__( 'Feed Them Gallery', 'ft-gallery' ),
+				'title' => esc_html__( 'Feed Them Gallery', 'feed-them-gallery' ),
 				'href'  => false,
 			)
 		);
@@ -383,7 +397,7 @@ class Setup_Functions {
 			array(
 				'id'     => 'ft_gallery_admin_bar_view_galleries',
 				'parent' => 'ft_gallery_admin_bar',
-				'title'  => esc_html__( 'Galleries ', 'ft-gallery' ),
+				'title'  => esc_html__( 'Galleries ', 'feed-them-gallery' ),
 				'href'   => admin_url( 'edit.php?post_type=ft_gallery' ),
 			)
 		);
@@ -392,7 +406,7 @@ class Setup_Functions {
 			array(
 				'id'     => 'ft_gallery_admin_bar_new_gallery',
 				'parent' => 'ft_gallery_admin_bar',
-				'title'  => esc_html__( 'Add Gallery ', 'ft-gallery' ),
+				'title'  => esc_html__( 'Add Gallery ', 'feed-them-gallery' ),
 				'href'   => admin_url( 'post-new.php?post_type=ft_gallery' ),
 			)
 		);
@@ -401,7 +415,7 @@ class Setup_Functions {
 			array(
 				'id'     => 'ft_gallery_admin_bar_settings',
 				'parent' => 'ft_gallery_admin_bar',
-				'title'  => esc_html__( 'Settings', 'ft-gallery' ),
+				'title'  => esc_html__( 'Settings', 'feed-them-gallery' ),
 				'href'   => admin_url( 'edit.php?post_type=ft_gallery&page=ft-gallery-settings-page' ),
 			)
 		);
@@ -411,7 +425,7 @@ class Setup_Functions {
 			array(
 				'id'     => 'ft_gallery_admin_bar_system_info',
 				'parent' => 'ft_gallery_admin_bar',
-				'title'  => esc_html__( 'System Info', 'ft-gallery' ),
+				'title'  => esc_html__( 'System Info', 'feed-them-gallery' ),
 				'href'   => admin_url( 'edit.php?post_type=ft_gallery&page=ft-gallery-system-info-submenu-page' ),
 			)
 		);
@@ -421,7 +435,7 @@ class Setup_Functions {
 				array(
 					'id'     => 'ft_gallery_admin_bar_plugin_license',
 					'parent' => 'ft_gallery_admin_bar',
-					'title'  => esc_html__( 'Plugin License', 'ft-gallery' ),
+					'title'  => esc_html__( 'Plugin License', 'feed-them-gallery' ),
 					'href'   => admin_url( 'edit.php?post_type=ft_gallery&page=ft-gallery-license-page' ),
 				)
 			);

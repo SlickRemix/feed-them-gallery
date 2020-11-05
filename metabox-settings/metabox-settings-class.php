@@ -217,14 +217,32 @@ class Metabox_Settings {
 				'dgd_strings',
 				array(
 					'panel' => array(
-						'title'  => __( 'Upload Images for Feed Them Gallery' ),
-						'button' => __( 'Save and Close Popup' ),
+						'title'  => __( 'Upload Images for Feed Them Gallery', 'feed-them-gallery' ),
+						'button' => __( 'Save and Close Popup', 'feed-them-gallery' ),
 					),
 				)
 			);
 
 			// Enqueue Metabox JS.
 			wp_enqueue_script( 'slick-metabox-js' );
+
+			// Register Select2 JS/CSS
+			wp_register_style(
+				'select2',
+				plugins_url( 'feed-them-gallery/assets/vendors/select2/css/select2.min.css' ),
+				array(),
+				FTG_CURRENT_VERSION
+			);
+
+			wp_register_script(
+				'select2',
+				plugins_url( 'feed-them-gallery/assets/vendors/select2/js/select2.min.js' ),
+				array(),
+				FTG_CURRENT_VERSION
+			);
+
+			wp_enqueue_style( 'select2' );
+			wp_enqueue_script( 'select2' );
 
 			// Register Metabox Tabs JS.
 			wp_register_script( 'slick-metabox-tabs', plugins_url( 'feed-them-gallery/metabox-settings/js/metabox-tabs.js' ), array(), FTG_CURRENT_VERSION, true );
@@ -235,8 +253,8 @@ class Metabox_Settings {
 				'ftg_mb_tabs',
 				array(
 					'submit_msgs' => array(
-						'saving_msg'  => __( 'Saving Options' ),
-						'success_msg' => __( 'Settings Saved Successfully' ),
+						'saving_msg'  => __( 'Saving Options', 'feed-them-gallery' ),
+						'success_msg' => __( 'Settings Saved Successfully', 'feed-them-gallery' ),
 					),
 				)
 			);
@@ -527,8 +545,9 @@ class Metabox_Settings {
 						$this->metabox_tabs_menu( $current_info, $tabs_list ),
 						array(
 							'a'      => array(
-								'href'  => array(),
-								'title' => array(),
+								'href'   => array(),
+								'title'  => array(),
+                                'target' => array(),
 							),
 							'br'     => array(),
 							'em'     => array(),
@@ -558,7 +577,10 @@ class Metabox_Settings {
 										">
 														<?php
 														// call_user_func(array(feed_them_gallery()->gallery, $tab_item['cont_func']), $params).
-														call_user_func( array( $this->current_this, $tab_item['cont_func'] ), $params );
+                                                        $callback = isset( $tab_item['callback'] ) ? $tab_item['callback'] : array( $this->current_this, $tab_item['cont_func'] );
+
+														call_user_func( $callback, $params, $tab_key );
+                                                        do_action( 'ft_gallery_after_metabox_settings_tab_fields', $params, $tab_key );
 														?>
 													</div> <!-- #tab-content -->
 
@@ -606,7 +628,7 @@ class Metabox_Settings {
 		// Get Old Settings Array if set.
 		$old_settings = true == $this->is_page ? $old_settings_page : $old_settings_post;
 
-		$prem_required_plugins = $this->core_functions_class->ft_gallery_required_plugins();
+		$prem_required_plugins = ft_gallery_premium_plugins();
 
 		$section_required_prem_plugin = ! isset( $section_info['required_prem_plugin'] ) || isset( $section_info['required_prem_plugin'] ) && is_plugin_active( $prem_required_plugins[ $section_info['required_prem_plugin'] ]['plugin_url'] ) ? 'active' : '';
 
@@ -661,9 +683,10 @@ class Metabox_Settings {
 
 				// Set Option ID. Use Prefix?
 				// $option_id = isset( $this->option_prefix ) ? $this->option_prefix . $option['id'] : $option['id'];.
-				$option_id = $option['id'];
+				$option_id     = isset( $option['id'] ) ? $option['id'] : '';
+                $default_value = isset( $option['default_value'] ) ? $option['default_value'] : '';
 
-				$final_value = isset( $old_settings[ $option_name ] ) && ! empty( $old_settings[ $option_name ] ) ? $old_settings[ $option_name ] : $option['default_value'];
+				$final_value = isset( $old_settings[ $option_name ] ) && ! empty( $old_settings[ $option_name ] ) ? $old_settings[ $option_name ] : $default_value;
 
 				$default_option_types = array( 'input', 'select', 'checkbox' );
 				$option_type          = $option['option_type'];
@@ -686,10 +709,14 @@ class Metabox_Settings {
 					switch ( $option['option_type'] ) {
 						// Input.
 						case 'input':
-                            $disabled = isset( $section_required_prem_plugin ) && 'active' !== $section_required_prem_plugin ? ' disabled' : '';
+							$disabled = ! empty( $option['disabled'] ) ? true : false;
+
+							if ( ! $disabled )	{
+								$disabled = isset( $section_required_prem_plugin ) && 'active' !== $section_required_prem_plugin ? true : false;
+							}
 
 							$output .= sprintf(
-                                '<input type="%s" name="%s" id="%s" class="feed-them-gallery-admin-input%s" placeholder="%s" value="%s" %s/>',
+                                '<input type="%s" name="%s" id="%s" class="feed-them-gallery-admin-input%s" placeholder="%s" value="%s"%s%s/>',
                                 $option['type'],
                                 $option_name,
                                 $option_id,
@@ -697,27 +724,29 @@ class Metabox_Settings {
                                 isset( $option['placeholder'] ) ? $option['placeholder'] : '',
                                 $final_value,
                                 isset( $option['autocomplete'] ) ? ' autocomplete="' . ' ' . $option['autocomplete'] : '',
-                                $disabled
+                                $disabled ? ' disabled="disabled"' : ''
                             );
 							break;
 
 						// Select.
 						case 'select':
 						case 'select_multi':
-							$disabled = '';
 							$multiple = '';
-							if ( isset( $section_required_prem_plugin ) && 'active' !== $section_required_prem_plugin )	{
-								$disabled = ' disabled';
+							$disabled = ! empty( $option['disabled'] ) ? true : false;
+
+							if ( ! $disabled )	{
+								$disabled = isset( $section_required_prem_plugin ) && 'active' !== $section_required_prem_plugin ? true : false;
 							}
 							if ( 'select_multi' == $option['option_type'] )	{
 								$multiple    = ' multiple';
                                 $option_name = $option_name . '[]';
 							}
 							$output .= sprintf(
-								'<select %s name="%s" id="%s" class="feed-them-gallery-admin-input"%s>',
-								$disabled,
+								'<select %s name="%s" id="%s" class="feed-them-gallery-admin-input%s"%s>',
+								$disabled ? ' disabled="disabled"' : '',
 								$option_name,
 								$option_id,
+								isset( $option['class'] ) ? ' ' . $option['class'] : '',
 								$multiple
 							);
 							$i        = 0;
@@ -741,6 +770,12 @@ class Metabox_Settings {
 								$i++;
 							}
 							$output .= '</select>';
+                            
+							break;
+
+						// Clients drop down list
+						case 'client_drop':
+							$output .= apply_filters( 'ftg_client_drop_metabox_field', '', $option, $current_post_id );
 							break;
 
 						// Checkbox.
@@ -781,13 +816,11 @@ class Metabox_Settings {
 						<span class="description">' . $option['desc'] . '</span>';
 						break;
 						*/
-
 					}
 				}
 
 				$output .= '<div class="clear"></div>';
 				$output .= '</div><!--/feed-them-gallery-admin-input-wrap-->';
-
 				$output .= isset( $option['outer_wrap_class'] ) || isset( $option['outer_wrap_display'] ) ? '</div>' : '';
 
 				// Sub option output END?
@@ -806,29 +839,34 @@ class Metabox_Settings {
 		}
 
 		$output .= '</div> <!--/Section Wrap Class END -->';
+        $output = apply_filters( 'ftg_cm_after_metabox_settings_field', $output, $option_type, $option_name );
 
 		return wp_kses(
 			$output,
 			array(
 				'a'      => array(
-					'href'  => array(),
-					'title' => array(),
-					'class' => array(),
+					'href'         => array(),
+					'title'        => array(),
+					'class'        => array(),
+                    'id'           => array(),
+					'data-user-id' => array(),
+                    'target'       => array()
 				),
 				'div'    => array(
-					'class' => array(),
-					'id'    => array(),
-					'style' => array(),
+					'class'    => array(),
+					'id'       => array(),
+					'style'    => array()
 				),
 				'select' => array(
-					'name'  => array(),
-					'class' => array(),
-					'id'    => array(),
+					'name'     => array(),
+					'class'    => array(),
+					'id'       => array(),
                     'multiple' => array(),
+					'disabled' => array()
 				),
 				'option' => array(
 					'value'    => array(),
-					'selected' => array(),
+					'selected' => array()
 				),
 				'input'  => array(
 					'value'       => array(),
@@ -838,14 +876,34 @@ class Metabox_Settings {
 					'placeholder' => array(),
 					'name'        => array(),
 					'checked'     => array(),
+					'disabled'    => array()
 				),
 				'h3'     => array(
 					'class' => array(),
 				),
+                'p'      => array(
+                    'class'    => array(),
+					'id'       => array(),
+					'style'    => array()
+                ),
 				'br'     => array(),
 				'em'     => array(),
 				'strong' => array(),
 				'small'  => array(),
+                'form'   => array(
+                    'name'   => array(),
+                    'action' => array(),
+                    'method' => array(),
+                    'id'     => array()
+                ),
+				'table'  => array(
+					'class' => array()
+				),
+				'tr'     => array(),
+				'th'     => array(),
+				'td'     => array(
+					'class' => array()
+				)
 			)
 		);
 	}

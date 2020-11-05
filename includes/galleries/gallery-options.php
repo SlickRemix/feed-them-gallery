@@ -53,6 +53,7 @@ class Gallery_Options {
 		$instance->woocommerce_extra_options();
 		$instance->pagination_options();
 		$instance->tags_options();
+		$instance->clients_options();
 
 		$instance->all_options = apply_filters( 'ftg_gallery_options', $instance->all_options );
 
@@ -1046,7 +1047,7 @@ class Gallery_Options {
 	public function woocommerce_options() {
 
 		$this->all_options['woocommerce'] = array(
-			// required_prem_plugin must match the array key returned in ft_gallery_required_plugins function.
+			// required_prem_plugin must match the array key returned in ft_gallery_premium_plugins function.
 			'required_prem_plugin' => 'feed_them_gallery_premium',
 			'input_wrap_class'     => 'ft-woocommerce-styles',
 			'section_attr_key'     => 'woocommerce_',
@@ -1331,7 +1332,7 @@ class Gallery_Options {
 
 		$this->all_options['woocommerce_exta'] = array(
 			'main_options' => array(
-				// required_prem_plugin must match the array key returned in ft_gallery_required_plugins function.
+				// required_prem_plugin must match the array key returned in ft_gallery_premium_plugins function.
 				'required_prem_plugin' => 'feed_them_gallery_premium',
 				// ******************************************
 				// Images to Products
@@ -1389,7 +1390,7 @@ class Gallery_Options {
 	 */
 	public function watermark_options() {
 		$this->all_options['watermark'] = array(
-			// required_prem_plugin must match the array key returned in ft_gallery_required_plugins function.
+			// required_prem_plugin must match the array key returned in ft_gallery_premium_plugins function.
 			'required_prem_plugin' => 'feed_them_gallery_premium',
 			'section_attr_key'     => 'facebook_',
 			'section_title'        => esc_html__( 'Watermark Options', 'feed-them-gallery' ),
@@ -2300,4 +2301,43 @@ class Gallery_Options {
 
 		return $this->all_options['tags'];
 	} //END TAGS OPTIONS
+
+	/**
+	 * Clients Options.
+	 *
+	 * @since	1.0
+	 * @return	array	Array of clients options
+	 */
+	public function clients_options()	{
+		$this->all_options['clients'] = array(
+			'required_prem_plugin' => 'feed_them_gallery_clients_manager',
+			'section_attr_key'     => 'facebook_',
+			'section_title'        => esc_html__( 'Client Options', 'feed-them-gallery' ),
+			'section_wrap_class'   => 'ftg-section-options',
+			// Form Info
+			'form_wrap_classes'    => 'fb-page-shortcode-form',
+			'form_wrap_id'         => 'fts-fb-page-form',
+            'menu_li_class'        => 'tab9',
+            'menu_a_text'          => esc_html__( 'Clients', 'feed-them-gallery' ),
+            'cont_wrap_id'         => 'ftg-tab-content10',
+            'cont_func'            => 'premium_extension_required',
+			'main_options'         => array(
+
+				// ******************************************
+				// Gallery Clients Options
+				// ******************************************
+				array(
+					'option_type'   => 'input',
+					'label'         => esc_html__( 'Gallery Clients', 'feed-them-gallery' ),
+					'type'          => 'text',
+					'id'            => 'ft-gallery-show-clients',
+					'name'          => 'ft_gallery_show_clients',
+					'default_value' => __( 'Clients Manager Required', 'feed-them-gallery' ),
+					'disabled'      => true
+				)
+			)
+        );
+
+		return $this->all_options['clients'];
+	}
 }

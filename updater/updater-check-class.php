@@ -67,7 +67,7 @@ class updater_check_class {
         ?>
 
         <div class="error notice">
-            <p><?php _e($this->plugin_name . ' needs a valid License Key! <a href="edit.php?post_type=ft_gallery&page=ft-gallery-license-page">Click here to add one</a> or you won\'t recieve updates. - <a href="https://www.slickremix.com/my-account/" target="_blank">You can get License Key Here.</a>', 'feed-them-social'); ?></p>
+            <p><?php _e($this->plugin_name . ' needs a valid License Key! <a href="edit.php?post_type=ft_gallery&page=ft-gallery-license-page">Click here to add one</a> or you won\'t recieve updates. - <a href="https://www.slickremix.com/my-account/" target="_blank">You can get License Key Here.</a>', 'feed-them-gallery'); ?></p>
         </div>
 
         <?php
@@ -82,7 +82,7 @@ class updater_check_class {
         ?>
 
         <div class="error notice">
-            <p><?php _e($this->plugin_name . ' - Your License Key is not active, expired, or is invalid. <a href="edit.php?post_type=ft_gallery&page=ft-gallery-license-page">Click here to add one</a> or you won\'t recieve updates. - <a href="https://www.slickremix.com/my-account/" target="_blank">You can get License Key Here.</a>', 'feed-them-social'); ?></p>
+            <p><?php _e($this->plugin_name . ' - Your License Key is not active, expired, or is invalid. <a href="edit.php?post_type=ft_gallery&page=ft-gallery-license-page">Click here to add one</a> or you won\'t recieve updates. - <a href="https://www.slickremix.com/my-account/" target="_blank">You can get License Key Here.</a>', 'feed-them-gallery'); ?></p>
         </div>
 
         <?php
@@ -256,7 +256,7 @@ class updater_check_class {
 
             if (empty($version_info->download_link)) {
                 printf(
-                    __('There is a new version of %1$s available. %2$sView version %3$s details%4$s.', 'feed-them-social'),
+                    __('There is a new version of %1$s available. %2$sView version %3$s details%4$s.', 'feed-them-gallery'),
                     esc_html($version_info->name),
                     '<a target="_blank" class="thickbox" href="' . esc_url($changelog_link) . '">',
                     esc_html($version_info->new_version),
@@ -264,7 +264,7 @@ class updater_check_class {
                 );
             } else {
                 printf(
-                    __('There is a new version of %1$s available. %2$sView version %3$s details%4$s or %5$supdate now%6$s.', 'feed-them-social'),
+                    __('There is a new version of %1$s available. %2$sView version %3$s details%4$s or %5$supdate now%6$s.', 'feed-them-gallery'),
                     esc_html($version_info->name),
                     '<a target="_blank" class="thickbox" href="' . esc_url($changelog_link) . '">',
                     esc_html($version_info->new_version),
@@ -422,7 +422,7 @@ class updater_check_class {
         }
 
         if (!current_user_can('update_plugins')) {
-            wp_die(__('You do not have permission to install plugin updates', 'feed-them-social'), __('Error', 'feed-them-social'), array('response' => 403));
+            wp_die(__('You do not have permission to install plugin updates', 'feed-them-gallery'), __('Error', 'feed-them-gallery'), array('response' => 403));
         }
 
         $data = $edd_plugin_data[$_REQUEST['slug']];

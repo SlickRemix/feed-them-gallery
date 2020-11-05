@@ -1,9 +1,9 @@
 === Feed Them Gallery ===
-Contributors: slickremix, slickchris
+Contributors: slickremix, slickchris, mikeyhoward1977
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
-Tested up to: 5.5
-Stable tag: 1.3.3
+Tested up to: 5.5.3
+Stable tag: 1.3.4
 License: GPLv2 or later
 
 Photo Gallery creation made easy. Sell images with Auto Create Product feature for WooCommerce. Watermarking, Lightbox Popup, ZIP'ing, Tags and more!
@@ -165,6 +165,28 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.3.4 Thursday, November 5th, 2020 =
+* NOTE: Most of the changes below are for the launch of the Client Management extension.
+* REMOVE: calls to `is_plugin_action`
+* ADDED: Single method for premium plugin purchase notice
+* ADDED: generic `premium_extension_required` method
+* ADDED: `ft_gallery_after_metabox_settings_tab_fields` action
+* ADDED: filters to the metabox tabs
+* ADDED: Select field for metabox settings
+* UPDATED: Use single function for premium plugin details
+* UPDATED: html entities
+* ADDED: filtering of admin notices
+* ADDED: uninstall procedure
+* ADDED: filters to gallery post columns
+* ADDED: template functionality
+* UPDATED: styles for better settings display
+* ADDED: select 2 class for select fields
+* ADDED: target attribute via kses
+* FIXED: Only display media button on required pages
+* FIXED: Load text domain
+* ADDED: license settings fields
+* UPDATED: settings page
+
 = Version 1.3.3 Wednesday, August 26th, 2020 =
    * FIX: Pagination not working on the front end after WordPress 5.5 update
    * UPDATED: Works with WooCommerce vs 4.4.1

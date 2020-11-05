@@ -1,6 +1,9 @@
 jQuery( document ).ready(
     function ($) {
 
+		// Select2 select boxes
+		$('.ftg-select2').select2();
+
         // Media Library button hook (WP >= 3.5):
         $( 'a#dgd_library_button' ).click(
             function (e) {
