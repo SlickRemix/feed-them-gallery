@@ -18,7 +18,7 @@
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * WC requires at least: 3.0.0
- * WC tested up to: 4.6.1
+ * WC tested up to: 4.6.2
  *
  * @version  1.3.4
  * @package  FeedThemSocial/Core

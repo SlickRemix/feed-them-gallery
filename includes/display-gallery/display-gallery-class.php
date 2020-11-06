@@ -1253,7 +1253,7 @@ class Display_Gallery {
 		if ( isset( $popup ) && 'yes' === $popup ) {
 
 			// it's ok if these styles & scripts load at the bottom of the page.
-			if ( ftg_get_option( 'fix_magnific' ) ) {
+			if ( '1' !== ftg_get_option( 'fix_magnific' ) ) {
 				wp_enqueue_style( 'ft-gallery-popup', plugins_url( 'feed-them-gallery/includes/feeds/css/magnific-popup.css' ), array(), FTG_CURRENT_VERSION );
 			}
 			if ( ! is_plugin_active( 'feed-them-premium/feed-them-premium.php' ) ) {
@@ -2451,13 +2451,9 @@ if ( empty( $ftg['is_album'] ) || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET
 						<script> jQuery(document).ready(function () {
 								<?php if ( 'autoscroll' === $scroll_more ) { // this is where we do SCROLL function to LOADMORE if = autoscroll in shortcode. ?>
 								jQuery(".<?php echo esc_js( $feed_name_rand_string ); ?>-scrollable").bind("scroll", function () {
-									if (jQuery(this).scrollTop() + jQuery(this).innerHeight() >= jQuery(this)[0].scrollHeight) {
-										<?php
+									if (jQuery(this).scrollTop() + jQuery(this).innerHeight() >= jQuery(this)[0].scrollHeight) {<?php
 } else { // this is where we do CLICK function to LOADMORE if = button in shortcode.
-	?>
-										jQuery("#loadMore_<?php echo esc_js( $ft_gallery_dynamic_name ); ?>").click(function () {
-	<?php
-}
+	?>jQuery("#loadMore_<?php echo esc_js( $ft_gallery_dynamic_name ); ?>").click(function () {<?php }
 											$ft_gallery_bounce_color = isset( $ft_gallery_loadmore_text_color ) && null !== $ft_gallery_loadmore_text_color ? ' style="background:' . esc_html( $ft_gallery_loadmore_text_color ) . ';"' : '';
 ?>
 											jQuery("#loadMore_<?php echo esc_js( $ft_gallery_dynamic_name ); ?>").addClass('fts-fb-spinner');
@@ -2506,8 +2502,7 @@ if ( isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] ) {
 
 ?>
 													if (ft_gallery_posts<?php echo sanitize_text_field( wp_unslash( $my_request['ft_gallery_dynamic_name'] ) ); ?> >=  <?php echo esc_js( $final_post_count ); ?>) {
-														jQuery('#loadMore_<?php echo esc_js( $ft_gallery_dynamic_name ); ?>').replaceWith('
-																					 <?php
+														jQuery('#loadMore_<?php echo esc_js( $ft_gallery_dynamic_name ); ?>').replaceWith('<?php
 																						print '<div style="';
 																						if ( isset( $loadmore_btn_maxwidth ) && '' !== $loadmore_btn_maxwidth ) {
 																							print 'max-width:' . esc_js( $loadmore_btn_maxwidth ) . ';';

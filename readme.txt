@@ -97,7 +97,7 @@ FREE PLUGIN OPTIONS
  * Say you set 10 image to show and you have 50 images. Then you would see 10 of 50. And when you loadmore the number will increase.
  * Change the color of the pagination numbers
 
-[PREMIUM PLUGIN FEATURES](https://www.slickremix.com/downloads/feed-them-gallery/)
+[PREMIUM EXTENSION FEATURES](https://www.slickremix.com/downloads/feed-them-gallery/)
 = Albums Options =
  * Create Albums out of your Galleries. [Demo](https://feedthemgallery.com/album-demo/)
  * Make as many albums as you want, and choose different layout options.
@@ -139,7 +139,26 @@ FREE PLUGIN OPTIONS
  * Create a Product from the zipped gallery
  * Edit Product button appears after creation
 
-[HIDE PRODUCTS & CATEGORIES PLUGIN FEATURES](https://www.slickremix.com/downloads/hide-woocommerce-products-categories/)
+[CLIENTS MANAGER EXTENSION FEATURES](https://www.slickremix.com/downloads/feed-them-gallery-clients-manager/)
+= Options =
+ * Creating the Galleries/Albums account page
+ * Utilizing the WooCommerce My Account page
+ * Email and From name options
+ * Edit “Client Introduction” email
+ * Edit “Gallery Invite Email” and “Notify Updated” emails
+ * Edit “Album Invite Email” and “Notify Updated” emails
+ * Send “Client Introduction” email
+ * Adding Clients to Galleries and Albums
+ * Send Invite + Resend Invite email for Clients to view Galleries or Albums
+ * Send email to Notify Clients of updated Galleries or Albums
+ * Remove Clients from a Gallery or Album
+ * Client List View
+ * Client Detail Options
+ * Adding Notes to a Client’s Profile
+ * Deleting a Client’s Profile and User info
+ * NOTE: You must have the Premium version to make Album edits.
+ 
+[HIDE PRODUCTS & CATEGORIES EXTENSION FEATURES](https://www.slickremix.com/downloads/hide-woocommerce-products-categories/)
 = Options =
  * Hide the Shop page from showing products
  * Add a custom Shop Page Redirect
@@ -166,26 +185,9 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
 
 == Changelog ==
 = Version 1.3.4 Thursday, November 5th, 2020 =
-* NOTE: Most of the changes below are for the launch of the Client Management extension.
-* REMOVE: calls to `is_plugin_action`
-* ADDED: Single method for premium plugin purchase notice
-* ADDED: generic `premium_extension_required` method
-* ADDED: `ft_gallery_after_metabox_settings_tab_fields` action
-* ADDED: filters to the metabox tabs
-* ADDED: Select field for metabox settings
-* UPDATED: Use single function for premium plugin details
-* UPDATED: html entities
-* ADDED: filtering of admin notices
-* ADDED: uninstall procedure
-* ADDED: filters to gallery post columns
-* ADDED: template functionality
-* UPDATED: styles for better settings display
-* ADDED: select 2 class for select fields
-* ADDED: target attribute via kses
-* FIXED: Only display media button on required pages
-* FIXED: Load text domain
-* ADDED: license settings fields
-* UPDATED: settings page
+   * NEW: Settings page
+   * FIXED: Loadmore Button
+   * NEW EXTENSION: It's been a long time coming but we are proud to introduce the brand new [Clients Manager](https://www.slickremix.com/downloads/feed-them-gallery-clients-manager/) extension for Feed Them Gallery.
 
 = Version 1.3.3 Wednesday, August 26th, 2020 =
    * FIX: Pagination not working on the front end after WordPress 5.5 update
