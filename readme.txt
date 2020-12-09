@@ -2,8 +2,8 @@
 Contributors: slickremix, slickchris, mikeyhoward1977
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
-Tested up to: 5.5.3
-Stable tag: 1.3.4
+Tested up to: 5.6
+Stable tag: 1.3.5
 License: GPLv2 or later
 
 Photo Gallery creation made easy. Sell images with Auto Create Product feature for WooCommerce. Watermarking, Lightbox Popup, ZIP'ing, Tags and more!
@@ -184,6 +184,11 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.3.5 Wednesday, December 9th, 2020 =
+   * PREMIUM FIXED: Edit Product button in popup was not directing to the proper WooCommerce product to edit.
+   * WORKS: WordPress 5.6
+   * WORKS: WooCommerce 4.8
+   
 = Version 1.3.4 Thursday, November 5th, 2020 =
    * NEW: Settings page
    * FIXED: Loadmore Button
