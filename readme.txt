@@ -185,9 +185,9 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
 
 == Changelog ==
 = Version 1.3.5 Wednesday, December 9th, 2020 =
-   * PREMIUM FIXED: Edit Product button in popup was not directing to the proper WooCommerce product to edit.
    * WORKS: WordPress 5.6
    * WORKS: WooCommerce 4.8
+   * PREMIUM FIXED: Edit Product button in popup was not directing to the proper WooCommerce product to edit.
    
 = Version 1.3.4 Thursday, November 5th, 2020 =
    * NEW: Settings page
