@@ -121,13 +121,13 @@ function ftg_delete_option( $key = '' ) {
  */
 function ftg_get_settings() {
 	$settings = get_option( 'ftg_settings' );
-	
+
 	if( empty( $settings ) ) {
 
 		$settings = array();
 
 		update_option( 'ftg_settings', $settings );
-		
+
 	}
 
 	return apply_filters( 'ftg_get_settings', $settings );
@@ -575,7 +575,7 @@ function ftg_color_callback( $args ) {
         esc_attr( $default ),
         esc_attr( $placeholder )
     );
-    
+
 	$html .= '<label for="ftg_settings[' . ftg_sanitize_key( $args['id'] ) . ']"> '  . wp_kses_post( $args['desc'] ) . '</label>';
 
 	echo apply_filters( 'ftg_after_setting_output', $html, $args );
@@ -904,7 +904,7 @@ if ( ! function_exists( 'ftg_premium_plugin_callback' ) ) {
         </label>
 
         <?php echo ob_get_clean();
-		
+
 	}
 } // ftg_premium_plugin_callback
 
