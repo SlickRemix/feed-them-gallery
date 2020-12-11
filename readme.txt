@@ -186,7 +186,7 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
 == Changelog ==
 = Version 1.3.6 Friday, December 11th, 2020 =
    * NEW: Settings > Gallery Styling > Image Date options: You can choose to customize the date and not use the time if preferred.
-   * REMOVED: Settings > Gallery Styling > Image Date options > Timezone Option: This is now controled by the WordPress Timezone general settings option.
+   * REMOVED: Settings > Gallery Styling > Image Date options > Timezone Option: This is now controlled by the WordPress Timezone general settings option.
    * FIX: Removed date_default_timezone_set() which was causing date/time conflicts.
    
 = Version 1.3.5 Wednesday, December 9th, 2020 =
