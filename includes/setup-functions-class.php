@@ -481,7 +481,7 @@ class Setup_Functions {
 			'ft_gallery_format_attachment_titles_options',
 			// date options.
 			'ft-gallery-date-and-time-format',
-			'ft-gallery-timezone',
+			// 'ft-gallery-timezone',
 			'ft-gallery-custom-date',
 			'ft-gallery-custom-time',
 			'ft_gallery_language_second',

@@ -127,7 +127,7 @@ class FTG_Upgrades {
             'ft_gallery_attch_title_file_name',
             'ft_gallery_attch_title_attch_id',
 			'ft_gallery_format_attachment_titles_options',
-			'ft-gallery-timezone',
+			// 'ft-gallery-timezone',
 			'ft-gallery-date-and-time-format',
 			'ft_gallery_text_color',
             'ft_gallery_text_size',

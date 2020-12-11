@@ -64,7 +64,7 @@ class FTG_Backwards_Compat {
             'ft_gallery_post_time',
             'ft-gallery-options-settings-custom-css-second',
             'ft-gallery-settings-admin-textarea-css',
-			'ft-gallery-timezone',
+		//	'ft-gallery-timezone',
 			'ft-gallery-date-and-time-format',
 			'ft_gallery_fix_magnific',
             'ft_gallery_duplicate_post_show',
@@ -90,7 +90,7 @@ class FTG_Backwards_Compat {
             'ft_gallery_enable_right_click',
             'ft_gallery_attch_prod_to_gallery_cat',
             'ft_gallery_woo_add_to_cart'
-            
+
 		);
 
 		// Add Actions and Filters.
@@ -172,9 +172,9 @@ class FTG_Backwards_Compat {
 			case 'ft-gallery-settings-admin-textarea-css':
 				$value = ftg_get_option( 'custom_css' );
 				break;
-			case 'ft-gallery-timezone':
-				$value = ftg_get_option( 'timezone' );
-				break;
+		//	case 'ft-gallery-timezone':
+		//		$value = ftg_get_option( 'timezone' );
+		//		break;
 			case 'ft-gallery-date-and-time-format':
 				$value = ftg_get_option( 'date_time_format' );
 				break;

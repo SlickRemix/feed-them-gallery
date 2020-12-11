@@ -151,7 +151,7 @@ class Feed_Them_Gallery {
 		register_activation_hook( __FILE__, array( $this, 'ft_gallery_plugin_activation' ) );
 
 		// Load plugin options.
-		add_action( 'admin_init', array( $this, 'set_plugin_timezone' ) );
+		add_action( 'admin_init', array( $this, 'set_plugin_date_format' ) );
 	}
 
 	/**
@@ -551,14 +551,13 @@ class Feed_Them_Gallery {
 	 *
 	 * @since 1.0.0
 	 */
-	public function set_plugin_timezone() {
+	public function set_plugin_date_format() {
 
 		if ( is_admin() && 'feed-them-gallery' === get_option( 'Feed_Them_Gallery_Activated_Plugin' ) ) {
 
 			// Options List.
 			$activation_options = array(
 				'ft-gallery-date-and-time-format' => 'one-day-ago',
-				'ft-gallery-timezone'             => 'America/New_York',
 			);
 
 			foreach ( $activation_options as $option_key => $option_value ) {
