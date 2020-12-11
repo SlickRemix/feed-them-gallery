@@ -379,11 +379,10 @@ jQuery( document ).ready(
 
 					if (jQuery( "div" ).hasClass( "ft-gallery-woo-btns-wrap-for-popup" )) {
 						magItem.woo_option = jQuery($item).parents( '.thumb' ).find( '.ft-gallery-woo-btns-wrap-for-popup' ).html();
-
 					}
 
 					// SLICKREMIX: THIS ADDS THE LIKES, COMMENTS, DESCRIPTION, DATES ETC TO THE POPUP
-					magItem.title = document.querySelector( '.ft-image-id-for-popup' ).innerHTML + document.querySelector( '.ft-gallery-popup-form' ).innerHTML + magItem.woo_option,
+					magItem.title = jQuery($item).parents( '.thumb' ).find( '.ft-image-id-for-popup' ).html() + document.querySelector( '.ft-gallery-popup-form' ).innerHTML + magItem.woo_option,
 
 						$items.push( magItem );
 				}
