@@ -188,6 +188,7 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
    * NEW: Settings > Gallery Styling > Image Date options: You can choose to customize the date and not use the time if preferred.
    * REMOVED: Settings > Gallery Styling > Image Date options > Timezone Option: This is now controlled by the WordPress Timezone general settings option.
    * FIX: Removed date_default_timezone_set() which was causing date/time conflicts.
+   * FIX: When editing an image in the popup the date would display the same across all images.
    
 = Version 1.3.5 Wednesday, December 9th, 2020 =
    * WORKS: WordPress 5.6
