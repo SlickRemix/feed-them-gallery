@@ -230,18 +230,19 @@ class Settings_Page {
                             'desc'    => __( "If enabled, the attachment title will be added to the 'Description' field", 'feed-them-gallery' )
                         )
                     )
-                )		
+                )
             ),
             'styles' => apply_filters( 'ftg_settings_styles',
                 array(
                     'main' => array(
-						'timezone' => array(
-							'id'      => 'timezone',
-							'name'    => __( 'TimeZone', 'feed-them-gallery' ),
-							'type'    => 'select',
-							'options' => ftg_get_timezone_setting_options(),
-							'std'     => 'America/Los_Angeles'
-						),
+                    	// we don't need to set a timezone so use this option for something else.
+					//	'timezone' => array(
+					//		'id'      => 'timezone',
+					//		'name'    => __( 'TimeZone', 'feed-them-gallery' ),
+					//		'type'    => 'select',
+					//		'options' => ftg_get_timezone_setting_options(),
+					//		'std'     => 'America/Los_Angeles'
+					//	),
 						'date_time_format' => array(
 							'id'            => 'date_time_format',
 							'name'          => __( 'Image Date Format', 'feed-them-gallery' ),
@@ -268,10 +269,10 @@ class Settings_Page {
                             'id'            => 'custom_date_time_desc',
                             'type'          => 'descriptive_text',
 							'desc'          => sprintf(
-                                __( 'This will override the date and time above', 'feed-them-gallery' ) . '<br>' .
+                                __( 'The Custom Time is not required if you would prefer to only customize the Date.', 'feed-them-gallery' ) . '<br>' .
                                 '<a href="%s" target="_blank">%s.</a>',
-                                'https://codex.wordpress.org/Formatting_Date_and_Time',
-                                __( 'Options for custom date and time formatting', 'feed-them-gallery' )
+                                'https://wordpress.org/support/article/formatting-date-and-time/',
+                                __( 'Documentation on date and time formatting', 'feed-them-gallery' )
                             )
                         )
 					),
@@ -377,7 +378,7 @@ class Settings_Page {
 							'desc'    => __( 'Check this box if you would like Feed Them Gallery and its extensions to completely remove all of its data when the plugin is deleted.', 'feed-them-gallery' )
 						)
                     )
-                )		
+                )
             ),
             /** License Settings */
             'licenses' => apply_filters( 'ftg_settings_licenses',
@@ -655,7 +656,7 @@ class Settings_Page {
         }
 
         ob_start();
-        
+
         ?>
         <script>
             jQuery(document).ready(function ($) {
@@ -975,7 +976,7 @@ class Settings_Page {
                     __( 'Feed Them Gallery was created by 2 Brothers, Spencer and Justin Labadie. That\'s it, 2 people! We spend all our time creating and supporting our plugins. Show us some love if you like our plugin and leave a quick review for us, it will make our day! <a href="%s" target="_blank">Leave us a Review ★★★★★</a>', 'feed-them-gallery' ),
                     'https://www.facebook.com/pg/SlickRemix/reviews/?ref=page_internal'
                 ); ?>
-                        
+
 			</div>
 			<div class="fts-plugin-reviews-support">
                 <?php printf(

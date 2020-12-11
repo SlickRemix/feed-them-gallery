@@ -179,7 +179,8 @@ class Display_Gallery {
 				return '';
 			}
 		}
-		$difference = date_i18n( time() ) - $timestamp;
+		$difference = current_time( 'timestamp' ) - $timestamp;
+
 		// Customize in your own language. Why thank-you I will.
 		$lengths = array( '60', '60', '24', '7', '4.35', '12', '10' );
 
@@ -239,23 +240,19 @@ class Display_Gallery {
 		$fts_custom_date   = ftg_get_option( 'custom_date' );
 		$fts_custom_time   = ftg_get_option( 'custom_time' );
 		$custom_date_check = ftg_get_option( 'date_time_format' );
-		$fts_timezone      = ftg_get_option( 'timezone' );
 
-		if ( '' === $fts_custom_date && '' === $fts_custom_time ) {
+		if ( 'fts-custom-date' !== $custom_date_check ) {
 			$custom_date_format = $custom_date_check;
-		} elseif ( '' !== $fts_custom_date || '' !== $fts_custom_time ) {
+		} elseif ( 'fts-custom-date' === $custom_date_check && !empty( $fts_custom_date ) || 'fts-custom-date' === $custom_date_check && !empty( $fts_custom_time ) ) {
 			$custom_date_format = $fts_custom_date . ' ' . $fts_custom_time;
 		} else {
 			$custom_date_format = 'F jS, Y \a\t g:ia';
-		}
-		if ( ! empty( $fts_timezone ) ) {
-			date_default_timezone_set( $fts_timezone );
 		}
 
 		if ( 'one-day-ago' === $custom_date_check ) {
 			$u_time = $this->ft_gallery_ago( $created_time );
 		} else {
-			$u_time = ! empty( $custom_date_check ) ? date_i18n( $custom_date_format, strtotime( $created_time ) ) : $this->ft_gallery_ago( $created_time );
+			$u_time = ! empty( $custom_date_check ) ? date( $custom_date_format , strtotime( $created_time ) ) : $this->ft_gallery_ago( $created_time );
 		}
 
 		// Return the time.
