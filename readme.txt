@@ -3,7 +3,7 @@ Contributors: slickremix, slickchris, mikeyhoward1977
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
 Tested up to: 5.6
-Stable tag: 1.3.6
+Stable tag: 1.3.7
 License: GPLv2 or later
 
 Photo Gallery creation made easy. Sell images with Auto Create Product feature for WooCommerce. Watermarking, Lightbox Popup, ZIP'ing, Tags and more!
@@ -184,6 +184,10 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.3.7 Wednesday, February 3rd, 2021 =
+   * WP-ADMIN FIX: Remove scripts loading on page posts
+   * WP-ADMIN FIX: Image not loading on Galleries list page if thumbnail url not present in array.
+   
 = Version 1.3.6 Friday, December 11th, 2020 =
    * NEW: Settings > Gallery Styling > Image Date options: You can choose to customize the date and not use the time if preferred.
    * REMOVED: Settings > Gallery Styling > Image Date options > Timezone Option: This is now controlled by the WordPress Timezone general settings option.

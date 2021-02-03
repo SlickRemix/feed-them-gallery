@@ -266,11 +266,7 @@ class Metabox_Settings {
 			wp_register_script( 'jquery-nested-sortable-js', plugins_url( 'feed-them-gallery/metabox-settings/js/jquery.mjs.nestedSortable.js' ), array( 'jquery-ui-core', 'jquery-ui-draggable', 'jquery-ui-sortable, ' ), FTG_CURRENT_VERSION, false );
 			// Enqueue jQuery Nested Sortable JS.
 			wp_enqueue_script( 'jquery-nested-sortable-js' );
-		}
 
-		// SRL: THESE SCRIPTS SHOULD ONLY BE LOADED ON THE GALLERY, ALBUM AND TEMPLATE SETTINGS PAGE, BUT THEY ARE ALSO LOADING ON THE GALLERY LIST AND ALBUM LIST PAGE TOO
-		// If is page we need to load extra metabox scripts usually loaded on a post page.
-		if ( in_array( $hook_suffix, array( 'post.php', 'post-new.php' ) ) || isset( $_GET['page'] ) && 'template_settings_page' === $_GET['page'] ) {
 			wp_enqueue_script( 'common' );
 			wp_enqueue_script( 'wp-lists' );
 			wp_enqueue_script( 'postbox' );
@@ -770,7 +766,7 @@ class Metabox_Settings {
 								$i++;
 							}
 							$output .= '</select>';
-                            
+
 							break;
 
 						// Clients drop down list

@@ -610,7 +610,7 @@ class Gallery {
 
 	/**
 	 * FT Galley Custom Edit Column
-	 * Put info in matching coloumns we set
+	 * Put info in matching columns we set
 	 *
 	 * @param $column
 	 * @param $post_id
@@ -621,14 +621,20 @@ class Gallery {
 			case 'gallery_thumb':
 				$display_gallery = new Display_Gallery();
 				$image_list      = $display_gallery->ft_gallery_get_media_rest( $post_id, '1' );
-				$thumb_text      = $this->ft_gallery_count_post_images( $post_id ) . ' ' . esc_html__( 'Images', 'feed-them-gallery' );
-				$edit_post_url   = get_edit_post_link( $post_id );
+				$thumb_text      = $this->ft_gallery_count_post_images( $post_id );
+				$image_plural 	 = $thumb_text <= 1 ? $thumb_text . ' ' . esc_html__( 'Image', 'feed-them-gallery' ) : $thumb_text . ' ' . esc_html__( 'Images', 'feed-them-gallery' );
+				$edit_post_url   = '' !== get_edit_post_link( $post_id ) ? get_edit_post_link( $post_id ) : '';
 
-				if ( $image_list ) {
+				$final_thumb_source = !empty ( $image_list ) && array_key_exists('source_url', $image_list[0] )  ? $image_list[0]['source_url'] : '';
+				$final_thumb = !empty ( $image_list ) && array_key_exists('thumbnail', $image_list[0]['media_details']['sizes'])  ? $image_list[0]['media_details']['sizes']['thumbnail']['source_url'] : $final_thumb_source;
+				$final_output = '' !== $final_thumb ? '<img src=" ' . esc_url( $final_thumb ) . '" alt="" />' : '';
+
+				/*echo '<pre style="width: 500px;">';
+				  print_r( $image_list );
+				echo '</pre>';*/
 					?>
-					<a href="<?php echo esc_url( $edit_post_url ); ?>"><img src="<?php echo esc_url( $image_list[0]['media_details']['sizes']['thumbnail']['source_url'] ); ?>" alt="" /><?php echo esc_html( $thumb_text ); ?></a>
+					<a href="<?php echo esc_url( $edit_post_url ); ?>"><?php echo $final_output . esc_html( $image_plural ); ?></a>
 					<?php
-				}
 				break;
 			// display a thumbnail photo!
 			case 'gallery_shortcode':
