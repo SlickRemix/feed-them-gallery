@@ -7,28 +7,28 @@
  * Plugin Name: Feed Them Gallery
  * Plugin URI: https://www.slickremix.com/
  * Description: Create Beautiful Responsive Galleries in Minutes. Choose the number of columns, loadmore button, popup and more! Sell your Galleries or individual Images with WooCommerce, watermark them, zip galleries, create Albums, create Tags for Images and Galleries, search Galleries and Images with tags, and pagination in our premium version.
- * Version: 1.3.6
+ * Version: 1.3.7
  * Author: SlickRemix
  * Author URI: https://www.slickremix.com/
  * Text Domain: feed-them-gallery
  * Domain Path: /languages
  * Requires at least: WordPress 4.7.0
  * Tested up to: WordPress 5.6.0
- * Stable tag: 1.3.6
+ * Stable tag: 1.3.7
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * WC requires at least: 3.0.0
- * WC tested up to: 4.8.0
+ * WC tested up to: 4.9.2
  *
- * @version  1.3.6
+ * @version  1.3.7
  * @package  FeedThemSocial/Core
- * @copyright   Copyright (c) 2012-2020 SlickRemix
+ * @copyright   Copyright (c) 2012-2021 SlickRemix
  *
  * Need Support? https://www.slickremix.com/my-account
  */
 
 // Doing this to ensure any js or css changes are reloaded properly. Added to enqued css and js files throughout.
-define( 'FTG_CURRENT_VERSION', '1.3.6' );
+define( 'FTG_CURRENT_VERSION', '1.3.7' );
 
 if ( ! defined( 'FTG_PLUGIN_FILE' ) )	{
 	define( 'FTG_PLUGIN_FILE', __FILE__ );
