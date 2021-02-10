@@ -193,7 +193,7 @@ class Metabox_Settings {
 
 		// Is a 'Page' edit page. (aka Settings Class )
 		// if ( $this->main_post_type === $current_info['post_type'] && $page_base === $current_info['base'] ) {
-		// SRL: THESE SCRIPTS SHOULD ONLY BE LOADED ON THE GALLERY, ALBUM AND TEMPLATE SETTINGS PAGE.
+		// SRL: THESE SCRIPTS ONLY LOAD ON THE GALLERY, ALBUM AND TEMPLATE SETTINGS PAGE.
 		if ( isset( $_GET['page'] ) && 'template_settings_page' === $_GET['page'] || $this->main_post_type === $current_info['post_type'] && 'post' === $current_info['base'] && in_array( $hook_suffix, array( 'post.php', 'post-new.php' ) ) ) {
 
 			// Enqueue jQuery. (Registered in WordPress Core)!
