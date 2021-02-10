@@ -2143,6 +2143,9 @@ if ( isset( $ftg['is_album'] ) && 'yes' !== $ftg['is_album'] && ! isset( $my_get
 
 							if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && 'yes' === $ft_gallery_show_add_to_cart_over_image ) {
 
+								// Check to see if we are working with a variable product and if so make the purchase link go to cart.
+								$product = wc_get_product( $product_id );
+
 								$ft_gallery_cart_page_name = get_option( 'ft_gallery_cart_page_name' ) ? get_option( 'ft_gallery_cart_page_name' ) : 'cart';
 
                                 // Check to see if we are working with a variable product and if so make the purchase link go to cart.
