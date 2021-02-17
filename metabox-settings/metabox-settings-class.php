@@ -189,6 +189,12 @@ class Metabox_Settings {
 			wp_register_style( 'slick-metabox', plugins_url( 'feed-them-gallery/metabox-settings/css/metabox.css' ), array(), FTG_CURRENT_VERSION );
 			// Enqueue Metabox CSS.
 			wp_enqueue_style( 'slick-metabox' );
+		}
+
+		// Is a 'Page' edit page. (aka Settings Class )
+		// if ( $this->main_post_type === $current_info['post_type'] && $page_base === $current_info['base'] ) {
+		// SRL: THESE SCRIPTS ONLY LOAD ON THE GALLERY, ALBUM AND TEMPLATE SETTINGS PAGE.
+		if ( isset( $_GET['page'] ) && 'template_settings_page' === $_GET['page'] || $this->main_post_type === $current_info['post_type'] && 'post' === $current_info['base'] && in_array( $hook_suffix, array( 'post.php', 'post-new.php' ) ) ) {
 
 			// Enqueue jQuery. (Registered in WordPress Core)!
 			wp_enqueue_script( 'jquery' );
@@ -260,11 +266,7 @@ class Metabox_Settings {
 			wp_register_script( 'jquery-nested-sortable-js', plugins_url( 'feed-them-gallery/metabox-settings/js/jquery.mjs.nestedSortable.js' ), array( 'jquery-ui-core', 'jquery-ui-draggable', 'jquery-ui-sortable, ' ), FTG_CURRENT_VERSION, false );
 			// Enqueue jQuery Nested Sortable JS.
 			wp_enqueue_script( 'jquery-nested-sortable-js' );
-		}
 
-		// SRL: THESE SCRIPTS SHOULD ONLY BE LOADED ON THE GALLERY, ALBUM AND TEMPLATE SETTINGS PAGE, BUT THEY ARE ALSO LOADING ON THE GALLERY LIST AND ALBUM LIST PAGE TOO
-		// If is page we need to load extra metabox scripts usually loaded on a post page.
-		if ( in_array( $hook_suffix, array( 'post.php', 'post-new.php' ) ) || isset( $_GET['page'] ) && 'template_settings_page' === $_GET['page'] ) {
 			wp_enqueue_script( 'common' );
 			wp_enqueue_script( 'wp-lists' );
 			wp_enqueue_script( 'postbox' );
