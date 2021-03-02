@@ -2059,11 +2059,11 @@ if ( isset( $ftg['is_album'] ) && 'yes' !== $ftg['is_album'] && ! isset( $my_get
 											if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && 'yes' === $show_purchase_link ) {
 
 												// Check to see if we are working with a variable product and if so make the purchase link go to cart.
-												$product = wc_get_product( $product_id );
-
 												$ft_gallery_cart_page_name = get_option( 'ft_gallery_cart_page_name' ) ? get_option( 'ft_gallery_cart_page_name' ) : 'cart';
 
-												if ( 'variable' === $product->get_type( 'variable' ) && 'prod_page' !== $purchase_link_option ) {
+                                                $product_type = \WC_Product_Factory::get_product_type($product_id);
+
+                                                if ( 'variable' === $product_type && 'prod_page' !== $purchase_link_option ) {
 													$purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name;
 												} else {
 													if ( 'prod_page' === $purchase_link_option ) {
@@ -2347,11 +2347,11 @@ if ( empty( $ftg['is_album'] ) || isset( $_GET['ftg-tags'] ) && 'page' !== $_GET
 										if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) && isset( $product_id ) && '' !== $product_id && 'yes' === $show_purchase_link ) {
 
 											// Check to see if we are working with a variable product and if so make the purchase link go to cart.
-											$product = wc_get_product( $product_id );
-
 											$ft_gallery_cart_page_name = get_option( 'ft_gallery_cart_page_name' ) ? get_option( 'ft_gallery_cart_page_name' ) : 'cart';
 
-											if ( 'variable' === $product->get_type( 'variable' ) && 'prod_page' !== $purchase_link_option ) {
+                                            $product_type = \WC_Product_Factory::get_product_type($product_id);
+
+                                            if ( 'variable' === $product_type && 'prod_page' !== $purchase_link_option ) {
 												$purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name;
 											} else {
 												if ( 'prod_page' === $purchase_link_option ) {
@@ -2897,9 +2897,9 @@ if ( isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] ) {
 	public function ftg_variable_add_to_cart( $product_id ) {
 		global $product;
 
-		$product = wc_get_product( $product_id );
+        $product_type = \WC_Product_Factory::get_product_type($product_id);
 
-		if ( 'variable' === $product->get_type( 'variable' ) ) {
+        if ( 'variable' === $product_type ) {
 			?>
 			<div class="ft-gallery-variations-wrap">
 				<div class="ft-gallery-variations-price-wrap">
@@ -2941,7 +2941,7 @@ if ( isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] ) {
 				</div>
 			</div>
 			<?php
-		} elseif ( 'simple' === $product->get_type( 'variable' ) ) {
+		} elseif ( 'simple' === $product_type ) {
 			?>
 
 			<div class="ft-gallery-variations-wrap">
