@@ -951,7 +951,8 @@ class Metabox_Settings {
 						// $option_name = isset( $this->option_prefix ) ? $this->option_prefix . $option['name'] : $option['name'];.
 						$option_name = isset( $option['name'] ) ? $option['name'] : '';
 
-						$option_type = $option['option_type'];
+                        // Set Option Type.
+                        $option_type = isset( $option['option_type'] ) && ! empty( $option['option_type'] ) ? $option['option_type'] : '';
 
 						if ( 'checkbox' === $option_type ) {
 							$new = isset( $_POST[ $option_name ] ) && 'false' !== $_POST[ $option_name ] ? 'true' : 'false';
