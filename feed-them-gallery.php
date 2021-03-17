@@ -13,12 +13,12 @@
  * Text Domain: feed-them-gallery
  * Domain Path: /languages
  * Requires at least: WordPress 4.7.0
- * Tested up to: WordPress 5.6.0
+ * Tested up to: WordPress 5.7.0
  * Stable tag: 1.3.7
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * WC requires at least: 3.0.0
- * WC tested up to: 4.9.2
+ * WC tested up to: 5.1.0
  *
  * @version  1.3.7
  * @package  FeedThemSocial/Core
@@ -27,7 +27,7 @@
  * Need Support? https://www.slickremix.com/my-account
  */
 
-// Doing this to ensure any js or css changes are reloaded properly. Added to enqued css and js files throughout.
+// Doing this to ensure any js or css changes are reloaded properly. Added to enqueued css and js files throughout.
 define( 'FTG_CURRENT_VERSION', '1.3.7' );
 
 if ( ! defined( 'FTG_PLUGIN_FILE' ) )	{

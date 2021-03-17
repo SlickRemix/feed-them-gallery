@@ -2310,7 +2310,7 @@ class Gallery_Options {
 	 */
 	public function clients_options()	{
 		$this->all_options['clients'] = array(
-			'required_prem_plugin' => 'feed_them_gallery_clients_manager',
+			'required_prem_plugin' => 'ftg_clients_manager',
 			'section_attr_key'     => 'facebook_',
 			'section_title'        => esc_html__( 'Client Options', 'feed-them-gallery' ),
 			'section_wrap_class'   => 'ftg-section-options',

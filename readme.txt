@@ -184,7 +184,7 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
-= Version 1.3.7 Wednesday, February 10th, 2021 =
+= Version 1.3.7 Friday, March 12th, 2021 =
    * WP-ADMIN FIX: Remove scripts loading on page posts
    * WP-ADMIN FIX: Image not loading on Galleries list page if thumbnail url not present in array.
    * UPDATED: Framework calls for Client Manager Extension.
