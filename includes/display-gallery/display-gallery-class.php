@@ -79,6 +79,47 @@ class Display_Gallery {
 
 		add_action( 'wp_ajax_ft_gallery_load_more', array( $this, 'ft_gallery_load_more' ) );
 		add_action( 'wp_ajax_nopriv_ft_gallery_load_more', array( $this, 'ft_gallery_load_more' ) );
+
+		if( '1' === ftg_get_option( 'ft_gallery_redirect' ) ){
+			add_action( 'template_redirect', array( $this, 'ft_gallery_redirect_post' ) );
+		}
+
+	}
+
+	/**
+	 * FT Gallery Register Redirect Post
+	 *
+	 * Redirect ft_gallery posts and archives
+	 *
+	 * @since 1.0.0
+	 */
+	public function ft_gallery_redirect_post ()
+	{
+		// Specific galleries and albums redirect. You can set the custom redirect URL under your Gallery's > Layout (tab) > Redirect this Gallery option.
+		$queried_post_type = get_query_var( 'post_type' );
+		$option = $this->ft_gallery_get_option_or_get_postmeta( get_the_ID() );
+		$post_redirect = null !== $option['ft_gallery_redirect_post'] ? $option['ft_gallery_redirect_post'] : '';
+
+		if( !empty ( $post_redirect ) ){
+			wp_safe_redirect( esc_url( $post_redirect ), 301 );
+			exit;
+		}
+
+		// Options for ALL galleries and albums redirect on the Settings > Misc (tab).
+		// We run this if statement after the one above so if a custom gallery redirect URL is set then it runs first.
+		$ftg_option_redirect = '1' === ftg_get_option( 'ft_gallery_redirect' );
+
+		if (  true === $ftg_option_redirect && is_single() && 'ft_gallery' === $queried_post_type ||
+			true === $ftg_option_redirect && is_archive() && 'ft_gallery' === $queried_post_type ||
+			true === $ftg_option_redirect && is_search() && 'ft_gallery' === $queried_post_type ||
+			true === $ftg_option_redirect && is_archive() && 'ft_gallery_albums' === $queried_post_type ||
+			true === $ftg_option_redirect && is_search() && 'ft_gallery_albums' === $queried_post_type ||
+			true === $ftg_option_redirect && is_single() && 'ft_gallery_albums' === $queried_post_type ) {
+
+			$redirect_url = ftg_get_option( 'ft_gallery_redirect_custom' ) ?: get_home_url();
+			wp_safe_redirect( esc_url( $redirect_url ), 301 );
+			exit;
+		}
 	}
 
 	/**
@@ -950,13 +991,22 @@ class Display_Gallery {
 			$ftg_woo_icon_color            = isset( $option['ftg_woo_icon_color'] ) ? $option['ftg_woo_icon_color'] : '';
 			$ftg_woo_icon_hover_color      = isset( $option['ftg_woo_icon_hover_color'] ) ? $option['ftg_woo_icon_hover_color'] : '';
 
+			$ftg_popup_image_max_height      	   = isset( $option['ftg_popup_image_max_height'] ) ? $option['ftg_popup_image_max_height'] : '';
+
 			// END GALLERY TAGS.
 			if ( isset( $option['ft_popup_display_options'] ) && 'full-width-second-half-bottom' === $option['ft_popup_display_options'] ||
 				isset( $option['ft_popup_display_options'] ) && 'full-width-photo-only' === $option['ft_popup_display_options'] ||
-				'' !== $ftg_woo_icon_background_color || '' !== $ftg_woo_icon_color || '' !== $ftg_woo_icon_hover_color ) {
+				'' !== $ftg_woo_icon_background_color || '' !== $ftg_woo_icon_color || '' !== $ftg_woo_icon_hover_color || '' !== $ftg_popup_image_max_height ) {
 				?>
-				<style>
+				<style><?php
+				if ( '' !== $ftg_popup_image_max_height ) {
+					?>
+					.fts-popup-image-position img {
+						max-height: <?php echo esc_attr( $ftg_popup_image_max_height ); ?>!important
+					}
+
 					<?php
+				}
 					if ( '' !== $ftg_woo_icon_background_color ) {
 						?>
 					.ft-gallery-responsive-cart-icon {
@@ -980,7 +1030,12 @@ class Display_Gallery {
 					<?php
 				}
 				if ( isset( $option['ft_popup_display_options'] ) && 'full-width-second-half-bottom' === $option['ft_popup_display_options'] ) {
+					if ( '' !== $ftg_popup_image_max_height ) {
 					?>
+					.fts-popup-image-position img {
+						max-height: <?php echo esc_attr( $ftg_popup_image_max_height ); ?>!important
+					}
+					<?php } ?>
 					@media (min-width: 0px) {
 						.ft-gallery-popup .fts-popup-second-half.fts-instagram-popup-second-half {
 							float: left !important
@@ -1036,7 +1091,12 @@ class Display_Gallery {
 
 					<?php
 				} elseif ( 'full-width-photo-only' === $option['ft_popup_display_options'] ) {
+					if ( '' !== $ftg_popup_image_max_height ) {
 					?>
+					.fts-popup-image-position img {
+						max-height: <?php echo esc_attr( $ftg_popup_image_max_height ); ?>!important
+					}
+					<?php } ?>
 					@media (min-width: 0px) {
 						.ft-gallery-popup .fts-popup-half {
 							background: #000 !important;
@@ -1640,6 +1700,11 @@ class Display_Gallery {
 					if ( $ftgp_current_version > '1.0.5' && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] || $ftgp_current_version > '1.0.5' && is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && isset( $_GET['ftg-tags'] ) && 'page' === $_GET['type'] ) {
 
 						$gallery_id = $image->ID;
+
+						// TRYING TO GET THE ALBUM URL TO DISPLAY THE REDIRECT URL SO USERS DON'T SEE THE ORIGINAL URL IN THE LOWER RIGHT
+						// CORNER OF THERE BROWSER IF THEY HOVER OVER THE GALLERY LINK IN THE ALBUM
+						// FOR NOW WE ARE GOING TO TABLE THIS BECAUSE IT'S MORE DIFFICULT TO GET AN OPTION IN A GALLERY FOR AN ALBUM.
+						// $gallery_post_link         = $option['ft_gallery_redirect_post'];
 
 						$gallery_post_link         = get_post_permalink( $gallery_id );
 						$gallery_attachments_count = $albums_class->ft_gallery_count_gallery_attachments( $gallery_id );
