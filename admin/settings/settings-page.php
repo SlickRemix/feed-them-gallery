@@ -343,6 +343,21 @@ class Settings_Page {
             'misc' => apply_filters( 'ftg_settings_misc',
                 array(
                     'main' => array(
+						'ft_gallery_redirect' => array(
+							'id'      => 'ft_gallery_redirect',
+							'name'    => __( 'Redirect all FT Gallery Pages', 'feed-them-gallery' ),
+							'type'    => 'checkbox',
+							'std'     => 0,
+							'desc'    => __( 'This will redirect ALL of our custom post type pages for galleries and albums to your Home Page. This is useful if you are using the gallery shortcode instead of our default ftg-gallery pages. To redirect specific posts you can set the option "Redirect this Gallery" under that gallery\'s Layout tab.', 'feed-them-gallery' )
+						),
+						'ft_gallery_redirect_custom' => array(
+							'id'      => 'ft_gallery_redirect_custom',
+							'name'    => __( 'Custom Redirect URL', 'feed-them-gallery' ),
+							'type'    => 'text',
+							'std'     => '',
+							'desc'    => __( ' Must have option above checked for this to work. Redirect ALL of our custom post type pages for galleries and albums to a custom URL.', 'feed-them-gallery' ),
+							'placeholder'    => __( 'Home Page', 'feed-them-gallery' )
+						),
                         'fix_magnific' => array(
                             'id'      => 'fix_magnific',
                             'name'    => __( 'Disable Magnific Popup CSS?', 'feed-them-gallery' ),

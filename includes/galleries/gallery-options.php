@@ -655,6 +655,18 @@ class Gallery_Options {
 						),
 					),
 				),
+				array(
+
+					'input_wrap_class' => 'ft-popup-pic-max-height',
+					'option_type'   => 'input',
+					'label'         => esc_html__( 'Max Height of Photo', 'feed-them-gallery' ),
+					'type'          => 'text',
+					'id'            => 'ftg_popup_image_max_height',
+					'name'          => 'ftg_popup_image_max_height',
+					'default_value' => '',
+					'placeholder'   => '527px',
+
+				),
 
 				// ******************************************
 				// Gallery Load More Options
@@ -930,6 +942,32 @@ class Gallery_Options {
 					'default_value' => '',
 					'value'         => '',
 				),
+
+				// *****************************************************************************
+				// Redirect this page if you are trying to hide it from being publicly visible.
+				// *****************************************************************************
+				array(
+					'grouped_options_title' => esc_html__( 'Redirect this Gallery', 'feed-them-gallery' ),
+					'option_type'           => 'input',
+					'instructional-text'    =>
+						sprintf(
+							esc_html__( '%1$sNOTE:%2$s This option is useful if you are using our gallery shortcode on a custom page and DO NOT want this ftg-gallery post type to be visible to the public. If you want to hide all the ftg-gallery posts from being public you can do so on our %3$sSettings Page%4$s', 'feed-them-gallery' ),
+							'<strong>',
+							'</strong>',
+							'<a href="' . esc_url( 'edit.php?post_type=ft_gallery&page=ft-gallery-settings-page&tab=misc' ) . '" target="_blank">',
+							'</a>'
+						),
+					'label'                 => esc_html__( 'Redirect URL', 'feed-them-gallery' ),
+					'type'          => 'text',
+					'id'            => 'ft_gallery_redirect_post',
+					'name'          => 'ft_gallery_redirect_post',
+					'placeholder'   => '',
+					'default_value' => '',
+					'autocomplete'          => 'off',
+				),
+
+
+
 
 			),
 

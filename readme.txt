@@ -2,7 +2,7 @@
 Contributors: slickremix, slickchris, mikeyhoward1977
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
-Tested up to: 5.6
+Tested up to: 5.7
 Stable tag: 1.3.7
 License: GPLv2 or later
 
@@ -184,8 +184,12 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
-= Version 1.3.7 Friday, March 12th, 2021 =
-   * WP-ADMIN FIX: Remove scripts loading on page posts
+= Version 1.3.7 Tuesday, March 23rd, 2021 =
+   * NEW: Set the max height for images in the popup. Useful for galleries with vertical and horizontal photos.
+   * NEW: Settings > Mis Options: Redirect ftg-gallery custom post type. Option to add custom redirect URL too.
+   * NEW: When creating a gallery you have the option to redirect the gallery under the Layout tab and the Redirect Gallery option near the bottom of the page.
+   * FIX: Popup close button would appear outside of the popup if logged out. It should only appear outside the popup if the content is below the photo.
+   * WP-ADMIN FIX: Remove scripts loading on page posts causing issues with other plugins. ( Ninja forms )
    * WP-ADMIN FIX: Image not loading on Galleries list page if thumbnail url not present in array.
    * UPDATED: Framework calls for Client Manager Extension.
    
