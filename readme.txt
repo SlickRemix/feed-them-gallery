@@ -184,6 +184,9 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.3.8 Wednesday, March 24th, 2021 =
+   * FIX: Add !wp_doing_ajax() around album class scripts so ajax is not accessible to the front end.
+   
 = Version 1.3.7 Tuesday, March 23rd, 2021 =
    * NEW: Set the max height for images in the popup. Useful for galleries with vertical and horizontal photos.
    * NEW: Settings > Mis Options: Redirect ftg-gallery custom post type. Option to add custom redirect URL too.

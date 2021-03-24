@@ -108,14 +108,10 @@ class Gallery {
 
 		$this->saved_settings_array = $all_options;
 
-		// we set current_user_can so our backend functions don't get loaded to the front end.
+		// We set ! wp_doing_ajax() so ajax isn't accessible to the front end.
 		// this came about after a ticket we received about our plugin being active and
-		// causing a woo booking plugin to not be able to checkout proper and ninja forms submit forms , when checking out it would show the cart was empty.
-		// this current_user_can resolves that problem.
-		if(!function_exists('wp_get_current_user')) {
-			include(ABSPATH . "wp-includes/pluggable.php");
-		}
-		if ( is_admin() && current_user_can( 'manage_options' ) ) {
+		// causing a woo booking plugin to not be able to checkout proper and ninja forms submit forms.
+		if ( is_admin() && ! wp_doing_ajax() ) {
 			// Load Metabox Setings Class (including all of the scripts and styles attached).
 			$this->metabox_settings_class = new Metabox_Settings( $this, $this->saved_settings_array );
 
