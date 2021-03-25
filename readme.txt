@@ -184,7 +184,7 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
-= Version 1.3.8 Wednesday, March 24th, 2021 =
+= Version 1.3.8 Thursday, March 25th, 2021 =
    * FIX: Add !wp_doing_ajax() around album class scripts so ajax is not accessible to the front end.
    * FIX: Gallery popup will display content on right side by default on screens larger than 1900px now instead of below.
    
