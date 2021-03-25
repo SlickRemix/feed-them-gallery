@@ -186,6 +186,7 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
 == Changelog ==
 = Version 1.3.8 Wednesday, March 24th, 2021 =
    * FIX: Add !wp_doing_ajax() around album class scripts so ajax is not accessible to the front end.
+   * FIX: Gallery popup will display content on right side by default on screens larger than 1900px now instead of below.
    
 = Version 1.3.7 Tuesday, March 23rd, 2021 =
    * NEW: Set the max height for images in the popup. Useful for galleries with vertical and horizontal photos.
