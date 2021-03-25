@@ -80,9 +80,7 @@ class Display_Gallery {
 		add_action( 'wp_ajax_ft_gallery_load_more', array( $this, 'ft_gallery_load_more' ) );
 		add_action( 'wp_ajax_nopriv_ft_gallery_load_more', array( $this, 'ft_gallery_load_more' ) );
 
-		if( '1' === ftg_get_option( 'ft_gallery_redirect' ) ){
-			add_action( 'template_redirect', array( $this, 'ft_gallery_redirect_post' ) );
-		}
+		add_action( 'template_redirect', array( $this, 'ft_gallery_redirect_post' ) );
 
 	}
 
