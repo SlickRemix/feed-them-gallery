@@ -189,7 +189,7 @@ class Shortcode_Button {
 		}
 
 		// Run WP_Query.
-		$galleries = new \ WP_Query( $args );
+		$galleries = new \WP_Query( $args );
 		if ( ! isset( $galleries->posts ) || empty( $galleries->posts ) ) {
 			return false;
 		}
