@@ -96,7 +96,7 @@ class Display_Gallery {
 		// Specific galleries and albums redirect. You can set the custom redirect URL under your Gallery's > Layout (tab) > Redirect this Gallery option.
 		$queried_post_type = get_query_var( 'post_type' );
 		$option = $this->ft_gallery_get_option_or_get_postmeta( get_the_ID() );
-		$post_redirect = null !== $option['ft_gallery_redirect_post'] ? $option['ft_gallery_redirect_post'] : '';
+		$post_redirect = isset( $option['ft_gallery_redirect_post'] ) ? $option['ft_gallery_redirect_post'] : '';
 
 		if( !empty ( $post_redirect ) ){
 			wp_safe_redirect( esc_url( $post_redirect ), 301 );
@@ -2821,7 +2821,7 @@ class Display_Gallery {
 				),
 			);
 
-			$query = new \ WP_Query( $query_args );
+			$query = new \WP_Query( $query_args );
 
 			if ( $query->have_posts() ) {
 
