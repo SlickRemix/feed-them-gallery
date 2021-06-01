@@ -655,9 +655,9 @@ class Display_Gallery {
 		$onchange = isset( $_GET['ftg-tags'] ) ? 'location.href = location.href + \'&orderby=\' + orderby.options[selectedIndex].value' : 'this.form.submit()';
 
 		print '<div class="ftg-orderby-wrap ' . esc_attr( $align_class ) . '"><form class="feed-them-gallery-ordering" method="get" ><select name="orderby" class="ftg-orderby" onchange="' . esc_attr( $onchange ) . '">
-					<option value="menu_order" ' . esc_html( $orderby_original ) . '>' . esc_html( 'Sort order of Images', 'feed-them-gallery' ) . '</option>
-					<option value="title" ' . esc_html( $orderby_alphabetical ) . '>' . esc_html( 'Sort alphabetically (A-Z)', 'feed-them-gallery' ) . '</option>
-					<option value="date" ' . esc_html( $orderby_date ) . '>' . esc_html( 'Sort by date', 'feed-them-gallery' ) . '</option></select></form></div>';
+					<option value="menu_order" ' . esc_html( $orderby_original ) . '>' . esc_html__( 'Sort order of Images', 'feed-them-gallery' ) . '</option>
+					<option value="title" ' . esc_html( $orderby_alphabetical ) . '>' . esc_html__( 'Sort alphabetically (A-Z)', 'feed-them-gallery' ) . '</option>
+					<option value="date" ' . esc_html( $orderby_date ) . '>' . esc_html__( 'Sort by date', 'feed-them-gallery' ) . '</option></select></form></div>';
 	}
 
 	/**
@@ -684,7 +684,7 @@ class Display_Gallery {
 		if ( isset( $is_album ) && 'yes' === $is_album ) {
 
 			$total_pagination_count = $gallery_class->ft_album_count_post_galleries( $ftg_id );
-			$pagination_text        = esc_html( 'Galleries', 'feed-them-gallery' );
+			$pagination_text        = esc_html__( 'Galleries', 'feed-them-gallery' );
 			$pagination_query_var   = 'paged';
 
 		} elseif ( isset( $tags ) && 'yes' === $tags ) {
@@ -694,12 +694,12 @@ class Display_Gallery {
 			$my_get                 = stripslashes_deep( $_GET );
 			$total_pagination_count = $image_count_for_tags;
 			$ftg_tags               = sanitize_text_field( wp_unslash( $my_get[ $taxonomy ] ) );
-			$pagination_text        = isset( $ftg_tags ) && 'page' === $ftg_tags ? esc_html( 'Galleries', 'feed-them-gallery' ) : esc_html( 'Images', 'feed-them-gallery' );
+			$pagination_text        = isset( $ftg_tags ) && 'page' === $ftg_tags ? esc_html__( 'Galleries', 'feed-them-gallery' ) : esc_html__( 'Images', 'feed-them-gallery' );
 			$pagination_query_var   = 'page';
 
 		} else {
 			$total_pagination_count = $gallery_class->ft_gallery_count_post_images( $ftg_id );
-			$pagination_text        = esc_html( 'Images', 'feed-them-gallery' );
+			$pagination_text        = esc_html__( 'Images', 'feed-them-gallery' );
 			$pagination_query_var   = 'paged';
 		}
 
@@ -738,7 +738,7 @@ class Display_Gallery {
 		$align_count_class = 'right' === $ftg_align_count ? ' ftg-total-page-count-align-right' : '';
 
 		$ft_gallery_true_pagination_count_text_color = null !== $option['ft_gallery_true_pagination_count_text_color'] ? ' style="color:' . esc_attr( $option['ft_gallery_true_pagination_count_text_color'] ) . '"' : '';
-		$page_count                                  = 'yes' === $ftg_display_count ? '<div class="ftg-total-pagination-count' . esc_attr( $align_count_class ) . '"' . $ft_gallery_true_pagination_count_text_color . '>' . esc_html( 'Showing', 'feed-them-gallery' ) . ' ' . esc_html( $per_page_final ) . '-' . esc_html( $count_per_page ) . ' of ' . esc_html( $total_pagination_count ) . ' ' . esc_html( $pagination_text ) . '</div>' : '';
+		$page_count                                  = 'yes' === $ftg_display_count ? '<div class="ftg-total-pagination-count' . esc_attr( $align_count_class ) . '"' . $ft_gallery_true_pagination_count_text_color . '>' . esc_html__( 'Showing', 'feed-them-gallery' ) . ' ' . esc_html( $per_page_final ) . '-' . esc_html( $count_per_page ) . ' of ' . esc_html( $total_pagination_count ) . ' ' . esc_html( $pagination_text ) . '</div>' : '';
 
 		if ( 'left' === $ftg_align_pagination ) {
 			print wp_kses(
@@ -2691,7 +2691,7 @@ class Display_Gallery {
 								if ( isset( $ft_gallery_loadmore_text_color ) && '' !== $ft_gallery_loadmore_text_color ) {
 									print 'color:' . esc_attr( $ft_gallery_loadmore_text_color ) . ';';
 								}
-								print 'margin:' . esc_attr( $loadmore_btn_margin ) . ' auto ' . esc_attr( $loadmore_btn_margin ) . '" class="fts-fb-load-more">' . esc_html( 'Load More', 'feed-them-gallery' ) . '</div>';
+								print 'margin:' . esc_attr( $loadmore_btn_margin ) . ' auto ' . esc_attr( $loadmore_btn_margin ) . '" class="fts-fb-load-more">' . esc_html__( 'Load More', 'feed-them-gallery' ) . '</div>';
 								print '</div>';
 
 							}
@@ -2707,7 +2707,7 @@ class Display_Gallery {
 								}
 								echo '<div class="ftgallery-image-count-wrap"' . $ft_gallery_pagination_text_color . '>';
 								echo '<span class="ft-gallery-image-loaded-count">' . esc_html( $post_count ) . '</span>';
-								echo '<span class="ft-gallery-count-of">' . esc_html( 'of', 'feed-them-gallery' ) . '</span>';
+								echo '<span class="ft-gallery-count-of">' . esc_html__( 'of', 'feed-them-gallery' ) . '</span>';
 								echo '<span class="ft-gallery-image-count-total"> ' . esc_html( $total_post_count ) . ' </span>';
 								echo '</div>';
 							}
@@ -2772,7 +2772,7 @@ class Display_Gallery {
 					}
 
 					if ( current_user_can( 'manage_options' ) && ! isset( $_GET['ftg-tags'] ) ) {
-						$gallery_or_album_text = isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] ? esc_html( 'Edit Album', 'feed-them-gallery' ) : esc_html( 'Edit Gallery', 'feed-them-gallery' );
+						$gallery_or_album_text = isset( $ftg['is_album'] ) && 'yes' === $ftg['is_album'] ? esc_html__( 'Edit Album', 'feed-them-gallery' ) : esc_html__( 'Edit Gallery', 'feed-them-gallery' );
 						?>
 						<div class="ft-gallery-edit-link" style="text-align: center;">
 							<a href="<?php print esc_url( $edit_url ); ?>"
