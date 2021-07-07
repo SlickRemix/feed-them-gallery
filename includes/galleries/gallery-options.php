@@ -123,8 +123,199 @@ class Gallery_Options {
 							'label' => esc_html__( 'Image Post in Grid (Masonry)', 'feed-them-gallery' ),
 							'value' => 'post-in-grid',
 						),
+                        array(
+                            'label' => esc_html__( 'Slider', 'feed-them-gallery' ),
+                            'value' => 'post-slider',
+                        ),
 					),
 				),
+
+                // Slider Arrow Size.
+                array(
+                    'input_wrap_class' => 'ft-wp-gallery-slider-hide',
+                    'option_type'   => 'input',
+                    'label'         => esc_html__( 'Slider: Speed', 'feed-them-gallery' ),
+                    'type'          => 'text',
+                    'id'            => 'ft-gallery-slider-speed-input',
+                    'name'          => 'ft_gallery_slider_speed',
+                    'default_value' => '',
+                    'placeholder'   => esc_html__( '450', 'feed-them-gallery' ),
+                    'autocomplete'  => 'off',
+                ),
+
+                // Slider Arrow Color.
+                array(
+                    'input_wrap_class' => 'ft-wp-gallery-slider-hide',
+                    'option_type'   => 'input',
+                    'label'         => esc_html__( 'Slider: Background Color', 'feed-them-gallery' ),
+                    'class'         => 'ft-gallery-feed-arrow-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:\'#eee\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'white\'}',
+                    'type'          => 'text',
+                    'id'            => 'ft-gallery-slider-background-color-input',
+                    'name'          => 'ft_gallery_slider_background_color',
+                    'default_value' => '',
+                    'placeholder'   => esc_html__( '#fff', 'feed-them-gallery' ),
+                    'autocomplete'  => 'off',
+                ),
+
+                // Slider Arrow Color.
+                array(
+                    'input_wrap_class' => 'ft-wp-gallery-slider-hide',
+                    'option_type'   => 'input',
+                    'label'         => esc_html__( 'Slider: Spacing', 'feed-them-gallery' ),
+                     'type'          => 'text',
+                    'id'            => 'ft-gallery-slider-spacing-input',
+                    'name'          => 'ft_gallery_slider_spacing',
+                    'default_value' => '',
+                    'placeholder'   => esc_html__( '0.5em', 'feed-them-gallery' ),
+                    'autocomplete'  => 'off',
+                ),
+
+                // Gallery Slider Banner.
+                array(
+                    'input_wrap_class' => 'ft-wp-gallery-slider-hide',
+                    'option_type'      => 'select',
+                    'label'            => esc_html__( 'Slider: Arrows', 'feed-them-gallery' ),
+                    'type'             => 'text',
+                    'id'               => 'ft_gallery_slider_arrows',
+                    'name'             => 'ft_gallery_slider_arrows',
+                    'default_value'    => '',
+                    'options'          => array(
+                        array(
+                            'label' => esc_html__( 'Show', 'feed-them-gallery' ),
+                            'value' => 'yes',
+                        ),
+                        array(
+                            'label' => esc_html__( 'Hide', 'feed-them-gallery' ),
+                            'value' => 'no',
+                        ),
+                    ),
+                ),
+                // Slider Arrow Size.
+                array(
+                    'input_wrap_class' => 'ft-wp-gallery-slider-hide ft-wp-gallery-slider-arrows-hide',
+                    'option_type'   => 'input',
+                    'label'         => esc_html__( 'Slider: Arrow Size', 'feed-them-gallery' ),
+                    'type'          => 'text',
+                    'id'            => 'ft-gallery-slider-arrow-size-input',
+                    'name'          => 'ft_gallery_slider_arrow_size',
+                    'default_value' => '',
+                    'placeholder'   => esc_html__( '2rem', 'feed-them-gallery' ),
+                    'autocomplete'  => 'off',
+                ),
+
+                // Slider Arrow Color.
+                array(
+                    'input_wrap_class' => 'ft-wp-gallery-slider-hide ft-wp-gallery-slider-arrows-hide',
+                    'option_type'   => 'input',
+                    'label'         => esc_html__( 'Slider: Arrow Color', 'feed-them-gallery' ),
+                    'class'         => 'ft-gallery-feed-arrow-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:\'#eee\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'white\'}',
+                    'type'          => 'text',
+                    'id'            => 'ft-gallery-slider-arrow-color-input',
+                    'name'          => 'ft_gallery_slider_arrow_color',
+                    'default_value' => '',
+                    'placeholder'   => esc_html__( '#fff', 'feed-them-gallery' ),
+                    'autocomplete'  => 'off',
+                ),
+
+                // Slider Arrow Hover Color.
+                array(
+                    'input_wrap_class' => 'ft-wp-gallery-slider-hide ft-wp-gallery-slider-arrows-hide',
+                    'option_type'   => 'input',
+                    'label'         => esc_html__( 'Slider: Arrow Hover Color', 'feed-them-gallery' ),
+                    'class'         => 'ft-gallery-feed-arrow-hover-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:\'#eee\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'white\'}',
+                    'type'          => 'text',
+                    'id'            => 'ft-gallery-slider-arrow-hover-color-input',
+                    'name'          => 'ft_gallery_slider_arrow_hover_color',
+                    'default_value' => '',
+                    'placeholder'   => esc_html__( '#e55d25', 'feed-them-gallery' ),
+                    'autocomplete'  => 'off',
+                ),
+
+                // Gallery Slider Banner.
+                array(
+                    'input_wrap_class' => 'ft-wp-gallery-slider-hide',
+                    'option_type'      => 'select',
+                    'label'            => esc_html__( 'Slider: Banner', 'feed-them-gallery' ),
+                    'type'             => 'text',
+                    'id'               => 'ft_gallery_slider_banner',
+                    'name'             => 'ft_gallery_slider_banner',
+                    'default_value'    => '',
+                    'options'          => array(
+                        array(
+                            'label' => esc_html__( 'Show', 'feed-them-gallery' ),
+                            'value' => 'yes',
+                        ),
+                        array(
+                            'label' => esc_html__( 'Hide', 'feed-them-gallery' ),
+                            'value' => 'no',
+                        ),
+                    ),
+                ),
+
+                // Slider Banner Text.
+                array(
+                    'input_wrap_class' => 'ft-wp-gallery-slider-hide ft-wp-gallery-slider-banner-hide',
+                    'option_type'   => 'input',
+                    'label'         => esc_html__( 'Slider: Banner Text', 'feed-them-gallery' ),
+                    'type'          => 'text',
+                    'id'            => 'ft_gallery_slider_text',
+                    'name'          => 'ft_gallery_slider_text',
+                    'placeholder'   =>  esc_html__( 'Coming Soon', 'feed-them-gallery' ),
+                    'default_value' => '',
+                ),
+
+                // Slider Banner Text Color.
+                array(
+                    'input_wrap_class' => 'ft-wp-gallery-slider-hide ft-wp-gallery-slider-banner-hide',
+                    'option_type'   => 'input',
+                    'label'         => esc_html__( 'Slider: Banner Text Color', 'feed-them-gallery' ),
+                    'class'         => 'ft-gallery-feed-text-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:\'#eee\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'white\'}',
+                    'type'          => 'text',
+                    'id'            => 'ft-gallery-slider-banner-text-color-input',
+                    'name'          => 'ft_gallery_slider_banner_text_color',
+                    'default_value' => '',
+                    'placeholder'   => esc_html__( '#fff', 'feed-them-gallery' ),
+                    'autocomplete'  => 'off',
+                ),
+
+                // Slider Banner Background Color.
+                array(
+                    'input_wrap_class' => 'ft-wp-gallery-slider-hide ft-wp-gallery-slider-banner-hide',
+                    'option_type'   => 'input',
+                    'label'         => esc_html__( 'Slider: Banner Color', 'feed-them-gallery' ),
+                    'class'         => 'ft-gallery-feed-background-color-input color {hash:true,caps:false,required:false,adjust:false,pickerFaceColor:\'#eee\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'white\'}',
+                    'type'          => 'text',
+                    'id'            => 'ft-gallery-slider-banner-background-color-input',
+                    'name'          => 'ft_gallery_slider_banner_background_color',
+                    'default_value' => '',
+                    'placeholder'   => esc_html__( '#ddd', 'feed-them-gallery' ),
+                    'autocomplete'  => 'off',
+                ),
+
+                // Slider Banner Padding.
+                array(
+                    'input_wrap_class' => 'ft-wp-gallery-slider-hide ft-wp-gallery-slider-banner-hide',
+                    'option_type'   => 'input',
+                    'label'         => esc_html__( 'Slider: Banner Padding', 'feed-them-gallery' ),
+                    'type'          => 'text',
+                    'id'            => 'ft_gallery_slider_text_padding',
+                    'name'          => 'ft_gallery_slider_text_padding',
+                    'placeholder'   =>  esc_html__( '1rem 1.625rem 1rem 1.625rem', 'feed-them-gallery' ),
+                    'default_value' => '',
+                ),
+
+                // Slider Banner Scew-x.
+                array(
+                    'input_wrap_class' => 'ft-wp-gallery-slider-hide ft-wp-gallery-slider-banner-hide',
+                    'option_type'   => 'input',
+                    'label'         => esc_html__( 'Slider: Banner Skew', 'feed-them-gallery' ),
+                    'type'          => 'text',
+                    'id'            => 'ft_gallery_slider_banner_skew_x',
+                    'name'          => 'ft_gallery_slider_banner_skew_x',
+                    'placeholder'   =>  esc_html__( '-10', 'feed-them-gallery' ),
+                    'default_value' => '',
+                ),
+
 				// Show Photo Caption.
 				array(
 					'input_wrap_class' => 'fb-page-description-option-hide',
@@ -172,6 +363,10 @@ class Gallery_Options {
 							'label' => esc_html__( 'Caption Below Photo', 'feed-them-gallery' ),
 							'value' => 'show_bottom',
 						),
+                        array(
+                            'label' => esc_html__( 'Do Not Display Caption', 'feed-them-gallery' ),
+                            'value' => 'none',
+                        ),
 					),
 				),
 

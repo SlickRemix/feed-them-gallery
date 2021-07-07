@@ -380,10 +380,10 @@ class Settings_Page {
                         ),
 						'show_powered_by' => array(
 							'id'      => 'show_powered_by',
-							'name'    => __( 'Show Powered by Text?', 'feed-them-gallery' ),
+							'name'    => __( 'Hide Powered by Text?', 'feed-them-gallery' ),
 							'type'    => 'checkbox',
 							'std'     => 0,
-							'desc'    => __( 'If enabled, powered by text will appear in the popup. Awesome! Thanks so much for sharing.', 'feed-them-gallery' )
+							'desc'    => __( 'Enable this to hide the Powered by text in the popup.', 'feed-them-gallery' )
 						),
                         'remove_on_uninstall' => array(
 							'id'      => 'remove_on_uninstall',
