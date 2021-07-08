@@ -370,7 +370,7 @@ class Settings_Page {
 							'name'    => __( 'Remove Slider Javascript?', 'feed-them-gallery' ),
 							'type'    => 'checkbox',
 							'std'     => 0,
-							'desc'    => __( 'Enable this if are not using the Slider layout option in any of your galleries.', 'feed-them-gallery' )
+							'desc'    => __( 'Enable this if you are not using the Slider layout option in any of your galleries.', 'feed-them-gallery' )
 						),
                         'duplicate_post_show' => array(
                             'id'      => 'duplicate_post_show',
