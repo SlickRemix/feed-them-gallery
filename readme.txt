@@ -185,8 +185,9 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
-= Version 1.4.0 Wednesday, July 7th, 2021 =
+= Version 1.4.0 Thursday, July 8th, 2021 =
    * NEW: Slider option under the Layout tab when creating a gallery. See [Slider Example](https://feedthemgallery.com/slider-example/).
+   * NEW: Settings > Misc: Option to disable the Slider javascript file if not using the slider on any galleries.
    * FIX: Hide Powered by Feed Them Gallery.
    * FIX: Make X button appear in popup instead of outside.
    * FIX: Clean up redundant strings and php notices being logged.

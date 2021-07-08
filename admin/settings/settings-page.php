@@ -360,11 +360,18 @@ class Settings_Page {
 						),
                         'fix_magnific' => array(
                             'id'      => 'fix_magnific',
-                            'name'    => __( 'Disable Magnific Popup CSS?', 'feed-them-gallery' ),
+                            'name'    => __( 'Remove Magnific Popup CSS?', 'feed-them-gallery' ),
                             'type'    => 'checkbox',
                             'std'     => 0,
-                            'desc'    => __( 'Enable this if your theme is already loading the style sheet for the popup.', 'feed-them-gallery' )
+                            'desc'    => __( 'Enable this if your theme is already loading the magnific style sheet for the popup.', 'feed-them-gallery' )
                         ),
+						'disable_slick_js' => array(
+							'id'      => 'disable_slick_js',
+							'name'    => __( 'Remove Slider Javascript?', 'feed-them-gallery' ),
+							'type'    => 'checkbox',
+							'std'     => 0,
+							'desc'    => __( 'Enable this if are not using the Slider layout option in any of your galleries.', 'feed-them-gallery' )
+						),
                         'duplicate_post_show' => array(
                             'id'      => 'duplicate_post_show',
                             'name'    => __( 'Disable Duplicate Gallery?', 'feed-them-gallery' ),

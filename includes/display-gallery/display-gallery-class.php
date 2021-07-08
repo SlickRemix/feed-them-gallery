@@ -173,8 +173,10 @@ class Display_Gallery {
 		wp_enqueue_script( 'ft-masonry-pkgd', plugins_url( 'feed-them-gallery/includes/feeds/js/masonry.pkgd.min.js' ), array( 'jquery' ), FTG_CURRENT_VERSION, true );
 		wp_enqueue_script( 'ft-images-loaded', plugins_url( 'feed-them-gallery/includes/feeds/js/imagesloaded.pkgd.min.js' ), array(), FTG_CURRENT_VERSION, true );
 		wp_enqueue_script( 'ft-front-end-js', plugins_url( 'feed-them-gallery/includes/js/front-end.js' ), array(), FTG_CURRENT_VERSION, true );
-        wp_enqueue_script( 'ft-slick-js', plugins_url( 'feed-them-gallery/includes/feeds/js/slick.js' ), array(), FTG_CURRENT_VERSION, true );
-        if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+		if( '1' !== ftg_get_option( 'disable_slick_js' ) ) {
+			wp_enqueue_script( 'ft-slick-js', plugins_url( 'feed-them-gallery/includes/feeds/js/slick.js' ), array(), FTG_CURRENT_VERSION, true );
+		}
+		if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 			wp_enqueue_script( 'add-to-cart-ajax_ajax', plugins_url() . '/feed-them-gallery/includes/feeds/js/add-to-cart-ajax.js', array( 'jquery' ), FTG_CURRENT_VERSION, true );
 		}
 		$php_info = array(
@@ -2762,7 +2764,7 @@ class Display_Gallery {
                             </div>
                             </div>
                             </div>
-                            <?php if ( 'yes' === $slider_banner_show ) { ?>
+                            <?php if ( 'yes' === $slider_banner_show && !empty( $slider_text )  ) { ?>
                                 <div class="slickremix-coming-soon-wrapper slickremix-absolute slickremix-transform"><div class="slickremix-relative"><div class="slickremix-absolute-banner-wrap slickremix-transform" <?php echo esc_attr( $slider_banner_color ) ?>></div><span class="slickremix-available-banner" <?php echo esc_attr( $slider_banner_text_color ) ?>><?php echo esc_html( $slider_text ) ?></span></div></div>
                             <?php } ?>
                             <div class='slickremix-slider-count'></div>
