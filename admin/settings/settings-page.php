@@ -360,11 +360,18 @@ class Settings_Page {
 						),
                         'fix_magnific' => array(
                             'id'      => 'fix_magnific',
-                            'name'    => __( 'Disable Magnific Popup CSS?', 'feed-them-gallery' ),
+                            'name'    => __( 'Remove Magnific Popup CSS?', 'feed-them-gallery' ),
                             'type'    => 'checkbox',
                             'std'     => 0,
-                            'desc'    => __( 'Enable this if your theme is already loading the style sheet for the popup.', 'feed-them-gallery' )
+                            'desc'    => __( 'Enable this if your theme is already loading the magnific style sheet for the popup.', 'feed-them-gallery' )
                         ),
+						'disable_slick_js' => array(
+							'id'      => 'disable_slick_js',
+							'name'    => __( 'Remove Slider Javascript?', 'feed-them-gallery' ),
+							'type'    => 'checkbox',
+							'std'     => 0,
+							'desc'    => __( 'Enable this if you are not using the Slider layout option in any of your galleries.', 'feed-them-gallery' )
+						),
                         'duplicate_post_show' => array(
                             'id'      => 'duplicate_post_show',
                             'name'    => __( 'Disable Duplicate Gallery?', 'feed-them-gallery' ),
@@ -380,10 +387,10 @@ class Settings_Page {
                         ),
 						'show_powered_by' => array(
 							'id'      => 'show_powered_by',
-							'name'    => __( 'Show Powered by Text?', 'feed-them-gallery' ),
+							'name'    => __( 'Hide Powered by Text?', 'feed-them-gallery' ),
 							'type'    => 'checkbox',
 							'std'     => 0,
-							'desc'    => __( 'If enabled, powered by text will appear in the popup. Awesome! Thanks so much for sharing.', 'feed-them-gallery' )
+							'desc'    => __( 'Enable this to hide the Powered by text in the popup.', 'feed-them-gallery' )
 						),
                         'remove_on_uninstall' => array(
 							'id'      => 'remove_on_uninstall',

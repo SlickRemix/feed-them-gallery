@@ -342,26 +342,103 @@ jQuery(document).ready(function ($) {
 
     // show grid options
     jQuery('#ft_gallery_type').bind('change', function (e) {
-        if (jQuery('#ft_gallery_type').val() == 'post-in-grid' || jQuery('#ft_gallery_type').val() == 'gallery' || jQuery('#ft_gallery_type').val() == 'gallery-collage') {
+        if ( jQuery('#ft_gallery_type').val() == 'post-slider' || jQuery('#ft_gallery_type').val() == 'post-in-grid' || jQuery('#ft_gallery_type').val() == 'gallery' || jQuery('#ft_gallery_type').val() == 'gallery-collage') {
             if (jQuery('#ft_gallery_type').val() == 'gallery') {
                 jQuery('#ft_gallery_height').show();
                 jQuery('.fb-page-columns-option-hide').show();
                 jQuery('.ftg-hide-for-columns').hide();
                 jQuery('.ftg-masonry-columns-option-hide').hide();
                 jQuery('.fb-page-grid-option-hide').show();
+                jQuery('.ft-wp-gallery-slider-hide').hide();
+                jQuery('.facebook-loadmore-wrap').show();
+            }
+            else if (jQuery('#ft_gallery_type').val() == 'post-slider') {
+                jQuery('.ft-wp-gallery-slider-hide').show();
+                jQuery('.fb-page-columns-option-hide').hide();
+                jQuery('.post-type-ft_gallery .tab3, .post-type-ft_gallery .tab7').hide();
+                jQuery('.ftg-hide-for-columns').hide();
+                jQuery('.ftg-masonry-columns-option-hide').hide();
+                jQuery('.fb-page-grid-option-hide, .facebook-loadmore-wrap, .ft-gallery-height').hide();
+                if (jQuery('#ft_gallery_slider_banner').val() == 'no') {
+                    jQuery('.ft-wp-gallery-slider-banner-hide').hide();
+                }
+                if (jQuery('#ft_gallery_slider_arrows').val() == 'no') {
+                    jQuery('.ft-wp-gallery-slider-arrows-hide').hide();
+                }
+
             }
             else {
+                jQuery('.ft-wp-gallery-slider-hide').hide();
                 jQuery('.ft_gallery_height').hide();
                 jQuery('.fb-page-columns-option-hide').hide();
                 jQuery('.ftg-hide-for-columns').show();
                 jQuery('.ftg-masonry-columns-option-hide').show();
                 jQuery('.fb-page-grid-option-hide').hide();
+                jQuery('.ft-wp-gallery-slider-hide').hide();
+                jQuery('.post-type-ft_gallery .tab3, .post-type-ft_gallery .tab7').show();
+                jQuery('.facebook-loadmore-wrap').show();
             }
         }
         else {
             jQuery('.fb-page-grid-option-hide').hide();
+            jQuery('.fb-page-columns-option-hide').hide();
             jQuery('.ftg-masonry-columns-option-hide').hide();
+            jQuery('.post-type-ft_gallery .tab3, .post-type-ft_gallery .tab7').show();
+            jQuery('.ft-wp-gallery-slider-hide').hide();
+            jQuery('.ft-wp-gallery-slider-arrows-hide').hide();
+            jQuery('.facebook-loadmore-wrap').show();
         }
     });
 
+    // show grid options
+    jQuery('#ft_gallery_slider_banner').bind('change', function (e) {
+
+        if (jQuery('#ft_gallery_slider_banner').val() == 'yes') {
+            jQuery('.ft-wp-gallery-slider-banner-hide').show();
+        }
+        else {
+            jQuery('.ft-wp-gallery-slider-banner-hide').hide();
+        }
+
+    });
+
+    jQuery('#ft_gallery_slider_arrows').bind('change', function (e) {
+
+        if (jQuery('#ft_gallery_slider_arrows').val() == 'yes') {
+            jQuery('.ft-wp-gallery-slider-arrows-hide').show();
+        }
+        else {
+            jQuery('.ft-wp-gallery-slider-arrows-hide').hide();
+        }
+
+    });
+
+    if (jQuery('#ft_gallery_type').val() == 'post-slider') {
+        jQuery('.ft-wp-gallery-slider-hide').show();
+        jQuery('.fb-page-columns-option-hide').hide();
+        jQuery('.post-type-ft_gallery .tab3, .post-type-ft_gallery .tab7').hide();
+        jQuery('.ftg-hide-for-columns').hide();
+        jQuery('.ftg-masonry-columns-option-hide').hide();
+        jQuery('.fb-page-grid-option-hide, .facebook-loadmore-wrap, .ft-gallery-height').hide();
+
+        if (jQuery('#ft_gallery_slider_banner').val() == 'yes') {
+            jQuery('.ft-wp-gallery-slider-banner-hide').show();
+        }
+        else {
+            jQuery('.ft-wp-gallery-slider-banner-hide').hide();
+        }
+
+        if (jQuery('#ft_gallery_slider_arrows').val() == 'yes') {
+            jQuery('.ft-wp-gallery-slider-arrows-hide').show();
+        }
+        else {
+            jQuery('.ft-wp-gallery-slider-arrows-hide').hide();
+        }
+    }
+    else {
+        jQuery('.ft-wp-gallery-slider-hide, .ft-wp-gallery-slider-arrows-hide').hide();
+        jQuery('.post-type-ft_gallery .tab3, .post-type-ft_gallery .tab7').show();
+        jQuery('.facebook-loadmore-wrap').show();
+
+    }
 });

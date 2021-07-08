@@ -3,7 +3,7 @@ Contributors: slickremix, slickchris, mikeyhoward1977
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
 Tested up to: 5.7.2
-Stable tag: 1.3.9.2
+Stable tag: 1.4.0
 License: GPLv2 or later
 
 Photo Gallery creation made easy. Sell images with Auto Create Product feature for WooCommerce. Watermarking, Lightbox Popup, ZIP'ing, Tags and more!
@@ -53,6 +53,7 @@ FREE PLUGIN OPTIONS
  * Image Post Gallery that looks similar to a blog post.
  * Image Post in Grid Gallery.
  * Image Gallery Collage, were different heights and width images will stack.
+ * Image Gallery Slider. [See Example](https://feedthemgallery.com/slider-example/).
  * Adjust the number of photos that show per gallery, for instance if you are showing a teaser
  * Choose the image size on the page
  * Add a User Name who took the photo and link it to an about page or social media account
@@ -184,6 +185,13 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.4.0 Thursday, July 8th, 2021 =
+   * NEW: Slider option under the Layout tab when creating a gallery. See [Slider Example](https://feedthemgallery.com/slider-example/).
+   * NEW: Settings > Misc: Option to disable the Slider javascript file if not using the slider on any galleries.
+   * FIX: Hide Powered by Feed Them Gallery.
+   * FIX: Make X button appear in popup instead of outside.
+   * FIX: Clean up redundant strings and php notices being logged.
+
 = Version 1.3.9.2 Tuesday, June 1st, 2021 =
    * FIX: Some text strings were not translatable.
    
