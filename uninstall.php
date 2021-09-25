@@ -38,7 +38,7 @@ if ( is_multisite() )   {
 /**
  * The main uninstallation function.
  *
- * The uninstall will only execute if the user has explicity
+ * The uninstall will only execute if the user has explicitly
  * enabled the option for data to be removed.
  *
  * @since   1.0
