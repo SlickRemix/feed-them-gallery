@@ -200,7 +200,9 @@ function ftg_checkbox_callback( $args ) {
 	$class = ftg_sanitize_html_class( $args['field_class'] );
 
 	$checked = ! empty( $ftg_option ) ? checked( 1, $ftg_option, false ) : '';
-	$html = '<input type="checkbox" id="ftg_settings[' . ftg_sanitize_key( $args['id'] ) . ']"' . $name . ' value="1" ' . $checked . ' class="' . $class . '"/>';
+
+	$html  = '<input type="hidden"' . $name . ' value="-1" />';
+	$html .= '<input type="checkbox" id="ftg_settings[' . ftg_sanitize_key( $args['id'] ) . ']"' . $name . ' value="1" ' . $checked . ' class="' . $class . '"/>';
 	$html .= '<label for="ftg_settings[' . ftg_sanitize_key( $args['id'] ) . ']"> '  . wp_kses_post( $args['desc'] ) . '</label>';
 
 	echo apply_filters( 'ftg_after_setting_output', $html, $args );
