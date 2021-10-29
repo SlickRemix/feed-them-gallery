@@ -846,9 +846,10 @@ class Display_Gallery {
 				// this is our fall back to make galleries work before the 1.1.6 update
 				// grab all possible meta values of the post in array.
 				$get_post_meta_array = get_post_meta( $ftg_id );
-
-				foreach ( $get_post_meta_array as $key => $value ) {
-					$option[ $key ] = $value[0];
+				if( is_array( $get_post_meta_array ) && !empty( $get_post_meta_array ) ) {
+					foreach ( $get_post_meta_array as $key => $value ) {
+						$option[$key] = $value[0];
+					}
 				}
 			}
 		}
