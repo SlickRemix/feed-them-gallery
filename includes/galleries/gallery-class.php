@@ -183,7 +183,7 @@ class Gallery {
 		// Add the image name to the media library so we can get a clean version when showing thumbnail on the page for the first time!
 		add_filter( 'image_size_names_choose', array( $this, 'ft_gallery_custom_thumb_sizes' ) );
 
-		if ( ! ftg_get_option( 'duplicate_post_show' ) ) {
+		if ( !empty( ftg_get_option( 'duplicate_post_show' ) ) ) {
 
 			add_action( 'admin_action_ft_gallery_duplicate_post_as_draft', array( $this, 'ft_gallery_duplicate_post_as_draft' ) );
 			add_filter( 'page_row_actions', array( $this, 'ft_gallery_duplicate_post_link' ), 10, 2 );
@@ -1210,7 +1210,7 @@ class Gallery {
 					if ( isset( $_GET['images'] ) && '-1' !== $_GET['images'] ) {
 						// Here we get_option the amount of users we want to see per page based on the saved settings field.
 						?>
-						<div class="ftg-total-pagination-count"><?php echo esc_html__( 'Showing', 'feed-them-gallery' ); ?> <?php echo esc_html( $per_page_final ); ?>-<?php echo esc_html( $count_per_page ); ?> of <?php echo esc_html( $total_pagination_count ); ?> <?php echo esc_html( 'Images', 'feed-them-gallery' ); ?></div>
+						<div class="ftg-total-pagination-count"><?php echo esc_html__( 'Showing', 'feed-them-gallery' ); ?> <?php echo esc_html( $per_page_final ); ?>-<?php echo esc_html( $count_per_page ); ?> <?php echo esc_html__( 'of', 'feed-them-gallery' ); ?> <?php echo esc_html( $total_pagination_count ); ?> <?php echo esc_html( 'Images', 'feed-them-gallery' ); ?></div>
 						<?php
 					}
 					?>

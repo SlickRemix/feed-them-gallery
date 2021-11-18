@@ -201,7 +201,7 @@ function ftg_checkbox_callback( $args ) {
 
 	$checked = ! empty( $ftg_option ) ? checked( 1, $ftg_option, false ) : '';
 
-	$html  = '<input type="hidden"' . $name . ' value="-1" />';
+	$html  = '<input type="hidden"' . $name . ' value="" />';
 	$html .= '<input type="checkbox" id="ftg_settings[' . ftg_sanitize_key( $args['id'] ) . ']"' . $name . ' value="1" ' . $checked . ' class="' . $class . '"/>';
 	$html .= '<label for="ftg_settings[' . ftg_sanitize_key( $args['id'] ) . ']"> '  . wp_kses_post( $args['desc'] ) . '</label>';
 
