@@ -185,7 +185,9 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
-= Version 1.4.3 Wednesday, November 17th, 2021 =
+= Version 1.4.3 Thursday, November 18th, 2021 =
+   * NOTE: Tested with WordPress Version 5.8.2
+   * NOTE: Tested with WooCommerce Version 5.9.0
    * FIX: Settings Page options not working properly on front end.
    * FIX: Translation string for the word 'of' for pagination has been added. .ie 1 of 4.
    
