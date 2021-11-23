@@ -185,7 +185,7 @@ class updater_license_page {
                        ); ?>
                     </li>
                     <li><?php
-                        echo sprintf(__('Now Enter your License Key and Click the %1$Save Changes button%2$s', 'feed-them-gallery'),
+                        echo sprintf(__('Now Enter your License Key and Click the %1$sSave Changes button%2$s', 'feed-them-gallery'),
                             '<strong>',
                             '</strong>'
                         ); ?>
