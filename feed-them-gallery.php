@@ -7,7 +7,7 @@
  * Plugin Name: Feed Them Gallery
  * Plugin URI: https://www.slickremix.com/
  * Description: Create Beautiful Responsive Galleries in Minutes. Choose the number of columns, loadmore button, popup and more! Sell your Galleries or individual Images with WooCommerce, watermark them, zip galleries, create Albums, create Tags for Images and Galleries, search Galleries and Images with tags, and pagination in our premium version.
- * Version: 1.4.3.1
+ * Version: 1.4.3.2
  * Author: SlickRemix
  * Author URI: https://www.slickremix.com/
  * Text Domain: feed-them-gallery
