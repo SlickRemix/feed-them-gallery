@@ -2,8 +2,8 @@
 Contributors: slickremix, slickchris, mikeyhoward1977
 Tags: gallery, image gallery, photo gallery, responsive gallery, wordpress gallery plugin
 Requires at least: 4.5.0
-Tested up to: 5.8.2
-Stable tag: 1.4.3.1
+Tested up to: 5.9
+Stable tag: 1.4.3.2
 License: GPLv2 or later
 
 Photo Gallery creation made easy. Sell images with Auto Create Product feature for WooCommerce. Watermarking, Lightbox Popup, ZIP'ing, Tags and more!
@@ -185,6 +185,9 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
+= Version 1.4.3.2 Monday, January 31st, 2022 =
+  * NOTE: Tested with WordPress Version 5.9
+  
 = Version 1.4.3.1 Tuesday, November 23rd, 2021 =
    * FIX: Missing s for a sprintf on plugin license page.
    
