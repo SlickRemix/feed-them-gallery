@@ -14,21 +14,21 @@
  * Domain Path: /languages
  * Requires at least: WordPress 4.7.0
  * Tested up to: WordPress 5.8.2
- * Stable tag: 1.4.3.1
+ * Stable tag: 1.4.3.2
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * WC requires at least: 3.0.0
- * WC tested up to: 5.9.0
+ * WC tested up to: 6.1.1
  *
- * @version  1.4.3.1
+ * @version  1.4.3.2
  * @package  FeedThemSocial/Core
- * @copyright   Copyright (c) 2012-2021 SlickRemix
+ * @copyright   Copyright (c) 2012-2022 SlickRemix
  *
  * Need Support? https://www.slickremix.com/my-account
  */
 
 // Doing this to ensure any js or css changes are reloaded properly. Added to enqueued css and js files throughout.
-define( 'FTG_CURRENT_VERSION', '1.4.3.1' );
+define( 'FTG_CURRENT_VERSION', '1.4.3.2' );
 
 if ( ! defined( 'FTG_PLUGIN_FILE' ) )	{
 	define( 'FTG_PLUGIN_FILE', __FILE__ );
