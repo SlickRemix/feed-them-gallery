@@ -185,7 +185,7 @@ You can [register to translate the site here](http://translate.slickremix.com/wp
   * Extract the zip file and drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page.
 
 == Changelog ==
-= Version 1.4.3.2 Monday, June 9th, 2022 =
+= Version 1.4.3.2 Thursday, June 9th, 2022 =
   * NOTE: Tested with WordPress Version 6.0
   * FIX PREMIUM: Script not loading properly for variations on some sites.
   
