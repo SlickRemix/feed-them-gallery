@@ -144,8 +144,8 @@ jQuery( document ).ready(
                                     jQuery( ".ft-gallery-js-load" ).hover(
                                         function() {
                                             if (jQuery( '.ft-gallery-popup .ft-gallery-variations-text' ).hasClass( 'ft-gallery-js-load' )) {
-                                                jQuery.getScript( "/wp-content/plugins/woocommerce/assets/js/frontend/add-to-cart-variation.min.js" );
-                                                jQuery( '.ft-gallery-popup .ft-gallery-variations-text' ).removeClass( 'ft-gallery-js-load' );
+                                                jQuery.getScript( ftgPremiumOption.site_path + "/wp-content/plugins/woocommerce/assets/js/frontend/add-to-cart-variation.min.js" );
+                                              	jQuery( '.ft-gallery-popup .ft-gallery-variations-text' ).removeClass( 'ft-gallery-js-load' );
                                             }
                                         }
                                     );

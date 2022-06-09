@@ -192,8 +192,8 @@ class Gallery {
 
 		}
 
-        // Add support message to tabs
-        add_action( 'ft_gallery_after_metabox_settings_tab_fields', array( $this, 'support_message' ), 900, 2 );
+		// Add support message to tabs
+		add_action( 'ft_gallery_after_metabox_settings_tab_fields', array( $this, 'support_message' ), 900, 2 );
 	}
 
 	/**
@@ -208,9 +208,9 @@ class Gallery {
 		$plugins  = ft_gallery_premium_plugins();
 		$plugin   = isset( $plugins[ $plugin ] ) ? $plugins[ $plugin ] : false;
 
-        if ( ! $plugin )    {
-            return;
-        }
+		if ( ! $plugin )    {
+			return;
+		}
 
 		$title    = $plugin['title'];
 		$purchase = $plugin['purchase_url'];
@@ -225,7 +225,7 @@ class Gallery {
 				esc_url( $purchase ),
 				$title
 			);
-		?>
+			?>
 		</div>
 		<?php
 
@@ -556,9 +556,9 @@ class Gallery {
 			if ( 'title' === $key ) {
 				$new[ $key ] = $value;
 				// put the tags column before it.
-                $new = apply_filters( "ft_gallery_custom_edit_columns_before_gallery_thumb", $new );
+				$new = apply_filters( "ft_gallery_custom_edit_columns_before_gallery_thumb", $new );
 				$new['gallery_thumb']     = '';
-                $new = apply_filters( "ft_gallery_custom_edit_columns_before_gallery_shortcode", $new );
+				$new = apply_filters( "ft_gallery_custom_edit_columns_before_gallery_shortcode", $new );
 				$new['gallery_shortcode'] = esc_html__( 'Gallery Shortcode', 'feed-them-gallery' );
 
 				if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
@@ -567,11 +567,11 @@ class Gallery {
 					$text = '';
 				}
 
-                $new = apply_filters( "ft_gallery_custom_edit_columns_before_gallery_zip", $new );
+				$new = apply_filters( "ft_gallery_custom_edit_columns_before_gallery_zip", $new );
 				$new['gallery_zip'] = $text;
 
 			} else {
-                $new = apply_filters( "ft_gallery_custom_edit_columns_before_{$key}", $new );
+				$new = apply_filters( "ft_gallery_custom_edit_columns_before_{$key}", $new );
 				$new[ $key ] = $value;
 			}
 		}
@@ -635,9 +635,9 @@ class Gallery {
 				/*echo '<pre style="width: 500px;">';
 				  print_r( $image_list );
 				echo '</pre>';*/
-					?>
-					<a href="<?php echo esc_url( $edit_post_url ); ?>"><?php echo $final_output . esc_html( $image_plural ); ?></a>
-					<?php
+				?>
+				<a href="<?php echo esc_url( $edit_post_url ); ?>"><?php echo $final_output . esc_html( $image_plural ); ?></a>
+				<?php
 				break;
 			// display a thumbnail photo!
 			case 'gallery_shortcode':
@@ -1089,7 +1089,7 @@ class Gallery {
 										   class="button" title="Add Media">
 											<span class="wp-media-buttons-icon"></span><?php esc_attr_e( 'Media Library', 'feed-them-gallery' ); ?>
 										</a>
-										<?php
+									<?php
 									else :
 										$browse_library_btn = bloginfo( 'wpurl' ) . '/wp-admin/media-upload.php?post_id=' . $gallery_class->parent_post_id . '&amp;tab=library&amp;=&amp;post_mime_type=image&amp;TB_iframe=1&amp;width=640&amp;height=353';
 										?>
@@ -1160,8 +1160,8 @@ class Gallery {
 
 				<div class="plupload-upload-uic hide-if-no-js
 							<?php
-							if ( $multiple ) :
-								?>
+				if ( $multiple ) :
+					?>
 									plupload-upload-uic-multiple<?php endif; ?>"
 					 id="<?php echo $id; ?>plupload-upload-ui">
 					<span class="ajaxnonceplu" id="ajaxnonceplu<?php echo esc_html( wp_create_nonce( $id . 'pluploadan' ) ); ?>"></span>
@@ -1294,9 +1294,9 @@ class Gallery {
 								esc_html_e( 'disabled', 'feed-them-gallery' );
 							}
 							?>
-								type="button"
-								class="ft-gallery-download-gallery ft_gallery_download_button_icon button button-primary button-larg"
-								onclick="ft_gallery_create_zip('<?php echo $gallery_class->parent_post_id; ?>', 'yes','false')"><?php esc_html_e( 'Zip Gallery & Download', 'feed-them-gallery' ); ?></button>
+							type="button"
+							class="ft-gallery-download-gallery ft_gallery_download_button_icon button button-primary button-larg"
+							onclick="ft_gallery_create_zip('<?php echo $gallery_class->parent_post_id; ?>', 'yes','false')"><?php esc_html_e( 'Zip Gallery & Download', 'feed-them-gallery' ); ?></button>
 						<a class="gallery-edit-button-question-one" href="javascript:;"
 						   rel="gallery-edit-question-download-gallery">?</a>
 					</div>
@@ -1376,8 +1376,8 @@ class Gallery {
 
 			<ul class="plupload-thumbs
 							<?php
-							if ( $multiple ) :
-								?>
+			if ( $multiple ) :
+				?>
 								plupload-thumbs-multiple<?php endif; ?>" id="<?php echo esc_attr( $id ); ?>plupload-thumbs"
 				data-post-id="<?php echo esc_attr( $object->ID ); ?>">
 				<?php
@@ -1665,7 +1665,7 @@ class Gallery {
 					'imgid'       => 0, // will be added per uploader
 				),
 			);
-		?>
+			?>
 			<script type="text/javascript">
 				var base_plupload_config =<?php echo json_encode( $plupload_init ); ?>;
 			</script>
@@ -1866,8 +1866,8 @@ class Gallery {
 
 				<span class="tab-section-description"><small><?php esc_html_e( 'The selected WooCommerce product will be duplicated when creating products for Landscape Images (Greater width than height), Square Images (Equal width and height), and Portrait Images (Width less than height). 1 image will produce 1 WooCommerce product. You must have the "Use Smart Image Orientation" checked above for this option to work properly and you must choose a Model Product for the 3 selections below.', 'feed-them-gallery' ); ?></small></span>
 				<span class="tab-section-description"><a
-							href="https://docs.woocommerce.com/document/variable-product/"
-							target="_blank"><small>
+						href="https://docs.woocommerce.com/document/variable-product/"
+						target="_blank"><small>
 							<?php
 							echo sprintf(
 								esc_html__( 'Learn how to create a %1$sVariable product%2$s in WooCommerce.', 'feed-them-gallery' ),
@@ -1931,15 +1931,15 @@ class Gallery {
 
 				<span class="tab-section-description"><small><?php esc_html_e( 'Select a Product that will be duplicated when creating a WooCommerce product for Gallery Digital ZIP. (Turns all images in Gallery into a ZIP for a Simple Virtual/Downloadable WooCommerce product.)', 'feed-them-gallery' ); ?></small></span>
 				<span class="tab-section-description"><a
-							href="https://docs.woocommerce.com/document/managing-products/#section-5"
-							target="_blank"><small>
+						href="https://docs.woocommerce.com/document/managing-products/#section-5"
+						target="_blank"><small>
 							 <?php
-								echo sprintf(
-									esc_html__( 'Learn how to create a %1$sSimple product%2$s in WooCommerce.', 'feed-them-gallery' ),
-									'<strong>',
-									'</strong>'
-								);
-								?>
+							 echo sprintf(
+								 esc_html__( 'Learn how to create a %1$sSimple product%2$s in WooCommerce.', 'feed-them-gallery' ),
+								 '<strong>',
+								 '</strong>'
+							 );
+							 ?>
 									</small></a> </span>
 				<span class="tab-section-description"><small>
 												<?php
@@ -2061,48 +2061,48 @@ class Gallery {
 		}
 	}
 
-    /**
-     * Premium plugin required tab content.
-     *
-     * @since   1.3.5
-     * @param   array   $params Array of tab option params
-     * @param   string  $tab    Current tab
-     * @return  void
-     */
-    public function tab_premium_extension_required( $params, $tab )   {
-        $gallery_class = $params['this'];
-        $plugin        = '';
+	/**
+	 * Premium plugin required tab content.
+	 *
+	 * @since   1.3.5
+	 * @param   array   $params Array of tab option params
+	 * @param   string  $tab    Current tab
+	 * @return  void
+	 */
+	public function tab_premium_extension_required( $params, $tab )   {
+		$gallery_class = $params['this'];
+		$plugin        = '';
 
-        if ( ! empty( $gallery_class->saved_settings_array[ $tab ]['required_prem_plugin'] ) )  {
-            $plugin = $gallery_class->saved_settings_array[ $tab ]['required_prem_plugin'];
-            ?>
-            <div class="ftg-section">
-                <?php $gallery_class->requires_extension( $plugin ); ?>
-            </div>
-            <?php
-        }
+		if ( ! empty( $gallery_class->saved_settings_array[ $tab ]['required_prem_plugin'] ) )  {
+			$plugin = $gallery_class->saved_settings_array[ $tab ]['required_prem_plugin'];
+			?>
+			<div class="ftg-section">
+				<?php $gallery_class->requires_extension( $plugin ); ?>
+			</div>
+			<?php
+		}
 
-        echo $gallery_class->metabox_settings_class->settings_html_form(
+		echo $gallery_class->metabox_settings_class->settings_html_form(
 			$gallery_class->saved_settings_array[ $tab ],
 			null,
 			$gallery_class->parent_post_id
 		);
 
-    } // tab_premium_extension_required
+	} // tab_premium_extension_required
 
 	/**
 	 * Displays the create a ticket message.
 	 *
 	 * @since	1.3.5
-     * @param   array   $params Array of tab option params
-     * @param   string  $tab    Current tab
+	 * @param   array   $params Array of tab option params
+	 * @param   string  $tab    Current tab
 	 * @return	void
 	 */
 	public function support_message( $params, $tab )	{
-        $gallery_class = $params['this'];
-        if ( empty( $gallery_class->saved_settings_array[ $tab ]['required_prem_plugin'] ) )    {
-            return;
-        }
+		$gallery_class = $params['this'];
+		if ( empty( $gallery_class->saved_settings_array[ $tab ]['required_prem_plugin'] ) )    {
+			return;
+		}
 		?>
 		<div class="clear"></div>
 
@@ -2220,7 +2220,7 @@ class Gallery {
 	 */
 	public function ft_gallery_generate_new_attachment_name( $gallery_id, $attachment_ID, $file_name ) {
 		$final_title   = '';
-        $title_options = ftg_get_option( 'file_naming' );
+		$title_options = ftg_get_option( 'file_naming' );
 
 		// Include Gallery Title
 		if ( ! empty( $title_options['attch_title_gallery_name'] ) ) {
@@ -2265,7 +2265,7 @@ class Gallery {
 		$path = pathinfo( $file );
 
 		$final_filename = '';
-        $file_options   = ftg_get_option( 'file_naming' );
+		$file_options   = ftg_get_option( 'file_naming' );
 
 		// Include Gallery Title
 		if ( ! empty( $file_options['attch_name_gallery_name'] ) ) {
