@@ -134,8 +134,8 @@ jQuery( document ).ready(
                                 jQuery( '#img1plupload-thumbs' ).prepend( '<li class="thumb" id="list_item_' + attachment.id + '" data-image-id="' + attachment.id + '"><img src="' + ftgImageThumb + '" alt="" /><div class="clear"></div></li>' );
 
                                 // do what ever you like to use it
-                                // console.log(attachment.attributes);
-                                // console.log(attachment.attributes['attachment']);
+                                console.log(attachment.attributes);
+								console.log(attachment.attributes['attachment']);
                                 // console.log(attachment.attributes['html']);
                                 // console.log(attachment.attributes['sizes']['ft_gallery_thumb']);
                                 jQuery.ajax(

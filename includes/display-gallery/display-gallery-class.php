@@ -181,6 +181,7 @@ class Display_Gallery {
 		}
 		$php_info = array(
 			'enable_right_click' => ftg_get_option( 'woo_enable_right_click', '' ),
+			'site_path' => get_site_url(),
 		);
 		wp_localize_script( 'ft-front-end-js', 'ftgPremiumOption', $php_info );
 	}
