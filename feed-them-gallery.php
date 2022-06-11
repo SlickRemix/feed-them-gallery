@@ -13,12 +13,12 @@
  * Text Domain: feed-them-gallery
  * Domain Path: /languages
  * Requires at least: WordPress 4.7.0
- * Tested up to: WordPress 5.8.2
+ * Tested up to: WordPress 6.0
  * Stable tag: 1.4.3.2
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * WC requires at least: 3.0.0
- * WC tested up to: 6.1.1
+ * WC tested up to: 6.5.1
  *
  * @version  1.4.3.2
  * @package  FeedThemSocial/Core
