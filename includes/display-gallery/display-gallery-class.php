@@ -1707,8 +1707,8 @@ class Display_Gallery {
 					if ( is_plugin_active( 'feed-them-gallery-premium/feed-them-gallery-premium.php' ) ) {
 						$gallery_to_woo       = new Gallery_to_Woocommerce();
 						$siteurl              = get_option( 'siteurl' );
-						$purchase_link        = ftg_get_option( 'woo_add_to_cart' );
-						$purchase_link_option = isset( $purchase_link['ft_gallery_woo_options'] ) ? $purchase_link['ft_gallery_woo_options'] : '';
+						$cart_option          = ftg_get_option( 'woo_add_to_cart' );
+						$purchase_link_option = isset( $cart_option ) ? $cart_option : '';
 					}
 
 					// Make sure it's not ajaxing.
@@ -2258,7 +2258,6 @@ class Display_Gallery {
 									$product_type = \WC_Product_Factory::get_product_type($product_id);
 
 									if ( 'variable' === $product_type && 'prod_page' !== $purchase_link_option ) {
-
 										$purchase_link = '' . $siteurl . '/' . $ft_gallery_cart_page_name;
 									} else {
 										if ( 'prod_page' === $purchase_link_option ) {

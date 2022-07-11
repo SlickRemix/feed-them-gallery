@@ -2165,7 +2165,7 @@ class Gallery {
 		wp_update_attachment_metadata( $attach_id, $attach_data );
 
 		// Use File & Title renaming
-		if ( ftg_get_option( 'use_attachment_naming' ) ) {
+		if ( ftg_get_option( 'use_attachment_naming' ) && ftg_get_option( 'file_naming' ) ) {
 			$file_name = preg_replace( '/\.[^.]+$/', '', basename( $status['url'] ) );
 			$this->ft_gallery_rename_attachment( $post_id, $attach_id, $file_name );
 			$this->ft_gallery_generate_new_attachment_name( $post_id, $attach_id, $file_name );
